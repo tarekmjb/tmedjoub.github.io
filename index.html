@@ -1,748 +1,549 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8"/>
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>Tarek MEDJOUB — Network & Security Engineer</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
-<style>
-:root {
-  --bg0: #0a0d0f;
-  --bg1: #0f1317;
-  --bg2: #141a1f;
-  --bg3: #1b2229;
-  --bg4: #212932;
-  --teal: #00b09b;
-  --teal2: #00d4bc;
-  --teal-dim: rgba(0,176,155,0.12);
-  --teal-border: rgba(0,176,155,0.25);
-  --text: #e8ecf0;
-  --text2: #9aa5b0;
-  --text3: #5a6a78;
-  --border: rgba(255,255,255,0.07);
-  --border2: rgba(255,255,255,0.04);
-  --font: 'DM Sans', sans-serif;
-  --mono: 'DM Mono', monospace;
-  --max: 1280px;
-}
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-html { scroll-behavior: smooth; font-size: 16px; }
-body { background: var(--bg0); color: var(--text); font-family: var(--font); font-weight: 400; line-height: 1.6; overflow-x: hidden; }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tarek MEDJOUB | Network & Security Engineer</title>
+  <meta name="description" content="Portfolio of Tarek MEDJOUB, Network & Security Engineer specialized in network infrastructure, network security, cloud technologies and IT project management." />
 
-/* ── TOP NAV ── */
-.topnav {
-  position: fixed; top: 0; left: 0; right: 0; z-index: 200;
-  background: rgba(10,13,15,0.92);
-  border-bottom: 1px solid var(--border);
-  backdrop-filter: blur(16px);
-  height: 64px;
-  display: flex; align-items: center;
-}
-.topnav-inner {
-  max-width: var(--max); margin: 0 auto; padding: 0 40px;
-  width: 100%;
-  display: flex; align-items: center; justify-content: space-between;
-}
-.nav-logo {
-  display: flex; align-items: center; gap: 12px;
-  text-decoration: none;
-}
-.nav-logo-mark {
-  width: 36px; height: 36px;
-  background: var(--teal);
-  border-radius: 6px;
-  display: flex; align-items: center; justify-content: center;
-  font-family: var(--mono); font-size: 13px; font-weight: 500;
-  color: #0a0d0f; letter-spacing: -0.02em;
-}
-.nav-name {
-  font-size: 15px; font-weight: 600; color: var(--text);
-  letter-spacing: -0.01em;
-}
-.nav-links {
-  display: flex; align-items: center; gap: 32px; list-style: none;
-}
-.nav-links a {
-  font-size: 13px; color: var(--text2); text-decoration: none;
-  letter-spacing: 0.02em; transition: color 0.2s;
-  font-weight: 400;
-}
-.nav-links a:hover { color: var(--teal2); }
-.nav-cta {
-  background: var(--teal); color: #0a0d0f !important;
-  padding: 8px 20px; border-radius: 4px;
-  font-weight: 500 !important; font-size: 13px !important;
-  transition: opacity 0.2s !important;
-}
-.nav-cta:hover { opacity: 0.85; }
+  <style>
+    :root {
+      --bg: #0b1120;
+      --card: #111827;
+      --card-soft: #1f2937;
+      --text: #f9fafb;
+      --muted: #9ca3af;
+      --accent: #38bdf8;
+      --accent-2: #22c55e;
+      --border: rgba(255, 255, 255, 0.1);
+    }
 
-/* ── HERO ── */
-.hero {
-  min-height: 100vh; padding: 140px 40px 100px;
-  max-width: var(--max); margin: 0 auto;
-  display: grid; grid-template-columns: 1fr 420px;
-  gap: 80px; align-items: center;
-}
-.hero-tag {
-  display: inline-flex; align-items: center; gap: 8px;
-  background: var(--teal-dim); border: 1px solid var(--teal-border);
-  border-radius: 4px; padding: 6px 14px;
-  font-family: var(--mono); font-size: 11px; color: var(--teal2);
-  letter-spacing: 0.08em; text-transform: uppercase;
-  margin-bottom: 28px;
-}
-.hero-tag-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--teal2); animation: blink 2s infinite; }
-@keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.3} }
-.hero-name {
-  font-size: clamp(44px, 5.5vw, 72px);
-  font-weight: 600; line-height: 1.05;
-  letter-spacing: -0.03em; color: var(--text);
-  margin-bottom: 10px;
-}
-.hero-name span { color: var(--teal2); }
-.hero-role {
-  font-size: 18px; font-weight: 300; color: var(--text2);
-  margin-bottom: 28px; letter-spacing: 0.01em;
-}
-.hero-desc {
-  font-size: 15px; color: var(--text2); line-height: 1.8;
-  max-width: 520px; margin-bottom: 40px; font-weight: 300;
-}
-.hero-desc strong { color: var(--text); font-weight: 500; }
-.hero-actions { display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 52px; }
-.btn {
-  display: inline-flex; align-items: center; gap: 8px;
-  padding: 12px 24px; border-radius: 4px;
-  font-size: 13px; font-weight: 500; text-decoration: none;
-  transition: all 0.2s; cursor: pointer; border: none;
-  letter-spacing: 0.01em;
-}
-.btn-primary { background: var(--teal); color: #0a0d0f; }
-.btn-primary:hover { background: var(--teal2); }
-.btn-outline { background: transparent; color: var(--text); border: 1px solid var(--border); }
-.btn-outline:hover { border-color: var(--teal-border); color: var(--teal2); background: var(--teal-dim); }
-.hero-stats {
-  display: flex; gap: 32px; padding-top: 32px;
-  border-top: 1px solid var(--border);
-}
-.hero-stat .num {
-  font-size: 28px; font-weight: 600; color: var(--text);
-  letter-spacing: -0.02em; line-height: 1;
-}
-.hero-stat .num span { color: var(--teal2); }
-.hero-stat .lbl { font-size: 12px; color: var(--text3); margin-top: 4px; font-weight: 400; }
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      scroll-behavior: smooth;
+    }
 
-/* Hero card */
-.hero-card {
-  background: var(--bg2);
-  border: 1px solid var(--border);
-  border-radius: 8px;
-  overflow: hidden;
-}
-.hc-bar {
-  background: var(--bg3); padding: 12px 20px;
-  border-bottom: 1px solid var(--border);
-  display: flex; align-items: center; gap: 8px;
-}
-.hc-dot { width: 10px; height: 10px; border-radius: 50%; }
-.hc-title {
-  font-family: var(--mono); font-size: 11px; color: var(--text3);
-  margin-left: 4px; letter-spacing: 0.05em;
-}
-.hc-body { padding: 4px 0; }
-.hc-row {
-  display: flex; align-items: center; justify-content: space-between;
-  padding: 13px 20px; border-bottom: 1px solid var(--border2);
-  font-size: 13px;
-}
-.hc-row:last-child { border-bottom: none; }
-.hc-key { color: var(--text3); font-family: var(--mono); font-size: 11px; letter-spacing: 0.04em; }
-.hc-val { color: var(--text); font-weight: 500; font-size: 13px; }
-.hc-val.teal { color: var(--teal2); }
-.hc-val.green { color: #4ade80; }
-.badge-sm {
-  display: inline-flex; align-items: center; gap: 5px;
-  background: rgba(74,222,128,0.1); border: 1px solid rgba(74,222,128,0.25);
-  border-radius: 3px; padding: 3px 8px;
-  font-size: 11px; color: #4ade80; font-family: var(--mono);
-}
-.badge-sm::before { content: '●'; font-size: 8px; }
+    body {
+      font-family: Inter, Arial, sans-serif;
+      background: radial-gradient(circle at top, #172554 0, var(--bg) 45%);
+      color: var(--text);
+      line-height: 1.7;
+    }
 
-/* ── DIVIDER ── */
-.section-divider { border: none; border-top: 1px solid var(--border); }
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
 
-/* ── SECTION WRAPPER ── */
-.section { padding: 96px 40px; max-width: var(--max); margin: 0 auto; }
-.section-full { padding: 96px 0; background: var(--bg1); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
-.section-full .section { padding-top: 0; padding-bottom: 0; }
+    .container {
+      width: min(1120px, 92%);
+      margin: auto;
+    }
 
-.section-eyebrow {
-  font-family: var(--mono); font-size: 11px; color: var(--teal2);
-  letter-spacing: 0.15em; text-transform: uppercase;
-  margin-bottom: 12px; display: flex; align-items: center; gap: 12px;
-}
-.section-eyebrow::before { content: ''; display: block; width: 32px; height: 1px; background: var(--teal2); }
-.section-title {
-  font-size: clamp(28px, 3vw, 40px); font-weight: 600;
-  letter-spacing: -0.02em; color: var(--text); margin-bottom: 48px;
-  line-height: 1.15;
-}
-.section-title span { color: var(--teal2); }
+    header {
+      padding: 28px 0;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      background: rgba(11, 17, 32, 0.85);
+      backdrop-filter: blur(14px);
+      border-bottom: 1px solid var(--border);
+    }
 
-/* ── SKILLS ── */
-.skills-grid {
-  display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  gap: 1px; background: var(--border);
-  border: 1px solid var(--border); border-radius: 8px; overflow: hidden;
-}
-.skill-block {
-  background: var(--bg2); padding: 28px 30px;
-  transition: background 0.2s;
-}
-.skill-block:hover { background: var(--bg3); }
-.skill-block-head {
-  display: flex; align-items: center; gap: 10px;
-  margin-bottom: 16px;
-}
-.skill-icon {
-  width: 32px; height: 32px; border-radius: 6px;
-  background: var(--teal-dim); border: 1px solid var(--teal-border);
-  display: flex; align-items: center; justify-content: center;
-  font-size: 15px; flex-shrink: 0;
-}
-.skill-block-title {
-  font-size: 13px; font-weight: 600; color: var(--text);
-  letter-spacing: 0.01em;
-}
-.pill-row { display: flex; flex-wrap: wrap; gap: 6px; }
-.pill {
-  background: var(--bg4); border: 1px solid var(--border);
-  border-radius: 3px; padding: 4px 10px;
-  font-size: 12px; color: var(--text2); font-family: var(--mono);
-  transition: all 0.2s;
-}
-.pill:hover { border-color: var(--teal-border); color: var(--teal2); background: var(--teal-dim); }
+    nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 24px;
+    }
 
-/* ── EXPERIENCE ── */
-.exp-layout { display: grid; grid-template-columns: 200px 1fr; gap: 0; }
-.exp-sidebar { padding-right: 48px; border-right: 1px solid var(--border); }
-.exp-sidebar-item {
-  padding: 14px 0; border-bottom: 1px solid var(--border2);
-  cursor: pointer; transition: all 0.2s;
-}
-.exp-sidebar-item:last-child { border-bottom: none; }
-.exp-sidebar-item.active .esi-company { color: var(--teal2); }
-.exp-sidebar-item.active { border-right: 2px solid var(--teal2); margin-right: -1px; padding-right: 2px; }
-.esi-company { font-size: 14px; font-weight: 500; color: var(--text2); transition: color 0.2s; }
-.esi-year { font-family: var(--mono); font-size: 11px; color: var(--text3); margin-top: 3px; }
-.exp-content { padding-left: 48px; }
-.exp-pane { display: none; }
-.exp-pane.active { display: block; }
-.exp-role { font-size: 22px; font-weight: 600; color: var(--text); letter-spacing: -0.02em; margin-bottom: 6px; }
-.exp-company-label { font-size: 14px; color: var(--teal2); margin-bottom: 4px; font-weight: 500; }
-.exp-period { font-family: var(--mono); font-size: 12px; color: var(--text3); margin-bottom: 24px; }
-.exp-list { list-style: none; display: flex; flex-direction: column; gap: 12px; margin-bottom: 24px; }
-.exp-list li { display: flex; gap: 12px; font-size: 14px; color: var(--text2); line-height: 1.7; }
-.exp-list li::before { content: '—'; color: var(--teal2); flex-shrink: 0; font-family: var(--mono); }
-.exp-list li strong { color: var(--text); font-weight: 500; }
-.tech-chips { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
-.tech-chip {
-  background: transparent; border: 1px solid var(--border);
-  border-radius: 3px; padding: 4px 10px;
-  font-family: var(--mono); font-size: 11px; color: var(--text3);
-}
+    .logo {
+      font-size: 1.15rem;
+      font-weight: 800;
+      letter-spacing: 0.5px;
+    }
 
-/* ── PROJECTS ── */
-.projects-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: var(--border); border: 1px solid var(--border); border-radius: 8px; overflow: hidden; }
-.proj-card {
-  background: var(--bg2); padding: 32px;
-  transition: background 0.2s; position: relative;
-}
-.proj-card:hover { background: var(--bg3); }
-.proj-card::before {
-  content: ''; position: absolute; top: 0; left: 0; right: 0;
-  height: 2px; background: transparent; transition: background 0.3s;
-}
-.proj-card:hover::before { background: var(--teal); }
-.proj-num {
-  font-family: var(--mono); font-size: 11px; color: var(--text3);
-  margin-bottom: 16px; letter-spacing: 0.1em;
-}
-.proj-title {
-  font-size: 17px; font-weight: 600; color: var(--text);
-  margin-bottom: 12px; line-height: 1.3; letter-spacing: -0.01em;
-}
-.proj-desc { font-size: 13px; color: var(--text2); line-height: 1.75; margin-bottom: 20px; }
-.proj-impact {
-  background: var(--teal-dim); border: 1px solid var(--teal-border);
-  border-radius: 4px; padding: 10px 14px;
-  font-size: 12px; color: var(--teal2); line-height: 1.6; margin-bottom: 18px;
-  font-style: italic;
-}
+    .logo span {
+      color: var(--accent);
+    }
 
-/* ── CERTS ── */
-.certs-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 12px; }
-.cert-item {
-  background: var(--bg2); border: 1px solid var(--border);
-  border-radius: 6px; padding: 18px 20px;
-  display: flex; gap: 14px; align-items: flex-start;
-  transition: border-color 0.2s;
-}
-.cert-item:hover { border-color: var(--teal-border); }
-.cert-logo {
-  width: 38px; height: 38px; border-radius: 6px;
-  display: flex; align-items: center; justify-content: center;
-  font-size: 16px; flex-shrink: 0;
-  background: var(--bg4); border: 1px solid var(--border);
-}
-.cert-name { font-size: 13px; font-weight: 500; color: var(--text); margin-bottom: 3px; line-height: 1.35; }
-.cert-sub { font-family: var(--mono); font-size: 11px; color: var(--text3); }
-.cert-sub .yr { color: var(--teal2); }
+    .nav-links {
+      display: flex;
+      gap: 22px;
+      font-size: 0.95rem;
+      color: var(--muted);
+    }
 
-/* ── EDU ── */
-.edu-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
-.edu-card {
-  background: var(--bg2); border: 1px solid var(--border);
-  border-radius: 8px; padding: 30px 32px;
-  transition: border-color 0.2s;
-}
-.edu-card:hover { border-color: var(--teal-border); }
-.edu-deg { font-size: 17px; font-weight: 600; color: var(--text); margin-bottom: 6px; line-height: 1.3; letter-spacing: -0.01em; }
-.edu-inst { font-size: 13px; color: var(--teal2); margin-bottom: 4px; font-weight: 500; }
-.edu-yr { font-family: var(--mono); font-size: 11px; color: var(--text3); margin-bottom: 14px; }
-.edu-note {
-  display: inline-flex; align-items: center; gap: 6px;
-  background: rgba(0,176,155,0.08); border: 1px solid var(--teal-border);
-  border-radius: 3px; padding: 5px 10px;
-  font-size: 11px; color: var(--teal2); font-family: var(--mono);
-}
+    .nav-links a:hover {
+      color: var(--accent);
+    }
 
-/* ── CONTACT ── */
-.contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: start; }
-.contact-links { display: flex; flex-direction: column; gap: 10px; margin-top: 28px; }
-.contact-link {
-  display: flex; align-items: center; gap: 14px;
-  background: var(--bg2); border: 1px solid var(--border);
-  border-radius: 6px; padding: 16px 18px;
-  text-decoration: none; color: var(--text); transition: all 0.2s;
-}
-.contact-link:hover { border-color: var(--teal-border); background: var(--bg3); }
-.contact-link:hover .cl-val { color: var(--teal2); }
-.cl-icon {
-  width: 38px; height: 38px; border-radius: 6px;
-  background: var(--teal-dim); border: 1px solid var(--teal-border);
-  display: flex; align-items: center; justify-content: center;
-  font-size: 16px; flex-shrink: 0;
-}
-.cl-lbl { font-family: var(--mono); font-size: 10px; color: var(--text3); letter-spacing: 0.1em; text-transform: uppercase; display: block; margin-bottom: 2px; }
-.cl-val { font-size: 13px; color: var(--text); font-weight: 500; transition: color 0.2s; }
-.otw-box {
-  background: var(--bg2); border: 1px solid var(--border);
-  border-radius: 8px; padding: 30px 32px;
-}
-.otw-label { font-family: var(--mono); font-size: 10px; color: var(--text3); letter-spacing: 0.15em; text-transform: uppercase; margin-bottom: 16px; }
-.otw-heading { font-size: 20px; font-weight: 600; color: var(--text); margin-bottom: 18px; letter-spacing: -0.02em; }
-.otw-list { list-style: none; display: flex; flex-direction: column; gap: 9px; }
-.otw-list li { display: flex; align-items: center; gap: 10px; font-size: 13px; color: var(--text2); }
-.otw-list li::before { content: '✓'; color: #4ade80; font-size: 12px; font-weight: 600; }
-.otw-meta { margin-top: 22px; padding-top: 18px; border-top: 1px solid var(--border); font-family: var(--mono); font-size: 11px; color: var(--text3); display: flex; flex-direction: column; gap: 5px; }
+    .hero {
+      padding: 110px 0 80px;
+      display: grid;
+      grid-template-columns: 1.35fr 0.65fr;
+      gap: 48px;
+      align-items: center;
+    }
 
-/* ── FOOTER ── */
-footer {
-  border-top: 1px solid var(--border); padding: 28px 40px;
-  display: flex; align-items: center; justify-content: space-between;
-  max-width: var(--max); margin: 0 auto;
-  font-family: var(--mono); font-size: 11px; color: var(--text3);
-}
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 14px;
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      color: var(--accent);
+      background: rgba(56, 189, 248, 0.08);
+      font-size: 0.9rem;
+      margin-bottom: 22px;
+    }
 
-/* ── RESPONSIVE ── */
-@media(max-width:1024px){
-  .hero { grid-template-columns: 1fr; padding-top: 120px; }
-  .hero-card { display: none; }
-  .exp-layout { grid-template-columns: 1fr; }
-  .exp-sidebar { border-right: none; border-bottom: 1px solid var(--border); padding-right: 0; padding-bottom: 24px; margin-bottom: 32px; display: flex; gap: 12px; flex-wrap: wrap; }
-  .exp-sidebar-item.active { border-right: none; border-bottom: 2px solid var(--teal2); margin-right: 0; margin-bottom: -1px; padding-right: 0; }
-  .exp-content { padding-left: 0; }
-  .projects-grid { grid-template-columns: 1fr; }
-  .contact-grid { grid-template-columns: 1fr; }
-  .edu-grid { grid-template-columns: 1fr; }
-}
-@media(max-width:600px){
-  .section { padding: 64px 24px; }
-  .hero { padding: 110px 24px 80px; }
-  .nav-links { display: none; }
-  .topnav-inner { padding: 0 24px; }
-  footer { padding: 24px; flex-direction: column; gap: 8px; text-align: center; }
-}
+    h1 {
+      font-size: clamp(2.7rem, 6vw, 5rem);
+      line-height: 1.05;
+      margin-bottom: 22px;
+    }
 
-/* Scroll reveal */
-.reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.65s ease, transform 0.65s ease; }
-.reveal.in { opacity: 1; transform: none; }
-</style>
+    .gradient-text {
+      background: linear-gradient(90deg, #38bdf8, #22c55e);
+      -webkit-background-clip: text;
+      color: transparent;
+    }
+
+    .hero p {
+      color: var(--muted);
+      max-width: 680px;
+      font-size: 1.08rem;
+      margin-bottom: 30px;
+    }
+
+    .actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+    }
+
+    .btn {
+      padding: 13px 20px;
+      border-radius: 14px;
+      font-weight: 700;
+      border: 1px solid var(--border);
+      transition: 0.25s;
+    }
+
+    .btn-primary {
+      background: var(--accent);
+      color: #020617;
+    }
+
+    .btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 14px 40px rgba(56, 189, 248, 0.15);
+    }
+
+    .profile-card {
+      background: linear-gradient(180deg, rgba(255,255,255,0.08), rgba(255,255,255,0.03));
+      border: 1px solid var(--border);
+      border-radius: 28px;
+      padding: 28px;
+      box-shadow: 0 24px 80px rgba(0,0,0,0.25);
+    }
+
+    .profile-card h3 {
+      margin-bottom: 18px;
+      font-size: 1.35rem;
+    }
+
+    .stat {
+      padding: 16px 0;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .stat:last-child {
+      border-bottom: 0;
+    }
+
+    .stat strong {
+      display: block;
+      font-size: 1.6rem;
+      color: var(--accent-2);
+    }
+
+    section {
+      padding: 72px 0;
+    }
+
+    .section-title {
+      font-size: 2rem;
+      margin-bottom: 16px;
+    }
+
+    .section-subtitle {
+      color: var(--muted);
+      max-width: 760px;
+      margin-bottom: 34px;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 22px;
+    }
+
+    .card {
+      background: rgba(17, 24, 39, 0.86);
+      border: 1px solid var(--border);
+      border-radius: 22px;
+      padding: 24px;
+    }
+
+    .card h3 {
+      color: var(--accent);
+      margin-bottom: 12px;
+    }
+
+    .card p,
+    .card li {
+      color: var(--muted);
+    }
+
+    ul {
+      padding-left: 20px;
+    }
+
+    .skills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 14px;
+    }
+
+    .skill {
+      padding: 7px 12px;
+      border-radius: 999px;
+      background: rgba(56, 189, 248, 0.08);
+      border: 1px solid var(--border);
+      color: #dbeafe;
+      font-size: 0.88rem;
+    }
+
+    .timeline {
+      display: grid;
+      gap: 22px;
+    }
+
+    .experience-card {
+      border-left: 4px solid var(--accent);
+    }
+
+    .meta {
+      color: var(--muted);
+      margin-bottom: 14px;
+      font-size: 0.95rem;
+    }
+
+    .project-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 22px;
+    }
+
+    .cert-table {
+      width: 100%;
+      border-collapse: collapse;
+      overflow: hidden;
+      border-radius: 18px;
+      background: var(--card);
+      border: 1px solid var(--border);
+    }
+
+    .cert-table th,
+    .cert-table td {
+      padding: 16px;
+      text-align: left;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .cert-table th {
+      color: var(--accent);
+      background: rgba(56, 189, 248, 0.06);
+    }
+
+    .cert-table td {
+      color: var(--muted);
+    }
+
+    footer {
+      padding: 42px 0;
+      border-top: 1px solid var(--border);
+      text-align: center;
+      color: var(--muted);
+    }
+
+    @media (max-width: 860px) {
+      .hero,
+      .grid,
+      .project-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .nav-links {
+        display: none;
+      }
+    }
+  </style>
 </head>
+
 <body>
-
-<!-- ═══ TOP NAV ═══ -->
-<header class="topnav">
-  <div class="topnav-inner">
-    <a href="#hero" class="nav-logo">
-      <div class="nav-logo-mark">TM</div>
-      <span class="nav-name">Tarek MEDJOUB</span>
-    </a>
-    <nav>
-      <ul class="nav-links">
-        <li><a href="#about">About</a></li>
-        <li><a href="#skills">Skills</a></li>
-        <li><a href="#experience">Experience</a></li>
-        <li><a href="#projects">Projects</a></li>
-        <li><a href="#certifications">Certifications</a></li>
-        <li><a href="#contact" class="nav-cta">Contact</a></li>
-      </ul>
+  <header>
+    <nav class="container">
+      <div class="logo">Tarek <span>MEDJOUB</span></div>
+      <div class="nav-links">
+        <a href="#about">About</a>
+        <a href="#skills">Skills</a>
+        <a href="#experience">Experience</a>
+        <a href="#projects">Projects</a>
+        <a href="#contact">Contact</a>
+      </div>
     </nav>
-  </div>
-</header>
+  </header>
 
-<!-- ═══ HERO ═══ -->
-<div id="hero" style="border-bottom: 1px solid var(--border);">
-  <div class="hero">
-    <div>
-      <div class="hero-tag"><span class="hero-tag-dot"></span>Available · Paris, France</div>
-      <h1 class="hero-name">Tarek<br/><span>MEDJOUB</span></h1>
-      <p class="hero-role">Network &amp; Security Engineer · Cloud · IT Project Management</p>
-      <p class="hero-desc">
-        Designing and securing <strong>enterprise-grade network infrastructures</strong> for 2+ years. CCNP certified. Fortinet SD-WAN specialist. Master's in Management. Based in Paris — open to opportunities across France and Europe.
+  <main class="container">
+    <section class="hero">
+      <div>
+        <div class="badge">Open to Network, Security & Infrastructure Roles</div>
+        <h1>Network & Security Engineer<br><span class="gradient-text">Infrastructure Specialist</span></h1>
+        <p>
+          I design, optimize and secure enterprise network infrastructures with a strong focus on network security, cloud connectivity, high availability, supervision and IT project management.
+        </p>
+        <div class="actions">
+          <a class="btn btn-primary" href="mailto:tarek.medjoub@outlook.fr">Contact Me</a>
+          <a class="btn" href="https://www.linkedin.com/in/tarek-medjoub" target="_blank">LinkedIn</a>
+          <a class="btn" href="#projects">View Projects</a>
+        </div>
+      </div>
+
+      <aside class="profile-card">
+        <h3>Profile Snapshot</h3>
+        <div class="stat"><strong>3+ Years</strong>Network, Security & Cloud Engineering</div>
+        <div class="stat"><strong>Enterprise</strong>Infrastructure & Network Security Operations</div>
+        <div class="stat"><strong>Cloud & Hybrid</strong>Modern Infrastructure Mindset</div>
+        <div class="stat"><strong>Multi-Certified</strong>Cisco, Huawei & Multicloud Technologies</div>
+      </aside>
+    </section>
+
+    <section id="about">
+      <h2 class="section-title">About Me</h2>
+      <p class="section-subtitle">
+        I combine technical expertise in networking, network security and cloud infrastructure with a management-oriented mindset.
       </p>
-      <div class="hero-actions">
-        <a href="mailto:tarek.medjoub@outlook.fr" class="btn btn-primary">Get in Touch</a>
-        <a href="https://www.linkedin.com/in/tarek-medjoub" target="_blank" class="btn btn-outline">LinkedIn →</a>
-      </div>
-      <div class="hero-stats">
-        <div class="hero-stat"><div class="num">2<span>+</span></div><div class="lbl">Years experience</div></div>
-        <div class="hero-stat"><div class="num">8</div><div class="lbl">Certifications</div></div>
-        <div class="hero-stat"><div class="num">4</div><div class="lbl">Major projects</div></div>
-        <div class="hero-stat"><div class="num">2</div><div class="lbl">Master degrees</div></div>
-      </div>
-    </div>
-
-    <div class="hero-card">
-      <div class="hc-bar">
-        <div class="hc-dot" style="background:#ff5f57;"></div>
-        <div class="hc-dot" style="background:#febc2e;margin-left:4px;"></div>
-        <div class="hc-dot" style="background:#28c840;margin-left:4px;"></div>
-        <span class="hc-title" style="margin-left:10px;">profile.json</span>
-      </div>
-      <div class="hc-body">
-        <div class="hc-row"><span class="hc-key">status</span><span class="badge-sm">available</span></div>
-        <div class="hc-row"><span class="hc-key">location</span><span class="hc-val">Paris, France</span></div>
-        <div class="hc-row"><span class="hc-key">email</span><span class="hc-val teal" style="font-size:12px;">tarek.medjoub@outlook.fr</span></div>
-        <div class="hc-row"><span class="hc-key">phone</span><span class="hc-val">+33 7 46 50 36 73</span></div>
-        <div class="hc-row"><span class="hc-key">top_cert</span><span class="hc-val teal">CCNP Core</span></div>
-        <div class="hc-row"><span class="hc-key">speciality</span><span class="hc-val">Fortinet SD-WAN</span></div>
-        <div class="hc-row"><span class="hc-key">education</span><span class="hc-val">Bac+5 · EQF Level 7</span></div>
-        <div class="hc-row"><span class="hc-key">languages</span><span class="hc-val">FR · EN · AR</span></div>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- ═══ ABOUT ═══ -->
-<div id="about" class="section-full">
-  <div class="section reveal">
-    <div class="section-eyebrow">About</div>
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:start;">
-      <div>
-        <h2 class="section-title" style="margin-bottom:24px;">Engineering networks<br/>that <span>don't fail.</span></h2>
-        <p style="font-size:15px;color:var(--text2);line-height:1.85;margin-bottom:16px;font-weight:300;">
-          I'm a Network & Security Engineer who spent two years at the infrastructure core of one of Algeria's largest industrial corporations — owning Tier-3 incidents, firewall architectures, and SD-WAN migrations on infrastructure that couldn't go down.
+      <div class="card">
+        <p>
+          I am a Network & Security Engineer with hands-on experience in critical enterprise environments.
+          My work focuses on infrastructure reliability, secure network design, performance optimization,
+          firewall policies, SD-WAN architecture, VPN connectivity and proactive supervision.
         </p>
-        <p style="font-size:15px;color:var(--text2);line-height:1.85;margin-bottom:16px;font-weight:300;">
-          What differentiates me is the combination: <strong style="color:var(--text);font-weight:500;">deep technical mastery of networking and security</strong> — paired with a Master's in Management that shaped how I think about risk, cost, and project delivery. I don't just configure; I lead and deliver.
-        </p>
-        <p style="font-size:15px;color:var(--text2);line-height:1.85;font-weight:300;">
-          Now based in Paris, I'm targeting roles where I can own complex infrastructure projects and drive real outcomes — not just execute tasks.
+        <br>
+        <p>
+          With a Master’s degree in Networks & Telecommunications and ongoing studies in Management and IT Project Governance,
+          I aim to bridge technical execution with strategic project delivery. My goal is to contribute to secure,
+          scalable and resilient infrastructures for modern organizations.
         </p>
       </div>
-      <div>
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--border);border:1px solid var(--border);border-radius:8px;overflow:hidden;">
-          <div style="background:var(--bg2);padding:18px 20px;"><div style="font-family:var(--mono);font-size:10px;color:var(--text3);letter-spacing:0.1em;text-transform:uppercase;margin-bottom:5px;">Full Name</div><div style="font-size:14px;color:var(--text);font-weight:500;">Tarek MEDJOUB</div></div>
-          <div style="background:var(--bg2);padding:18px 20px;"><div style="font-family:var(--mono);font-size:10px;color:var(--text3);letter-spacing:0.1em;text-transform:uppercase;margin-bottom:5px;">Location</div><div style="font-size:14px;color:var(--text);font-weight:500;">Paris, France</div></div>
-          <div style="background:var(--bg2);padding:18px 20px;"><div style="font-family:var(--mono);font-size:10px;color:var(--text3);letter-spacing:0.1em;text-transform:uppercase;margin-bottom:5px;">Experience</div><div style="font-size:14px;color:var(--teal2);font-weight:500;">2+ Years</div></div>
-          <div style="background:var(--bg2);padding:18px 20px;"><div style="font-family:var(--mono);font-size:10px;color:var(--text3);letter-spacing:0.1em;text-transform:uppercase;margin-bottom:5px;">Education</div><div style="font-size:14px;color:var(--text);font-weight:500;">Master · EQF 7</div></div>
-          <div style="background:var(--bg2);padding:18px 20px;"><div style="font-family:var(--mono);font-size:10px;color:var(--text3);letter-spacing:0.1em;text-transform:uppercase;margin-bottom:5px;">Availability</div><div style="font-size:14px;color:#4ade80;font-weight:500;">Open to work</div></div>
-          <div style="background:var(--bg2);padding:18px 20px;"><div style="font-family:var(--mono);font-size:10px;color:var(--text3);letter-spacing:0.1em;text-transform:uppercase;margin-bottom:5px;">Languages</div><div style="font-size:14px;color:var(--text);font-weight:500;">FR · EN · AR</div></div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
+    </section>
 
-<!-- ═══ SKILLS ═══ -->
-<div id="skills">
-  <div class="section reveal">
-    <div class="section-eyebrow">Technical Skills</div>
-    <h2 class="section-title">The Stack I <span>Operate In</span></h2>
-    <div class="skills-grid">
-      <div class="skill-block">
-        <div class="skill-block-head"><div class="skill-icon">🌐</div><div class="skill-block-title">Networking & Protocols</div></div>
-        <div class="pill-row">
-          <span class="pill">TCP/IP · UDP</span><span class="pill">OSPF</span><span class="pill">BGP</span>
-          <span class="pill">EIGRP · RIP</span><span class="pill">VLAN · VTP · STP</span>
-          <span class="pill">HSRP</span><span class="pill">EtherChannel</span>
-          <span class="pill">DNS · DHCP · SNMP</span><span class="pill">QoS</span>
-        </div>
-      </div>
-      <div class="skill-block">
-        <div class="skill-block-head"><div class="skill-icon">🔒</div><div class="skill-block-title">Network Security</div></div>
-        <div class="pill-row">
-          <span class="pill">Fortinet FortiGate</span><span class="pill">SD-WAN</span>
-          <span class="pill">IPsec / SSL VPN</span><span class="pill">NAT · PAT</span>
-          <span class="pill">IDS / IPS</span><span class="pill">ACL</span>
-          <span class="pill">DMZ</span><span class="pill">Layer 2 Security</span>
-        </div>
-      </div>
-      <div class="skill-block">
-        <div class="skill-block-head"><div class="skill-icon">☁️</div><div class="skill-block-title">Cloud & Multicloud</div></div>
-        <div class="pill-row">
-          <span class="pill">Aviatrix Multicloud</span><span class="pill">Microsoft Azure</span>
-          <span class="pill">Huawei Cloud</span><span class="pill">VPN Gateway</span>
-          <span class="pill">Cloud Networking</span>
-        </div>
-      </div>
-      <div class="skill-block">
-        <div class="skill-block-head"><div class="skill-icon">📊</div><div class="skill-block-title">Monitoring & Management</div></div>
-        <div class="pill-row">
-          <span class="pill">PRTG</span><span class="pill">Zabbix</span>
-          <span class="pill">ManageEngine OpManager</span>
-          <span class="pill">GLPI</span><span class="pill">Alerting & Dashboards</span>
-        </div>
-      </div>
-      <div class="skill-block">
-        <div class="skill-block-head"><div class="skill-icon">🖥️</div><div class="skill-block-title">Systems & Platforms</div></div>
-        <div class="pill-row">
-          <span class="pill">Cisco IOS</span><span class="pill">Linux</span>
-          <span class="pill">Windows Server</span><span class="pill">GNS3</span>
-          <span class="pill">Ubiquiti</span><span class="pill">Proxmox</span>
-        </div>
-      </div>
-      <div class="skill-block">
-        <div class="skill-block-head"><div class="skill-icon">📋</div><div class="skill-block-title">Project Management</div></div>
-        <div class="pill-row">
-          <span class="pill">Agile · Scrum</span><span class="pill">ITIL</span>
-          <span class="pill">Risk Management</span>
-          <span class="pill">Technical Documentation</span>
-          <span class="pill">Stakeholder Management</span>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
+    <section id="skills">
+      <h2 class="section-title">Technical Stack</h2>
+      <p class="section-subtitle">A structured overview of my main technical and management competencies.</p>
 
-<!-- ═══ EXPERIENCE ═══ -->
-<div id="experience" class="section-full">
-  <div class="section reveal">
-    <div class="section-eyebrow">Experience</div>
-    <h2 class="section-title">Where I've <span>Delivered</span></h2>
-    <div class="exp-layout">
-      <div class="exp-sidebar">
-        <div class="exp-sidebar-item active" onclick="showExp('condor')">
-          <div class="esi-company">Condor Electronics</div>
-          <div class="esi-year">2023 – 2025</div>
-        </div>
-        <div class="exp-sidebar-item" onclick="showExp('3k')">
-          <div class="esi-company">3K Solutions</div>
-          <div class="esi-year">2023</div>
-        </div>
-      </div>
-      <div class="exp-content">
-        <div class="exp-pane active" id="exp-condor">
-          <div class="exp-role">Network & Security Engineer</div>
-          <div class="exp-company-label">SPA Condor Electronics</div>
-          <div class="exp-period">October 2023 – September 2025 · Algeria · Full-time</div>
-          <ul class="exp-list">
-            <li><strong>Tier-3 Incident Management</strong> — Owned critical incident resolution end-to-end, reducing MTTR across production environments through structured root-cause analysis and escalation frameworks.</li>
-            <li><strong>SD-WAN Architecture</strong> — Designed and deployed a Fortinet SD-WAN overlay, replacing static WAN links with application-aware, policy-driven routing — cutting operational complexity across all sites.</li>
-            <li><strong>Security Hardening</strong> — Maintained FortiGate firewall policies, IPsec/SSL VPN tunnels, DMZ segmentation, and IDS/IPS profiles across the enterprise perimeter.</li>
-            <li><strong>Proactive Monitoring</strong> — Deployed PRTG and Zabbix dashboards for 24/7 visibility, enabling preventive intervention before user-facing impact.</li>
-            <li><strong>Multi-Site Redundancy</strong> — Designed failover architecture using Ubiquiti backhaul, dual-firewall HA, and VPN failback — achieving 99.9%+ uptime on remote branches.</li>
-            <li><strong>Infrastructure Audits</strong> — Conducted full audits of VLAN, OSPF, STP, and ACL configurations; implemented optimizations that improved stability and reduced recurring incidents.</li>
-          </ul>
-          <div class="tech-chips">
-            <span class="tech-chip">Fortinet FortiGate</span><span class="tech-chip">SD-WAN</span>
-            <span class="tech-chip">OSPF</span><span class="tech-chip">VLANs</span>
-            <span class="tech-chip">IPsec VPN</span><span class="tech-chip">PRTG</span>
-            <span class="tech-chip">Zabbix</span><span class="tech-chip">GLPI</span>
-            <span class="tech-chip">Ubiquiti</span>
+      <div class="grid">
+        <div class="card">
+          <h3>Networking</h3>
+          <p>Routing, switching and enterprise network architecture.</p>
+          <div class="skills">
+            <span class="skill">TCP/IP</span><span class="skill">OSPF</span><span class="skill">BGP</span><span class="skill">VLAN</span><span class="skill">STP</span><span class="skill">HSRP</span>
           </div>
         </div>
-        <div class="exp-pane" id="exp-3k">
-          <div class="exp-role">Junior Network Engineer</div>
-          <div class="exp-company-label">3K Solutions — Internship</div>
-          <div class="exp-period">February 2023 – June 2023 · Algeria</div>
-          <ul class="exp-list">
-            <li>Installed and configured switches, routers, and access points across client sites.</li>
-            <li>Managed LAN/WAN infrastructure including IP addressing plans and inter-VLAN routing.</li>
-            <li>Monitored infrastructure health and contributed to root-cause analysis for recurring incidents.</li>
-            <li>Participated in firewall rule reviews and access control audits to maintain network security posture.</li>
-          </ul>
-          <div class="tech-chips">
-            <span class="tech-chip">Cisco IOS</span><span class="tech-chip">TCP/IP</span>
-            <span class="tech-chip">LAN/WAN</span><span class="tech-chip">Firewall</span>
+
+        <div class="card">
+          <h3>Network Security</h3>
+          <p>Network protection, segmentation, VPN security and infrastructure hardening.</p>
+          <div class="skills">
+            <span class="skill">FortiGate</span><span class="skill">VPN IPsec</span><span class="skill">ACL</span><span class="skill">IDS/IPS</span><span class="skill">DMZ</span>
+          </div>
+        </div>
+
+        <div class="card">
+          <h3>Monitoring</h3>
+          <p>Infrastructure supervision and availability reporting.</p>
+          <div class="skills">
+            <span class="skill">PRTG</span><span class="skill">Zabbix</span><span class="skill">OpManager</span><span class="skill">GLPI</span>
+          </div>
+        </div>
+
+        <div class="card">
+          <h3>Cloud & Infrastructure</h3>
+          <p>Cloud networking, hybrid infrastructure and enterprise connectivity.</p>
+          <div class="skills">
+            <span class="skill">AWS</span><span class="skill">Microsoft Azure</span><span class="skill">Cloud Networking</span><span class="skill">Hybrid Infrastructure</span><span class="skill">SD-WAN</span><span class="skill">HA</span>
+          </div>
+        </div>
+
+        <div class="card">
+          <h3>Systems</h3>
+          <p>Systems administration and enterprise support.</p>
+          <div class="skills">
+            <span class="skill">Windows Server</span><span class="skill">Infrastructure Admin</span><span class="skill">User Support</span>
+          </div>
+        </div>
+
+        <div class="card">
+          <h3>Management</h3>
+          <p>IT project coordination, reporting and strategic thinking.</p>
+          <div class="skills">
+            <span class="skill">IT Project Management</span><span class="skill">Documentation</span><span class="skill">Leadership</span>
           </div>
         </div>
       </div>
-    </div>
-  </div>
-</div>
+    </section>
 
-<!-- ═══ PROJECTS ═══ -->
-<div id="projects">
-  <div class="section reveal">
-    <div class="section-eyebrow">Projects</div>
-    <h2 class="section-title">Infrastructure I've <span>Built</span></h2>
-    <div class="projects-grid">
-      <div class="proj-card">
-        <div class="proj-num">01 · 2025</div>
-        <div class="proj-title">Network Config Audit & Optimization</div>
-        <p class="proj-desc">Full-depth audit of multi-tier switching infrastructure to resolve configuration drift, security gaps, and routing inefficiencies across Core, Distribution, and Access layers.</p>
-        <div class="proj-impact">Improved network stability, cleaned legacy ACLs and OSPF misconfigurations, established a documented baseline for future changes.</div>
-        <div class="tech-chips"><span class="tech-chip">OSPF</span><span class="tech-chip">VLANs</span><span class="tech-chip">ACLs</span><span class="tech-chip">DHCP</span><span class="tech-chip">SNMP</span></div>
-      </div>
-      <div class="proj-card">
-        <div class="proj-num">02 · 2025</div>
-        <div class="proj-title">SD-WAN Architecture Migration</div>
-        <p class="proj-desc">Replaced legacy WAN links with a centrally managed Fortinet SD-WAN overlay — application-based traffic steering, encrypted VPN tunnels, and FortiManager-driven policy control.</p>
-        <div class="proj-impact">Centralized visibility, reduced WAN costs, sub-second failover for business-critical applications.</div>
-        <div class="tech-chips"><span class="tech-chip">Fortinet SD-WAN</span><span class="tech-chip">IPsec VPN</span><span class="tech-chip">FortiManager</span></div>
-      </div>
-      <div class="proj-card">
-        <div class="proj-num">03 · 2024</div>
-        <div class="proj-title">Multi-Site Redundancy Solution</div>
-        <p class="proj-desc">Eliminated single points of failure for remote branches by deploying Ubiquiti wireless backhaul, dual-firewall HA failover, and VPN fallback paths with documented runbooks.</p>
-        <div class="proj-impact">99.9%+ site connectivity SLA — branches remain online even during primary link failure.</div>
-        <div class="tech-chips"><span class="tech-chip">Ubiquiti</span><span class="tech-chip">FortiGate HA</span><span class="tech-chip">IPsec VPN</span></div>
-      </div>
-      <div class="proj-card">
-        <div class="proj-num">04 · 2024</div>
-        <div class="proj-title">Enterprise LAN Design & Build</div>
-        <p class="proj-desc">Designed and deployed a hierarchical 3-tier LAN replacing a flat architecture — with full VLAN segmentation, DMZ, OSPF routing, Layer 2 security, and HSRP gateway redundancy.</p>
-        <div class="proj-impact">Eliminated broadcast storms, enforced micro-segmentation, full redundancy with sub-second failover.</div>
-        <div class="tech-chips"><span class="tech-chip">OSPF</span><span class="tech-chip">HSRP</span><span class="tech-chip">STP</span><span class="tech-chip">DMZ</span><span class="tech-chip">L2 Security</span></div>
-      </div>
-    </div>
-  </div>
-</div>
+    <section id="experience">
+      <h2 class="section-title">Professional Experience</h2>
+      <div class="timeline">
+        <div class="card experience-card">
+          <h3>Network & Security Engineer — SPA Condor Electronics</h3>
+          <div class="meta">Oct 2023 — Sep 2025 | Algeria</div>
+          <ul>
+            <li>Managed advanced N3 incident troubleshooting and network operations.</li>
+            <li>Optimized and secured enterprise infrastructure using Fortinet and SD-WAN technologies.</li>
+            <li>Supervised network availability, performance and operational continuity.</li>
+            <li>Configured and deployed network equipment across production environments.</li>
+            <li>Contributed to firewall hardening, segmentation and infrastructure reliability.</li>
+          </ul>
+        </div>
 
-<!-- ═══ CERTIFICATIONS ═══ -->
-<div id="certifications" class="section-full">
-  <div class="section reveal">
-    <div class="section-eyebrow">Certifications</div>
-    <h2 class="section-title">Credentials & <span>Validation</span></h2>
-    <div class="certs-grid">
-      <div class="cert-item"><div class="cert-logo">☁️</div><div><div class="cert-name">Multicloud Network Associate</div><div class="cert-sub">Aviatrix · <span class="yr">2025</span></div></div></div>
-      <div class="cert-item"><div class="cert-logo">🔵</div><div><div class="cert-name">CCNP: Core Networking</div><div class="cert-sub">Cisco Networking Academy · <span class="yr">2025</span></div></div></div>
-      <div class="cert-item"><div class="cert-logo">🛡️</div><div><div class="cert-name">Network Defense</div><div class="cert-sub">Cisco Networking Academy · <span class="yr">2024</span></div></div></div>
-      <div class="cert-item"><div class="cert-logo">🔐</div><div><div class="cert-name">Network Security</div><div class="cert-sub">Cisco Networking Academy · <span class="yr">2022</span></div></div></div>
-      <div class="cert-item"><div class="cert-logo">🔵</div><div><div class="cert-name">CCNA: Switching, Routing & Wireless</div><div class="cert-sub">Cisco Networking Academy · <span class="yr">2023</span></div></div></div>
-      <div class="cert-item"><div class="cert-logo">🔵</div><div><div class="cert-name">CCNA: Introduction to Networks</div><div class="cert-sub">Cisco Networking Academy · <span class="yr">2022</span></div></div></div>
-      <div class="cert-item"><div class="cert-logo">🟥</div><div><div class="cert-name">HCIA Cloud Computing</div><div class="cert-sub">Huawei · <span class="yr">2021</span></div></div></div>
-      <div class="cert-item"><div class="cert-logo">🟥</div><div><div class="cert-name">HCIA Routing & Switching</div><div class="cert-sub">Huawei · <span class="yr">2021</span></div></div></div>
-    </div>
-    <p style="margin-top:24px;font-family:var(--mono);font-size:12px;color:var(--text3);">
-      Currently pursuing: <span style="color:var(--teal2);">CCNP Security</span> &nbsp;·&nbsp; <span style="color:var(--teal2);">Azure AZ-700 Network Engineer Associate</span>
-    </p>
-  </div>
-</div>
+        <div class="card experience-card">
+          <h3>Freelance IT & Digital Solutions Consultant</h3>
+          <div class="meta">2025 — Present | Independent</div>
+          <ul>
+            <li>Support small businesses and individuals with IT, digital presence and technical problem-solving.</li>
+            <li>Assist with website structure, portfolio creation, domain/email setup and professional online visibility.</li>
+            <li>Provide basic troubleshooting, system configuration, documentation and digital process improvement.</li>
+            <li>Translate business needs into simple, practical and usable technical solutions.</li>
+            <li>Develop professional communication assets, technical portfolios and structured digital profiles.</li>
+          </ul>
+        </div>
 
-<!-- ═══ EDUCATION ═══ -->
-<div id="education">
-  <div class="section reveal">
-    <div class="section-eyebrow">Education</div>
-    <h2 class="section-title">Academic <span>Foundation</span></h2>
-    <div class="edu-grid">
-      <div class="edu-card">
-        <div class="edu-deg">Master in Management & Project Management</div>
-        <div class="edu-inst">Institut Supérieur — Doctorate of Business Administration</div>
-        <div class="edu-yr">2024 – 2026 · In progress</div>
-        <p style="font-size:13px;color:var(--text2);line-height:1.75;font-weight:300;">Strategic project leadership, risk management, and organizational governance — complementing deep engineering expertise with business decision-making frameworks.</p>
-      </div>
-      <div class="edu-card">
-        <div class="edu-deg">Master in Networks & Telecommunications</div>
-        <div class="edu-inst">Université de Béjaïa — Algeria</div>
-        <div class="edu-yr">2021 – 2023</div>
-        <div class="edu-note">🇫🇷 ENIC-NARIC France · EQF Level 7 · Equivalent to French Master (Bac+5)</div>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- ═══ CONTACT ═══ -->
-<div id="contact" class="section-full">
-  <div class="section reveal">
-    <div class="section-eyebrow">Contact</div>
-    <h2 class="section-title">Let's build something<br/><span>worth securing.</span></h2>
-    <div class="contact-grid">
-      <div>
-        <p style="font-size:15px;color:var(--text2);line-height:1.85;font-weight:300;margin-bottom:8px;">
-          Open to full-time roles, freelance missions, and consulting engagements across France and Europe. Network architect, security engineer, or technical project lead — reach out.
-        </p>
-        <div class="contact-links">
-          <a class="contact-link" href="mailto:tarek.medjoub@outlook.fr">
-            <div class="cl-icon">✉️</div>
-            <div><span class="cl-lbl">Email</span><span class="cl-val">tarek.medjoub@outlook.fr</span></div>
-          </a>
-          <a class="contact-link" href="https://www.linkedin.com/in/tarek-medjoub" target="_blank">
-            <div class="cl-icon">💼</div>
-            <div><span class="cl-lbl">LinkedIn</span><span class="cl-val">linkedin.com/in/tarek-medjoub</span></div>
-          </a>
-          <a class="contact-link" href="tel:+33746503673">
-            <div class="cl-icon">📞</div>
-            <div><span class="cl-lbl">Phone</span><span class="cl-val">+33 7 46 50 36 73</span></div>
-          </a>
+        <div class="card experience-card">
+          <h3>Network Engineer Intern — 3K Solutions</h3>
+          <div class="meta">Feb 2023 — Jun 2023 | Algeria</div>
+          <ul>
+            <li>Installed and configured network devices.</li>
+            <li>Supported LAN/WAN optimization and maintenance.</li>
+            <li>Participated in monitoring and infrastructure availability tasks.</li>
+          </ul>
         </div>
       </div>
-      <div class="otw-box">
-        <div class="otw-label">open_to_work</div>
-        <div class="otw-heading">Seeking My Next Challenge</div>
-        <ul class="otw-list">
-          <li>Network Engineer (Ingénieur Réseaux)</li>
-          <li>Network & Security Engineer</li>
-          <li>IT Project Manager / Chef de Projet</li>
-          <li>Cloud Network Engineer</li>
-          <li>Infrastructure Consultant</li>
-        </ul>
-        <div class="otw-meta">
-          <span>📍 Paris · Île-de-France · Remote</span>
-          <span>🗓️ Available immediately</span>
+    </section>
+
+    <section id="projects">
+      <h2 class="section-title">Featured Projects</h2>
+      <p class="section-subtitle">Selected infrastructure and network engineering projects.</p>
+
+      <div class="project-grid">
+        <div class="card">
+          <h3>SD-WAN Enterprise Migration</h3>
+          <p>Migration toward SD-WAN architecture to improve inter-site connectivity, routing efficiency and centralized management.</p>
+          <div class="skills"><span class="skill">SD-WAN</span><span class="skill">VPN</span><span class="skill">Fortinet</span></div>
+        </div>
+
+        <div class="card">
+          <h3>LAN Architecture Optimization</h3>
+          <p>Optimization of VLANs, OSPF, DHCP, ACLs and SNMP policies across core, distribution and access layers.</p>
+          <div class="skills"><span class="skill">VLAN</span><span class="skill">OSPF</span><span class="skill">ACL</span></div>
+        </div>
+
+        <div class="card">
+          <h3>Network Redundancy Solution</h3>
+          <p>Implementation of resilient connectivity between remote sites using Ubiquiti antennas, VPN and redundancy design.</p>
+          <div class="skills"><span class="skill">Ubiquiti</span><span class="skill">VPN</span><span class="skill">HA</span></div>
+        </div>
+
+        <div class="card">
+          <h3>Enterprise LAN Implementation</h3>
+          <p>Design and implementation of a secure LAN architecture including DMZ, VLANs, HSRP, STP, VTP and firewalling.</p>
+          <div class="skills"><span class="skill">DMZ</span><span class="skill">HSRP</span><span class="skill">Firewall</span></div>
+        </div>
+
+        <div class="card">
+          <h3>Professional Portfolio Website</h3>
+          <p>Creation of a modern personal portfolio to present technical expertise, professional projects, certifications and career positioning.</p>
+          <div class="skills"><span class="skill">HTML</span><span class="skill">CSS</span><span class="skill">UI/UX</span><span class="skill">Personal Branding</span></div>
+        </div>
+
+        <div class="card">
+          <h3>Digital Presence & Business Support</h3>
+          <p>Support for small business visibility through structured digital profiles, professional content, online communication and administrative workflows.</p>
+          <div class="skills"><span class="skill">Digital Strategy</span><span class="skill">Documentation</span><span class="skill">Business Support</span></div>
         </div>
       </div>
-    </div>
-  </div>
-</div>
+    </section>
 
-<!-- ═══ FOOTER ═══ -->
-<div style="border-top: 1px solid var(--border);">
+    <section id="certifications">
+      <h2 class="section-title">Certifications</h2>
+      <table class="cert-table">
+        <thead>
+          <tr>
+            <th>Certification</th>
+            <th>Organization</th>
+            <th>Year</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>Multicloud Network Associate</td><td>Aviatrix</td><td>2025</td></tr>
+          <tr><td>CCNP: Core Networking</td><td>Cisco Networking Academy</td><td>2025</td></tr>
+          <tr><td>Network Defense</td><td>Cisco Networking Academy</td><td>2024</td></tr>
+          <tr><td>CCNA: Switching, Routing & Wireless Essentials</td><td>Cisco Networking Academy</td><td>2023</td></tr>
+          <tr><td>Network Security</td><td>Cisco Networking Academy</td><td>2022</td></tr>
+          <tr><td>HCIA Cloud Computing</td><td>Huawei</td><td>2021</td></tr>
+          <tr><td>HCIA Routing & Switching</td><td>Huawei</td><td>2021</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section id="education">
+      <h2 class="section-title">Education</h2>
+      <div class="grid">
+        <div class="card">
+          <h3>Master in Management & Project Governance</h3>
+          <p>2024 — 2026<br>Institute of Business Administration</p>
+        </div>
+        <div class="card">
+          <h3>Master in Networks & Telecommunications</h3>
+          <p>2021 — 2023<br>Specialization in enterprise networking, telecommunications and network security.</p>
+        </div>
+        <div class="card">
+          <h3>Professional Focus</h3>
+          <p>Network engineering, network security, cloud connectivity and infrastructure project management.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="contact">
+      <h2 class="section-title">Contact</h2>
+      <div class="card">
+        <p><strong>Email:</strong> <a href="mailto:tarek.medjoub@outlook.fr">tarek.medjoub@outlook.fr</a></p>
+        <p><strong>LinkedIn:</strong> <a href="https://www.linkedin.com/in/tarek-medjoub" target="_blank">linkedin.com/in/tarek-medjoub</a></p>
+        <p><strong>Location:</strong> Paris, France</p>
+      </div>
+    </section>
+  </main>
+
   <footer>
-    <span>© 2025 Tarek MEDJOUB · Network & Security Engineer · Paris, France</span>
-    <span style="color:var(--teal2);">tarek.medjoub@outlook.fr</span>
+    <p>© 2026 Tarek MEDJOUB — Network & Security Engineer</p>
   </footer>
-</div>
-
-<script>
-function showExp(id) {
-  document.querySelectorAll('.exp-pane').forEach(p => p.classList.remove('active'));
-  document.querySelectorAll('.exp-sidebar-item').forEach(s => s.classList.remove('active'));
-  document.getElementById('exp-' + id).classList.add('active');
-  const items = document.querySelectorAll('.exp-sidebar-item');
-  const map = { condor: 0, '3k': 1 };
-  if (items[map[id]]) items[map[id]].classList.add('active');
-}
-
-const reveals = document.querySelectorAll('.reveal');
-const obs = new IntersectionObserver(entries => {
-  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('in'); });
-}, { threshold: 0.08 });
-reveals.forEach(r => obs.observe(r));
-</script>
 </body>
 </html>
