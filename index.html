@@ -5,952 +5,744 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>Tarek MEDJOUB — Network & Security Engineer</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=JetBrains+Mono:wght@300;400;500&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
 :root {
-  --bg:        #070c14;
-  --bg2:       #0d1520;
-  --bg3:       #111d2e;
-  --cyan:      #00d4ff;
-  --cyan-dim:  #00a0c0;
-  --gold:      #c8a96e;
-  --text:      #e8eef5;
-  --muted:     #6a8099;
-  --border:    rgba(0,212,255,0.12);
-  --border2:   rgba(0,212,255,0.06);
-  --font-display: 'Playfair Display', serif;
-  --font-mono:    'JetBrains Mono', monospace;
-  --font-body:    'Outfit', sans-serif;
+  --bg0: #0a0d0f;
+  --bg1: #0f1317;
+  --bg2: #141a1f;
+  --bg3: #1b2229;
+  --bg4: #212932;
+  --teal: #00b09b;
+  --teal2: #00d4bc;
+  --teal-dim: rgba(0,176,155,0.12);
+  --teal-border: rgba(0,176,155,0.25);
+  --text: #e8ecf0;
+  --text2: #9aa5b0;
+  --text3: #5a6a78;
+  --border: rgba(255,255,255,0.07);
+  --border2: rgba(255,255,255,0.04);
+  --font: 'DM Sans', sans-serif;
+  --mono: 'DM Mono', monospace;
+  --max: 1280px;
 }
-
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; font-size: 16px; }
+body { background: var(--bg0); color: var(--text); font-family: var(--font); font-weight: 400; line-height: 1.6; overflow-x: hidden; }
 
-html { scroll-behavior: smooth; }
-
-body {
-  background: var(--bg);
-  color: var(--text);
-  font-family: var(--font-body);
-  font-weight: 300;
-  overflow-x: hidden;
-  cursor: none;
+/* ── TOP NAV ── */
+.topnav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 200;
+  background: rgba(10,13,15,0.92);
+  border-bottom: 1px solid var(--border);
+  backdrop-filter: blur(16px);
+  height: 64px;
+  display: flex; align-items: center;
 }
-
-/* ── Custom cursor ── */
-.cursor {
-  position: fixed; width: 10px; height: 10px;
-  background: var(--cyan); border-radius: 50%;
-  pointer-events: none; z-index: 9999;
-  transform: translate(-50%,-50%);
-  transition: transform 0.1s, opacity 0.2s;
-  mix-blend-mode: screen;
+.topnav-inner {
+  max-width: var(--max); margin: 0 auto; padding: 0 40px;
+  width: 100%;
+  display: flex; align-items: center; justify-content: space-between;
 }
-.cursor-ring {
-  position: fixed; width: 36px; height: 36px;
-  border: 1px solid rgba(0,212,255,0.5); border-radius: 50%;
-  pointer-events: none; z-index: 9998;
-  transform: translate(-50%,-50%);
-  transition: transform 0.15s ease, width 0.2s, height 0.2s;
-}
-body:hover .cursor { opacity: 1; }
-
-/* ── Canvas network bg ── */
-#net-canvas {
-  position: fixed; inset: 0; z-index: 0;
-  opacity: 0.35; pointer-events: none;
-}
-
-/* ── Noise overlay ── */
-body::after {
-  content: '';
-  position: fixed; inset: 0; z-index: 1;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
-  pointer-events: none; opacity: 0.6;
-}
-
-/* ── Layout ── */
-.wrapper { position: relative; z-index: 2; }
-
-/* ── Sidebar nav ── */
-nav {
-  position: fixed; left: 0; top: 0; bottom: 0; width: 72px;
-  background: rgba(7,12,20,0.9);
-  border-right: 1px solid var(--border2);
-  display: flex; flex-direction: column;
-  align-items: center; justify-content: center; gap: 32px;
-  z-index: 100; backdrop-filter: blur(12px);
-}
-.nav-dot {
-  width: 6px; height: 6px;
-  background: var(--muted); border-radius: 50%;
-  cursor: pointer; transition: all 0.3s;
-  position: relative;
-}
-.nav-dot::after {
-  content: attr(data-label);
-  position: absolute; left: 20px; top: 50%;
-  transform: translateY(-50%);
-  font-family: var(--font-mono); font-size: 10px;
-  color: var(--cyan); white-space: nowrap;
-  opacity: 0; transition: opacity 0.2s; pointer-events: none;
-  background: var(--bg2); padding: 4px 8px; border-radius: 3px;
-  border: 1px solid var(--border);
-}
-.nav-dot:hover::after, .nav-dot.active::after { opacity: 1; }
-.nav-dot:hover, .nav-dot.active {
-  background: var(--cyan);
-  box-shadow: 0 0 12px var(--cyan);
-  transform: scale(1.6);
-}
-
-/* ── Sections ── */
-section {
-  min-height: 100vh; padding: 100px 100px 100px 140px;
-  display: flex; flex-direction: column; justify-content: center;
-  border-bottom: 1px solid var(--border2);
-  opacity: 0; transform: translateY(30px);
-  transition: opacity 0.7s ease, transform 0.7s ease;
-}
-section.visible { opacity: 1; transform: translateY(0); }
-
-/* ── Section label ── */
-.section-label {
-  font-family: var(--font-mono); font-size: 11px;
-  color: var(--cyan); letter-spacing: 0.25em;
-  text-transform: uppercase; margin-bottom: 16px;
+.nav-logo {
   display: flex; align-items: center; gap: 12px;
+  text-decoration: none;
 }
-.section-label::before {
-  content: ''; display: block; width: 40px; height: 1px;
-  background: var(--cyan);
+.nav-logo-mark {
+  width: 36px; height: 36px;
+  background: var(--teal);
+  border-radius: 6px;
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--mono); font-size: 13px; font-weight: 500;
+  color: #0a0d0f; letter-spacing: -0.02em;
 }
+.nav-name {
+  font-size: 15px; font-weight: 600; color: var(--text);
+  letter-spacing: -0.01em;
+}
+.nav-links {
+  display: flex; align-items: center; gap: 32px; list-style: none;
+}
+.nav-links a {
+  font-size: 13px; color: var(--text2); text-decoration: none;
+  letter-spacing: 0.02em; transition: color 0.2s;
+  font-weight: 400;
+}
+.nav-links a:hover { color: var(--teal2); }
+.nav-cta {
+  background: var(--teal); color: #0a0d0f !important;
+  padding: 8px 20px; border-radius: 4px;
+  font-weight: 500 !important; font-size: 13px !important;
+  transition: opacity 0.2s !important;
+}
+.nav-cta:hover { opacity: 0.85; }
 
 /* ── HERO ── */
-#hero {
-  position: relative; overflow: hidden;
-  background: linear-gradient(135deg, var(--bg) 0%, var(--bg2) 100%);
+.hero {
+  min-height: 100vh; padding: 140px 40px 100px;
+  max-width: var(--max); margin: 0 auto;
+  display: grid; grid-template-columns: 1fr 420px;
+  gap: 80px; align-items: center;
 }
-.hero-grid {
-  display: grid; grid-template-columns: 1fr 340px; gap: 60px;
-  align-items: center;
+.hero-tag {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: var(--teal-dim); border: 1px solid var(--teal-border);
+  border-radius: 4px; padding: 6px 14px;
+  font-family: var(--mono); font-size: 11px; color: var(--teal2);
+  letter-spacing: 0.08em; text-transform: uppercase;
+  margin-bottom: 28px;
 }
-.hero-eyebrow {
-  font-family: var(--font-mono); font-size: 12px;
-  color: var(--cyan); letter-spacing: 0.3em;
-  text-transform: uppercase; margin-bottom: 20px;
-  display: flex; align-items: center; gap: 10px;
+.hero-tag-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--teal2); animation: blink 2s infinite; }
+@keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.3} }
+.hero-name {
+  font-size: clamp(44px, 5.5vw, 72px);
+  font-weight: 600; line-height: 1.05;
+  letter-spacing: -0.03em; color: var(--text);
+  margin-bottom: 10px;
 }
-.hero-eyebrow span {
-  display: inline-block; width: 50px; height: 1px;
-  background: var(--cyan);
-}
-h1 {
-  font-family: var(--font-display); font-size: clamp(48px, 6vw, 80px);
-  font-weight: 900; line-height: 1.0; color: var(--text);
-  margin-bottom: 12px;
-}
-h1 em { color: var(--cyan); font-style: normal; }
-.hero-title {
-  font-family: var(--font-mono); font-size: 13px;
-  color: var(--gold); letter-spacing: 0.15em;
-  text-transform: uppercase; margin-bottom: 28px;
+.hero-name span { color: var(--teal2); }
+.hero-role {
+  font-size: 18px; font-weight: 300; color: var(--text2);
+  margin-bottom: 28px; letter-spacing: 0.01em;
 }
 .hero-desc {
-  font-size: 16px; color: var(--muted); line-height: 1.8;
-  max-width: 560px; font-weight: 300; margin-bottom: 40px;
+  font-size: 15px; color: var(--text2); line-height: 1.8;
+  max-width: 520px; margin-bottom: 40px; font-weight: 300;
 }
 .hero-desc strong { color: var(--text); font-weight: 500; }
-
-.cta-row { display: flex; gap: 16px; flex-wrap: wrap; }
+.hero-actions { display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 52px; }
 .btn {
-  font-family: var(--font-mono); font-size: 11px;
-  letter-spacing: 0.15em; text-transform: uppercase;
-  padding: 14px 28px; border-radius: 2px;
-  cursor: pointer; text-decoration: none;
-  transition: all 0.25s; display: inline-block;
-}
-.btn-primary {
-  background: var(--cyan); color: var(--bg);
-  border: 1px solid var(--cyan);
-}
-.btn-primary:hover {
-  background: transparent; color: var(--cyan);
-  box-shadow: 0 0 24px rgba(0,212,255,0.3);
-}
-.btn-ghost {
-  background: transparent; color: var(--text);
-  border: 1px solid var(--border);
-}
-.btn-ghost:hover {
-  border-color: var(--cyan); color: var(--cyan);
-}
-
-/* Status badge */
-.status-badge {
   display: inline-flex; align-items: center; gap: 8px;
-  background: rgba(0,212,255,0.06); border: 1px solid var(--border);
-  border-radius: 2px; padding: 8px 16px;
-  font-family: var(--font-mono); font-size: 11px; color: var(--cyan);
-  margin-bottom: 32px;
+  padding: 12px 24px; border-radius: 4px;
+  font-size: 13px; font-weight: 500; text-decoration: none;
+  transition: all 0.2s; cursor: pointer; border: none;
+  letter-spacing: 0.01em;
 }
-.status-dot {
-  width: 7px; height: 7px; border-radius: 50%;
-  background: #00ff88;
-  box-shadow: 0 0 8px #00ff88;
-  animation: pulse-dot 2s infinite;
+.btn-primary { background: var(--teal); color: #0a0d0f; }
+.btn-primary:hover { background: var(--teal2); }
+.btn-outline { background: transparent; color: var(--text); border: 1px solid var(--border); }
+.btn-outline:hover { border-color: var(--teal-border); color: var(--teal2); background: var(--teal-dim); }
+.hero-stats {
+  display: flex; gap: 32px; padding-top: 32px;
+  border-top: 1px solid var(--border);
 }
-@keyframes pulse-dot {
-  0%,100% { opacity: 1; } 50% { opacity: 0.3; }
+.hero-stat .num {
+  font-size: 28px; font-weight: 600; color: var(--text);
+  letter-spacing: -0.02em; line-height: 1;
 }
+.hero-stat .num span { color: var(--teal2); }
+.hero-stat .lbl { font-size: 12px; color: var(--text3); margin-top: 4px; font-weight: 400; }
 
-/* Hero card panel */
-.hero-panel {
-  background: var(--bg3); border: 1px solid var(--border);
-  border-radius: 4px; padding: 32px;
-  font-family: var(--font-mono); font-size: 12px;
+/* Hero card */
+.hero-card {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  overflow: hidden;
 }
-.hero-panel .panel-title {
-  color: var(--muted); font-size: 10px; letter-spacing: 0.2em;
-  text-transform: uppercase; margin-bottom: 20px;
-  border-bottom: 1px solid var(--border2); padding-bottom: 12px;
-}
-.stat-row {
-  display: flex; justify-content: space-between;
-  padding: 10px 0; border-bottom: 1px solid var(--border2);
-}
-.stat-row:last-child { border-bottom: none; }
-.stat-key { color: var(--muted); }
-.stat-val { color: var(--cyan); font-weight: 500; }
-.stat-val.gold { color: var(--gold); }
-
-/* ── ABOUT ── */
-.about-grid {
-  display: grid; grid-template-columns: 1fr 1fr; gap: 80px;
-  align-items: start;
-}
-h2 {
-  font-family: var(--font-display); font-size: clamp(36px,4vw,52px);
-  font-weight: 700; line-height: 1.1; margin-bottom: 28px;
-  color: var(--text);
-}
-h2 span { color: var(--cyan); }
-p {
-  font-size: 15px; color: var(--muted); line-height: 1.9;
-  margin-bottom: 16px; font-weight: 300;
-}
-p strong { color: var(--text); font-weight: 500; }
-
-.about-quote {
-  border-left: 2px solid var(--cyan); padding-left: 20px;
-  margin: 24px 0;
-  font-family: var(--font-display); font-style: italic;
-  font-size: 18px; color: var(--text); line-height: 1.6;
-}
-
-/* Info grid */
-.info-grid {
-  display: grid; grid-template-columns: 1fr 1fr; gap: 1px;
-  background: var(--border2); border: 1px solid var(--border2);
-  border-radius: 4px; overflow: hidden; margin-top: 8px;
-}
-.info-cell {
-  background: var(--bg3); padding: 18px 20px;
-}
-.info-cell .key {
-  font-family: var(--font-mono); font-size: 9px;
-  color: var(--muted); letter-spacing: 0.2em;
-  text-transform: uppercase; margin-bottom: 6px;
-}
-.info-cell .val {
-  font-size: 14px; color: var(--text); font-weight: 500;
-}
-
-/* ── SKILLS ── */
-.skills-section { background: var(--bg2); }
-.skills-grid {
-  display: grid; grid-template-columns: repeat(auto-fill, minmax(280px,1fr));
-  gap: 24px; margin-top: 12px;
-}
-.skill-card {
-  background: var(--bg3); border: 1px solid var(--border2);
-  border-radius: 4px; padding: 24px;
-  transition: border-color 0.3s, transform 0.3s;
-}
-.skill-card:hover {
-  border-color: var(--border); transform: translateY(-4px);
-}
-.skill-card-title {
-  font-family: var(--font-mono); font-size: 10px;
-  color: var(--cyan); letter-spacing: 0.2em;
-  text-transform: uppercase; margin-bottom: 16px;
+.hc-bar {
+  background: var(--bg3); padding: 12px 20px;
+  border-bottom: 1px solid var(--border);
   display: flex; align-items: center; gap: 8px;
 }
-.skill-card-title .icon { font-size: 14px; }
-.tag-cloud { display: flex; flex-wrap: wrap; gap: 8px; }
-.tag {
-  background: rgba(0,212,255,0.06); border: 1px solid var(--border);
-  border-radius: 2px; padding: 5px 10px;
-  font-family: var(--font-mono); font-size: 11px; color: var(--text);
+.hc-dot { width: 10px; height: 10px; border-radius: 50%; }
+.hc-title {
+  font-family: var(--mono); font-size: 11px; color: var(--text3);
+  margin-left: 4px; letter-spacing: 0.05em;
+}
+.hc-body { padding: 4px 0; }
+.hc-row {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 13px 20px; border-bottom: 1px solid var(--border2);
+  font-size: 13px;
+}
+.hc-row:last-child { border-bottom: none; }
+.hc-key { color: var(--text3); font-family: var(--mono); font-size: 11px; letter-spacing: 0.04em; }
+.hc-val { color: var(--text); font-weight: 500; font-size: 13px; }
+.hc-val.teal { color: var(--teal2); }
+.hc-val.green { color: #4ade80; }
+.badge-sm {
+  display: inline-flex; align-items: center; gap: 5px;
+  background: rgba(74,222,128,0.1); border: 1px solid rgba(74,222,128,0.25);
+  border-radius: 3px; padding: 3px 8px;
+  font-size: 11px; color: #4ade80; font-family: var(--mono);
+}
+.badge-sm::before { content: '●'; font-size: 8px; }
+
+/* ── DIVIDER ── */
+.section-divider { border: none; border-top: 1px solid var(--border); }
+
+/* ── SECTION WRAPPER ── */
+.section { padding: 96px 40px; max-width: var(--max); margin: 0 auto; }
+.section-full { padding: 96px 0; background: var(--bg1); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+.section-full .section { padding-top: 0; padding-bottom: 0; }
+
+.section-eyebrow {
+  font-family: var(--mono); font-size: 11px; color: var(--teal2);
+  letter-spacing: 0.15em; text-transform: uppercase;
+  margin-bottom: 12px; display: flex; align-items: center; gap: 12px;
+}
+.section-eyebrow::before { content: ''; display: block; width: 32px; height: 1px; background: var(--teal2); }
+.section-title {
+  font-size: clamp(28px, 3vw, 40px); font-weight: 600;
+  letter-spacing: -0.02em; color: var(--text); margin-bottom: 48px;
+  line-height: 1.15;
+}
+.section-title span { color: var(--teal2); }
+
+/* ── SKILLS ── */
+.skills-grid {
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 1px; background: var(--border);
+  border: 1px solid var(--border); border-radius: 8px; overflow: hidden;
+}
+.skill-block {
+  background: var(--bg2); padding: 28px 30px;
+  transition: background 0.2s;
+}
+.skill-block:hover { background: var(--bg3); }
+.skill-block-head {
+  display: flex; align-items: center; gap: 10px;
+  margin-bottom: 16px;
+}
+.skill-icon {
+  width: 32px; height: 32px; border-radius: 6px;
+  background: var(--teal-dim); border: 1px solid var(--teal-border);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 15px; flex-shrink: 0;
+}
+.skill-block-title {
+  font-size: 13px; font-weight: 600; color: var(--text);
+  letter-spacing: 0.01em;
+}
+.pill-row { display: flex; flex-wrap: wrap; gap: 6px; }
+.pill {
+  background: var(--bg4); border: 1px solid var(--border);
+  border-radius: 3px; padding: 4px 10px;
+  font-size: 12px; color: var(--text2); font-family: var(--mono);
   transition: all 0.2s;
 }
-.tag:hover {
-  background: rgba(0,212,255,0.12); border-color: var(--cyan-dim);
-  color: var(--cyan);
-}
+.pill:hover { border-color: var(--teal-border); color: var(--teal2); background: var(--teal-dim); }
 
 /* ── EXPERIENCE ── */
-.timeline { position: relative; padding-left: 32px; margin-top: 8px; }
-.timeline::before {
-  content: ''; position: absolute; left: 0; top: 8px; bottom: 0;
-  width: 1px; background: var(--border);
+.exp-layout { display: grid; grid-template-columns: 200px 1fr; gap: 0; }
+.exp-sidebar { padding-right: 48px; border-right: 1px solid var(--border); }
+.exp-sidebar-item {
+  padding: 14px 0; border-bottom: 1px solid var(--border2);
+  cursor: pointer; transition: all 0.2s;
 }
-.timeline-item { position: relative; margin-bottom: 64px; }
-.timeline-item::before {
-  content: ''; position: absolute; left: -36px; top: 8px;
-  width: 8px; height: 8px; border-radius: 50%;
-  background: var(--cyan); box-shadow: 0 0 12px var(--cyan);
-}
-.t-header { margin-bottom: 20px; }
-.t-company {
-  font-family: var(--font-display); font-size: 24px;
-  font-weight: 700; color: var(--text); margin-bottom: 6px;
-}
-.t-role {
-  font-family: var(--font-mono); font-size: 12px;
-  color: var(--gold); letter-spacing: 0.1em; margin-bottom: 8px;
-}
-.t-meta {
-  display: flex; gap: 16px; flex-wrap: wrap;
-  font-family: var(--font-mono); font-size: 11px; color: var(--muted);
-}
-.t-meta span { display: flex; align-items: center; gap: 6px; }
-.t-desc {
-  font-size: 14px; color: var(--muted); line-height: 1.8;
-  margin-bottom: 20px;
-}
-.achievement-list { list-style: none; display: flex; flex-direction: column; gap: 10px; }
-.achievement-list li {
-  display: flex; gap: 12px; align-items: flex-start;
-  font-size: 14px; color: var(--muted); line-height: 1.7;
-}
-.achievement-list li::before {
-  content: '→'; color: var(--cyan); flex-shrink: 0;
-  font-family: var(--font-mono); margin-top: 2px;
-}
-.achievement-list li strong { color: var(--text); font-weight: 500; }
-.tech-row { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 20px; }
-.tech-pill {
-  background: rgba(0,212,255,0.05); border: 1px solid var(--border2);
-  border-radius: 2px; padding: 4px 10px;
-  font-family: var(--font-mono); font-size: 10px; color: var(--muted);
+.exp-sidebar-item:last-child { border-bottom: none; }
+.exp-sidebar-item.active .esi-company { color: var(--teal2); }
+.exp-sidebar-item.active { border-right: 2px solid var(--teal2); margin-right: -1px; padding-right: 2px; }
+.esi-company { font-size: 14px; font-weight: 500; color: var(--text2); transition: color 0.2s; }
+.esi-year { font-family: var(--mono); font-size: 11px; color: var(--text3); margin-top: 3px; }
+.exp-content { padding-left: 48px; }
+.exp-pane { display: none; }
+.exp-pane.active { display: block; }
+.exp-role { font-size: 22px; font-weight: 600; color: var(--text); letter-spacing: -0.02em; margin-bottom: 6px; }
+.exp-company-label { font-size: 14px; color: var(--teal2); margin-bottom: 4px; font-weight: 500; }
+.exp-period { font-family: var(--mono); font-size: 12px; color: var(--text3); margin-bottom: 24px; }
+.exp-list { list-style: none; display: flex; flex-direction: column; gap: 12px; margin-bottom: 24px; }
+.exp-list li { display: flex; gap: 12px; font-size: 14px; color: var(--text2); line-height: 1.7; }
+.exp-list li::before { content: '—'; color: var(--teal2); flex-shrink: 0; font-family: var(--mono); }
+.exp-list li strong { color: var(--text); font-weight: 500; }
+.tech-chips { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
+.tech-chip {
+  background: transparent; border: 1px solid var(--border);
+  border-radius: 3px; padding: 4px 10px;
+  font-family: var(--mono); font-size: 11px; color: var(--text3);
 }
 
 /* ── PROJECTS ── */
-.projects-section { background: var(--bg2); }
-.projects-grid {
-  display: grid; grid-template-columns: repeat(auto-fill, minmax(340px,1fr));
-  gap: 24px; margin-top: 12px;
+.projects-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: var(--border); border: 1px solid var(--border); border-radius: 8px; overflow: hidden; }
+.proj-card {
+  background: var(--bg2); padding: 32px;
+  transition: background 0.2s; position: relative;
 }
-.project-card {
-  background: var(--bg3); border: 1px solid var(--border2);
-  border-radius: 4px; padding: 28px;
-  transition: all 0.3s; position: relative; overflow: hidden;
+.proj-card:hover { background: var(--bg3); }
+.proj-card::before {
+  content: ''; position: absolute; top: 0; left: 0; right: 0;
+  height: 2px; background: transparent; transition: background 0.3s;
 }
-.project-card::after {
-  content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
-  background: linear-gradient(90deg, transparent, var(--cyan), transparent);
-  transform: scaleX(0); transition: transform 0.4s;
+.proj-card:hover::before { background: var(--teal); }
+.proj-num {
+  font-family: var(--mono); font-size: 11px; color: var(--text3);
+  margin-bottom: 16px; letter-spacing: 0.1em;
 }
-.project-card:hover::after { transform: scaleX(1); }
-.project-card:hover { border-color: var(--border); transform: translateY(-6px); }
-.project-year {
-  font-family: var(--font-mono); font-size: 10px; color: var(--muted);
-  margin-bottom: 12px; letter-spacing: 0.15em;
+.proj-title {
+  font-size: 17px; font-weight: 600; color: var(--text);
+  margin-bottom: 12px; line-height: 1.3; letter-spacing: -0.01em;
 }
-.project-title {
-  font-family: var(--font-display); font-size: 20px;
-  font-weight: 700; color: var(--text); margin-bottom: 12px;
-  line-height: 1.2;
+.proj-desc { font-size: 13px; color: var(--text2); line-height: 1.75; margin-bottom: 20px; }
+.proj-impact {
+  background: var(--teal-dim); border: 1px solid var(--teal-border);
+  border-radius: 4px; padding: 10px 14px;
+  font-size: 12px; color: var(--teal2); line-height: 1.6; margin-bottom: 18px;
+  font-style: italic;
 }
-.project-desc {
-  font-size: 13px; color: var(--muted); line-height: 1.8; margin-bottom: 16px;
-}
-.project-impact {
-  display: flex; align-items: flex-start; gap: 8px;
-  background: rgba(0,212,255,0.04); border: 1px solid var(--border2);
-  border-radius: 2px; padding: 10px 14px;
-  font-size: 12px; color: var(--text); line-height: 1.6; margin-bottom: 16px;
-}
-.project-impact::before { content: '◆'; color: var(--cyan); font-size: 8px; margin-top: 4px; flex-shrink: 0; }
 
-/* ── CERTIFICATIONS ── */
-.certs-grid {
-  display: grid; grid-template-columns: repeat(auto-fill, minmax(260px,1fr));
-  gap: 16px; margin-top: 12px;
+/* ── CERTS ── */
+.certs-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 12px; }
+.cert-item {
+  background: var(--bg2); border: 1px solid var(--border);
+  border-radius: 6px; padding: 18px 20px;
+  display: flex; gap: 14px; align-items: flex-start;
+  transition: border-color 0.2s;
 }
-.cert-card {
-  background: var(--bg3); border: 1px solid var(--border2);
-  border-radius: 4px; padding: 20px 22px;
-  display: flex; align-items: flex-start; gap: 16px;
-  transition: all 0.25s;
-}
-.cert-card:hover {
-  border-color: var(--border); transform: translateX(6px);
-}
-.cert-icon {
-  width: 40px; height: 40px; border-radius: 8px;
+.cert-item:hover { border-color: var(--teal-border); }
+.cert-logo {
+  width: 38px; height: 38px; border-radius: 6px;
   display: flex; align-items: center; justify-content: center;
-  font-size: 18px; flex-shrink: 0;
+  font-size: 16px; flex-shrink: 0;
+  background: var(--bg4); border: 1px solid var(--border);
 }
-.cert-icon.cisco { background: rgba(29,102,190,0.2); }
-.cert-icon.aviatrix { background: rgba(0,163,224,0.2); }
-.cert-icon.huawei { background: rgba(255,0,0,0.15); }
-.cert-name {
-  font-size: 14px; font-weight: 500; color: var(--text);
-  margin-bottom: 4px; line-height: 1.3;
-}
-.cert-meta {
-  font-family: var(--font-mono); font-size: 10px; color: var(--muted);
-}
-.cert-year { color: var(--gold); }
+.cert-name { font-size: 13px; font-weight: 500; color: var(--text); margin-bottom: 3px; line-height: 1.35; }
+.cert-sub { font-family: var(--mono); font-size: 11px; color: var(--text3); }
+.cert-sub .yr { color: var(--teal2); }
 
-/* ── EDUCATION ── */
-.edu-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-top: 12px; }
+/* ── EDU ── */
+.edu-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
 .edu-card {
-  background: var(--bg3); border: 1px solid var(--border2);
-  border-radius: 4px; padding: 28px; transition: all 0.25s;
+  background: var(--bg2); border: 1px solid var(--border);
+  border-radius: 8px; padding: 30px 32px;
+  transition: border-color 0.2s;
 }
-.edu-card:hover { border-color: var(--border); }
-.edu-degree {
-  font-family: var(--font-display); font-size: 20px;
-  font-weight: 700; color: var(--text); margin-bottom: 8px;
-  line-height: 1.3;
-}
-.edu-school { font-size: 14px; color: var(--cyan); margin-bottom: 6px; }
-.edu-period {
-  font-family: var(--font-mono); font-size: 11px; color: var(--muted);
-  margin-bottom: 14px;
-}
-.edu-badge {
+.edu-card:hover { border-color: var(--teal-border); }
+.edu-deg { font-size: 17px; font-weight: 600; color: var(--text); margin-bottom: 6px; line-height: 1.3; letter-spacing: -0.01em; }
+.edu-inst { font-size: 13px; color: var(--teal2); margin-bottom: 4px; font-weight: 500; }
+.edu-yr { font-family: var(--mono); font-size: 11px; color: var(--text3); margin-bottom: 14px; }
+.edu-note {
   display: inline-flex; align-items: center; gap: 6px;
-  background: rgba(200,169,110,0.1); border: 1px solid rgba(200,169,110,0.3);
-  border-radius: 2px; padding: 6px 12px;
-  font-family: var(--font-mono); font-size: 10px; color: var(--gold);
-  letter-spacing: 0.1em;
+  background: rgba(0,176,155,0.08); border: 1px solid var(--teal-border);
+  border-radius: 3px; padding: 5px 10px;
+  font-size: 11px; color: var(--teal2); font-family: var(--mono);
 }
 
 /* ── CONTACT ── */
-.contact-section {
-  background: linear-gradient(135deg, var(--bg) 0%, var(--bg2) 100%);
-  min-height: 60vh;
-}
-.contact-inner {
-  display: grid; grid-template-columns: 1fr 400px; gap: 80px;
-  align-items: center;
-}
-.contact-links { display: flex; flex-direction: column; gap: 16px; margin-top: 32px; }
+.contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: start; }
+.contact-links { display: flex; flex-direction: column; gap: 10px; margin-top: 28px; }
 .contact-link {
-  display: flex; align-items: center; gap: 16px;
-  background: var(--bg3); border: 1px solid var(--border2);
-  border-radius: 4px; padding: 16px 20px;
-  text-decoration: none; color: var(--text);
-  transition: all 0.25s; font-size: 14px;
+  display: flex; align-items: center; gap: 14px;
+  background: var(--bg2); border: 1px solid var(--border);
+  border-radius: 6px; padding: 16px 18px;
+  text-decoration: none; color: var(--text); transition: all 0.2s;
 }
-.contact-link:hover {
-  border-color: var(--cyan); color: var(--cyan);
-  transform: translateX(8px);
-}
-.contact-link .cl-icon {
-  width: 36px; height: 36px;
-  background: rgba(0,212,255,0.08); border: 1px solid var(--border);
-  border-radius: 4px; display: flex; align-items: center; justify-content: center;
+.contact-link:hover { border-color: var(--teal-border); background: var(--bg3); }
+.contact-link:hover .cl-val { color: var(--teal2); }
+.cl-icon {
+  width: 38px; height: 38px; border-radius: 6px;
+  background: var(--teal-dim); border: 1px solid var(--teal-border);
+  display: flex; align-items: center; justify-content: center;
   font-size: 16px; flex-shrink: 0;
 }
-.contact-link .cl-label {
-  font-family: var(--font-mono); font-size: 10px;
-  color: var(--muted); display: block; margin-bottom: 2px;
-  letter-spacing: 0.15em; text-transform: uppercase;
+.cl-lbl { font-family: var(--mono); font-size: 10px; color: var(--text3); letter-spacing: 0.1em; text-transform: uppercase; display: block; margin-bottom: 2px; }
+.cl-val { font-size: 13px; color: var(--text); font-weight: 500; transition: color 0.2s; }
+.otw-box {
+  background: var(--bg2); border: 1px solid var(--border);
+  border-radius: 8px; padding: 30px 32px;
+}
+.otw-label { font-family: var(--mono); font-size: 10px; color: var(--text3); letter-spacing: 0.15em; text-transform: uppercase; margin-bottom: 16px; }
+.otw-heading { font-size: 20px; font-weight: 600; color: var(--text); margin-bottom: 18px; letter-spacing: -0.02em; }
+.otw-list { list-style: none; display: flex; flex-direction: column; gap: 9px; }
+.otw-list li { display: flex; align-items: center; gap: 10px; font-size: 13px; color: var(--text2); }
+.otw-list li::before { content: '✓'; color: #4ade80; font-size: 12px; font-weight: 600; }
+.otw-meta { margin-top: 22px; padding-top: 18px; border-top: 1px solid var(--border); font-family: var(--mono); font-size: 11px; color: var(--text3); display: flex; flex-direction: column; gap: 5px; }
+
+/* ── FOOTER ── */
+footer {
+  border-top: 1px solid var(--border); padding: 28px 40px;
+  display: flex; align-items: center; justify-content: space-between;
+  max-width: var(--max); margin: 0 auto;
+  font-family: var(--mono); font-size: 11px; color: var(--text3);
 }
 
-/* Open to work card */
-.otw-card {
-  background: var(--bg3); border: 1px solid var(--border);
-  border-radius: 4px; padding: 32px;
+/* ── RESPONSIVE ── */
+@media(max-width:1024px){
+  .hero { grid-template-columns: 1fr; padding-top: 120px; }
+  .hero-card { display: none; }
+  .exp-layout { grid-template-columns: 1fr; }
+  .exp-sidebar { border-right: none; border-bottom: 1px solid var(--border); padding-right: 0; padding-bottom: 24px; margin-bottom: 32px; display: flex; gap: 12px; flex-wrap: wrap; }
+  .exp-sidebar-item.active { border-right: none; border-bottom: 2px solid var(--teal2); margin-right: 0; margin-bottom: -1px; padding-right: 0; }
+  .exp-content { padding-left: 0; }
+  .projects-grid { grid-template-columns: 1fr; }
+  .contact-grid { grid-template-columns: 1fr; }
+  .edu-grid { grid-template-columns: 1fr; }
 }
-.otw-title {
-  font-family: var(--font-mono); font-size: 10px; color: var(--muted);
-  letter-spacing: 0.2em; text-transform: uppercase; margin-bottom: 20px;
-}
-.otw-role {
-  font-family: var(--font-display); font-size: 22px;
-  font-weight: 700; color: var(--text); margin-bottom: 12px;
-}
-.otw-list { list-style: none; display: flex; flex-direction: column; gap: 8px; }
-.otw-list li {
-  font-family: var(--font-mono); font-size: 12px; color: var(--muted);
-  display: flex; gap: 10px;
-}
-.otw-list li::before { content: '✓'; color: #00ff88; }
-
-/* ── Scroll indicator ── */
-.scroll-hint {
-  position: fixed; bottom: 32px; right: 40px; z-index: 100;
-  font-family: var(--font-mono); font-size: 10px; color: var(--muted);
-  writing-mode: vertical-rl; letter-spacing: 0.15em;
-  display: flex; align-items: center; gap: 10px;
-}
-.scroll-hint::before {
-  content: ''; display: block; width: 1px; height: 40px;
-  background: linear-gradient(to bottom, transparent, var(--cyan));
+@media(max-width:600px){
+  .section { padding: 64px 24px; }
+  .hero { padding: 110px 24px 80px; }
+  .nav-links { display: none; }
+  .topnav-inner { padding: 0 24px; }
+  footer { padding: 24px; flex-direction: column; gap: 8px; text-align: center; }
 }
 
-/* ── Responsive ── */
-@media (max-width: 1024px) {
-  section { padding: 80px 40px 80px 100px; }
-  .hero-grid, .about-grid, .contact-inner, .edu-grid { grid-template-columns: 1fr; }
-  .hero-panel { display: none; }
-}
-@media (max-width: 600px) {
-  section { padding: 60px 24px 60px 80px; }
-  nav { width: 52px; }
-}
-
-/* Reveal animation helpers */
-@keyframes fadeUp {
-  from { opacity: 0; transform: translateY(20px); }
-  to   { opacity: 1; transform: translateY(0); }
-}
-.reveal { opacity: 0; transform: translateY(20px); transition: all 0.6s ease; }
-.reveal.in { opacity: 1; transform: translateY(0); }
+/* Scroll reveal */
+.reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.65s ease, transform 0.65s ease; }
+.reveal.in { opacity: 1; transform: none; }
 </style>
 </head>
 <body>
 
-<!-- cursor -->
-<div class="cursor" id="cursor"></div>
-<div class="cursor-ring" id="cursor-ring"></div>
+<!-- ═══ TOP NAV ═══ -->
+<header class="topnav">
+  <div class="topnav-inner">
+    <a href="#hero" class="nav-logo">
+      <div class="nav-logo-mark">TM</div>
+      <span class="nav-name">Tarek MEDJOUB</span>
+    </a>
+    <nav>
+      <ul class="nav-links">
+        <li><a href="#about">About</a></li>
+        <li><a href="#skills">Skills</a></li>
+        <li><a href="#experience">Experience</a></li>
+        <li><a href="#projects">Projects</a></li>
+        <li><a href="#certifications">Certifications</a></li>
+        <li><a href="#contact" class="nav-cta">Contact</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
 
-<!-- canvas bg -->
-<canvas id="net-canvas"></canvas>
-
-<!-- sidebar nav -->
-<nav id="sidenav">
-  <div class="nav-dot active" data-label="Home"     data-target="hero"   onclick="scrollTo('hero')"></div>
-  <div class="nav-dot"        data-label="About"    data-target="about"  onclick="scrollTo('about')"></div>
-  <div class="nav-dot"        data-label="Skills"   data-target="skills" onclick="scrollTo('skills')"></div>
-  <div class="nav-dot"        data-label="Experience" data-target="exp"  onclick="scrollTo('exp')"></div>
-  <div class="nav-dot"        data-label="Projects" data-target="projects" onclick="scrollTo('projects')"></div>
-  <div class="nav-dot"        data-label="Certs"    data-target="certs"  onclick="scrollTo('certs')"></div>
-  <div class="nav-dot"        data-label="Education" data-target="edu"   onclick="scrollTo('edu')"></div>
-  <div class="nav-dot"        data-label="Contact"  data-target="contact" onclick="scrollTo('contact')"></div>
-</nav>
-
-<div class="wrapper">
-
-<!-- ═══════════════ HERO ═══════════════ -->
-<section id="hero">
-  <div class="hero-grid">
+<!-- ═══ HERO ═══ -->
+<div id="hero" style="border-bottom: 1px solid var(--border);">
+  <div class="hero">
     <div>
-      <div class="hero-eyebrow"><span></span>Network & Security Engineer</div>
-      <h1>Tarek<br/><em>MEDJOUB</em></h1>
-      <div class="hero-title">Infrastructure · Cybersecurity · Cloud · Project Lead</div>
-      <div class="status-badge">
-        <span class="status-dot"></span>
-        Open to opportunities · Paris, France
-      </div>
+      <div class="hero-tag"><span class="hero-tag-dot"></span>Available · Paris, France</div>
+      <h1 class="hero-name">Tarek<br/><span>MEDJOUB</span></h1>
+      <p class="hero-role">Network &amp; Security Engineer · Cloud · IT Project Management</p>
       <p class="hero-desc">
-        I build <strong>resilient, secure, and scalable network infrastructures</strong> — from enterprise LAN architecture to SD-WAN migrations and multi-site redundancy. 2+ years at production scale. CCNP certified. Based in Paris.
+        Designing and securing <strong>enterprise-grade network infrastructures</strong> for 2+ years. CCNP certified. Fortinet SD-WAN specialist. Master's in Management. Based in Paris — open to opportunities across France and Europe.
       </p>
-      <div class="cta-row">
+      <div class="hero-actions">
         <a href="mailto:tarek.medjoub@outlook.fr" class="btn btn-primary">Get in Touch</a>
-        <a href="https://www.linkedin.com/in/tarek-medjoub" target="_blank" class="btn btn-ghost">LinkedIn →</a>
+        <a href="https://www.linkedin.com/in/tarek-medjoub" target="_blank" class="btn btn-outline">LinkedIn →</a>
+      </div>
+      <div class="hero-stats">
+        <div class="hero-stat"><div class="num">2<span>+</span></div><div class="lbl">Years experience</div></div>
+        <div class="hero-stat"><div class="num">8</div><div class="lbl">Certifications</div></div>
+        <div class="hero-stat"><div class="num">4</div><div class="lbl">Major projects</div></div>
+        <div class="hero-stat"><div class="num">2</div><div class="lbl">Master degrees</div></div>
       </div>
     </div>
-    <div class="hero-panel">
-      <div class="panel-title">// profile.json</div>
-      <div class="stat-row"><span class="stat-key">status</span><span class="stat-val">● available</span></div>
-      <div class="stat-row"><span class="stat-key">location</span><span class="stat-val">Paris, FR</span></div>
-      <div class="stat-row"><span class="stat-key">experience</span><span class="stat-val">2+ years</span></div>
-      <div class="stat-row"><span class="stat-key">certifications</span><span class="stat-val gold">8 active</span></div>
-      <div class="stat-row"><span class="stat-key">top_skill</span><span class="stat-val">Fortinet SD-WAN</span></div>
-      <div class="stat-row"><span class="stat-key">education</span><span class="stat-val">Bac+5 · EQF 7</span></div>
-      <div class="stat-row"><span class="stat-key">languages</span><span class="stat-val">FR · EN · AR</span></div>
-    </div>
-  </div>
-</section>
 
-<!-- ═══════════════ ABOUT ═══════════════ -->
-<section id="about">
-  <div class="section-label">About Me</div>
-  <div class="about-grid">
-    <div>
-      <h2>Engineering networks<br/><span>that don't fail.</span></h2>
-      <p>I'm a Network & Security Engineer who spent two years inside one of Algeria's largest industrial corporations, handling Tier-3 incidents, firewall architectures, and SD-WAN migrations on infrastructure that simply couldn't go down.</p>
-      <p>What drives me isn't just technical depth — it's the intersection of <strong>engineering precision and strategic thinking</strong>. My Master's in Management gave me a framework to think beyond the CLI: risk, cost, continuity, and stakeholder impact are part of every infrastructure decision I make.</p>
-      <blockquote class="about-quote">"A network is only as strong as its worst-planned segment."</blockquote>
-      <p>Now based in Paris, I'm targeting roles where I can own complex projects — not just execute tickets. I hold certifications from Cisco, Aviatrix, and Huawei, and I'm actively preparing for CCNP Security and Azure AZ-700.</p>
-    </div>
-    <div>
-      <div class="info-grid">
-        <div class="info-cell"><div class="key">Full Name</div><div class="val">Tarek MEDJOUB</div></div>
-        <div class="info-cell"><div class="key">Location</div><div class="val">Paris, France</div></div>
-        <div class="info-cell"><div class="key">Phone</div><div class="val">+33 7 46 50 36 73</div></div>
-        <div class="info-cell"><div class="key">Email</div><div class="val">tarek.medjoub<br/>@outlook.fr</div></div>
-        <div class="info-cell"><div class="key">Experience</div><div class="val">2+ Years</div></div>
-        <div class="info-cell"><div class="key">Education</div><div class="val">Master · EQF Level 7</div></div>
-        <div class="info-cell"><div class="key">Languages</div><div class="val">French · English · Arabic</div></div>
-        <div class="info-cell"><div class="key">Availability</div><div class="val" style="color:#00ff88">Open to work</div></div>
+    <div class="hero-card">
+      <div class="hc-bar">
+        <div class="hc-dot" style="background:#ff5f57;"></div>
+        <div class="hc-dot" style="background:#febc2e;margin-left:4px;"></div>
+        <div class="hc-dot" style="background:#28c840;margin-left:4px;"></div>
+        <span class="hc-title" style="margin-left:10px;">profile.json</span>
+      </div>
+      <div class="hc-body">
+        <div class="hc-row"><span class="hc-key">status</span><span class="badge-sm">available</span></div>
+        <div class="hc-row"><span class="hc-key">location</span><span class="hc-val">Paris, France</span></div>
+        <div class="hc-row"><span class="hc-key">email</span><span class="hc-val teal" style="font-size:12px;">tarek.medjoub@outlook.fr</span></div>
+        <div class="hc-row"><span class="hc-key">phone</span><span class="hc-val">+33 7 46 50 36 73</span></div>
+        <div class="hc-row"><span class="hc-key">top_cert</span><span class="hc-val teal">CCNP Core</span></div>
+        <div class="hc-row"><span class="hc-key">speciality</span><span class="hc-val">Fortinet SD-WAN</span></div>
+        <div class="hc-row"><span class="hc-key">education</span><span class="hc-val">Bac+5 · EQF Level 7</span></div>
+        <div class="hc-row"><span class="hc-key">languages</span><span class="hc-val">FR · EN · AR</span></div>
       </div>
     </div>
   </div>
-</section>
+</div>
 
-<!-- ═══════════════ SKILLS ═══════════════ -->
-<section id="skills" class="skills-section">
-  <div class="section-label">Technical Skills</div>
-  <h2>The Stack I <span>Operate In</span></h2>
-  <div class="skills-grid">
-    <div class="skill-card">
-      <div class="skill-card-title"><span class="icon">🌐</span> Networking & Protocols</div>
-      <div class="tag-cloud">
-        <span class="tag">TCP/IP · UDP</span><span class="tag">OSPF</span><span class="tag">BGP</span>
-        <span class="tag">EIGRP · RIP</span><span class="tag">VLAN · VTP · STP</span>
-        <span class="tag">HSRP</span><span class="tag">EtherChannel</span>
-        <span class="tag">DNS · DHCP · SNMP</span><span class="tag">QoS</span><span class="tag">LAN/WAN Design</span>
+<!-- ═══ ABOUT ═══ -->
+<div id="about" class="section-full">
+  <div class="section reveal">
+    <div class="section-eyebrow">About</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:start;">
+      <div>
+        <h2 class="section-title" style="margin-bottom:24px;">Engineering networks<br/>that <span>don't fail.</span></h2>
+        <p style="font-size:15px;color:var(--text2);line-height:1.85;margin-bottom:16px;font-weight:300;">
+          I'm a Network & Security Engineer who spent two years at the infrastructure core of one of Algeria's largest industrial corporations — owning Tier-3 incidents, firewall architectures, and SD-WAN migrations on infrastructure that couldn't go down.
+        </p>
+        <p style="font-size:15px;color:var(--text2);line-height:1.85;margin-bottom:16px;font-weight:300;">
+          What differentiates me is the combination: <strong style="color:var(--text);font-weight:500;">deep technical mastery of networking and security</strong> — paired with a Master's in Management that shaped how I think about risk, cost, and project delivery. I don't just configure; I lead and deliver.
+        </p>
+        <p style="font-size:15px;color:var(--text2);line-height:1.85;font-weight:300;">
+          Now based in Paris, I'm targeting roles where I can own complex infrastructure projects and drive real outcomes — not just execute tasks.
+        </p>
       </div>
-    </div>
-    <div class="skill-card">
-      <div class="skill-card-title"><span class="icon">🔒</span> Network Security</div>
-      <div class="tag-cloud">
-        <span class="tag">Fortinet FortiGate</span><span class="tag">SD-WAN</span>
-        <span class="tag">IPsec / SSL VPN</span><span class="tag">NAT · PAT</span>
-        <span class="tag">IDS / IPS</span><span class="tag">ACL</span>
-        <span class="tag">DMZ Segmentation</span><span class="tag">Layer 2 Security</span>
-        <span class="tag">Firewall Policies</span>
-      </div>
-    </div>
-    <div class="skill-card">
-      <div class="skill-card-title"><span class="icon">☁️</span> Cloud & Multicloud</div>
-      <div class="tag-cloud">
-        <span class="tag">Aviatrix Multicloud</span><span class="tag">Microsoft Azure</span>
-        <span class="tag">Huawei Cloud</span><span class="tag">Cloud Networking</span>
-        <span class="tag">VPN Gateway</span>
-      </div>
-    </div>
-    <div class="skill-card">
-      <div class="skill-card-title"><span class="icon">📊</span> Monitoring & Management</div>
-      <div class="tag-cloud">
-        <span class="tag">PRTG</span><span class="tag">Zabbix</span>
-        <span class="tag">ManageEngine OpManager</span><span class="tag">GLPI</span>
-        <span class="tag">Performance Dashboards</span><span class="tag">Alerting</span>
-      </div>
-    </div>
-    <div class="skill-card">
-      <div class="skill-card-title"><span class="icon">🖥️</span> Systems & Infrastructure</div>
-      <div class="tag-cloud">
-        <span class="tag">Cisco IOS</span><span class="tag">Linux</span>
-        <span class="tag">Windows Server</span><span class="tag">GNS3</span>
-        <span class="tag">Packet Tracer</span><span class="tag">Ubiquiti</span>
-        <span class="tag">Proxmox / VMware</span>
-      </div>
-    </div>
-    <div class="skill-card">
-      <div class="skill-card-title"><span class="icon">📋</span> Project Management</div>
-      <div class="tag-cloud">
-        <span class="tag">Agile · Scrum</span><span class="tag">ITIL</span>
-        <span class="tag">Risk Management</span><span class="tag">MS Project</span>
-        <span class="tag">Technical Documentation</span><span class="tag">Stakeholder Mgmt</span>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ═══════════════ EXPERIENCE ═══════════════ -->
-<section id="exp">
-  <div class="section-label">Experience</div>
-  <h2>Where I've <span>Delivered</span></h2>
-  <div class="timeline">
-
-    <div class="timeline-item">
-      <div class="t-header">
-        <div class="t-company">SPA Condor Electronics</div>
-        <div class="t-role">Network & Security Engineer</div>
-        <div class="t-meta">
-          <span>📅 Oct 2023 – Sep 2025</span>
-          <span>📍 Algeria</span>
-          <span>⚡ Full-time</span>
+      <div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--border);border:1px solid var(--border);border-radius:8px;overflow:hidden;">
+          <div style="background:var(--bg2);padding:18px 20px;"><div style="font-family:var(--mono);font-size:10px;color:var(--text3);letter-spacing:0.1em;text-transform:uppercase;margin-bottom:5px;">Full Name</div><div style="font-size:14px;color:var(--text);font-weight:500;">Tarek MEDJOUB</div></div>
+          <div style="background:var(--bg2);padding:18px 20px;"><div style="font-family:var(--mono);font-size:10px;color:var(--text3);letter-spacing:0.1em;text-transform:uppercase;margin-bottom:5px;">Location</div><div style="font-size:14px;color:var(--text);font-weight:500;">Paris, France</div></div>
+          <div style="background:var(--bg2);padding:18px 20px;"><div style="font-family:var(--mono);font-size:10px;color:var(--text3);letter-spacing:0.1em;text-transform:uppercase;margin-bottom:5px;">Experience</div><div style="font-size:14px;color:var(--teal2);font-weight:500;">2+ Years</div></div>
+          <div style="background:var(--bg2);padding:18px 20px;"><div style="font-family:var(--mono);font-size:10px;color:var(--text3);letter-spacing:0.1em;text-transform:uppercase;margin-bottom:5px;">Education</div><div style="font-size:14px;color:var(--text);font-weight:500;">Master · EQF 7</div></div>
+          <div style="background:var(--bg2);padding:18px 20px;"><div style="font-family:var(--mono);font-size:10px;color:var(--text3);letter-spacing:0.1em;text-transform:uppercase;margin-bottom:5px;">Availability</div><div style="font-size:14px;color:#4ade80;font-weight:500;">Open to work</div></div>
+          <div style="background:var(--bg2);padding:18px 20px;"><div style="font-family:var(--mono);font-size:10px;color:var(--text3);letter-spacing:0.1em;text-transform:uppercase;margin-bottom:5px;">Languages</div><div style="font-size:14px;color:var(--text);font-weight:500;">FR · EN · AR</div></div>
         </div>
       </div>
-      <p class="t-desc">Condor Electronics is one of Algeria's largest industrial corporations. I served as the go-to engineer for Tier-3 incidents, infrastructure security, and strategic network projects across multi-site production environments.</p>
-      <ul class="achievement-list">
-        <li><strong>Tier-3 Incident Management</strong> — Owned critical incident resolution end-to-end, reducing MTTR across enterprise environments through structured troubleshooting and root-cause analysis.</li>
-        <li><strong>SD-WAN Architecture</strong> — Designed and deployed a Fortinet SD-WAN overlay, replacing static WAN links with application-aware, policy-driven routing — cutting operational complexity and improving branch performance.</li>
-        <li><strong>Security Hardening</strong> — Maintained FortiGate firewall policies, IPsec/SSL VPN tunnels, DMZ segmentation, and IDS/IPS profiles; enforced NAT/PAT and ACL standards across the enterprise perimeter.</li>
-        <li><strong>Proactive Monitoring</strong> — Deployed PRTG and Zabbix dashboards for 24/7 infrastructure visibility, enabling preventive action before service degradation impacted users.</li>
-        <li><strong>Multi-Site Redundancy</strong> — Designed failover architecture using Ubiquiti backhaul links, dual-firewall HA, and VPN failback — achieving 99.9%+ uptime across remote branches.</li>
-        <li><strong>Network Optimization</strong> — Conducted full audits of VLAN segmentation, OSPF routing, STP topology, and ACL policies; implemented tuning that improved stability and reduced incident frequency.</li>
-      </ul>
-      <div class="tech-row">
-        <span class="tech-pill">Fortinet FortiGate</span><span class="tech-pill">SD-WAN</span>
-        <span class="tech-pill">OSPF</span><span class="tech-pill">VLANs</span>
-        <span class="tech-pill">IPsec VPN</span><span class="tech-pill">PRTG</span>
-        <span class="tech-pill">Zabbix</span><span class="tech-pill">GLPI</span>
-        <span class="tech-pill">Ubiquiti</span>
-      </div>
     </div>
+  </div>
+</div>
 
-    <div class="timeline-item">
-      <div class="t-header">
-        <div class="t-company">3K Solutions</div>
-        <div class="t-role">Junior Network Engineer — Internship</div>
-        <div class="t-meta">
-          <span>📅 Feb 2023 – Jun 2023</span>
-          <span>📍 Algeria</span>
+<!-- ═══ SKILLS ═══ -->
+<div id="skills">
+  <div class="section reveal">
+    <div class="section-eyebrow">Technical Skills</div>
+    <h2 class="section-title">The Stack I <span>Operate In</span></h2>
+    <div class="skills-grid">
+      <div class="skill-block">
+        <div class="skill-block-head"><div class="skill-icon">🌐</div><div class="skill-block-title">Networking & Protocols</div></div>
+        <div class="pill-row">
+          <span class="pill">TCP/IP · UDP</span><span class="pill">OSPF</span><span class="pill">BGP</span>
+          <span class="pill">EIGRP · RIP</span><span class="pill">VLAN · VTP · STP</span>
+          <span class="pill">HSRP</span><span class="pill">EtherChannel</span>
+          <span class="pill">DNS · DHCP · SNMP</span><span class="pill">QoS</span>
         </div>
       </div>
-      <ul class="achievement-list">
-        <li>Installed and configured switches, routers, and access points across client deployments.</li>
-        <li>Managed LAN/WAN infrastructure including IP addressing plans and inter-VLAN routing.</li>
-        <li>Monitored infrastructure health and contributed to root-cause analysis for recurring issues.</li>
-        <li>Participated in firewall rule reviews and access control audits to maintain network security.</li>
-      </ul>
-      <div class="tech-row">
-        <span class="tech-pill">Cisco IOS</span><span class="tech-pill">TCP/IP</span>
-        <span class="tech-pill">LAN/WAN</span><span class="tech-pill">Firewall</span>
+      <div class="skill-block">
+        <div class="skill-block-head"><div class="skill-icon">🔒</div><div class="skill-block-title">Network Security</div></div>
+        <div class="pill-row">
+          <span class="pill">Fortinet FortiGate</span><span class="pill">SD-WAN</span>
+          <span class="pill">IPsec / SSL VPN</span><span class="pill">NAT · PAT</span>
+          <span class="pill">IDS / IPS</span><span class="pill">ACL</span>
+          <span class="pill">DMZ</span><span class="pill">Layer 2 Security</span>
+        </div>
       </div>
-    </div>
-
-  </div>
-</section>
-
-<!-- ═══════════════ PROJECTS ═══════════════ -->
-<section id="projects" class="projects-section">
-  <div class="section-label">Featured Projects</div>
-  <h2>Infrastructure I've <span>Built</span></h2>
-  <div class="projects-grid">
-
-    <div class="project-card">
-      <div class="project-year">// 2025</div>
-      <div class="project-title">Network Config Audit & Optimization</div>
-      <p class="project-desc">Full-depth audit of multi-tier switching infrastructure to resolve configuration drift, security gaps, and routing inefficiencies across Core, Distribution, and Access layers.</p>
-      <div class="project-impact">Improved network stability, cleaned legacy ACLs and OSPF misconfigurations, established a documented baseline for future changes.</div>
-      <div class="tech-row">
-        <span class="tech-pill">OSPF</span><span class="tech-pill">VLANs</span>
-        <span class="tech-pill">ACLs</span><span class="tech-pill">DHCP</span><span class="tech-pill">SNMP</span>
+      <div class="skill-block">
+        <div class="skill-block-head"><div class="skill-icon">☁️</div><div class="skill-block-title">Cloud & Multicloud</div></div>
+        <div class="pill-row">
+          <span class="pill">Aviatrix Multicloud</span><span class="pill">Microsoft Azure</span>
+          <span class="pill">Huawei Cloud</span><span class="pill">VPN Gateway</span>
+          <span class="pill">Cloud Networking</span>
+        </div>
       </div>
-    </div>
-
-    <div class="project-card">
-      <div class="project-year">// 2025</div>
-      <div class="project-title">SD-WAN Architecture Migration</div>
-      <p class="project-desc">Replaced legacy WAN links with a centrally managed Fortinet SD-WAN overlay across multiple sites, with application-based traffic steering and encrypted VPN tunnels.</p>
-      <div class="project-impact">Centralized visibility, reduced WAN costs, sub-second failover for business-critical applications.</div>
-      <div class="tech-row">
-        <span class="tech-pill">Fortinet SD-WAN</span><span class="tech-pill">IPsec VPN</span>
-        <span class="tech-pill">FortiManager</span>
+      <div class="skill-block">
+        <div class="skill-block-head"><div class="skill-icon">📊</div><div class="skill-block-title">Monitoring & Management</div></div>
+        <div class="pill-row">
+          <span class="pill">PRTG</span><span class="pill">Zabbix</span>
+          <span class="pill">ManageEngine OpManager</span>
+          <span class="pill">GLPI</span><span class="pill">Alerting & Dashboards</span>
+        </div>
       </div>
-    </div>
-
-    <div class="project-card">
-      <div class="project-year">// 2024</div>
-      <div class="project-title">Multi-Site Redundancy Solution</div>
-      <p class="project-desc">Eliminated single points of failure for remote branches by deploying Ubiquiti wireless backhaul, dual-firewall HA failover, and VPN fallback paths.</p>
-      <div class="project-impact">99.9%+ site connectivity SLA — branches stay online even during primary link failure.</div>
-      <div class="tech-row">
-        <span class="tech-pill">Ubiquiti</span><span class="tech-pill">FortiGate HA</span>
-        <span class="tech-pill">IPsec VPN</span>
+      <div class="skill-block">
+        <div class="skill-block-head"><div class="skill-icon">🖥️</div><div class="skill-block-title">Systems & Platforms</div></div>
+        <div class="pill-row">
+          <span class="pill">Cisco IOS</span><span class="pill">Linux</span>
+          <span class="pill">Windows Server</span><span class="pill">GNS3</span>
+          <span class="pill">Ubiquiti</span><span class="pill">Proxmox</span>
+        </div>
       </div>
-    </div>
-
-    <div class="project-card">
-      <div class="project-year">// 2024</div>
-      <div class="project-title">Enterprise LAN Design & Build</div>
-      <p class="project-desc">Designed and deployed a hierarchical 3-tier LAN replacing a flat network architecture — with full VLAN segmentation, DMZ, dynamic routing, Layer 2 security, and gateway redundancy.</p>
-      <div class="project-impact">Eliminated broadcast storms, enforced micro-segmentation, achieved full network redundancy with sub-second failover.</div>
-      <div class="tech-row">
-        <span class="tech-pill">OSPF</span><span class="tech-pill">HSRP</span>
-        <span class="tech-pill">STP</span><span class="tech-pill">VLANs</span>
-        <span class="tech-pill">DMZ</span><span class="tech-pill">L2 Security</span>
-      </div>
-    </div>
-
-  </div>
-</section>
-
-<!-- ═══════════════ CERTIFICATIONS ═══════════════ -->
-<section id="certs">
-  <div class="section-label">Certifications</div>
-  <h2>Credentials & <span>Validation</span></h2>
-  <div class="certs-grid">
-    <div class="cert-card"><div class="cert-icon aviatrix">☁️</div><div><div class="cert-name">Multicloud Network Associate</div><div class="cert-meta">Aviatrix · <span class="cert-year">2025</span></div></div></div>
-    <div class="cert-card"><div class="cert-icon cisco">🔵</div><div><div class="cert-name">CCNP: Core Networking</div><div class="cert-meta">Cisco Networking Academy · <span class="cert-year">2025</span></div></div></div>
-    <div class="cert-card"><div class="cert-icon cisco">🛡️</div><div><div class="cert-name">Network Defense</div><div class="cert-meta">Cisco Networking Academy · <span class="cert-year">2024</span></div></div></div>
-    <div class="cert-card"><div class="cert-icon cisco">🔐</div><div><div class="cert-name">Network Security</div><div class="cert-meta">Cisco Networking Academy · <span class="cert-year">2022</span></div></div></div>
-    <div class="cert-card"><div class="cert-icon cisco">🔵</div><div><div class="cert-name">CCNA: Switching, Routing & Wireless</div><div class="cert-meta">Cisco Networking Academy · <span class="cert-year">2023</span></div></div></div>
-    <div class="cert-card"><div class="cert-icon cisco">🔵</div><div><div class="cert-name">CCNA: Introduction to Networks</div><div class="cert-meta">Cisco Networking Academy · <span class="cert-year">2022</span></div></div></div>
-    <div class="cert-card"><div class="cert-icon huawei">🟥</div><div><div class="cert-name">HCIA Cloud Computing</div><div class="cert-meta">Huawei · <span class="cert-year">2021</span></div></div></div>
-    <div class="cert-card"><div class="cert-icon huawei">🟥</div><div><div class="cert-name">HCIA Routing & Switching</div><div class="cert-meta">Huawei · <span class="cert-year">2021</span></div></div></div>
-  </div>
-  <p style="margin-top:28px; font-family:var(--font-mono); font-size:12px; color:var(--muted);">
-    🔜 Currently pursuing: <span style="color:var(--cyan)">CCNP Security</span> &nbsp;·&nbsp; <span style="color:var(--cyan)">Azure AZ-700 (Network Engineer Associate)</span>
-  </p>
-</section>
-
-<!-- ═══════════════ EDUCATION ═══════════════ -->
-<section id="edu" class="skills-section">
-  <div class="section-label">Education</div>
-  <h2>Academic <span>Foundation</span></h2>
-  <div class="edu-grid">
-    <div class="edu-card">
-      <div class="edu-degree">Master in Management & Project Management</div>
-      <div class="edu-school">Institut Supérieur — Doctorate of Business Administration</div>
-      <div class="edu-period">2024 – 2026 · In progress</div>
-      <p style="font-size:13px;margin:0">Strategic project leadership, risk management, organizational governance, and business decision-making frameworks to complement deep technical expertise.</p>
-    </div>
-    <div class="edu-card">
-      <div class="edu-degree">Master in Networks & Telecommunications</div>
-      <div class="edu-school">Université de Béjaïa — Algeria</div>
-      <div class="edu-period">2021 – 2023</div>
-      <div class="edu-badge">🇫🇷 Recognized by ENIC-NARIC France · EQF Level 7 · Equivalent to French Master (Bac+5)</div>
-    </div>
-  </div>
-</section>
-
-<!-- ═══════════════ CONTACT ═══════════════ -->
-<section id="contact" class="contact-section">
-  <div class="section-label">Contact</div>
-  <div class="contact-inner">
-    <div>
-      <h2>Let's build something<br/><span>worth securing.</span></h2>
-      <p>I'm open to full-time roles, freelance missions, and consulting engagements across France and Europe. Whether you need a network architect, a security-focused engineer, or a technical project lead — let's talk.</p>
-      <div class="contact-links">
-        <a class="contact-link" href="mailto:tarek.medjoub@outlook.fr">
-          <span class="cl-icon">✉️</span>
-          <div><span class="cl-label">Email</span>tarek.medjoub@outlook.fr</div>
-        </a>
-        <a class="contact-link" href="https://www.linkedin.com/in/tarek-medjoub" target="_blank">
-          <span class="cl-icon">💼</span>
-          <div><span class="cl-label">LinkedIn</span>linkedin.com/in/tarek-medjoub</div>
-        </a>
-        <a class="contact-link" href="tel:+33746503673">
-          <span class="cl-icon">📞</span>
-          <div><span class="cl-label">Phone</span>+33 7 46 50 36 73</div>
-        </a>
-      </div>
-    </div>
-    <div class="otw-card">
-      <div class="otw-title">// open_to_work.json</div>
-      <div class="otw-role">Seeking My Next Challenge</div>
-      <ul class="otw-list">
-        <li>Network Engineer (Ingénieur Réseaux)</li>
-        <li>Network & Security Engineer</li>
-        <li>IT Project Manager / Chef de Projet</li>
-        <li>Cloud Network Engineer</li>
-        <li>Infrastructure Consultant</li>
-      </ul>
-      <div style="margin-top:20px; padding-top:16px; border-top:1px solid var(--border2); font-family:var(--font-mono); font-size:11px; color:var(--muted);">
-        <div style="margin-bottom:6px;">📍 Paris · Île-de-France · Remote</div>
-        <div>🗓️ Available immediately</div>
+      <div class="skill-block">
+        <div class="skill-block-head"><div class="skill-icon">📋</div><div class="skill-block-title">Project Management</div></div>
+        <div class="pill-row">
+          <span class="pill">Agile · Scrum</span><span class="pill">ITIL</span>
+          <span class="pill">Risk Management</span>
+          <span class="pill">Technical Documentation</span>
+          <span class="pill">Stakeholder Management</span>
+        </div>
       </div>
     </div>
   </div>
-</section>
+</div>
 
-</div><!-- /wrapper -->
+<!-- ═══ EXPERIENCE ═══ -->
+<div id="experience" class="section-full">
+  <div class="section reveal">
+    <div class="section-eyebrow">Experience</div>
+    <h2 class="section-title">Where I've <span>Delivered</span></h2>
+    <div class="exp-layout">
+      <div class="exp-sidebar">
+        <div class="exp-sidebar-item active" onclick="showExp('condor')">
+          <div class="esi-company">Condor Electronics</div>
+          <div class="esi-year">2023 – 2025</div>
+        </div>
+        <div class="exp-sidebar-item" onclick="showExp('3k')">
+          <div class="esi-company">3K Solutions</div>
+          <div class="esi-year">2023</div>
+        </div>
+      </div>
+      <div class="exp-content">
+        <div class="exp-pane active" id="exp-condor">
+          <div class="exp-role">Network & Security Engineer</div>
+          <div class="exp-company-label">SPA Condor Electronics</div>
+          <div class="exp-period">October 2023 – September 2025 · Algeria · Full-time</div>
+          <ul class="exp-list">
+            <li><strong>Tier-3 Incident Management</strong> — Owned critical incident resolution end-to-end, reducing MTTR across production environments through structured root-cause analysis and escalation frameworks.</li>
+            <li><strong>SD-WAN Architecture</strong> — Designed and deployed a Fortinet SD-WAN overlay, replacing static WAN links with application-aware, policy-driven routing — cutting operational complexity across all sites.</li>
+            <li><strong>Security Hardening</strong> — Maintained FortiGate firewall policies, IPsec/SSL VPN tunnels, DMZ segmentation, and IDS/IPS profiles across the enterprise perimeter.</li>
+            <li><strong>Proactive Monitoring</strong> — Deployed PRTG and Zabbix dashboards for 24/7 visibility, enabling preventive intervention before user-facing impact.</li>
+            <li><strong>Multi-Site Redundancy</strong> — Designed failover architecture using Ubiquiti backhaul, dual-firewall HA, and VPN failback — achieving 99.9%+ uptime on remote branches.</li>
+            <li><strong>Infrastructure Audits</strong> — Conducted full audits of VLAN, OSPF, STP, and ACL configurations; implemented optimizations that improved stability and reduced recurring incidents.</li>
+          </ul>
+          <div class="tech-chips">
+            <span class="tech-chip">Fortinet FortiGate</span><span class="tech-chip">SD-WAN</span>
+            <span class="tech-chip">OSPF</span><span class="tech-chip">VLANs</span>
+            <span class="tech-chip">IPsec VPN</span><span class="tech-chip">PRTG</span>
+            <span class="tech-chip">Zabbix</span><span class="tech-chip">GLPI</span>
+            <span class="tech-chip">Ubiquiti</span>
+          </div>
+        </div>
+        <div class="exp-pane" id="exp-3k">
+          <div class="exp-role">Junior Network Engineer</div>
+          <div class="exp-company-label">3K Solutions — Internship</div>
+          <div class="exp-period">February 2023 – June 2023 · Algeria</div>
+          <ul class="exp-list">
+            <li>Installed and configured switches, routers, and access points across client sites.</li>
+            <li>Managed LAN/WAN infrastructure including IP addressing plans and inter-VLAN routing.</li>
+            <li>Monitored infrastructure health and contributed to root-cause analysis for recurring incidents.</li>
+            <li>Participated in firewall rule reviews and access control audits to maintain network security posture.</li>
+          </ul>
+          <div class="tech-chips">
+            <span class="tech-chip">Cisco IOS</span><span class="tech-chip">TCP/IP</span>
+            <span class="tech-chip">LAN/WAN</span><span class="tech-chip">Firewall</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 
-<div class="scroll-hint">scroll</div>
+<!-- ═══ PROJECTS ═══ -->
+<div id="projects">
+  <div class="section reveal">
+    <div class="section-eyebrow">Projects</div>
+    <h2 class="section-title">Infrastructure I've <span>Built</span></h2>
+    <div class="projects-grid">
+      <div class="proj-card">
+        <div class="proj-num">01 · 2025</div>
+        <div class="proj-title">Network Config Audit & Optimization</div>
+        <p class="proj-desc">Full-depth audit of multi-tier switching infrastructure to resolve configuration drift, security gaps, and routing inefficiencies across Core, Distribution, and Access layers.</p>
+        <div class="proj-impact">Improved network stability, cleaned legacy ACLs and OSPF misconfigurations, established a documented baseline for future changes.</div>
+        <div class="tech-chips"><span class="tech-chip">OSPF</span><span class="tech-chip">VLANs</span><span class="tech-chip">ACLs</span><span class="tech-chip">DHCP</span><span class="tech-chip">SNMP</span></div>
+      </div>
+      <div class="proj-card">
+        <div class="proj-num">02 · 2025</div>
+        <div class="proj-title">SD-WAN Architecture Migration</div>
+        <p class="proj-desc">Replaced legacy WAN links with a centrally managed Fortinet SD-WAN overlay — application-based traffic steering, encrypted VPN tunnels, and FortiManager-driven policy control.</p>
+        <div class="proj-impact">Centralized visibility, reduced WAN costs, sub-second failover for business-critical applications.</div>
+        <div class="tech-chips"><span class="tech-chip">Fortinet SD-WAN</span><span class="tech-chip">IPsec VPN</span><span class="tech-chip">FortiManager</span></div>
+      </div>
+      <div class="proj-card">
+        <div class="proj-num">03 · 2024</div>
+        <div class="proj-title">Multi-Site Redundancy Solution</div>
+        <p class="proj-desc">Eliminated single points of failure for remote branches by deploying Ubiquiti wireless backhaul, dual-firewall HA failover, and VPN fallback paths with documented runbooks.</p>
+        <div class="proj-impact">99.9%+ site connectivity SLA — branches remain online even during primary link failure.</div>
+        <div class="tech-chips"><span class="tech-chip">Ubiquiti</span><span class="tech-chip">FortiGate HA</span><span class="tech-chip">IPsec VPN</span></div>
+      </div>
+      <div class="proj-card">
+        <div class="proj-num">04 · 2024</div>
+        <div class="proj-title">Enterprise LAN Design & Build</div>
+        <p class="proj-desc">Designed and deployed a hierarchical 3-tier LAN replacing a flat architecture — with full VLAN segmentation, DMZ, OSPF routing, Layer 2 security, and HSRP gateway redundancy.</p>
+        <div class="proj-impact">Eliminated broadcast storms, enforced micro-segmentation, full redundancy with sub-second failover.</div>
+        <div class="tech-chips"><span class="tech-chip">OSPF</span><span class="tech-chip">HSRP</span><span class="tech-chip">STP</span><span class="tech-chip">DMZ</span><span class="tech-chip">L2 Security</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ CERTIFICATIONS ═══ -->
+<div id="certifications" class="section-full">
+  <div class="section reveal">
+    <div class="section-eyebrow">Certifications</div>
+    <h2 class="section-title">Credentials & <span>Validation</span></h2>
+    <div class="certs-grid">
+      <div class="cert-item"><div class="cert-logo">☁️</div><div><div class="cert-name">Multicloud Network Associate</div><div class="cert-sub">Aviatrix · <span class="yr">2025</span></div></div></div>
+      <div class="cert-item"><div class="cert-logo">🔵</div><div><div class="cert-name">CCNP: Core Networking</div><div class="cert-sub">Cisco Networking Academy · <span class="yr">2025</span></div></div></div>
+      <div class="cert-item"><div class="cert-logo">🛡️</div><div><div class="cert-name">Network Defense</div><div class="cert-sub">Cisco Networking Academy · <span class="yr">2024</span></div></div></div>
+      <div class="cert-item"><div class="cert-logo">🔐</div><div><div class="cert-name">Network Security</div><div class="cert-sub">Cisco Networking Academy · <span class="yr">2022</span></div></div></div>
+      <div class="cert-item"><div class="cert-logo">🔵</div><div><div class="cert-name">CCNA: Switching, Routing & Wireless</div><div class="cert-sub">Cisco Networking Academy · <span class="yr">2023</span></div></div></div>
+      <div class="cert-item"><div class="cert-logo">🔵</div><div><div class="cert-name">CCNA: Introduction to Networks</div><div class="cert-sub">Cisco Networking Academy · <span class="yr">2022</span></div></div></div>
+      <div class="cert-item"><div class="cert-logo">🟥</div><div><div class="cert-name">HCIA Cloud Computing</div><div class="cert-sub">Huawei · <span class="yr">2021</span></div></div></div>
+      <div class="cert-item"><div class="cert-logo">🟥</div><div><div class="cert-name">HCIA Routing & Switching</div><div class="cert-sub">Huawei · <span class="yr">2021</span></div></div></div>
+    </div>
+    <p style="margin-top:24px;font-family:var(--mono);font-size:12px;color:var(--text3);">
+      Currently pursuing: <span style="color:var(--teal2);">CCNP Security</span> &nbsp;·&nbsp; <span style="color:var(--teal2);">Azure AZ-700 Network Engineer Associate</span>
+    </p>
+  </div>
+</div>
+
+<!-- ═══ EDUCATION ═══ -->
+<div id="education">
+  <div class="section reveal">
+    <div class="section-eyebrow">Education</div>
+    <h2 class="section-title">Academic <span>Foundation</span></h2>
+    <div class="edu-grid">
+      <div class="edu-card">
+        <div class="edu-deg">Master in Management & Project Management</div>
+        <div class="edu-inst">Institut Supérieur — Doctorate of Business Administration</div>
+        <div class="edu-yr">2024 – 2026 · In progress</div>
+        <p style="font-size:13px;color:var(--text2);line-height:1.75;font-weight:300;">Strategic project leadership, risk management, and organizational governance — complementing deep engineering expertise with business decision-making frameworks.</p>
+      </div>
+      <div class="edu-card">
+        <div class="edu-deg">Master in Networks & Telecommunications</div>
+        <div class="edu-inst">Université de Béjaïa — Algeria</div>
+        <div class="edu-yr">2021 – 2023</div>
+        <div class="edu-note">🇫🇷 ENIC-NARIC France · EQF Level 7 · Equivalent to French Master (Bac+5)</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ CONTACT ═══ -->
+<div id="contact" class="section-full">
+  <div class="section reveal">
+    <div class="section-eyebrow">Contact</div>
+    <h2 class="section-title">Let's build something<br/><span>worth securing.</span></h2>
+    <div class="contact-grid">
+      <div>
+        <p style="font-size:15px;color:var(--text2);line-height:1.85;font-weight:300;margin-bottom:8px;">
+          Open to full-time roles, freelance missions, and consulting engagements across France and Europe. Network architect, security engineer, or technical project lead — reach out.
+        </p>
+        <div class="contact-links">
+          <a class="contact-link" href="mailto:tarek.medjoub@outlook.fr">
+            <div class="cl-icon">✉️</div>
+            <div><span class="cl-lbl">Email</span><span class="cl-val">tarek.medjoub@outlook.fr</span></div>
+          </a>
+          <a class="contact-link" href="https://www.linkedin.com/in/tarek-medjoub" target="_blank">
+            <div class="cl-icon">💼</div>
+            <div><span class="cl-lbl">LinkedIn</span><span class="cl-val">linkedin.com/in/tarek-medjoub</span></div>
+          </a>
+          <a class="contact-link" href="tel:+33746503673">
+            <div class="cl-icon">📞</div>
+            <div><span class="cl-lbl">Phone</span><span class="cl-val">+33 7 46 50 36 73</span></div>
+          </a>
+        </div>
+      </div>
+      <div class="otw-box">
+        <div class="otw-label">open_to_work</div>
+        <div class="otw-heading">Seeking My Next Challenge</div>
+        <ul class="otw-list">
+          <li>Network Engineer (Ingénieur Réseaux)</li>
+          <li>Network & Security Engineer</li>
+          <li>IT Project Manager / Chef de Projet</li>
+          <li>Cloud Network Engineer</li>
+          <li>Infrastructure Consultant</li>
+        </ul>
+        <div class="otw-meta">
+          <span>📍 Paris · Île-de-France · Remote</span>
+          <span>🗓️ Available immediately</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ FOOTER ═══ -->
+<div style="border-top: 1px solid var(--border);">
+  <footer>
+    <span>© 2025 Tarek MEDJOUB · Network & Security Engineer · Paris, France</span>
+    <span style="color:var(--teal2);">tarek.medjoub@outlook.fr</span>
+  </footer>
+</div>
 
 <script>
-// ── Custom cursor ──
-const cur = document.getElementById('cursor');
-const ring = document.getElementById('cursor-ring');
-let mx=0,my=0,rx=0,ry=0;
-document.addEventListener('mousemove', e => { mx=e.clientX; my=e.clientY; cur.style.left=mx+'px'; cur.style.top=my+'px'; });
-(function animRing(){
-  rx+=(mx-rx)*0.12; ry+=(my-ry)*0.12;
-  ring.style.left=rx+'px'; ring.style.top=ry+'px';
-  requestAnimationFrame(animRing);
-})();
-document.querySelectorAll('a,button,.nav-dot').forEach(el=>{
-  el.addEventListener('mouseenter',()=>{ ring.style.width='56px'; ring.style.height='56px'; ring.style.borderColor='rgba(0,212,255,0.8)'; });
-  el.addEventListener('mouseleave',()=>{ ring.style.width='36px'; ring.style.height='36px'; ring.style.borderColor='rgba(0,212,255,0.5)'; });
-});
-
-// ── Network canvas ──
-const canvas = document.getElementById('net-canvas');
-const ctx = canvas.getContext('2d');
-let W, H, nodes=[];
-function resize(){ W=canvas.width=window.innerWidth; H=canvas.height=window.innerHeight; }
-resize(); window.addEventListener('resize',resize);
-
-class Node {
-  constructor(){ this.reset(); this.y=Math.random()*H; }
-  reset(){
-    this.x=Math.random()*W; this.y=-10;
-    this.vx=(Math.random()-0.5)*0.4;
-    this.vy=Math.random()*0.3+0.1;
-    this.r=Math.random()*2+1;
-    this.life=1;
-  }
-  update(){
-    this.x+=this.vx; this.y+=this.vy;
-    if(this.y>H+10) this.reset();
-  }
-}
-for(let i=0;i<80;i++) nodes.push(new Node());
-
-function drawNet(){
-  ctx.clearRect(0,0,W,H);
-  nodes.forEach(n=>n.update());
-  for(let i=0;i<nodes.length;i++){
-    for(let j=i+1;j<nodes.length;j++){
-      const dx=nodes[i].x-nodes[j].x, dy=nodes[i].y-nodes[j].y;
-      const d=Math.sqrt(dx*dx+dy*dy);
-      if(d<130){
-        ctx.beginPath();
-        ctx.strokeStyle=`rgba(0,212,255,${0.15*(1-d/130)})`;
-        ctx.lineWidth=0.5;
-        ctx.moveTo(nodes[i].x,nodes[i].y);
-        ctx.lineTo(nodes[j].x,nodes[j].y);
-        ctx.stroke();
-      }
-    }
-    ctx.beginPath();
-    ctx.arc(nodes[i].x,nodes[i].y,nodes[i].r,0,Math.PI*2);
-    ctx.fillStyle='rgba(0,212,255,0.5)';
-    ctx.fill();
-  }
-  requestAnimationFrame(drawNet);
-}
-drawNet();
-
-// ── Scroll reveal ──
-const sections = document.querySelectorAll('section');
-const obs = new IntersectionObserver(entries=>{
-  entries.forEach(e=>{ if(e.isIntersecting) e.target.classList.add('visible'); });
-},{threshold:0.1});
-sections.forEach(s=>obs.observe(s));
-
-// ── Nav active ──
-const dots = document.querySelectorAll('.nav-dot');
-const secObs = new IntersectionObserver(entries=>{
-  entries.forEach(e=>{
-    if(e.isIntersecting){
-      dots.forEach(d=>d.classList.remove('active'));
-      const match = document.querySelector(`.nav-dot[data-target="${e.target.id}"]`);
-      if(match) match.classList.add('active');
-    }
-  });
-},{threshold:0.4});
-sections.forEach(s=>secObs.observe(s));
-
-function scrollTo(id){
-  document.getElementById(id).scrollIntoView({behavior:'smooth'});
+function showExp(id) {
+  document.querySelectorAll('.exp-pane').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.exp-sidebar-item').forEach(s => s.classList.remove('active'));
+  document.getElementById('exp-' + id).classList.add('active');
+  const items = document.querySelectorAll('.exp-sidebar-item');
+  const map = { condor: 0, '3k': 1 };
+  if (items[map[id]]) items[map[id]].classList.add('active');
 }
 
-// ── Scroll hint hide ──
-const hint = document.querySelector('.scroll-hint');
-window.addEventListener('scroll',()=>{ hint.style.opacity = window.scrollY>200?'0':'1'; });
+const reveals = document.querySelectorAll('.reveal');
+const obs = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('in'); });
+}, { threshold: 0.08 });
+reveals.forEach(r => obs.observe(r));
 </script>
 </body>
 </html>
