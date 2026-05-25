@@ -65,7 +65,7 @@ nav {
   display:grid;
   grid-template-columns:1fr 300px;
   gap:3rem;
-  align-items:stretch;
+  align-items:center;
   width:100%;
 }
 @media(max-width:700px){ .hero-inner{grid-template-columns:1fr;} }
@@ -73,33 +73,35 @@ nav {
   background:var(--card);
   border:1px solid var(--border);
   border-radius:16px;
-  padding:1.75rem 1.5rem;
+  padding:1.5rem;
   display:flex;
   flex-direction:column;
-  justify-content:space-between;
+  gap:0;
+  min-height:340px;
 }
 .snapshot-title {
-  font-size:.78rem;font-weight:700;letter-spacing:.1em;
+  font-size:.72rem;font-weight:700;letter-spacing:.12em;
   text-transform:uppercase;color:var(--text);
-  margin-bottom:0;
   padding-bottom:.75rem;
+  margin-bottom:.5rem;
   border-bottom:1px solid var(--border);
+  flex-shrink:0;
 }
 .snap-item {
   flex:1;
   display:flex;
   flex-direction:column;
   justify-content:center;
-  padding:.75rem 0;
+  padding:.5rem 0;
   border-bottom:1px solid rgba(255,255,255,.06);
 }
 .snap-item:last-child { border-bottom:none; }
-.snap-val { font-size:1.05rem;font-weight:700;margin-bottom:.25rem; }
+.snap-val { font-size:1rem;font-weight:700;margin-bottom:.2rem; }
 .snap-val.c1{color:var(--accent);}
 .snap-val.c2{color:var(--accent2);}
 .snap-val.c3{color:var(--accent2);}
 .snap-val.c4{color:var(--accent2);}
-.snap-desc { font-size:.82rem;color:var(--muted);line-height:1.5; }
+.snap-desc { font-size:.8rem;color:var(--muted);line-height:1.4; }
 .hero-glow {
   position:absolute;top:-200px;right:-200px;
   width:700px;height:700px;
