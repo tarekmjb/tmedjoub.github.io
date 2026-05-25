@@ -65,7 +65,7 @@ nav {
   display:grid;
   grid-template-columns:1fr 300px;
   gap:3rem;
-  align-items:center;
+  align-items:stretch;
   width:100%;
 }
 @media(max-width:700px){ .hero-inner{grid-template-columns:1fr;} }
@@ -74,68 +74,32 @@ nav {
   border:1px solid var(--border);
   border-radius:16px;
   padding:1.75rem 1.5rem;
-  position:relative;
-  overflow:hidden;
-}
-.snapshot-card::before {
-  content:'';position:absolute;inset:0;
-  background:linear-gradient(135deg,rgba(0,212,255,.04) 0%,transparent 60%);
-  pointer-events:none;
+  display:flex;
+  flex-direction:column;
+  justify-content:space-between;
 }
 .snapshot-title {
-  font-size:.72rem;font-weight:700;letter-spacing:.12em;
+  font-size:.78rem;font-weight:700;letter-spacing:.1em;
   text-transform:uppercase;color:var(--text);
-  margin-bottom:1.2rem;
+  margin-bottom:0;
   padding-bottom:.75rem;
   border-bottom:1px solid var(--border);
 }
-/* carousel slides */
-.snap-slides { position:relative;min-height:220px; }
-.snap-slide {
-  position:absolute;inset:0;
-  display:flex;flex-direction:column;justify-content:center;gap:1rem;
-  opacity:0;transform:translateY(16px);
-  transition:opacity .5s ease,transform .5s ease;
-  pointer-events:none;
+.snap-item {
+  flex:1;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  padding:.75rem 0;
+  border-bottom:1px solid rgba(255,255,255,.06);
 }
-.snap-slide.active {
-  opacity:1;transform:translateY(0);
-  pointer-events:auto;
-}
-.snap-slide.exit {
-  opacity:0;transform:translateY(-16px);
-}
-.snap-item { padding:.7rem 0;border-bottom:1px solid rgba(255,255,255,.05); }
 .snap-item:last-child { border-bottom:none; }
-.snap-val { font-size:1.1rem;font-weight:700;margin-bottom:.2rem; }
+.snap-val { font-size:1.05rem;font-weight:700;margin-bottom:.25rem; }
 .snap-val.c1{color:var(--accent);}
 .snap-val.c2{color:var(--accent2);}
-.snap-val.c3{color:#a78bfa;}
-.snap-val.c4{color:#fb923c;}
-.snap-val.c5{color:#f472b6;}
-.snap-desc { font-size:.8rem;color:var(--muted);line-height:1.5; }
-/* dots */
-.snap-dots {
-  display:flex;gap:.45rem;justify-content:center;
-  margin-top:1.2rem;
-}
-.snap-dot {
-  width:6px;height:6px;border-radius:99px;
-  background:rgba(255,255,255,.15);
-  cursor:pointer;
-  transition:width .3s,background .3s;
-}
-.snap-dot.active { width:20px;background:var(--accent); }
-/* progress bar */
-.snap-progress {
-  position:absolute;bottom:0;left:0;right:0;height:2px;
-  background:rgba(0,212,255,.1);
-}
-.snap-progress-bar {
-  height:100%;width:0%;
-  background:linear-gradient(90deg,var(--accent),var(--accent2));
-  transition:width linear;
-}
+.snap-val.c3{color:var(--accent2);}
+.snap-val.c4{color:var(--accent2);}
+.snap-desc { font-size:.82rem;color:var(--muted);line-height:1.5; }
 .hero-glow {
   position:absolute;top:-200px;right:-200px;
   width:700px;height:700px;
@@ -328,71 +292,25 @@ footer { border-top:1px solid var(--border);padding:2.5rem 0;text-align:center;c
 
       </div>
 
-      <!-- RIGHT: Snapshot Carousel -->
+      <!-- RIGHT: Snapshot Card -->
       <div class="snapshot-card">
         <div class="snapshot-title">Profile Snapshot</div>
-        <div class="snap-slides" id="snapSlides">
-
-          <!-- Slide 1 -->
-          <div class="snap-slide active">
-            <div class="snap-item">
-              <div class="snap-val c1">3+ Years</div>
-              <div class="snap-desc">Network, Security &amp; Cloud Engineering</div>
-            </div>
-            <div class="snap-item">
-              <div class="snap-val c2">Enterprise</div>
-              <div class="snap-desc">Infrastructure &amp; Network Security Operations</div>
-            </div>
-          </div>
-
-          <!-- Slide 2 -->
-          <div class="snap-slide">
-            <div class="snap-item">
-              <div class="snap-val c3">Cloud &amp; Hybrid</div>
-              <div class="snap-desc">Modern Infrastructure Mindset — Azure, AWS &amp; Aviatrix</div>
-            </div>
-            <div class="snap-item">
-              <div class="snap-val c4">Multi-Certified</div>
-              <div class="snap-desc">Cisco CCNP · Huawei HCIA · Aviatrix Multicloud</div>
-            </div>
-          </div>
-
-          <!-- Slide 3 -->
-          <div class="snap-slide">
-            <div class="snap-item">
-              <div class="snap-val c1">7 Certifications</div>
-              <div class="snap-desc">Cisco · Huawei · Aviatrix — from 2021 to 2025</div>
-            </div>
-            <div class="snap-item">
-              <div class="snap-val c2">Dual Master's</div>
-              <div class="snap-desc">Networks &amp; Telecoms + IT Project Governance</div>
-            </div>
-          </div>
-
-          <!-- Slide 4 -->
-          <div class="snap-slide">
-            <div class="snap-item">
-              <div class="snap-val c3">Paris, France</div>
-              <div class="snap-desc">Open to on-site &amp; remote opportunities</div>
-            </div>
-            <div class="snap-item">
-              <div class="snap-val c4">Available Now</div>
-              <div class="snap-desc">Network · Security · Infrastructure roles</div>
-            </div>
-          </div>
-
+        <div class="snap-item">
+          <div class="snap-val c1">3+ Years</div>
+          <div class="snap-desc">Network, Security &amp; Cloud Engineering</div>
         </div>
-
-        <!-- Dots navigation -->
-        <div class="snap-dots" id="snapDots">
-          <div class="snap-dot active" onclick="goSlide(0)"></div>
-          <div class="snap-dot" onclick="goSlide(1)"></div>
-          <div class="snap-dot" onclick="goSlide(2)"></div>
-          <div class="snap-dot" onclick="goSlide(3)"></div>
+        <div class="snap-item">
+          <div class="snap-val c2">Enterprise</div>
+          <div class="snap-desc">Infrastructure &amp; Network Security Operations</div>
         </div>
-
-        <!-- Progress bar -->
-        <div class="snap-progress"><div class="snap-progress-bar" id="snapBar"></div></div>
+        <div class="snap-item">
+          <div class="snap-val c3">Cloud &amp; Hybrid</div>
+          <div class="snap-desc">Modern Infrastructure Mindset</div>
+        </div>
+        <div class="snap-item">
+          <div class="snap-val c4">Multi-Certified</div>
+          <div class="snap-desc">Cisco, Huawei &amp; Multicloud Technologies</div>
+        </div>
       </div>
 
     </div>
@@ -605,44 +523,6 @@ footer { border-top:1px solid var(--border);padding:2.5rem 0;text-align:center;c
 </footer>
 
 <script>
-// Snapshot carousel
-const slides = document.querySelectorAll('.snap-slide');
-const dots = document.querySelectorAll('.snap-dot');
-const bar = document.getElementById('snapBar');
-const INTERVAL = 3200;
-let current = 0;
-let timer, barTimer;
-
-function goSlide(n) {
-  slides[current].classList.remove('active');
-  slides[current].classList.add('exit');
-  setTimeout(() => slides[current < slides.length ? current : 0].classList.remove('exit'), 500);
-  dots[current].classList.remove('active');
-  current = n;
-  slides[current].classList.add('active');
-  dots[current].classList.add('active');
-  // reset progress bar
-  bar.style.transition = 'none';
-  bar.style.width = '0%';
-  requestAnimationFrame(() => {
-    requestAnimationFrame(() => {
-      bar.style.transition = `width ${INTERVAL}ms linear`;
-      bar.style.width = '100%';
-    });
-  });
-}
-
-function nextSlide() {
-  goSlide((current + 1) % slides.length);
-}
-
-function startCarousel() {
-  goSlide(0);
-  timer = setInterval(nextSlide, INTERVAL);
-}
-
-startCarousel();
-
 // Scroll reveals
 const reveals = document.querySelectorAll('.reveal');
 const io = new IntersectionObserver(entries => {
