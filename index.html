@@ -61,6 +61,81 @@ nav {
   padding:6rem 0 4rem;
   position:relative;
 }
+.hero-inner {
+  display:grid;
+  grid-template-columns:1fr 300px;
+  gap:3rem;
+  align-items:center;
+  width:100%;
+}
+@media(max-width:700px){ .hero-inner{grid-template-columns:1fr;} }
+.snapshot-card {
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:16px;
+  padding:1.75rem 1.5rem;
+  position:relative;
+  overflow:hidden;
+}
+.snapshot-card::before {
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(135deg,rgba(0,212,255,.04) 0%,transparent 60%);
+  pointer-events:none;
+}
+.snapshot-title {
+  font-size:.72rem;font-weight:700;letter-spacing:.12em;
+  text-transform:uppercase;color:var(--text);
+  margin-bottom:1.2rem;
+  padding-bottom:.75rem;
+  border-bottom:1px solid var(--border);
+}
+/* carousel slides */
+.snap-slides { position:relative;min-height:220px; }
+.snap-slide {
+  position:absolute;inset:0;
+  display:flex;flex-direction:column;justify-content:center;gap:1rem;
+  opacity:0;transform:translateY(16px);
+  transition:opacity .5s ease,transform .5s ease;
+  pointer-events:none;
+}
+.snap-slide.active {
+  opacity:1;transform:translateY(0);
+  pointer-events:auto;
+}
+.snap-slide.exit {
+  opacity:0;transform:translateY(-16px);
+}
+.snap-item { padding:.7rem 0;border-bottom:1px solid rgba(255,255,255,.05); }
+.snap-item:last-child { border-bottom:none; }
+.snap-val { font-size:1.1rem;font-weight:700;margin-bottom:.2rem; }
+.snap-val.c1{color:var(--accent);}
+.snap-val.c2{color:var(--accent2);}
+.snap-val.c3{color:#a78bfa;}
+.snap-val.c4{color:#fb923c;}
+.snap-val.c5{color:#f472b6;}
+.snap-desc { font-size:.8rem;color:var(--muted);line-height:1.5; }
+/* dots */
+.snap-dots {
+  display:flex;gap:.45rem;justify-content:center;
+  margin-top:1.2rem;
+}
+.snap-dot {
+  width:6px;height:6px;border-radius:99px;
+  background:rgba(255,255,255,.15);
+  cursor:pointer;
+  transition:width .3s,background .3s;
+}
+.snap-dot.active { width:20px;background:var(--accent); }
+/* progress bar */
+.snap-progress {
+  position:absolute;bottom:0;left:0;right:0;height:2px;
+  background:rgba(0,212,255,.1);
+}
+.snap-progress-bar {
+  height:100%;width:0%;
+  background:linear-gradient(90deg,var(--accent),var(--accent2));
+  transition:width linear;
+}
 .hero-glow {
   position:absolute;top:-200px;right:-200px;
   width:700px;height:700px;
@@ -211,45 +286,6 @@ h2 { font-size:2rem;font-weight:700;letter-spacing:-.02em;margin-bottom:.5rem; }
 /* FOOTER */
 footer { border-top:1px solid var(--border);padding:2.5rem 0;text-align:center;color:var(--muted);font-size:.82rem; }
 
-/* TERMINAL */
-.terminal {
-  background:#080d18;
-  border:1px solid rgba(0,212,255,.2);
-  border-radius:14px;
-  overflow:hidden;
-  margin-top:2.5rem;
-  box-shadow:0 0 40px rgba(0,212,255,.06), 0 20px 60px rgba(0,0,0,.4);
-}
-.term-bar {
-  background:#0f1525;
-  padding:.65rem 1rem;
-  display:flex;align-items:center;gap:.5rem;
-  border-bottom:1px solid rgba(0,212,255,.1);
-}
-.term-dot { width:11px;height:11px;border-radius:50%; }
-.term-dot.r{background:#ff5f57;} .term-dot.y{background:#ffbd2e;} .term-dot.g{background:#28c941;}
-.term-title { font-size:.72rem;font-family:'JetBrains Mono',monospace;color:var(--muted);margin-left:.5rem;letter-spacing:.06em; }
-.term-body {
-  padding:1.4rem 1.6rem 1.8rem;
-  font-family:'JetBrains Mono',monospace;
-  font-size:.82rem;
-  line-height:2;
-  min-height:260px;
-}
-.term-line { display:flex;align-items:baseline;gap:.6rem;opacity:0;transform:translateY(4px);transition:opacity .15s,transform .15s; }
-.term-line.show { opacity:1;transform:none; }
-.term-prompt { color:var(--accent2);flex-shrink:0; }
-.term-cmd { color:var(--accent); }
-.term-out { color:var(--muted);padding-left:1.4rem; }
-.term-out.hi { color:var(--text); }
-.term-out .val { color:var(--accent2); }
-.term-out .tag-c { color:var(--accent); }
-.term-cursor {
-  display:inline-block;width:8px;height:1em;
-  background:var(--accent);vertical-align:text-bottom;
-  animation:blink .8s step-end infinite;margin-left:2px;
-}
-@keyframes blink{0%,100%{opacity:1}50%{opacity:0}}
 .reveal { opacity:0;transform:translateY(24px);transition:opacity .6s ease,transform .6s ease; }
 .reveal.visible { opacity:1;transform:none; }
 </style>
@@ -277,22 +313,88 @@ footer { border-top:1px solid var(--border);padding:2.5rem 0;text-align:center;c
   <section class="hero" id="hero">
     <div class="hero-glow"></div>
     <div class="hero-glow2"></div>
-    <div>
-      <div class="badge-pill">Open to Network, Security &amp; Infrastructure Roles</div>
-      <h1>Network &amp; Security<br>Engineer<br><span class="accent">Infrastructure Specialist</span></h1>
-      <p class="hero-sub">I design, optimize and secure enterprise network infrastructures with a strong focus on network security, cloud connectivity, high availability, supervision and IT project management.</p>
-      <div class="hero-ctas">
-        <a href="mailto:tarek.medjoub@outlook.fr" class="btn-primary">Contact Me</a>
-        <a href="https://linkedin.com/in/tarek-medjoub" class="btn-outline">LinkedIn</a>
-        <a href="#projects" class="btn-outline">View Projects</a>
-      </div>
-      <div class="terminal" id="hero-terminal">
-        <div class="term-bar">
-          <div class="term-dot r"></div><div class="term-dot y"></div><div class="term-dot g"></div>
-          <div class="term-title">tarek@medjoub:~$ skill-scan --profile engineer</div>
+    <div class="hero-inner">
+
+      <!-- LEFT: Title + CTA + Terminal -->
+      <div>
+        <div class="badge-pill">Open to Network, Security &amp; Infrastructure Roles</div>
+        <h1>Network &amp; Security<br>Engineer<br><span class="accent">Infrastructure Specialist</span></h1>
+        <p class="hero-sub">I design, optimize and secure enterprise network infrastructures with a strong focus on network security, cloud connectivity, high availability, supervision and IT project management.</p>
+        <div class="hero-ctas">
+          <a href="mailto:tarek.medjoub@outlook.fr" class="btn-primary">Contact Me</a>
+          <a href="https://linkedin.com/in/tarek-medjoub" class="btn-outline">LinkedIn</a>
+          <a href="#projects" class="btn-outline">View Projects</a>
         </div>
-        <div class="term-body" id="term-body"></div>
+
       </div>
+
+      <!-- RIGHT: Snapshot Carousel -->
+      <div class="snapshot-card">
+        <div class="snapshot-title">Profile Snapshot</div>
+        <div class="snap-slides" id="snapSlides">
+
+          <!-- Slide 1 -->
+          <div class="snap-slide active">
+            <div class="snap-item">
+              <div class="snap-val c1">3+ Years</div>
+              <div class="snap-desc">Network, Security &amp; Cloud Engineering</div>
+            </div>
+            <div class="snap-item">
+              <div class="snap-val c2">Enterprise</div>
+              <div class="snap-desc">Infrastructure &amp; Network Security Operations</div>
+            </div>
+          </div>
+
+          <!-- Slide 2 -->
+          <div class="snap-slide">
+            <div class="snap-item">
+              <div class="snap-val c3">Cloud &amp; Hybrid</div>
+              <div class="snap-desc">Modern Infrastructure Mindset — Azure, AWS &amp; Aviatrix</div>
+            </div>
+            <div class="snap-item">
+              <div class="snap-val c4">Multi-Certified</div>
+              <div class="snap-desc">Cisco CCNP · Huawei HCIA · Aviatrix Multicloud</div>
+            </div>
+          </div>
+
+          <!-- Slide 3 -->
+          <div class="snap-slide">
+            <div class="snap-item">
+              <div class="snap-val c1">7 Certifications</div>
+              <div class="snap-desc">Cisco · Huawei · Aviatrix — from 2021 to 2025</div>
+            </div>
+            <div class="snap-item">
+              <div class="snap-val c2">Dual Master's</div>
+              <div class="snap-desc">Networks &amp; Telecoms + IT Project Governance</div>
+            </div>
+          </div>
+
+          <!-- Slide 4 -->
+          <div class="snap-slide">
+            <div class="snap-item">
+              <div class="snap-val c3">Paris, France</div>
+              <div class="snap-desc">Open to on-site &amp; remote opportunities</div>
+            </div>
+            <div class="snap-item">
+              <div class="snap-val c4">Available Now</div>
+              <div class="snap-desc">Network · Security · Infrastructure roles</div>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Dots navigation -->
+        <div class="snap-dots" id="snapDots">
+          <div class="snap-dot active" onclick="goSlide(0)"></div>
+          <div class="snap-dot" onclick="goSlide(1)"></div>
+          <div class="snap-dot" onclick="goSlide(2)"></div>
+          <div class="snap-dot" onclick="goSlide(3)"></div>
+        </div>
+
+        <!-- Progress bar -->
+        <div class="snap-progress"><div class="snap-progress-bar" id="snapBar"></div></div>
+      </div>
+
     </div>
   </section>
 
@@ -503,56 +605,43 @@ footer { border-top:1px solid var(--border);padding:2.5rem 0;text-align:center;c
 </footer>
 
 <script>
-// Terminal animation
-const termLines = [
-  { type:'cmd',  prompt:'tarek@medjoub:~$', text:'skill-scan --category networking' },
-  { type:'out',  text:'<span class="tag-c">[NETWORKING]</span>  <span class="val">TCP/IP · OSPF · BGP · EIGRP · VLAN · STP · HSRP · SD-WAN</span>' },
-  { type:'out',  text:'<span class="tag-c">[SECURITY]  </span>  <span class="val">FortiGate · VPN IPsec · ACL · IDS/IPS · DMZ · Hardening</span>' },
-  { type:'cmd',  prompt:'tarek@medjoub:~$', text:'skill-scan --category cloud' },
-  { type:'out',  text:'<span class="tag-c">[CLOUD]     </span>  <span class="val">Azure · AWS · Aviatrix Multicloud · Hybrid Infra · HA</span>' },
-  { type:'out',  text:'<span class="tag-c">[MONITORING]</span>  <span class="val">Zabbix · PRTG · OpManager · GLPI · SNMP v2/v3</span>' },
-  { type:'cmd',  prompt:'tarek@medjoub:~$', text:'skill-scan --category systems' },
-  { type:'out',  text:'<span class="tag-c">[SYSTEMS]   </span>  <span class="val">Windows Server · Infrastructure Admin · User Support</span>' },
-  { type:'out',  text:'<span class="tag-c">[MGMT]      </span>  <span class="val">IT Project Management · Documentation · Leadership</span>' },
-  { type:'cmd',  prompt:'tarek@medjoub:~$', text:'cert-list --verified' },
-  { type:'out',  text:'<span class="tag-c">[CERTS]     </span>  <span class="val">CCNP Core · CCNA · Aviatrix MNA · HCIA Cloud · HCIA R&S · NetSec</span>' },
-  { type:'cmd',  prompt:'tarek@medjoub:~$', text:'status --availability', hi:true },
-  { type:'out',  text:'<span class="val">✔  Open to Network, Security &amp; Infrastructure roles — Paris &amp; Remote</span>', hi:true },
-];
+// Snapshot carousel
+const slides = document.querySelectorAll('.snap-slide');
+const dots = document.querySelectorAll('.snap-dot');
+const bar = document.getElementById('snapBar');
+const INTERVAL = 3200;
+let current = 0;
+let timer, barTimer;
 
-const termBody = document.getElementById('term-body');
-let lineIdx = 0;
-let cursor = null;
-
-function addCursor() {
-  if(cursor) cursor.remove();
-  cursor = document.createElement('span');
-  cursor.className = 'term-cursor';
-  termBody.appendChild(cursor);
+function goSlide(n) {
+  slides[current].classList.remove('active');
+  slides[current].classList.add('exit');
+  setTimeout(() => slides[current < slides.length ? current : 0].classList.remove('exit'), 500);
+  dots[current].classList.remove('active');
+  current = n;
+  slides[current].classList.add('active');
+  dots[current].classList.add('active');
+  // reset progress bar
+  bar.style.transition = 'none';
+  bar.style.width = '0%';
+  requestAnimationFrame(() => {
+    requestAnimationFrame(() => {
+      bar.style.transition = `width ${INTERVAL}ms linear`;
+      bar.style.width = '100%';
+    });
+  });
 }
 
-function showNextLine() {
-  if(lineIdx >= termLines.length) { addCursor(); return; }
-  const l = termLines[lineIdx++];
-  const div = document.createElement('div');
-  div.className = 'term-line' + (l.hi ? ' hi' : '');
-  if(l.type === 'cmd') {
-    div.innerHTML = `<span class="term-prompt">${l.prompt}</span><span class="term-cmd">${l.text}</span>`;
-  } else {
-    div.className += ' term-out';
-    div.innerHTML = l.text;
-  }
-  termBody.appendChild(div);
-  requestAnimationFrame(() => div.classList.add('show'));
-  const delay = l.type === 'cmd' ? 420 : 180;
-  setTimeout(showNextLine, delay);
+function nextSlide() {
+  goSlide((current + 1) % slides.length);
 }
 
-// Start when terminal scrolls into view
-const termObs = new IntersectionObserver(entries => {
-  if(entries[0].isIntersecting){ showNextLine(); termObs.disconnect(); }
-}, { threshold: 0.3 });
-termObs.observe(document.getElementById('hero-terminal'));
+function startCarousel() {
+  goSlide(0);
+  timer = setInterval(nextSlide, INTERVAL);
+}
+
+startCarousel();
 
 // Scroll reveals
 const reveals = document.querySelectorAll('.reveal');
