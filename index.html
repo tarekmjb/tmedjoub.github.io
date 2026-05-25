@@ -113,10 +113,7 @@ h1 .accent { color:var(--accent);display:block; }
   transition:border-color .2s,background .2s;
 }
 .btn-outline:hover { border-color:var(--accent);background:rgba(0,212,255,.05); }
-.stats-row { display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:1px;background:var(--border);border:1px solid var(--border);border-radius:12px;overflow:hidden;margin-top:3rem; }
-.stat { background:var(--card);padding:1.25rem 1.5rem; }
-.stat-val { font-size:1.6rem;font-weight:700;color:var(--accent);font-family:'JetBrains Mono',monospace; }
-.stat-label { font-size:.78rem;color:var(--muted);margin-top:.2rem;letter-spacing:.04em; }
+
 
 /* SECTION */
 section { padding:5rem 0; }
@@ -214,7 +211,45 @@ h2 { font-size:2rem;font-weight:700;letter-spacing:-.02em;margin-bottom:.5rem; }
 /* FOOTER */
 footer { border-top:1px solid var(--border);padding:2.5rem 0;text-align:center;color:var(--muted);font-size:.82rem; }
 
-/* SCROLL ANIMATIONS */
+/* TERMINAL */
+.terminal {
+  background:#080d18;
+  border:1px solid rgba(0,212,255,.2);
+  border-radius:14px;
+  overflow:hidden;
+  margin-top:2.5rem;
+  box-shadow:0 0 40px rgba(0,212,255,.06), 0 20px 60px rgba(0,0,0,.4);
+}
+.term-bar {
+  background:#0f1525;
+  padding:.65rem 1rem;
+  display:flex;align-items:center;gap:.5rem;
+  border-bottom:1px solid rgba(0,212,255,.1);
+}
+.term-dot { width:11px;height:11px;border-radius:50%; }
+.term-dot.r{background:#ff5f57;} .term-dot.y{background:#ffbd2e;} .term-dot.g{background:#28c941;}
+.term-title { font-size:.72rem;font-family:'JetBrains Mono',monospace;color:var(--muted);margin-left:.5rem;letter-spacing:.06em; }
+.term-body {
+  padding:1.4rem 1.6rem 1.8rem;
+  font-family:'JetBrains Mono',monospace;
+  font-size:.82rem;
+  line-height:2;
+  min-height:260px;
+}
+.term-line { display:flex;align-items:baseline;gap:.6rem;opacity:0;transform:translateY(4px);transition:opacity .15s,transform .15s; }
+.term-line.show { opacity:1;transform:none; }
+.term-prompt { color:var(--accent2);flex-shrink:0; }
+.term-cmd { color:var(--accent); }
+.term-out { color:var(--muted);padding-left:1.4rem; }
+.term-out.hi { color:var(--text); }
+.term-out .val { color:var(--accent2); }
+.term-out .tag-c { color:var(--accent); }
+.term-cursor {
+  display:inline-block;width:8px;height:1em;
+  background:var(--accent);vertical-align:text-bottom;
+  animation:blink .8s step-end infinite;margin-left:2px;
+}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:0}}
 .reveal { opacity:0;transform:translateY(24px);transition:opacity .6s ease,transform .6s ease; }
 .reveal.visible { opacity:1;transform:none; }
 </style>
@@ -251,11 +286,12 @@ footer { border-top:1px solid var(--border);padding:2.5rem 0;text-align:center;c
         <a href="https://linkedin.com/in/tarek-medjoub" class="btn-outline">LinkedIn</a>
         <a href="#projects" class="btn-outline">View Projects</a>
       </div>
-      <div class="stats-row">
-        <div class="stat"><div class="stat-val">3+</div><div class="stat-label">Years Experience</div></div>
-        <div class="stat"><div class="stat-val">7</div><div class="stat-label">Certifications</div></div>
-        <div class="stat"><div class="stat-val">4</div><div class="stat-label">Major Projects</div></div>
-        <div class="stat"><div class="stat-val">2×</div><div class="stat-label">Master's Degrees</div></div>
+      <div class="terminal" id="hero-terminal">
+        <div class="term-bar">
+          <div class="term-dot r"></div><div class="term-dot y"></div><div class="term-dot g"></div>
+          <div class="term-title">tarek@medjoub:~$ skill-scan --profile engineer</div>
+        </div>
+        <div class="term-body" id="term-body"></div>
       </div>
     </div>
   </section>
@@ -467,6 +503,58 @@ footer { border-top:1px solid var(--border);padding:2.5rem 0;text-align:center;c
 </footer>
 
 <script>
+// Terminal animation
+const termLines = [
+  { type:'cmd',  prompt:'tarek@medjoub:~$', text:'skill-scan --category networking' },
+  { type:'out',  text:'<span class="tag-c">[NETWORKING]</span>  <span class="val">TCP/IP · OSPF · BGP · EIGRP · VLAN · STP · HSRP · SD-WAN</span>' },
+  { type:'out',  text:'<span class="tag-c">[SECURITY]  </span>  <span class="val">FortiGate · VPN IPsec · ACL · IDS/IPS · DMZ · Hardening</span>' },
+  { type:'cmd',  prompt:'tarek@medjoub:~$', text:'skill-scan --category cloud' },
+  { type:'out',  text:'<span class="tag-c">[CLOUD]     </span>  <span class="val">Azure · AWS · Aviatrix Multicloud · Hybrid Infra · HA</span>' },
+  { type:'out',  text:'<span class="tag-c">[MONITORING]</span>  <span class="val">Zabbix · PRTG · OpManager · GLPI · SNMP v2/v3</span>' },
+  { type:'cmd',  prompt:'tarek@medjoub:~$', text:'skill-scan --category systems' },
+  { type:'out',  text:'<span class="tag-c">[SYSTEMS]   </span>  <span class="val">Windows Server · Infrastructure Admin · User Support</span>' },
+  { type:'out',  text:'<span class="tag-c">[MGMT]      </span>  <span class="val">IT Project Management · Documentation · Leadership</span>' },
+  { type:'cmd',  prompt:'tarek@medjoub:~$', text:'cert-list --verified' },
+  { type:'out',  text:'<span class="tag-c">[CERTS]     </span>  <span class="val">CCNP Core · CCNA · Aviatrix MNA · HCIA Cloud · HCIA R&S · NetSec</span>' },
+  { type:'cmd',  prompt:'tarek@medjoub:~$', text:'status --availability', hi:true },
+  { type:'out',  text:'<span class="val">✔  Open to Network, Security &amp; Infrastructure roles — Paris &amp; Remote</span>', hi:true },
+];
+
+const termBody = document.getElementById('term-body');
+let lineIdx = 0;
+let cursor = null;
+
+function addCursor() {
+  if(cursor) cursor.remove();
+  cursor = document.createElement('span');
+  cursor.className = 'term-cursor';
+  termBody.appendChild(cursor);
+}
+
+function showNextLine() {
+  if(lineIdx >= termLines.length) { addCursor(); return; }
+  const l = termLines[lineIdx++];
+  const div = document.createElement('div');
+  div.className = 'term-line' + (l.hi ? ' hi' : '');
+  if(l.type === 'cmd') {
+    div.innerHTML = `<span class="term-prompt">${l.prompt}</span><span class="term-cmd">${l.text}</span>`;
+  } else {
+    div.className += ' term-out';
+    div.innerHTML = l.text;
+  }
+  termBody.appendChild(div);
+  requestAnimationFrame(() => div.classList.add('show'));
+  const delay = l.type === 'cmd' ? 420 : 180;
+  setTimeout(showNextLine, delay);
+}
+
+// Start when terminal scrolls into view
+const termObs = new IntersectionObserver(entries => {
+  if(entries[0].isIntersecting){ showNextLine(); termObs.disconnect(); }
+}, { threshold: 0.3 });
+termObs.observe(document.getElementById('hero-terminal'));
+
+// Scroll reveals
 const reveals = document.querySelectorAll('.reveal');
 const io = new IntersectionObserver(entries => {
   entries.forEach(e => { if(e.isIntersecting) { e.target.classList.add('visible'); io.unobserve(e.target); } });
