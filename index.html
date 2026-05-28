@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Tarek MEDJOUB — Portfolio Preview</title>
+<title>Tarek MEDJOUB — Portfolio</title>
 <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
 <style>
 :root {
@@ -155,7 +155,6 @@ h1 .accent { color:var(--accent);display:block; }
 }
 .btn-outline:hover { border-color:var(--accent);background:rgba(0,212,255,.05); }
 
-
 /* SECTION */
 section { padding:5rem 0; }
 .section-tag {
@@ -213,13 +212,28 @@ h2 { font-size:2rem;font-weight:700;letter-spacing:-.02em;margin-bottom:.5rem; }
 
 /* PROJECTS */
 .proj-grid { display:grid;grid-template-columns:repeat(auto-fit,minmax(380px,1fr));gap:1rem;margin-top:2rem; }
+@media(max-width:600px){ .proj-grid{grid-template-columns:1fr;} }
 .proj-card {
   background:var(--card);border:1px solid var(--border);border-radius:12px;
   padding:1.5rem;transition:border-color .2s,transform .2s;
+  display:flex;flex-direction:column;
 }
 .proj-card:hover { border-color:rgba(0,212,255,.4);transform:translateY(-3px); }
 .proj-title { font-size:1rem;font-weight:700;color:var(--accent);margin-bottom:.5rem; }
-.proj-desc { font-size:.85rem;color:var(--muted);line-height:1.75;margin-bottom:1rem; }
+.proj-desc { font-size:.85rem;color:var(--muted);line-height:1.75;margin-bottom:1rem;flex:1; }
+.proj-footer { display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:.75rem;margin-top:.5rem; }
+.btn-details {
+  display:inline-flex;align-items:center;gap:.4rem;
+  font-size:.78rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;
+  color:var(--navy);background:var(--accent);
+  padding:.45rem 1.1rem;border-radius:6px;
+  text-decoration:none;
+  transition:transform .15s,box-shadow .15s,background .15s;
+  white-space:nowrap;
+}
+.btn-details:hover { transform:translateY(-2px);box-shadow:0 6px 20px rgba(0,212,255,.3); }
+.btn-details svg { transition:transform .2s; }
+.btn-details:hover svg { transform:translateX(3px); }
 
 /* CERTS */
 .cert-table { width:100%;border-collapse:collapse;margin-top:2rem; }
@@ -235,14 +249,9 @@ h2 { font-size:2rem;font-weight:700;letter-spacing:-.02em;margin-bottom:.5rem; }
 .edu-year { font-size:.78rem;font-family:'JetBrains Mono',monospace;color:var(--accent2);margin-bottom:.5rem; }
 .edu-badge {
   display:inline-flex;align-items:center;gap:.4rem;
-  margin-top:.75rem;
-  padding:.35rem .75rem;
-  border-radius:6px;
-  background:rgba(0,255,157,.07);
-  border:1px solid rgba(0,255,157,.25);
-  font-size:.72rem;font-weight:700;
-  color:var(--accent2);
-  letter-spacing:.04em;
+  margin-top:.75rem;padding:.35rem .75rem;border-radius:6px;
+  background:rgba(0,255,157,.07);border:1px solid rgba(0,255,157,.25);
+  font-size:.72rem;font-weight:700;color:var(--accent2);letter-spacing:.04em;
 }
 .edu-badge svg { flex-shrink:0; }
 .edu-desc { font-size:.82rem;color:var(--muted);line-height:1.7; }
@@ -292,8 +301,6 @@ footer { border-top:1px solid var(--border);padding:2.5rem 0;text-align:center;c
     <div class="hero-glow"></div>
     <div class="hero-glow2"></div>
     <div class="hero-inner">
-
-      <!-- LEFT: Title + CTA + Terminal -->
       <div>
         <div class="badge-pill">Open to Network, Security &amp; Infrastructure Roles</div>
         <h1>Network &amp; Security<br>Engineer<br><span class="accent">Infrastructure Specialist</span></h1>
@@ -303,10 +310,7 @@ footer { border-top:1px solid var(--border);padding:2.5rem 0;text-align:center;c
           <a href="https://linkedin.com/in/tarek-medjoub" class="btn-outline">LinkedIn</a>
           <a href="#projects" class="btn-outline">View Projects</a>
         </div>
-
       </div>
-
-      <!-- RIGHT: Snapshot Card -->
       <div class="snapshot-card">
         <div class="snapshot-title">Profile Snapshot</div>
         <div class="snap-item">
@@ -326,7 +330,6 @@ footer { border-top:1px solid var(--border);padding:2.5rem 0;text-align:center;c
           <div class="snap-desc">Cisco, Huawei &amp; Multicloud Technologies</div>
         </div>
       </div>
-
     </div>
   </section>
 
@@ -387,7 +390,6 @@ footer { border-top:1px solid var(--border);padding:2.5rem 0;text-align:center;c
     <div class="section-tag">Experience</div>
     <h2>Professional History</h2>
     <div class="exp-list">
-
       <div class="exp-card">
         <div class="exp-role">Network &amp; Security Engineer — SPA Condor Electronics</div>
         <div class="exp-meta">Oct 2023 — Sep 2025 · Algeria</div>
@@ -400,7 +402,6 @@ footer { border-top:1px solid var(--border);padding:2.5rem 0;text-align:center;c
         </ul>
         <div class="exp-tech"><span class="tag">Fortinet</span><span class="tag">SD-WAN</span><span class="tag">VPN IPsec</span><span class="tag">OSPF</span><span class="tag">PRTG</span><span class="tag">Zabbix</span></div>
       </div>
-
       <div class="exp-card">
         <div class="exp-role">Freelance IT &amp; Digital Solutions Consultant</div>
         <div class="exp-meta">2025 — Present · Independent</div>
@@ -411,7 +412,6 @@ footer { border-top:1px solid var(--border);padding:2.5rem 0;text-align:center;c
         </ul>
         <div class="exp-tech"><span class="tag">Consulting</span><span class="tag">Web Infrastructure</span><span class="tag">Documentation</span></div>
       </div>
-
       <div class="exp-card">
         <div class="exp-role">Network Engineer Intern — 3K Solutions</div>
         <div class="exp-meta">Feb 2023 — Jun 2023 · Algeria</div>
@@ -421,7 +421,6 @@ footer { border-top:1px solid var(--border);padding:2.5rem 0;text-align:center;c
         </ul>
         <div class="exp-tech"><span class="tag">LAN/WAN</span><span class="tag">Network Config</span><span class="tag">Monitoring</span></div>
       </div>
-
     </div>
   </section>
 
@@ -432,26 +431,43 @@ footer { border-top:1px solid var(--border);padding:2.5rem 0;text-align:center;c
     <div class="section-tag">Projects</div>
     <h2>Featured Work</h2>
     <div class="proj-grid">
+
       <div class="proj-card">
         <div class="proj-title">SD-WAN Enterprise Migration</div>
         <div class="proj-desc">Migrated a multi-site enterprise network from legacy WAN to centrally managed SD-WAN architecture, improving inter-site connectivity, routing efficiency and operational visibility.</div>
-        <div class="tags"><span class="tag">SD-WAN</span><span class="tag">VPN</span><span class="tag">Fortinet</span><span class="tag">BGP</span></div>
+        <div class="proj-footer">
+          <div class="tags"><span class="tag">SD-WAN</span><span class="tag">VPN</span><span class="tag">Fortinet</span><span class="tag">BGP</span></div>
+          <a href="projects/sdwan.html" class="btn-details">View Details <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+        </div>
       </div>
+
       <div class="proj-card">
         <div class="proj-title">LAN Architecture Optimization</div>
         <div class="proj-desc">Redesigned core switching across distribution and access layers — eliminating bottlenecks and enforcing security segmentation with OSPF, VLAN, ACL and SNMP-based monitoring.</div>
-        <div class="tags"><span class="tag">VLAN</span><span class="tag">OSPF</span><span class="tag">ACL</span><span class="tag">SNMP</span></div>
+        <div class="proj-footer">
+          <div class="tags"><span class="tag">VLAN</span><span class="tag">OSPF</span><span class="tag">ACL</span><span class="tag">SNMP</span></div>
+          <a href="projects/lan-optimization.html" class="btn-details">View Details <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+        </div>
       </div>
+
       <div class="proj-card">
-        <div class="proj-title">Hybrid Cloud Connectivity Lab — Azure & AWS</div>
+        <div class="proj-title">Hybrid Cloud Connectivity Lab — Azure &amp; AWS</div>
         <div class="proj-desc">Designed a hybrid multicloud architecture connecting on-premises FortiGate to both Azure VPN Gateway and AWS Transit Gateway, with BGP route propagation and centralized PRTG monitoring across all environments.</div>
-        <div class="tags"><span class="tag">FortiGate</span><span class="tag">Azure</span><span class="tag">AWS</span><span class="tag">BGP</span><span class="tag">IPsec</span><span class="tag">Aviatrix</span></div>
+        <div class="proj-footer">
+          <div class="tags"><span class="tag">FortiGate</span><span class="tag">Azure</span><span class="tag">AWS</span><span class="tag">BGP</span><span class="tag">IPsec</span></div>
+          <a href="projects/hybrid-cloud.html" class="btn-details">View Details <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+        </div>
       </div>
+
       <div class="proj-card">
-        <div class="proj-title">Infrastructure Monitoring & Alerting Stack</div>
+        <div class="proj-title">Infrastructure Monitoring &amp; Alerting Stack</div>
         <div class="proj-desc">Built a centralized supervision environment with Zabbix SNMP polling, threshold-based alerting and GLPI ITSM integration — delivering NOC-style dashboards and structured incident response workflows across a multi-device topology.</div>
-        <div class="tags"><span class="tag">Zabbix</span><span class="tag">PRTG</span><span class="tag">SNMP</span><span class="tag">GLPI</span><span class="tag">OpManager</span></div>
+        <div class="proj-footer">
+          <div class="tags"><span class="tag">Zabbix</span><span class="tag">PRTG</span><span class="tag">SNMP</span><span class="tag">GLPI</span></div>
+          <a href="projects/monitoring-stack.html" class="btn-details">View Details <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+        </div>
       </div>
+
     </div>
   </section>
 
@@ -541,7 +557,6 @@ footer { border-top:1px solid var(--border);padding:2.5rem 0;text-align:center;c
 </footer>
 
 <script>
-// Scroll reveals
 const reveals = document.querySelectorAll('.reveal');
 const io = new IntersectionObserver(entries => {
   entries.forEach(e => { if(e.isIntersecting) { e.target.classList.add('visible'); io.unobserve(e.target); } });
