@@ -189,6 +189,45 @@ h2 { font-size:2rem;font-weight:700;letter-spacing:-.02em;margin-bottom:.5rem; }
   font-family:'JetBrains Mono',monospace;
 }
 
+/* NETWORKING EXPANDED */
+.net-grid { display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1rem;margin-top:1.5rem; }
+.net-card {
+  background:var(--card);border:1px solid var(--border);border-radius:12px;
+  padding:1.5rem;transition:border-color .2s,transform .2s;position:relative;overflow:hidden;
+}
+.net-card::before {
+  content:'';position:absolute;top:0;left:0;right:0;height:2px;
+  background:linear-gradient(90deg,var(--accent),var(--accent2));
+  opacity:0;transition:opacity .2s;
+}
+.net-card:hover { border-color:rgba(0,212,255,.45);transform:translateY(-3px); }
+.net-card:hover::before { opacity:1; }
+.net-card-header { display:flex;align-items:center;gap:.75rem;margin-bottom:.85rem; }
+.net-icon {
+  width:34px;height:34px;border-radius:8px;
+  background:rgba(0,212,255,.1);border:1px solid rgba(0,212,255,.2);
+  display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:.9rem;
+}
+.net-title { font-size:.8rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--accent); }
+.net-bullets { list-style:none;display:flex;flex-direction:column;gap:.35rem;margin-bottom:1rem; }
+.net-bullets li { font-size:.78rem;color:var(--muted);line-height:1.6;display:flex;gap:.5rem; }
+.net-bullets li::before { content:'▸';color:var(--accent2);flex-shrink:0;font-size:.65rem;margin-top:.25rem; }
+.net-bullets li strong { color:var(--text);font-weight:600; }
+.net-tags { display:flex;flex-wrap:wrap;gap:.35rem;margin-top:.85rem; }
+.net-tag {
+  font-size:.68rem;font-weight:600;padding:.25rem .6rem;border-radius:5px;
+  background:rgba(0,212,255,.07);border:1px solid rgba(0,212,255,.18);
+  color:var(--accent);font-family:'JetBrains Mono',monospace;
+}
+.net-tag.g { background:rgba(0,255,157,.06);border-color:rgba(0,255,157,.18);color:var(--accent2); }
+.skills-subnav { display:flex;flex-wrap:wrap;gap:.5rem;margin-top:1.5rem;margin-bottom:.25rem; }
+.skills-subnav span {
+  font-size:.72rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;
+  padding:.35rem .9rem;border-radius:99px;
+  border:1px solid var(--border);color:var(--muted);cursor:default;
+}
+.skills-subnav span.active { border-color:var(--accent);color:var(--accent);background:rgba(0,212,255,.07); }
+
 /* EXPERIENCE */
 .exp-list { display:flex;flex-direction:column;gap:1.5rem;margin-top:2rem; }
 .exp-card {
@@ -362,37 +401,221 @@ footer { border-top:1px solid var(--border);padding:2.5rem 0;text-align:center;c
   <section id="stack" class="reveal">
     <div class="section-tag">Technical Stack</div>
     <h2>Skills &amp; Expertise</h2>
-    <div class="stack-grid">
-      <div class="stack-card">
-        <div class="stack-title">Networking</div>
-        <div class="stack-desc">Routing, switching and enterprise network architecture.</div>
-        <div class="tags"><span class="tag">TCP/IP</span><span class="tag">OSPF</span><span class="tag">BGP</span><span class="tag">VLAN</span><span class="tag">STP</span><span class="tag">HSRP</span></div>
+
+    <p style="font-size:.88rem;color:var(--muted);line-height:1.8;max-width:680px;margin-top:.5rem;margin-bottom:1.5rem;">Full-stack network engineering across Layer 2 switching, Layer 3 routing, WAN/SD-WAN, VPN tunneling, network security, cloud connectivity, monitoring and infrastructure design — from architecture to production deployment.</p>
+
+    <div class="net-grid">
+
+      <!-- Layer 2 -->
+      <div class="net-card">
+        <div class="net-card-header">
+          <div class="net-icon">
+            <svg width="16" height="16" fill="none" stroke="var(--accent)" stroke-width="2" viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 3H8M12 3v4"/></svg>
+          </div>
+          <div class="net-title">Layer 2 — Switching</div>
+        </div>
+        <ul class="net-bullets">
+          <li><strong>VLANs (802.1Q)</strong> — trunking, access ports, native VLAN hardening, pruning</li>
+          <li><strong>STP / RSTP / MSTP</strong> — root election, PortFast, BPDU Guard, Root Guard, loop prevention</li>
+          <li><strong>EtherChannel / LACP (802.3ad)</strong> — port aggregation, load-balancing modes</li>
+          <li><strong>Port Security</strong> — MAC limiting, sticky MAC, violation actions</li>
+          <li><strong>DHCP Snooping, DAI, IP Source Guard</strong> — Layer 2 attack mitigation</li>
+          <li><strong>CDP / LLDP</strong> — topology discovery and neighbor mapping</li>
+        </ul>
+        <div class="net-tags">
+          <span class="net-tag">802.1Q</span><span class="net-tag">STP/RSTP</span><span class="net-tag">MSTP</span><span class="net-tag">LACP</span><span class="net-tag">Port Security</span><span class="net-tag">DAI</span><span class="net-tag g">Cisco Catalyst</span>
+        </div>
       </div>
-      <div class="stack-card">
-        <div class="stack-title">Network Security</div>
-        <div class="stack-desc">Network protection, segmentation, VPN security and infrastructure hardening.</div>
-        <div class="tags"><span class="tag">FortiGate</span><span class="tag">VPN IPsec</span><span class="tag">ACL</span><span class="tag">IDS/IPS</span><span class="tag">DMZ</span></div>
+
+      <!-- Layer 3 Routing -->
+      <div class="net-card">
+        <div class="net-card-header">
+          <div class="net-icon">
+            <svg width="16" height="16" fill="none" stroke="var(--accent)" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/><path d="M2 12h20"/></svg>
+          </div>
+          <div class="net-title">Layer 3 — Routing</div>
+        </div>
+        <ul class="net-bullets">
+          <li><strong>OSPF</strong> — multi-area, LSA types, DR/BDR, route summarization, auth, stub areas</li>
+          <li><strong>BGP (eBGP/iBGP)</strong> — AS-PATH, local-pref, MED, weight, route-maps, prefix filtering</li>
+          <li><strong>EIGRP</strong> — metric components, feasible successor, DUAL algorithm, passive interfaces</li>
+          <li><strong>Route Redistribution</strong> — multi-protocol, metric seeding, tag-based loop prevention</li>
+          <li><strong>Policy-Based Routing (PBR)</strong> — traffic steering per source IP or application</li>
+          <li><strong>IPv6</strong> — dual-stack, OSPFv3, SLAAC, DHCPv6, static routing</li>
+        </ul>
+        <div class="net-tags">
+          <span class="net-tag">OSPF</span><span class="net-tag">BGP</span><span class="net-tag">EIGRP</span><span class="net-tag">PBR</span><span class="net-tag">Redistribution</span><span class="net-tag">IPv6</span><span class="net-tag g">OSPFv3</span>
+        </div>
       </div>
-      <div class="stack-card">
-        <div class="stack-title">Monitoring</div>
-        <div class="stack-desc">Infrastructure supervision and availability reporting.</div>
-        <div class="tags"><span class="tag">PRTG</span><span class="tag">Zabbix</span><span class="tag">OpManager</span><span class="tag">GLPI</span></div>
+
+      <!-- WAN & SD-WAN -->
+      <div class="net-card">
+        <div class="net-card-header">
+          <div class="net-icon">
+            <svg width="16" height="16" fill="none" stroke="var(--accent)" stroke-width="2" viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+          </div>
+          <div class="net-title">WAN &amp; SD-WAN</div>
+        </div>
+        <ul class="net-bullets">
+          <li><strong>Fortinet SD-WAN</strong> — SLA probes, performance-based path selection, zone policies</li>
+          <li><strong>Dual-ISP design</strong> — active/active, active/passive, sub-second automatic failover</li>
+          <li><strong>Traffic Steering</strong> — per-application routing rules, QoS marking, bandwidth shaping</li>
+          <li><strong>MPLS concepts</strong> — label switching, VRF, PE/CE routing models</li>
+          <li><strong>FortiManager</strong> — centralized SD-WAN policy management, ADOM, policy push</li>
+          <li><strong>FortiAnalyzer</strong> — log aggregation, SD-WAN analytics, compliance reporting</li>
+        </ul>
+        <div class="net-tags">
+          <span class="net-tag">SD-WAN</span><span class="net-tag">Dual-ISP</span><span class="net-tag">QoS</span><span class="net-tag">MPLS</span><span class="net-tag g">FortiManager</span><span class="net-tag g">FortiAnalyzer</span>
+        </div>
       </div>
-      <div class="stack-card">
-        <div class="stack-title">Cloud &amp; Infrastructure</div>
-        <div class="stack-desc">Cloud networking, hybrid infrastructure and enterprise connectivity.</div>
-        <div class="tags"><span class="tag">AWS</span><span class="tag">Azure</span><span class="tag">SD-WAN</span><span class="tag">Aviatrix</span><span class="tag">HA</span></div>
+
+      <!-- VPN & Tunneling -->
+      <div class="net-card">
+        <div class="net-card-header">
+          <div class="net-icon">
+            <svg width="16" height="16" fill="none" stroke="var(--accent)" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+          </div>
+          <div class="net-title">VPN &amp; Tunneling</div>
+        </div>
+        <ul class="net-bullets">
+          <li><strong>IPsec IKEv1/v2</strong> — Phase 1/2, AES-256/SHA-256, PFS, DPD, aggressive/main mode</li>
+          <li><strong>Hub-and-Spoke VPN</strong> — centralized IPsec topology, spoke-to-spoke via hub</li>
+          <li><strong>SSL/TLS VPN</strong> — FortiGate SSL VPN, split tunneling, full-tunnel, MFA integration</li>
+          <li><strong>GRE over IPsec</strong> — tunnel encapsulation, keepalives, MTU/MSS clamping</li>
+          <li><strong>BGP over IPsec</strong> — dynamic route propagation across encrypted tunnels</li>
+          <li><strong>Site-to-Cloud VPN</strong> — FortiGate to Azure VPN GW, AWS TGW, IKEv2 with BGP</li>
+        </ul>
+        <div class="net-tags">
+          <span class="net-tag">IPsec IKEv2</span><span class="net-tag">SSL VPN</span><span class="net-tag">GRE</span><span class="net-tag">Hub-Spoke</span><span class="net-tag g">BGP over IPsec</span><span class="net-tag g">Site-to-Cloud</span>
+        </div>
       </div>
-      <div class="stack-card">
-        <div class="stack-title">Systems</div>
-        <div class="stack-desc">Systems administration and enterprise support.</div>
-        <div class="tags"><span class="tag">Windows Server</span><span class="tag">Infrastructure Admin</span><span class="tag">User Support</span></div>
+
+      <!-- High Availability -->
+      <div class="net-card">
+        <div class="net-card-header">
+          <div class="net-icon">
+            <svg width="16" height="16" fill="none" stroke="var(--accent)" stroke-width="2" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          </div>
+          <div class="net-title">High Availability</div>
+        </div>
+        <ul class="net-bullets">
+          <li><strong>HSRP / VRRP</strong> — virtual gateway redundancy, priority, preemption, interface tracking</li>
+          <li><strong>FortiGate HA</strong> — Active/Passive and Active/Active clustering, session synchronization</li>
+          <li><strong>Dual-ISP Failover</strong> — SLA probe-triggered path switching, sub-second convergence</li>
+          <li><strong>Link Aggregation Failover</strong> — LACP with uplink redundancy and load distribution</li>
+          <li><strong>Redundant topology design</strong> — no single point of failure at core and distribution layers</li>
+          <li><strong>BFD</strong> — Bidirectional Forwarding Detection for fast failure detection with BGP/OSPF</li>
+        </ul>
+        <div class="net-tags">
+          <span class="net-tag">HSRP</span><span class="net-tag">VRRP</span><span class="net-tag">FortiGate HA</span><span class="net-tag">BFD</span><span class="net-tag g">Active/Active</span><span class="net-tag g">Session Sync</span>
+        </div>
       </div>
-      <div class="stack-card">
-        <div class="stack-title">Management</div>
-        <div class="stack-desc">IT project coordination, reporting and strategic thinking.</div>
-        <div class="tags"><span class="tag">IT Project Mgmt</span><span class="tag">Documentation</span><span class="tag">Leadership</span></div>
+
+      <!-- Network Services & Design -->
+      <div class="net-card">
+        <div class="net-card-header">
+          <div class="net-icon">
+            <svg width="16" height="16" fill="none" stroke="var(--accent)" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M12 1v4M12 19v4M4.22 4.22l2.83 2.83M16.95 16.95l2.83 2.83M1 12h4M19 12h4M4.22 19.78l2.83-2.83M16.95 7.05l2.83-2.83"/></svg>
+          </div>
+          <div class="net-title">Network Services &amp; Design</div>
+        </div>
+        <ul class="net-bullets">
+          <li><strong>DHCP</strong> — server/relay, option 82, reservations, scope management, failover</li>
+          <li><strong>DNS</strong> — forward/reverse zones, split-DNS, conditional forwarders</li>
+          <li><strong>NTP</strong> — stratum hierarchy, peer authentication, drift management</li>
+          <li><strong>SNMPv3</strong> — authPriv (SHA/AES), OID polling, trap configuration</li>
+          <li><strong>3-Tier Architecture</strong> — core / distribution / access, campus LAN design</li>
+          <li><strong>Network Documentation</strong> — topology diagrams, IP address plans, runbooks, change management</li>
+        </ul>
+        <div class="net-tags">
+          <span class="net-tag">DHCP</span><span class="net-tag">DNS</span><span class="net-tag">NTP</span><span class="net-tag">SNMPv3</span><span class="net-tag g">3-Tier Design</span><span class="net-tag g">IP Planning</span>
+        </div>
       </div>
+
+      <!-- Network Security -->
+      <div class="net-card">
+        <div class="net-card-header">
+          <div class="net-icon">
+            <svg width="16" height="16" fill="none" stroke="var(--accent)" stroke-width="2" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M9 12l2 2 4-4"/></svg>
+          </div>
+          <div class="net-title">Network Security</div>
+        </div>
+        <ul class="net-bullets">
+          <li><strong>FortiGate Firewall</strong> — policy design, NAT, security profiles, IPS, application control, UTM</li>
+          <li><strong>Firewall Architecture</strong> — DMZ design, zone-based policies, implicit deny, least privilege</li>
+          <li><strong>ACL</strong> — standard/extended, named ACLs, time-based, interface inbound/outbound enforcement</li>
+          <li><strong>IDS/IPS</strong> — signature tuning, inline vs passive, FortiGate IPS engine, custom signatures</li>
+          <li><strong>Network Segmentation</strong> — VLAN-based isolation, inter-zone ACL, micro-segmentation concepts</li>
+          <li><strong>Infrastructure Hardening</strong> — disable unused services, SSH key auth, SNMPv3, management VLAN isolation</li>
+        </ul>
+        <div class="net-tags">
+          <span class="net-tag">FortiGate</span><span class="net-tag">ACL</span><span class="net-tag">IDS/IPS</span><span class="net-tag">UTM</span><span class="net-tag">DMZ</span><span class="net-tag g">Zone Policies</span><span class="net-tag g">Hardening</span>
+        </div>
+      </div>
+
+      <!-- Cloud & Hybrid Connectivity -->
+      <div class="net-card">
+        <div class="net-card-header">
+          <div class="net-icon">
+            <svg width="16" height="16" fill="none" stroke="var(--accent)" stroke-width="2" viewBox="0 0 24 24"><path d="M18 10h-1.26A8 8 0 1 0 9 20h9a5 5 0 0 0 0-10z"/></svg>
+          </div>
+          <div class="net-title">Cloud &amp; Hybrid Connectivity</div>
+        </div>
+        <ul class="net-bullets">
+          <li><strong>Azure VPN Gateway</strong> — IKEv2 site-to-site, active/active, BGP peering, APIPA addressing</li>
+          <li><strong>AWS Transit Gateway</strong> — VPN attachment, route table propagation, multi-VPC connectivity</li>
+          <li><strong>FortiGate to Cloud</strong> — on-prem to Azure/AWS over IPsec with full BGP route exchange</li>
+          <li><strong>Aviatrix</strong> — multicloud network associate, centralized cloud routing and security</li>
+          <li><strong>Hybrid Architecture</strong> — on-prem LAN extension to cloud, consistent routing policy across environments</li>
+          <li><strong>Cloud Monitoring</strong> — PRTG cloud probes, unified NOC dashboard across on-prem and cloud</li>
+        </ul>
+        <div class="net-tags">
+          <span class="net-tag">Azure VPN GW</span><span class="net-tag">AWS TGW</span><span class="net-tag">Aviatrix</span><span class="net-tag">BGP</span><span class="net-tag g">Hybrid Design</span><span class="net-tag g">Multicloud</span>
+        </div>
+      </div>
+
+      <!-- Monitoring & Supervision -->
+      <div class="net-card">
+        <div class="net-card-header">
+          <div class="net-icon">
+            <svg width="16" height="16" fill="none" stroke="var(--accent)" stroke-width="2" viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+          </div>
+          <div class="net-title">Monitoring &amp; Supervision</div>
+        </div>
+        <ul class="net-bullets">
+          <li><strong>Zabbix</strong> — SNMPv3 polling, custom templates per vendor, trigger-based alerting, auto-discovery</li>
+          <li><strong>PRTG</strong> — bandwidth sensors, WAN link utilization, VPN tunnel state, cloud endpoint probes</li>
+          <li><strong>ManageEngine OpManager</strong> — live topology maps, NOC dashboards, availability heatmaps</li>
+          <li><strong>GLPI ITSM</strong> — automated ticket creation via Zabbix webhook, SLA tracking, incident lifecycle</li>
+          <li><strong>FortiAnalyzer</strong> — centralized log aggregation, SD-WAN analytics, compliance reporting</li>
+          <li><strong>Alerting Design</strong> — severity thresholds (CPU, interfaces, VPN, BGP), escalation matrix, on-call routing</li>
+        </ul>
+        <div class="net-tags">
+          <span class="net-tag">Zabbix</span><span class="net-tag">PRTG</span><span class="net-tag">OpManager</span><span class="net-tag">GLPI</span><span class="net-tag g">FortiAnalyzer</span><span class="net-tag g">NOC Design</span>
+        </div>
+      </div>
+
+      <!-- Systems & IT Management -->
+      <div class="net-card">
+        <div class="net-card-header">
+          <div class="net-icon">
+            <svg width="16" height="16" fill="none" stroke="var(--accent)" stroke-width="2" viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
+          </div>
+          <div class="net-title">Systems &amp; IT Management</div>
+        </div>
+        <ul class="net-bullets">
+          <li><strong>Windows Server</strong> — Active Directory, DNS, DHCP, GPO, user/group management</li>
+          <li><strong>Linux</strong> — CLI administration, service management, bash scripting for network automation</li>
+          <li><strong>IT Project Management</strong> — change management, project planning, stakeholder reporting, risk assessment</li>
+          <li><strong>Technical Documentation</strong> — network topology diagrams, runbooks, IP address plans, change records</li>
+          <li><strong>Incident Management</strong> — N3 troubleshooting, root cause analysis, post-mortem documentation</li>
+          <li><strong>EVE-NG</strong> — virtual lab design and validation, FortiGate/Cisco KVM images, topology simulation</li>
+        </ul>
+        <div class="net-tags">
+          <span class="net-tag">Windows Server</span><span class="net-tag">Linux</span><span class="net-tag">Active Directory</span><span class="net-tag">EVE-NG</span><span class="net-tag g">IT Project Mgmt</span><span class="net-tag g">N3 Support</span>
+        </div>
+      </div>
+
     </div>
   </section>
 
