@@ -1,0 +1,9 @@
+PORTFOLIO BILINGUE EN / FR
+
+Anglais par défaut lors de la première visite. Le sélecteur EN | FR mémorise le choix du visiteur dans son navigateur.
+
+Ouvrir index.html pour consulter le portfolio.
+Pour publier : déposer index.html, language.js et les dossiers assets, projects, labs et fr à la racine du dépôt GitHub.
+Les deux CV restent accessibles quelle que soit la langue du site.
+
+Les pages françaises de projets reprennent les études de cas. Les longs schémas et configurations des pages SD-WAN/LAN d’origine restent consultables en anglais via un lien identifié.
