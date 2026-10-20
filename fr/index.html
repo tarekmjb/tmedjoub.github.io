@@ -1,0 +1,771 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>  
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tarek MEDJOUB — Ingénieur Réseaux, Sécurité &amp; Cloud</title>
+<meta name="description" content="Tarek Medjoub, ingénieur réseaux, sécurité et cloud à Paris : Cisco, Fortinet, infrastructures multisites, connectivité hybride Azure/AWS et labs EVE-NG.">
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --navy: #0a0e1a;
+  --navy2: #0f1629;
+  --card: #131b2e;
+  --card2: #1a2540;
+  --accent: #00d4ff;
+  --accent2: #00ff9d;
+  --text: #e8eaf6;
+  --muted: #8892a4;
+  --border: rgba(0,212,255,0.15);
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+body {
+  font-family:'Sora',sans-serif;
+  background:var(--navy);
+  color:var(--text);
+  line-height:1.7;
+  overflow-x:hidden;
+}
+.noise {
+  position:fixed;inset:0;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+  pointer-events:none;z-index:0;opacity:.4;
+}
+.grid-bg {
+  position:fixed;inset:0;
+  background-image:linear-gradient(rgba(0,212,255,0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0,212,255,0.03) 1px, transparent 1px);
+  background-size:60px 60px;
+  pointer-events:none;z-index:0;
+}
+.wrap { max-width:900px;margin:0 auto;padding:0 2rem;position:relative;z-index:1; }
+
+/* NAV */
+nav {
+  position:sticky;top:0;
+  background:rgba(10,14,26,.92);
+  backdrop-filter:blur(16px);
+  border-bottom:1px solid var(--border);
+  padding:.9rem 0;
+  z-index:100;
+}
+.nav-inner { display:flex;align-items:center;justify-content:space-between; }
+.logo { font-size:1.1rem;font-weight:700;letter-spacing:-.01em; }
+.logo span { color:var(--accent); }
+.nav-links { display:flex;gap:2rem; }
+.nav-links a { color:var(--muted);font-size:.85rem;text-decoration:none;letter-spacing:.05em;text-transform:uppercase;transition:color .2s; }
+.nav-links a:hover { color:var(--accent); }
+
+/* HERO */
+.hero {
+  min-height:90vh;display:flex;align-items:center;
+  padding:6rem 0 4rem;
+  position:relative;
+}
+.hero-inner {
+  display:grid;
+  grid-template-columns:1fr 300px;
+  gap:3rem;
+  align-items:center;
+  width:100%;
+}
+@media(max-width:700px){ .hero-inner{grid-template-columns:1fr;} }
+.snapshot-card {
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:16px;
+  padding:1.5rem;
+  display:flex;
+  flex-direction:column;
+  gap:0;
+  min-height:340px;
+}
+.snapshot-title {
+  font-size:.72rem;font-weight:700;letter-spacing:.12em;
+  text-transform:uppercase;color:var(--text);
+  padding-bottom:.75rem;
+  margin-bottom:.5rem;
+  border-bottom:1px solid var(--border);
+  flex-shrink:0;
+}
+.snap-item {
+  flex:1;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  padding:.5rem 0;
+  border-bottom:1px solid rgba(255,255,255,.06);
+}
+.snap-item:last-child { border-bottom:none; }
+.snap-val { font-size:1rem;font-weight:700;margin-bottom:.2rem; }
+.snap-val.c1{color:var(--accent);}
+.snap-val.c2{color:var(--accent2);}
+.snap-val.c3{color:var(--accent2);}
+.snap-val.c4{color:var(--accent2);}
+.snap-desc { font-size:.8rem;color:var(--muted);line-height:1.4; }
+.hero-glow {
+  position:absolute;top:-200px;right:-200px;
+  width:700px;height:700px;
+  background:radial-gradient(circle, rgba(0,212,255,.06) 0%, transparent 70%);
+  pointer-events:none;
+}
+.hero-glow2 {
+  position:absolute;bottom:-100px;left:-100px;
+  width:500px;height:500px;
+  background:radial-gradient(circle, rgba(0,255,157,.04) 0%, transparent 70%);
+  pointer-events:none;
+}
+.badge-pill {
+  display:inline-flex;align-items:center;gap:.5rem;
+  border:1px solid rgba(0,255,157,.3);
+  background:rgba(0,255,157,.06);
+  color:var(--accent2);
+  font-size:.75rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;
+  padding:.4rem 1rem;border-radius:99px;margin-bottom:1.5rem;
+}
+.badge-pill::before { content:'';width:6px;height:6px;border-radius:50%;background:var(--accent2);animation:pulse 2s infinite; }
+@keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:.5;transform:scale(1.4)} }
+h1 {
+  font-size:clamp(2.8rem,6vw,4.5rem);
+  font-weight:700;
+  line-height:1.05;
+  letter-spacing:-.03em;
+  margin-bottom:.5rem;
+}
+h1 .accent { color:var(--accent);display:block; }
+.hero-sub {
+  font-size:1.05rem;color:var(--muted);
+  max-width:540px;margin:1.2rem 0 2rem;
+  line-height:1.8;
+}
+.hero-ctas { display:flex;gap:1rem;flex-wrap:wrap;margin-bottom:3rem; }
+.btn-primary {
+  padding:.75rem 1.75rem;
+  background:var(--accent);color:#000;
+  font-weight:700;font-size:.9rem;
+  border-radius:8px;text-decoration:none;
+  transition:transform .15s,box-shadow .15s;
+}
+.btn-primary:hover { transform:translateY(-2px);box-shadow:0 8px 30px rgba(0,212,255,.3); }
+.btn-outline {
+  padding:.75rem 1.75rem;
+  border:1px solid var(--border);color:var(--text);
+  font-weight:600;font-size:.9rem;
+  border-radius:8px;text-decoration:none;
+  transition:border-color .2s,background .2s;
+}
+.btn-outline:hover { border-color:var(--accent);background:rgba(0,212,255,.05); }
+
+/* SECTION */
+section { padding:5rem 0; }
+.section-tag {
+  font-size:.72rem;font-weight:600;letter-spacing:.15em;text-transform:uppercase;
+  color:var(--accent);margin-bottom:.75rem;
+  display:flex;align-items:center;gap:.6rem;
+}
+.section-tag::before { content:'';width:24px;height:1px;background:var(--accent); }
+h2 { font-size:2rem;font-weight:700;letter-spacing:-.02em;margin-bottom:.5rem; }
+.section-divider { border:none;border-top:1px solid var(--border);margin:5rem 0 0; }
+
+/* ABOUT */
+.about-text { font-size:1rem;color:var(--muted);line-height:1.9;max-width:720px; }
+.about-text + .about-text { margin-top:1rem; }
+
+/* TECH STACK */
+.stack-grid { display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:1rem;margin-top:2rem; }
+.stack-card {
+  background:var(--card);border:1px solid var(--border);border-radius:12px;
+  padding:1.5rem;transition:border-color .2s,transform .2s;
+}
+.stack-card:hover { border-color:rgba(0,212,255,.4);transform:translateY(-3px); }
+.stack-title { font-size:.8rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);margin-bottom:.75rem; }
+.stack-desc { font-size:.82rem;color:var(--muted);margin-bottom:1rem;line-height:1.6; }
+.tags { display:flex;flex-wrap:wrap;gap:.4rem; }
+.tag {
+  font-size:.72rem;font-weight:600;
+  padding:.3rem .7rem;border-radius:6px;
+  background:rgba(0,212,255,.08);
+  border:1px solid rgba(0,212,255,.2);
+  color:var(--accent);
+  font-family:'JetBrains Mono',monospace;
+}
+
+/* NETWORKING EXPANDED */
+.net-grid { display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1rem;margin-top:1.5rem; }
+.net-card {
+  background:var(--card);border:1px solid var(--border);border-radius:12px;
+  padding:1.5rem;transition:border-color .2s,transform .2s;position:relative;overflow:hidden;
+}
+.net-card::before {
+  content:'';position:absolute;top:0;left:0;right:0;height:2px;
+  background:linear-gradient(90deg,var(--accent),var(--accent2));
+  opacity:0;transition:opacity .2s;
+}
+.net-card:hover { border-color:rgba(0,212,255,.45);transform:translateY(-3px); }
+.net-card:hover::before { opacity:1; }
+.net-card-header { display:flex;align-items:center;gap:.75rem;margin-bottom:.85rem; }
+.net-icon {
+  width:34px;height:34px;border-radius:8px;
+  background:rgba(0,212,255,.1);border:1px solid rgba(0,212,255,.2);
+  display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:.9rem;
+}
+.net-title { font-size:.8rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--accent); }
+.net-bullets { list-style:none;display:flex;flex-direction:column;gap:.35rem;margin-bottom:1rem; }
+.net-bullets li { font-size:.78rem;color:var(--muted);line-height:1.6;display:flex;gap:.5rem; }
+.net-bullets li::before { content:'▸';color:var(--accent2);flex-shrink:0;font-size:.65rem;margin-top:.25rem; }
+.net-bullets li strong { color:var(--text);font-weight:600; }
+.net-tags { display:flex;flex-wrap:wrap;gap:.35rem;margin-top:.85rem; }
+.net-tag {
+  font-size:.68rem;font-weight:600;padding:.25rem .6rem;border-radius:5px;
+  background:rgba(0,212,255,.07);border:1px solid rgba(0,212,255,.18);
+  color:var(--accent);font-family:'JetBrains Mono',monospace;
+}
+.net-tag.g { background:rgba(0,255,157,.06);border-color:rgba(0,255,157,.18);color:var(--accent2); }
+.skills-subnav { display:flex;flex-wrap:wrap;gap:.5rem;margin-top:1.5rem;margin-bottom:.25rem; }
+.skills-subnav span {
+  font-size:.72rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;
+  padding:.35rem .9rem;border-radius:99px;
+  border:1px solid var(--border);color:var(--muted);cursor:default;
+}
+.skills-subnav span.active { border-color:var(--accent);color:var(--accent);background:rgba(0,212,255,.07); }
+
+/* EXPERIENCE */
+.exp-list { display:flex;flex-direction:column;gap:1.5rem;margin-top:2rem; }
+.exp-card {
+  background:var(--card);border:1px solid var(--border);border-radius:12px;
+  padding:1.75rem;position:relative;overflow:hidden;
+  transition:border-color .2s;
+}
+.exp-card::before {
+  content:'';position:absolute;left:0;top:0;bottom:0;
+  width:3px;background:linear-gradient(to bottom,var(--accent),var(--accent2));
+  border-radius:3px 0 0 3px;
+}
+.exp-card:hover { border-color:rgba(0,212,255,.35); }
+.exp-role { font-size:1rem;font-weight:700;color:var(--accent);margin-bottom:.3rem; }
+.exp-meta { font-size:.8rem;color:var(--muted);margin-bottom:1rem;font-family:'JetBrains Mono',monospace; }
+.exp-bullets { list-style:none;display:flex;flex-direction:column;gap:.5rem; }
+.exp-bullets li { font-size:.88rem;color:var(--muted);line-height:1.7;display:flex;gap:.6rem; }
+.exp-bullets li::before { content:'▸';color:var(--accent);flex-shrink:0;margin-top:.05rem; }
+.exp-tech { display:flex;flex-wrap:wrap;gap:.4rem;margin-top:1rem; }
+.exp-tech .tag { background:rgba(0,255,157,.06);border-color:rgba(0,255,157,.2);color:var(--accent2); }
+
+/* PROJECTS */
+.proj-grid { display:grid;grid-template-columns:repeat(auto-fit,minmax(380px,1fr));gap:1rem;margin-top:2rem; }
+@media(max-width:600px){ .proj-grid{grid-template-columns:1fr;} }
+.proj-card {
+  background:var(--card);border:1px solid var(--border);border-radius:12px;
+  padding:1.5rem;transition:border-color .2s,transform .2s;
+  display:flex;flex-direction:column;
+}
+.proj-card:hover { border-color:rgba(0,212,255,.4);transform:translateY(-3px); }
+.proj-title { font-size:1rem;font-weight:700;color:var(--accent);margin-bottom:.5rem; }
+.proj-desc { font-size:.85rem;color:var(--muted);line-height:1.75;margin-bottom:1rem;flex:1; }
+.proj-footer { display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:.75rem;margin-top:.5rem; }
+.btn-details {
+  display:inline-flex;align-items:center;gap:.4rem;
+  font-size:.78rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;
+  color:var(--navy);background:var(--accent);
+  padding:.45rem 1.1rem;border-radius:6px;
+  text-decoration:none;
+  transition:transform .15s,box-shadow .15s,background .15s;
+  white-space:nowrap;
+}
+.btn-details:hover { transform:translateY(-2px);box-shadow:0 6px 20px rgba(0,212,255,.3); }
+.btn-details svg { transition:transform .2s; }
+.btn-details:hover svg { transform:translateX(3px); }
+
+/* CERTS */
+.cert-table { width:100%;border-collapse:collapse;margin-top:2rem; }
+.cert-table th { text-align:left;font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);border-bottom:1px solid var(--border);padding:.6rem 1rem .6rem 0; }
+.cert-table td { padding:.85rem 1rem .85rem 0;font-size:.88rem;border-bottom:1px solid rgba(255,255,255,.04);color:var(--muted); }
+.cert-table td:first-child { color:var(--text);font-weight:500; }
+.cert-table td:last-child { font-family:'JetBrains Mono',monospace;color:var(--accent); }
+
+/* EDU */
+.edu-grid { display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:1rem;margin-top:2rem; }
+.edu-card { background:var(--card);border:1px solid var(--border);border-radius:12px;padding:1.5rem; }
+.edu-title { font-size:.9rem;font-weight:700;color:var(--accent);margin-bottom:.4rem;line-height:1.4; }
+.edu-year { font-size:.78rem;font-family:'JetBrains Mono',monospace;color:var(--accent2);margin-bottom:.5rem; }
+.edu-badge {
+  display:inline-flex;align-items:center;gap:.4rem;
+  margin-top:.75rem;padding:.35rem .75rem;border-radius:6px;
+  background:rgba(0,255,157,.07);border:1px solid rgba(0,255,157,.25);
+  font-size:.72rem;font-weight:700;color:var(--accent2);letter-spacing:.04em;
+}
+.edu-badge svg { flex-shrink:0; }
+.edu-desc { font-size:.82rem;color:var(--muted);line-height:1.7; }
+
+/* CONTACT */
+.contact-card {
+  background:var(--card);border:1px solid var(--border);border-radius:16px;
+  padding:2.5rem;margin-top:2rem;
+  display:flex;flex-direction:column;gap:1rem;
+  max-width:560px;
+}
+.contact-row { display:flex;align-items:center;gap:1rem;font-size:.9rem; }
+.contact-icon { width:36px;height:36px;border-radius:8px;background:rgba(0,212,255,.1);display:flex;align-items:center;justify-content:center;flex-shrink:0; }
+.contact-label { font-size:.72rem;text-transform:uppercase;letter-spacing:.1em;color:var(--muted); }
+.contact-val { color:var(--text);font-weight:500; }
+.contact-val a { color:var(--accent);text-decoration:none; }
+.contact-val a:hover { text-decoration:underline; }
+
+/* FOOTER */
+footer { border-top:1px solid var(--border);padding:2.5rem 0;text-align:center;color:var(--muted);font-size:.82rem; }
+
+.reveal { opacity:1;transform:none; }
+.reveal.visible { opacity:1;transform:none; }
+
+html { scroll-padding-top:100px; }
+a:focus-visible { outline:2px solid var(--accent);outline-offset:5px; }
+.hero-ctas { flex-wrap:wrap; }
+.contact-val { overflow-wrap:anywhere; }
+@media(max-width:600px) { .nav-inner {flex-wrap:wrap;gap:12px;} .nav-links {display:flex;flex-wrap:wrap;gap:12px;} .cert-table td,.cert-table th {font-size:.7rem;padding-right:.4rem;} .contact-card {padding:1.2rem;} }
+@media(prefers-reduced-motion:reduce) { * {animation:none!important;transition:none!important;scroll-behavior:auto!important;} }
+
+.menu-toggle{display:none;background:none;color:var(--accent);border:1px solid var(--border);padding:.45rem .7rem;border-radius:6px;font:inherit;font-size:.8rem}
+.nav-links{gap:1.15rem}.nav-links a{font-size:.72rem}.nav-links a.active{color:var(--accent)}
+.resume-intro{font-size:.9rem;color:var(--muted);margin:1rem 0 1.5rem;max-width:600px}
+.resume-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.25rem}
+.resume-card{padding:1.5rem;background:var(--card);border:1px solid var(--border);border-radius:14px;transition:border-color .2s}
+.resume-card:hover{border-color:var(--accent)}.resume-lang{display:inline-grid;place-items:center;width:43px;height:43px;background:rgba(0,212,255,.1);color:var(--accent);border-radius:9px;font-family:'JetBrains Mono',monospace;font-size:.95rem;margin-bottom:1.25rem}
+.resume-card h3{font-size:1.05rem}.resume-card p{font-size:.8rem;color:var(--muted);margin:.5rem 0}.resume-format{font-size:.68rem;color:var(--muted)}
+.resume-actions{display:flex;align-items:center;gap:1rem;margin-top:1.5rem;flex-wrap:wrap}.resume-actions .btn-primary{font-size:.78rem;padding:.6rem 1rem}.resume-actions>a:last-child{font-size:.75rem;color:var(--accent);text-decoration:none}
+.project-filters{display:flex;gap:.5rem;flex-wrap:wrap;margin:1.5rem 0}.project-filters button{border:1px solid var(--border);color:var(--muted);background:var(--card);border-radius:7px;padding:.55rem .85rem;font:inherit;font-size:.7rem;cursor:pointer}.project-filters button.selected{color:var(--navy);background:var(--accent)}.proj-card[hidden]{display:none}
+.back-top{position:fixed;bottom:20px;right:20px;z-index:90;background:var(--card2);color:var(--accent);border:1px solid var(--border);width:40px;height:40px;display:grid;place-items:center;text-decoration:none;border-radius:10px}.back-top[hidden]{display:none}
+@media(max-width:700px){.resume-grid{grid-template-columns:1fr}.nav-inner{flex-wrap:wrap}.menu-toggle{display:block;cursor:pointer}.nav-links{display:flex;flex-wrap:wrap;width:100%;gap:1rem}.js-ready .nav-links{display:none}.js-ready .nav-links.open{display:flex}h1{overflow-wrap:normal}.wrap{padding-inline:1.25rem}}
+
+.ui-icon{display:inline-block;vertical-align:middle;flex-shrink:0;color:inherit}.net-icon{color:var(--accent)}.btn-primary,.btn-outline,.btn-details,.menu-toggle{display:inline-flex;align-items:center;justify-content:center;gap:.55rem}.resume-actions>a:last-child{display:inline-flex;align-items:center;gap:.4rem}.section-tag .ui-icon{width:15px;height:15px;margin-right:.4rem}.labs-intro{font-size:.9rem;line-height:1.9;color:var(--muted);margin:1rem 0;max-width:700px}.labs-note{display:flex;gap:.8rem;align-items:flex-start;padding:1rem 1.2rem;background:rgba(0,212,255,.04);border:1px solid var(--border);border-radius:10px;color:var(--muted);font-size:.78rem;margin:1.5rem 0}.labs-note .ui-icon{color:var(--accent)}.labs-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1.25rem}.lab-card{display:flex;flex-direction:column;padding:1.5rem;background:var(--card);border:1px solid var(--border);border-radius:14px;transition:border-color .2s}.lab-card:hover{border-color:var(--accent)}.lab-top{display:flex;justify-content:space-between;align-items:center;color:var(--accent);margin-bottom:1.3rem}.lab-top>.ui-icon{width:25px;height:25px}.lab-status{font-size:.6rem;letter-spacing:.07em;text-transform:uppercase;padding:.25rem .55rem;border:1px solid var(--border);border-radius:20px;color:var(--muted)}.lab-category{font-family:'JetBrains Mono',monospace;font-size:.65rem;color:var(--accent);margin-bottom:.5rem}.lab-card h3{font-size:1.05rem;line-height:1.5}.lab-card p{font-size:.8rem;line-height:1.8;color:var(--muted);margin:.8rem 0 1rem}.lab-card .tags{margin-top:auto;margin-bottom:1.3rem}.lab-card .btn-details{justify-content:flex-start}.lab-outline{padding-left:1.2rem;color:var(--muted);font-size:.9rem;line-height:2.2;margin-top:1rem}.lab-checklist{margin-top:1rem;border:1px solid var(--border);border-radius:12px;overflow:hidden}.lab-checklist>div{padding:1rem;display:flex;gap:1rem;align-items:center;background:var(--card)}.lab-checklist>div+div{border-top:1px solid var(--border)}.lab-checklist span{font-size:.65rem;color:var(--accent);min-width:80px}.lab-checklist strong{font-size:.8rem;font-weight:500}.nav-links{gap:.9rem}.nav-links a{font-size:.66rem}
+@media(max-width:600px){.labs-grid{grid-template-columns:1fr}.lab-card{padding:1.2rem}.lab-checklist>div{align-items:flex-start}.lab-checklist strong{font-size:.75rem}}
+</style>
+<style>.language-switch{display:inline-flex;align-items:center;gap:3px;flex-shrink:0;padding:3px;border:1px solid var(--border);border-radius:8px;background:var(--card)}.language-switch a{font:600 .65rem 'Sora',sans-serif;color:var(--muted);padding:5px 7px;text-decoration:none;border-radius:5px}.language-switch a[aria-current="page"]{color:var(--navy);background:var(--accent)}.language-strip{max-width:900px;margin:0 auto;padding:1rem 2rem;display:flex;justify-content:flex-end;position:relative;z-index:2}.nav-inner{gap:.8rem}.nav-links{gap:.7rem}.nav-links a{font-size:.61rem}@media(max-width:700px){.nav-inner>.language-switch{margin-left:0}.menu-toggle{margin-left:auto}.nav-links{order:4}.language-strip{padding-inline:1.25rem}.hero h1{font-size:clamp(2rem,7vw,3rem)}}html[lang=fr] .hero h1{font-size:clamp(2rem,5.5vw,3rem)}html[lang=fr] .hero-inner{gap:2rem}</style><style>
+/* Refined desktop header and hero; keep the original blue/cyan identity. */
+nav .wrap{max-width:1180px}nav .nav-inner{display:flex;align-items:center;gap:1.5rem;flex-wrap:nowrap}.logo{white-space:nowrap;font-size:1rem}nav .language-switch{margin-left:auto;order:2}nav .nav-links{order:1;display:flex;gap:1.2rem;width:auto;margin-left:auto;flex-wrap:nowrap}nav .nav-links a{font-size:.65rem;letter-spacing:.02em;white-space:nowrap}nav .menu-toggle{display:none}
+.hero{min-height:700px;padding:5rem 0 4rem}.hero-inner{grid-template-columns:minmax(0,1fr) 285px;gap:3rem;align-items:center}.hero .badge-pill{font-size:.62rem;letter-spacing:.035em;padding:.4rem .75rem;margin-bottom:1.8rem;text-transform:none;line-height:1.6}.hero-name{font-family:'JetBrains Mono',monospace;font-size:.75rem;letter-spacing:.14em;color:var(--muted);margin-bottom:1rem}.hero h1,html[lang=fr] .hero h1{font-size:clamp(2.35rem,4.2vw,3.45rem);line-height:1.16;letter-spacing:-.04em;margin-bottom:1.1rem;overflow-wrap:normal}.hero h1 .accent{display:block}.hero-specialties{color:var(--text);font-size:.7rem;line-height:2}.hero-specialties span{color:var(--accent);margin:0 .2rem}.hero .hero-sub{font-size:.88rem;line-height:1.9;margin:1.1rem 0 1.6rem}.hero-ctas{gap:.7rem;margin-bottom:0}.hero-ctas a{font-size:.73rem;padding:.7rem 1rem;min-height:44px}.hero-ctas a[href*=linkedin]{order:4}.hero-ctas a[href*=resume]{order:3}.snapshot-card{padding:1.5rem;background:linear-gradient(145deg,rgba(0,212,255,.055),transparent),var(--card);box-shadow:0 16px 60px rgba(0,0,0,.15);min-height:0}.snapshot-title{font-size:.65rem;letter-spacing:.09em}.snapshot-card .snap-val{font-size:1.05rem}.snapshot-card .snap-desc{font-size:.73rem;line-height:1.7}.grid-bg{opacity:.55}.hero-glow{opacity:.55}
+@media(min-width:1100px){body>.wrap{max-width:1040px}.hero-inner{grid-template-columns:minmax(0,1fr) 300px;gap:4rem}}
+@media(max-width:900px){nav .nav-inner{gap:1rem}nav .nav-links{gap:.8rem}nav .nav-links a{font-size:.6rem}.hero-inner{gap:2rem;grid-template-columns:minmax(0,1fr) 260px}.hero-specialties{font-size:.64rem}}
+@media(max-width:760px){nav .nav-inner{flex-wrap:wrap;gap:.75rem}nav .language-switch{order:1;margin-left:auto}nav .menu-toggle{order:2;display:inline-flex;gap:.4rem;align-items:center;margin-left:0;font-size:.7rem;padding:.45rem .6rem}nav .menu-toggle .ui-icon{width:17px;height:17px}nav .nav-links{order:3;width:100%;margin:0;flex-wrap:wrap;padding:.6rem 0;gap:1rem}nav .nav-links a{font-size:.7rem}.js-ready nav .nav-links{display:none}.js-ready nav .nav-links.open{display:flex}.hero{padding:3rem 0;min-height:0}.hero-inner{grid-template-columns:1fr;gap:2.5rem}.hero .badge-pill{margin-bottom:1.5rem}.hero h1,html[lang=fr] .hero h1{font-size:clamp(2rem,7.8vw,3rem);line-height:1.18}.hero-specialties{font-size:.7rem}.hero .hero-sub{max-width:510px}.snapshot-card{max-width:100%;width:100%}.snapshot-card .snap-item{padding:.8rem 0}.hero-ctas{gap:.6rem}.hero-ctas a{font-size:.7rem;padding:.7rem .9rem}}
+</style><style>
+/* Technical cards: full content, clearer hierarchy. */
+#stack .net-grid{grid-template-columns:repeat(3,minmax(0,1fr));gap:1.15rem;align-items:stretch;margin-top:2rem}
+#stack .net-card{display:flex;flex-direction:column;min-width:0;padding:1.4rem 1.25rem;border:1px solid rgba(0,212,255,.17);border-radius:14px;background:linear-gradient(155deg,rgba(0,212,255,.035),transparent 45%),var(--card);box-shadow:0 8px 28px rgba(0,0,0,.1);transition:border-color .2s,box-shadow .2s}
+#stack .net-card:hover{transform:none;border-color:rgba(0,212,255,.45);box-shadow:0 10px 32px rgba(0,0,0,.2)}
+#stack .net-card::before{opacity:.65;height:2px;background:linear-gradient(90deg,var(--accent),rgba(0,212,255,0));left:1.25rem;right:1.25rem}
+#stack .net-card-header{align-items:center;gap:.7rem;margin-bottom:1.15rem;padding-bottom:1rem;border-bottom:1px solid var(--border);min-height:64px}
+#stack .net-icon{height:36px;width:36px;border-radius:10px;background:rgba(0,212,255,.07);border-color:rgba(0,212,255,.2)}
+#stack .net-icon .ui-icon{width:20px;height:20px}
+#stack .net-title{font-size:.7rem;line-height:1.65;letter-spacing:.055em;color:var(--accent);overflow-wrap:normal}
+#stack .net-bullets{display:block;list-style:none;margin:0 0 1.3rem;padding:0}
+#stack .net-bullets li{display:block;position:relative;padding:0 0 .9rem;margin:0 0 .85rem;font-size:.73rem;line-height:1.8;color:#9ca8bb;border-bottom:1px solid rgba(136,146,164,.09);overflow-wrap:break-word}
+#stack .net-bullets li:last-child{border:0;padding-bottom:0;margin-bottom:0}
+#stack .net-bullets li::before{display:none}
+#stack .net-bullets li strong{display:block;margin:0 0 .22rem;color:var(--text);font-weight:600;font-size:.75rem;line-height:1.65}
+#stack .net-bullets .skill-explanation{display:block;font-weight:400}
+#stack .net-tags{margin-top:auto;padding-top:1rem;border-top:1px solid var(--border);gap:.4rem}
+#stack .net-tag{font-size:.58rem;line-height:1.6;padding:.24rem .45rem;border-radius:4px;font-weight:500;background:rgba(0,212,255,.045);border-color:rgba(0,212,255,.15)}
+#stack .net-tag.g{color:var(--accent2);background:rgba(0,255,157,.035);border-color:rgba(0,255,157,.16)}
+@media(max-width:1050px){#stack .net-grid{grid-template-columns:repeat(2,minmax(0,1fr))}#stack .net-card{padding:1.5rem}#stack .net-bullets li{font-size:.78rem}#stack .net-bullets li strong{font-size:.8rem}#stack .net-tag{font-size:.62rem}}
+@media(max-width:620px){#stack .net-grid{grid-template-columns:1fr;gap:1rem}#stack .net-card{padding:1.3rem}#stack .net-card-header{min-height:0}#stack .net-title{font-size:.76rem}#stack .net-bullets li{font-size:.8rem;line-height:1.85}#stack .net-bullets li strong{font-size:.82rem}}
+</style><style>.labs-growth{font-family:"JetBrains Mono",monospace;color:var(--accent);font-size:.7rem;line-height:1.9;margin:1rem 0 1.5rem;padding-left:1rem;border-left:2px solid var(--accent)}.lab-card h3{line-height:1.6}</style><style>
+#education .education-intro{font-size:.85rem;line-height:1.8;color:var(--muted);max-width:620px;margin-top:1rem}.education-timeline{margin-top:2rem;border:1px solid var(--border);border-radius:14px;background:linear-gradient(120deg,rgba(0,212,255,.025),transparent),var(--card);overflow:hidden}.education-entry{display:grid;grid-template-columns:165px minmax(0,1fr);gap:2rem;padding:2rem}.education-entry+.education-entry{border-top:1px solid var(--border)}.education-date{font-family:'JetBrains Mono',monospace;font-size:.85rem;font-weight:600;color:var(--accent);padding-top:.35rem;line-height:1.8}.education-date>span{display:block;font-size:.59rem;letter-spacing:.1em;color:var(--muted);margin-top:.5rem;font-weight:400}.education-heading{display:flex;align-items:center;gap:.8rem}.education-icon{height:38px;width:38px;display:grid;place-items:center;flex-shrink:0;border-radius:9px;color:var(--accent);background:rgba(0,212,255,.06);border:1px solid var(--border)}.education-heading h3{font-size:1.05rem;line-height:1.55;font-weight:600;color:var(--text)}.education-school{font-size:.8rem;color:var(--muted);margin:.8rem 0}.education-description{font-size:.76rem;line-height:1.9;color:var(--muted)}.education-recognition{display:flex;align-items:flex-start;gap:.5rem;color:var(--accent2);font-size:.66rem;line-height:1.8;margin-top:.9rem}.education-recognition svg{flex-shrink:0;margin-top:2px}.education-tags{display:flex;flex-wrap:wrap;gap:.4rem;margin-top:1rem}.education-tags span{font-size:.6rem;line-height:1.7;color:var(--muted);border:1px solid var(--border);border-radius:5px;padding:.2rem .5rem}
+@media(max-width:650px){.education-entry{grid-template-columns:1fr;gap:1rem;padding:1.3rem}.education-date{display:flex;align-items:center;flex-wrap:wrap;gap:1rem;font-size:.75rem}.education-date>span{margin:0}.education-heading h3{font-size:.95rem}.education-heading{align-items:flex-start}.education-recognition{font-size:.64rem}}
+</style><style>
+.network-visual{align-self:center;width:100%;min-width:0;background:linear-gradient(155deg,rgba(0,212,255,.035),transparent 60%),rgba(15,22,41,.8);border:1px solid var(--border);border-radius:17px;position:relative;box-shadow:0 20px 65px rgba(0,0,0,.15)}.network-visual-top{display:flex;align-items:center;gap:.6rem;border-bottom:1px solid var(--border);padding:1rem;font-size:.56rem;font-weight:600;color:var(--text);letter-spacing:.02em}.architecture-mark{height:6px;width:6px;border-radius:50%;background:var(--accent);flex-shrink:0}.architecture-svg{display:block;width:100%;height:auto;padding:.4rem}.arch-lines{stroke:rgba(0,212,255,.3);stroke-width:1.3;stroke-linejoin:round}.arch-lines .arch-flow{stroke:var(--accent);stroke-width:1.6;stroke-dasharray:4 19;animation:arch-flow 10s linear infinite}.arch-device rect{fill:#131d30;stroke:rgba(0,212,255,.28);stroke-width:1}.arch-device path{fill:none;stroke:#00d4ff;stroke-width:1.4;stroke-linecap:round;stroke-linejoin:round}.arch-device text{font:7px 'JetBrains Mono',monospace;letter-spacing:.3px;text-anchor:middle;fill:#bcc9db}.arch-core>rect{fill:#062c40;stroke:#00d4ff;stroke-width:1.2}.arch-core .arch-core-inner{fill:none;stroke:rgba(0,212,255,.17);stroke-width:1}.arch-core path{fill:none;stroke:#00d4ff;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}.arch-core text{font:600 10px 'JetBrains Mono',monospace;letter-spacing:.6px;text-anchor:middle;fill:#e8eaf6}.arch-core .arch-core-sub{font-size:7px;fill:#00d4ff;letter-spacing:.3px}.arch-protocols text{font:6px 'JetBrains Mono',monospace;fill:#889bb3}.network-visual-footer{border-top:1px solid var(--border);padding:.85rem;font-size:.56rem;color:var(--muted);text-align:center;letter-spacing:.03em}.network-visual-note{position:absolute;bottom:-1.65rem;right:.2rem;font-size:.53rem;letter-spacing:.04em;color:var(--muted)}@keyframes arch-flow{to{stroke-dashoffset:-230}}@media(max-width:760px){.network-visual{max-width:380px;margin:.5rem auto 1rem}.network-visual-top{font-size:.65rem;padding:1.1rem}.network-visual-footer{font-size:.65rem}.network-visual-note{font-size:.59rem}}@media(prefers-reduced-motion:reduce){.arch-lines .arch-flow{animation:none}}
+</style><style>.hero .badge-pill{background:rgba(0,255,157,.035);border-color:rgba(0,255,157,.2);font-size:.6rem;letter-spacing:0;animation:none;box-shadow:none;max-width:100%;line-height:1.8}.hero .badge-pill::before{animation:none;box-shadow:none}#about .about-text{font-size:.9rem;line-height:2;max-width:780px}#about .about-text strong{font-weight:500;color:var(--text)}#about .about-text+.about-text{margin-top:1.2rem}</style><style>#about .cloud-profile{padding:1rem 1.2rem;border-left:2px solid var(--accent);background:rgba(0,212,255,.035);border-radius:0 8px 8px 0}.hero .badge-pill{font-size:.57rem}.hero h1,html[lang=fr] .hero h1{font-size:clamp(2rem,3.8vw,3.1rem)}@media(max-width:760px){.hero h1,html[lang=fr] .hero h1{font-size:clamp(2rem,7vw,3rem)}}</style></head>
+<body class="">
+<div class="noise"></div>
+<div class="grid-bg"></div>
+
+<nav>
+  <div class="wrap nav-inner">
+    <div class="logo">Tarek <span>MEDJOUB</span></div>
+    <div class="language-switch" role="group" aria-label="Langue du site"><a href="../index.html" data-language="en" lang="en" hreflang="en">EN</a><a href="index.html" data-language="fr" lang="fr" hreflang="fr" aria-current="page">FR</a></div><button class="menu-toggle" aria-controls="navigation" aria-expanded="false">Menu <svg class="ui-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16" stroke="currentColor" fill="none" stroke-width="1.6"/></svg></button><div class="nav-links" id="navigation">
+      <a href="#about">À propos</a>
+      <a href="#stack">Compétences</a>
+      <a href="#experience">Expérience</a>
+      <a href="#projects">Projets</a><a href="#labs">Labs</a>
+      <a href="#resume">CV</a><a href="#contact">Contact</a>
+    </div>
+  </div>
+</nav>
+
+<div class="wrap">
+
+  <!-- HERO -->
+  <section class="hero" id="hero">
+    <div class="hero-glow"></div>
+    <div class="hero-glow2"></div>
+    <div class="hero-inner">
+      <div>
+        <div class="badge-pill">Réseaux, Sécurité &amp; Cloud · À l’écoute · Paris</div><p class="hero-name">Tarek MEDJOUB</p><h1>Ingénieur Réseaux,<br><span class="accent">Sécurité &amp; Cloud.</span></h1><p class="hero-specialties">Réseaux multisites <span>·</span> Sécurité Fortinet <span>·</span> Cloud hybride</p><p class="hero-sub">J’interviens en réseaux d’entreprise, sécurité Fortinet et connectivité cloud hybride, en associant mon expérience réseau en production à des projets Azure et AWS en laboratoire.</p><div class="hero-ctas">
+          <a href="mailto:tarek.medjoub@outlook.fr" class="btn-primary">Me contacter</a>
+          <a href="https://linkedin.com/in/tarek-medjoub" class="btn-outline">LinkedIn</a>
+          <a href="#projects" class="btn-outline">Voir les projets</a>
+          <a href="#resume" class="btn-outline">Télécharger le CV <svg class="ui-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12m-5-5 5 5 5-5M4 16v4h16v-4"/></svg></a>
+        </div>
+      </div>
+      <aside class="network-visual"><div class="network-visual-top"><span class="architecture-mark" aria-hidden="true"></span><span>Connecter. Sécuriser. Superviser.</span></div><svg class="architecture-svg" viewBox="0 0 340 390" role="img" aria-label="Illustration d’un FortiGate reliant les opérateurs, une agence, le cloud, le LAN et la supervision." xmlns="http://www.w3.org/2000/svg"><defs><pattern id="arch-dots" width="18" height="18" patternUnits="userSpaceOnUse"><circle cx="1" cy="1" r=".7" fill="#00d4ff" opacity=".16"/></pattern></defs><rect width="340" height="390" fill="url(#arch-dots)"/><g class="arch-lines" fill="none"><path d="M170 90V158M120 194H65V151M220 194H275V151M145 230V298H87V320M195 230V298H253V320"/><path class="arch-flow" d="M170 90V158M120 194H65V151M220 194H275V151M145 230V298H87V320M195 230V298H253V320"/></g><g class="arch-device"><rect x="118" y="42" width="104" height="48" rx="9"/><path d="M137 63h16m-12-5-5 5 5 5m55-5h-16m12-5 5 5-5 5"/><text x="170" y="80">WAN / FAI</text><rect x="18" y="105" width="94" height="46" rx="9"/><path d="M57 121h16m-12-5-5 5 5 5m9-10 5 5-5 5"/><text x="65" y="141">AGENCE</text><rect x="228" y="105" width="94" height="46" rx="9"/><path d="M265 125h18a5 5 0 0 0-1-10 7 7 0 0 0-13-1 6 6 0 0 0-4 11Z"/><text x="275" y="141">CLOUD</text><rect x="30" y="320" width="114" height="46" rx="9"/><path d="M77 335h20m-16-3v6m6-6v6m6-6v6"/><text x="87" y="356">LAN / VLAN</text><rect x="196" y="320" width="114" height="46" rx="9"/><path d="M237 336h7l3-6 5 13 4-9h11"/><text x="253" y="356">SUPERVISION</text></g><g class="arch-core"><rect x="112" y="142" width="116" height="104" rx="19"/><rect class="arch-core-inner" x="121" y="151" width="98" height="86" rx="13"/><path d="m170 163 13 5v10c0 9-13 16-13 16s-13-7-13-16v-10l13-5Z"/><path d="m163 177 5 5 9-10"/><text x="170" y="213">FORTIGATE</text><text class="arch-core-sub" x="170" y="229">HA / SD-WAN</text></g><g class="arch-protocols"><text x="180" y="127">SD-WAN</text><text x="66" y="182">IPsec</text><text x="242" y="182">BGP</text><text x="155" y="278">OSPF</text><text x="210" y="290">SNMP</text></g></svg><div class="network-visual-footer"><span>Routage · Sécurité · Visibilité</span></div><p class="network-visual-note">Architecture illustrative</p></aside>
+    </div>
+  </section>
+
+  <hr class="section-divider">
+
+  <!-- ABOUT -->
+  <section id="about" class="reveal">
+    <div class="section-tag">À propos</div>
+    <h2>De l’exploitation réseau au pilotage de projets</h2>
+    <p class="about-text">Mes compétences principales couvrent <strong>le routage et la commutation Cisco, la sécurité Fortinet et la connectivité multisite</strong>. J’interviens sur la segmentation VLAN, le routage OSPF/BGP, les politiques de pare-feu, le NAT et les VPN IPsec. Mon expérience comprend également le SD-WAN Fortinet, les liens redondants et les architectures à haute disponibilité.</p>
+    <p class="about-text cloud-profile">Mes travaux en <strong>cloud hybride</strong> portent sur l’interconnexion du réseau local avec <strong>Azure VPN Gateway et AWS Transit Gateway</strong>, au moyen de tunnels IPsec et d’échanges de routes BGP, avec supervision PRTG centralisée. Ces projets en laboratoire complètent mon expérience en production dans les réseaux et la sécurité.</p><p class="about-text">J’utilise <strong>Zabbix, PRTG et GLPI</strong> pour superviser les infrastructures, diagnostiquer les problèmes de connectivité et suivre les incidents. En complément de la configuration et du dépannage, je contribue aux audits techniques, à la documentation d’architecture et à la coordination de projets. Je continue à développer mes compétences à travers des <strong>labs EVE-NG en routage, sécurité, connectivité cloud hybride et automatisation Ansible</strong>.</p>
+  </section>
+
+  <hr class="section-divider">
+
+  <!-- TECH STACK -->
+  <section id="stack" class="reveal">
+    <div class="section-tag">Environnement technique</div>
+    <h2>Compétences &amp; expertise</h2>
+
+    <p style="font-size:.88rem;color:var(--muted);line-height:1.8;max-width:680px;margin-top:.5rem;margin-bottom:1.5rem;">Mes domaines techniques couvrent la commutation, le routage, la sécurité Fortinet, la connectivité cloud hybride et l’exploitation réseau. Des labs EVE-NG dédiés expliqueront les protocoles et leur dépannage à travers des exercices ciblés et reproductibles.</p>
+
+    <div class="net-grid">
+
+      <!-- Layer 2 -->
+      <div class="net-card">
+        <div class="net-card-header">
+          <div class="net-icon"><svg class="ui-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="6" height="6" rx="1"/><rect x="15" y="15" width="6" height="6" rx="1"/><rect x="3" y="15" width="6" height="6" rx="1"/><path d="M6 9v6m0-3h12v3"/></svg>
+          </div>
+          <div class="net-title">Couche 2 — Commutation</div>
+        </div>
+        <ul class="net-bullets">
+          <li><strong>VLANs (802.1Q)</strong><span class="skill-explanation">trunks, ports access, sécurisation du VLAN natif, élagage</span></li>
+          <li><strong>STP / RSTP / MSTP</strong><span class="skill-explanation">élection du pont racine, PortFast, BPDU Guard, Root Guard, prévention des boucles</span></li>
+          <li><strong>EtherChannel / LACP (802.3ad)</strong><span class="skill-explanation">agrégation de ports, modes de répartition de charge</span></li>
+          <li><strong>Sécurité des ports</strong><span class="skill-explanation">limitation des adresses MAC, sticky MAC, actions en cas de violation</span></li>
+          <li><strong>DHCP Snooping, DAI, IP Source Guard</strong><span class="skill-explanation">protection contre les attaques de couche 2</span></li>
+          <li><strong>CDP / LLDP</strong><span class="skill-explanation">découverte de topologie et identification des voisins</span></li>
+        </ul>
+        <div class="net-tags">
+          <span class="net-tag">802.1Q</span><span class="net-tag">STP/RSTP</span><span class="net-tag">MSTP</span><span class="net-tag">LACP</span><span class="net-tag">Sécurité des ports</span><span class="net-tag">DAI</span><span class="net-tag g">Cisco Catalyst</span>
+        </div>
+      </div>
+
+      <!-- Layer 3 Routing -->
+      <div class="net-card">
+        <div class="net-card-header">
+          <div class="net-icon"><svg class="ui-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="6" cy="5" r="2"/><circle cx="18" cy="19" r="2"/><path d="M6 7v8a4 4 0 0 0 4 4h6M14 5h6m-3-3 3 3-3 3M9 5h5"/></svg>
+          </div>
+          <div class="net-title">Couche 3 — Routage</div>
+        </div>
+        <ul class="net-bullets">
+          <li><strong>OSPF</strong><span class="skill-explanation">multi-aires, types de LSA, DR/BDR, agrégation de routes, authentification, aires stub</span></li>
+          <li><strong>BGP (eBGP/iBGP)</strong><span class="skill-explanation">AS-PATH, local-pref, MED, weight, route-maps, filtrage de préfixes</span></li>
+          <li><strong>EIGRP</strong><span class="skill-explanation">métriques, successeur faisable, algorithme DUAL, interfaces passives</span></li>
+          <li><strong>Redistribution de routes</strong><span class="skill-explanation">redistribution entre protocoles, métriques initiales, prévention des boucles par tags</span></li>
+          <li><strong>Routage par politiques (PBR)</strong><span class="skill-explanation">orientation du trafic selon l’IP source ou l’application</span></li>
+          <li><strong>IPv6</strong><span class="skill-explanation">double pile, OSPFv3, SLAAC, DHCPv6, routage statique</span></li>
+        </ul>
+        <div class="net-tags">
+          <span class="net-tag">OSPF</span><span class="net-tag">BGP</span><span class="net-tag">EIGRP</span><span class="net-tag">PBR</span><span class="net-tag">Redistribution</span><span class="net-tag">IPv6</span><span class="net-tag g">OSPFv3</span>
+        </div>
+      </div>
+
+      <!-- WAN & SD-WAN -->
+      <div class="net-card">
+        <div class="net-card-header">
+          <div class="net-icon"><svg class="ui-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m12 3 9 5-9 5-9-5 9-5Zm-9 9 9 5 9-5M3 16l9 5 9-5"/></svg>
+          </div>
+          <div class="net-title">WAN &amp; SD-WAN</div>
+        </div>
+        <ul class="net-bullets">
+          <li><strong>Fortinet SD-WAN</strong><span class="skill-explanation">sondes SLA, sélection des chemins selon les performances, politiques de zone</span></li>
+          <li><strong>Architecture à deux opérateurs</strong><span class="skill-explanation">actif/actif, actif/passif, basculement automatique selon l’état des liens</span></li>
+          <li><strong>Orientation du trafic</strong><span class="skill-explanation">routage par application, marquage QoS, gestion de la bande passante</span></li>
+          <li><strong>Principes MPLS</strong><span class="skill-explanation">commutation de labels, VRF, modèles de routage PE/CE</span></li>
+          <li><strong>FortiManager</strong><span class="skill-explanation">gestion centralisée des politiques SD-WAN, ADOM, déploiement des politiques</span></li>
+          <li><strong>FortiAnalyzer</strong><span class="skill-explanation">centralisation des journaux, analyse SD-WAN, rapports de conformité</span></li>
+        </ul>
+        <div class="net-tags">
+          <span class="net-tag">SD-WAN</span><span class="net-tag">Dual-ISP</span><span class="net-tag">QoS</span><span class="net-tag">MPLS</span><span class="net-tag g">FortiManager</span><span class="net-tag g">FortiAnalyzer</span>
+        </div>
+      </div>
+
+      <!-- VPN & Tunneling -->
+      <div class="net-card">
+        <div class="net-card-header">
+          <div class="net-icon"><svg class="ui-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="10" width="16" height="11" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3m-4 5v2"/></svg>
+          </div>
+          <div class="net-title">VPN &amp; tunnels</div>
+        </div>
+        <ul class="net-bullets">
+          <li><strong>IPsec IKEv1/v2</strong><span class="skill-explanation">phases 1/2, AES-256/SHA-256, PFS, DPD, modes aggressive/main</span></li>
+          <li><strong>VPN en étoile (hub-and-spoke)</strong><span class="skill-explanation">topologie IPsec centralisée, communications entre agences via le hub</span></li>
+          <li><strong>VPN SSL/TLS</strong><span class="skill-explanation">VPN SSL FortiGate, split tunneling, tunnel complet, intégration MFA</span></li>
+          <li><strong>GRE sur IPsec</strong><span class="skill-explanation">encapsulation, keepalives, ajustement MTU/MSS</span></li>
+          <li><strong>BGP sur IPsec</strong><span class="skill-explanation">propagation dynamique des routes dans les tunnels chiffrés</span></li>
+          <li><strong>VPN site-à-cloud</strong><span class="skill-explanation">FortiGate vers Azure VPN GW et AWS TGW, IKEv2 avec BGP</span></li>
+        </ul>
+        <div class="net-tags">
+          <span class="net-tag">IPsec IKEv2</span><span class="net-tag">SSL VPN</span><span class="net-tag">GRE</span><span class="net-tag">Hub-and-spoke</span><span class="net-tag g">BGP sur IPsec</span><span class="net-tag g">Site-à-cloud</span>
+        </div>
+      </div>
+
+      <!-- High Availability -->
+      <div class="net-card">
+        <div class="net-card-header">
+          <div class="net-icon"><svg class="ui-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m12 3 8 3v6c0 5-8 9-8 9s-8-4-8-9V6l8-3Z"/><path d="m8 12 3 3 5-6"/></svg>
+          </div>
+          <div class="net-title">Haute disponibilité</div>
+        </div>
+        <ul class="net-bullets">
+          <li><strong>HSRP / VRRP</strong><span class="skill-explanation">redondance de passerelle, priorité, préemption, suivi des interfaces</span></li>
+          <li><strong>FortiGate HA</strong><span class="skill-explanation">clusters actif/passif et actif/actif, synchronisation des sessions</span></li>
+          <li><strong>Basculement entre opérateurs</strong><span class="skill-explanation">changement de chemin déclenché par les sondes SLA et l’état des liens</span></li>
+          <li><strong>Redondance par agrégation de liens</strong><span class="skill-explanation">LACP, redondance des liaisons montantes et répartition de charge</span></li>
+          <li><strong>Conception de topologies redondantes</strong><span class="skill-explanation">suppression des points uniques de défaillance au cœur et à la distribution</span></li>
+          <li><strong>BFD</strong><span class="skill-explanation">détection rapide des défaillances avec BGP/OSPF</span></li>
+        </ul>
+        <div class="net-tags">
+          <span class="net-tag">HSRP</span><span class="net-tag">VRRP</span><span class="net-tag">FortiGate HA</span><span class="net-tag">BFD</span><span class="net-tag g">Active/Active</span><span class="net-tag g">Synchronisation des sessions</span>
+        </div>
+      </div>
+
+      <!-- Network Services & Design -->
+      <div class="net-card">
+        <div class="net-card-header">
+          <div class="net-icon"><svg class="ui-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="7" rx="2"/><rect x="3" y="14" width="18" height="7" rx="2"/><path d="M7 6h.01M7 17h.01M11 6h6m-6 11h6"/></svg>
+          </div>
+          <div class="net-title">Services &amp; architecture réseau</div>
+        </div>
+        <ul class="net-bullets">
+          <li><strong>DHCP</strong><span class="skill-explanation">serveur/relais, option 82, réservations, gestion des étendues, basculement</span></li>
+          <li><strong>DNS</strong><span class="skill-explanation">zones directes/inverses, split-DNS, redirecteurs conditionnels</span></li>
+          <li><strong>NTP</strong><span class="skill-explanation">hiérarchie des strates, authentification des pairs, suivi de la dérive</span></li>
+          <li><strong>SNMPv3</strong><span class="skill-explanation">authPriv (SHA/AES), interrogation des OID, configuration des traps</span></li>
+          <li><strong>Architecture à trois couches</strong><span class="skill-explanation">cœur / distribution / accès, architecture LAN de campus</span></li>
+          <li><strong>Documentation réseau</strong><span class="skill-explanation">schémas de topologie, plans d’adressage, procédures, gestion des changements</span></li>
+        </ul>
+        <div class="net-tags">
+          <span class="net-tag">DHCP</span><span class="net-tag">DNS</span><span class="net-tag">NTP</span><span class="net-tag">SNMPv3</span><span class="net-tag g">Architecture à trois couches</span><span class="net-tag g">Plan d’adressage IP</span>
+        </div>
+      </div>
+
+      <!-- Network Security -->
+      <div class="net-card">
+        <div class="net-card-header">
+          <div class="net-icon"><svg class="ui-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m12 3 8 3v6c0 5-8 9-8 9s-8-4-8-9V6l8-3Z"/><path d="m8 12 3 3 5-6"/></svg>
+          </div>
+          <div class="net-title">Sécurité réseau</div>
+        </div>
+        <ul class="net-bullets">
+          <li><strong>Pare-feu FortiGate</strong><span class="skill-explanation">politiques, NAT, profils de sécurité, IPS, contrôle applicatif, UTM</span></li>
+          <li><strong>Architecture de pare-feu</strong><span class="skill-explanation">conception DMZ, politiques par zone, refus implicite, moindre privilège</span></li>
+          <li><strong>ACL</strong><span class="skill-explanation">ACL standard/étendues, nommées, temporelles, filtrage entrant/sortant</span></li>
+          <li><strong>IDS/IPS</strong><span class="skill-explanation">ajustement des signatures, modes inline/passif, moteur IPS FortiGate, signatures personnalisées</span></li>
+          <li><strong>Segmentation réseau</strong><span class="skill-explanation">isolation par VLAN, ACL inter-zones, principes de microsegmentation</span></li>
+          <li><strong>Durcissement de l’infrastructure</strong><span class="skill-explanation">désactivation des services inutilisés, clés SSH, SNMPv3, isolation du VLAN d’administration</span></li>
+        </ul>
+        <div class="net-tags">
+          <span class="net-tag">FortiGate</span><span class="net-tag">ACL</span><span class="net-tag">IDS/IPS</span><span class="net-tag">UTM</span><span class="net-tag">DMZ</span><span class="net-tag g">Politiques par zone</span><span class="net-tag g">Durcissement</span>
+        </div>
+      </div>
+
+      <!-- Cloud & Hybrid Connectivity -->
+      <div class="net-card">
+        <div class="net-card-header">
+          <div class="net-icon"><svg class="ui-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 18h11a4 4 0 0 0 0-8h-1a6 6 0 1 0-10 8Z"/></svg>
+          </div>
+          <div class="net-title">Cloud &amp; infrastructure hybride</div>
+        </div>
+        <ul class="net-bullets">
+          <li><strong>Azure VPN Gateway</strong><span class="skill-explanation">IKEv2 site-à-site, actif/actif, voisinage BGP, adressage APIPA</span></li>
+          <li><strong>AWS Transit Gateway</strong><span class="skill-explanation">raccordement VPN, propagation des tables de routage, connectivité multi-VPC</span></li>
+          <li><strong>FortiGate vers le cloud</strong><span class="skill-explanation">réseau local vers Azure/AWS sur IPsec avec échange de routes BGP</span></li>
+          <li><strong>Aviatrix</strong><span class="skill-explanation">réseau multicloud, routage et sécurité cloud centralisés</span></li>
+          <li><strong>Architecture hybride</strong><span class="skill-explanation">interconnexion du réseau local et du cloud, cohérence des politiques de routage</span></li>
+          <li><strong>Supervision cloud</strong><span class="skill-explanation">sondes cloud PRTG, tableau de bord NOC pour le réseau local et le cloud</span></li>
+        </ul>
+        <div class="net-tags">
+          <span class="net-tag">Azure VPN GW</span><span class="net-tag">AWS TGW</span><span class="net-tag">Aviatrix</span><span class="net-tag">BGP</span><span class="net-tag g">Architecture hybride</span><span class="net-tag g">Multicloud</span>
+        </div>
+      </div>
+
+      <!-- Monitoring & Supervision -->
+      <div class="net-card">
+        <div class="net-card-header">
+          <div class="net-icon"><svg class="ui-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12h4l3-8 4 16 3-8h4"/></svg>
+          </div>
+          <div class="net-title">Supervision &amp; suivi</div>
+        </div>
+        <ul class="net-bullets">
+          <li><strong>Zabbix</strong><span class="skill-explanation">collecte SNMPv3, modèles par constructeur, alertes sur déclencheurs, découverte automatique</span></li>
+          <li><strong>PRTG</strong><span class="skill-explanation">capteurs de bande passante, utilisation WAN, état des VPN, sondes cloud</span></li>
+          <li><strong>ManageEngine OpManager</strong><span class="skill-explanation">cartes de topologie, tableaux de bord NOC, suivi de disponibilité</span></li>
+          <li><strong>GLPI ITSM</strong><span class="skill-explanation">création de tickets via webhook Zabbix, suivi des SLA, cycle de vie des incidents</span></li>
+          <li><strong>FortiAnalyzer</strong><span class="skill-explanation">centralisation des journaux, analyse SD-WAN, rapports de conformité</span></li>
+          <li><strong>Conception des alertes</strong><span class="skill-explanation">seuils de criticité (CPU, interfaces, VPN, BGP), matrice d’escalade, astreinte</span></li>
+        </ul>
+        <div class="net-tags">
+          <span class="net-tag">Zabbix</span><span class="net-tag">PRTG</span><span class="net-tag">OpManager</span><span class="net-tag">GLPI</span><span class="net-tag g">FortiAnalyzer</span><span class="net-tag g">Organisation NOC</span>
+        </div>
+      </div>
+
+      <!-- Systems & IT Management -->
+      <div class="net-card">
+        <div class="net-card-header">
+          <div class="net-icon"><svg class="ui-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="13" rx="2"/><path d="M8 21h8m-4-5v5m-5-9 3-4 3 3 3-4"/></svg>
+          </div>
+          <div class="net-title">Systèmes &amp; gestion IT</div>
+        </div>
+        <ul class="net-bullets">
+          <li><strong>Windows Server</strong><span class="skill-explanation">Active Directory, DNS, DHCP, GPO, gestion des utilisateurs et groupes</span></li>
+          <li><strong>Linux</strong><span class="skill-explanation">administration en ligne de commande, gestion des services, scripts Bash d’automatisation</span></li>
+          <li><strong>Gestion de projets IT</strong><span class="skill-explanation">gestion des changements, planification, reporting, analyse des risques</span></li>
+          <li><strong>Documentation technique</strong><span class="skill-explanation">topologies réseau, procédures, plans d’adressage, suivi des changements</span></li>
+          <li><strong>Gestion des incidents</strong><span class="skill-explanation">dépannage N3, analyse des causes, comptes rendus d’incident</span></li>
+          <li><strong>EVE-NG</strong><span class="skill-explanation">conception et validation de maquettes, images KVM FortiGate/Cisco, simulation de topologies</span></li>
+        </ul>
+        <div class="net-tags">
+          <span class="net-tag">Windows Server</span><span class="net-tag">Linux</span><span class="net-tag">Active Directory</span><span class="net-tag">EVE-NG</span><span class="net-tag g">Gestion de projets IT</span><span class="net-tag g">Support N3</span>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <hr class="section-divider">
+
+  <!-- EXPERIENCE -->
+  <section id="experience" class="reveal">
+    <div class="section-tag">Expérience</div>
+    <h2>Expériences &amp; responsabilités</h2>
+    <div class="exp-list"><div class="exp-card"><div class="exp-role">Ingénieur Réseaux &amp; Sécurité — Indépendant</div><div class="exp-meta">Depuis août 2026 · France</div><ul class="exp-bullets"><li>Audit des configurations réseau et sécurité, identification des vulnérabilités et priorisation des corrections selon leur criticité.</li><li>Revue des politiques de pare-feu, des architectures VPN et de la segmentation pour adapter les accès aux besoins des clients.</li><li>Étude de solutions SD-WAN, de connectivité cloud et de supervision ; rédaction des architectures et des procédures d’exploitation.</li></ul><div class="exp-tech"><span class="tag">Audit</span><span class="tag">FortiGate</span><span class="tag">VPN</span><span class="tag">Segmentation</span></div></div><div class="exp-card"><div class="exp-role">Assistant Chef de Projet Réseaux &amp; Sécurité — SGHP · Stage</div><div class="exp-meta">Mars 2026 — Septembre 2026 · France</div><ul class="exp-bullets"><li>Appui au chef de projet pour la migration d’une architecture on-premises vers le cloud, dans le cadre de l’évolution de l’infrastructure de l’entreprise.</li></ul><div class="exp-tech"><span class="tag">Coordination de projet</span><span class="tag">Migration cloud</span></div></div><div class="exp-card"><div class="exp-role">Team Leader &amp; Chef de Projet Réseaux &amp; Sécurité — Condor Electronics</div><div class="exp-meta">Octobre 2023 — Septembre 2025 · Algérie</div><ul class="exp-bullets"><li>Encadrement de quatre techniciens et deux ingénieurs, avec priorisation des incidents et des projets sur un réseau industriel multisite.</li><li>Migration des connexions intersites vers le SD-WAN Fortinet : déploiement de tunnels VPN, adaptation du routage et gestion centralisée des liaisons.</li><li>Déploiement de liaisons de secours Ubiquiti et d’équipements redondants pour limiter le risque d’interruption entre les sites.</li><li>Audit des configurations VLAN, ACL et OSPF sur les équipements Cisco et FortiGate.</li><li>Traitement des alertes Zabbix/PRTG, diagnostic des incidents de connectivité et de routage, suivi des tickets dans GLPI.</li></ul><div class="exp-tech"><span class="tag">Cisco</span><span class="tag">FortiGate</span><span class="tag">SD-WAN</span><span class="tag">Ubiquiti</span><span class="tag">Zabbix</span><span class="tag">GLPI</span></div></div><div class="exp-card"><div class="exp-role">Stagiaire Ingénieur Réseaux — 3K Solutions</div><div class="exp-meta">Février 2023 — Juin 2023 · Algérie</div><ul class="exp-bullets"><li>Configuration d’équipements Cisco (adressage IP, VLAN et routage statique) et tests de connectivité avant mise en service.</li></ul><div class="exp-tech"><span class="tag">Cisco IOS</span><span class="tag">VLAN</span><span class="tag">Routage</span></div></div></div>
+  </section>
+
+  <hr class="section-divider">
+
+  <!-- PROJECTS -->
+  <section id="projects" class="reveal">
+    <div class="section-tag">Projets</div>
+    <h2>Projets sélectionnés</h2><div class="project-filters" role="group" aria-label="Filtrer les projets"><button data-filter="all" class="selected" aria-pressed="true">Tous les projets</button><button data-filter="network" aria-pressed="false">Réseaux &amp; sécurité</button><button data-filter="cloud" aria-pressed="false">Cloud hybride</button><button data-filter="monitoring" aria-pressed="false">Supervision</button></div>
+    <div class="proj-grid">
+
+      <div class="proj-card" data-category="network">
+        <div class="proj-title">Migration SD-WAN multisite</div>
+        <div class="proj-desc">Projet SD-WAN Fortinet en étoile sur quatre sites, avec deux liens opérateur par site, IPsec IKEv2/AES-256 et routage BGP/OSPF. Validation sous EVE-NG avant migration ; basculement inférieur à une seconde mesuré en laboratoire.</div>
+        <div class="proj-footer">
+          <div class="tags"><span class="tag">SD-WAN</span><span class="tag">VPN</span><span class="tag">Fortinet</span><span class="tag">BGP</span></div>
+          <a href="projects/sdwan.html" class="btn-details">Voir le projet <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+        </div>
+      </div>
+
+      <div class="proj-card" data-category="network">
+        <div class="proj-title">Optimisation de l’architecture LAN</div>
+        <div class="proj-desc">Refonte des couches distribution et accès : segmentation VLAN, routage OSPF, filtrage ACL et supervision SNMP.</div>
+        <div class="proj-footer">
+          <div class="tags"><span class="tag">VLAN</span><span class="tag">OSPF</span><span class="tag">ACL</span><span class="tag">SNMP</span></div>
+          <a href="projects/lan-optimization.html" class="btn-details">Voir le projet <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+        </div>
+      </div>
+
+      <div class="proj-card" data-category="cloud">
+        <div class="proj-title">Architecture cloud hybride — Azure &amp; AWS</div>
+        <div class="proj-desc">Conception d’une maquette hybride reliant un FortiGate local à Azure VPN Gateway et AWS Transit Gateway, avec échange des routes BGP et supervision PRTG centralisée.</div>
+        <div class="proj-footer">
+          <div class="tags"><span class="tag">FortiGate</span><span class="tag">Azure</span><span class="tag">AWS</span><span class="tag">BGP</span><span class="tag">IPsec</span></div>
+          <a href="projects/hybrid-cloud.html" class="btn-details">Voir le projet <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+        </div>
+      </div>
+
+      <div class="proj-card" data-category="monitoring">
+        <div class="proj-title">Supervision &amp; gestion des alertes</div>
+        <div class="proj-desc">Mise en place d’un environnement de supervision centralisé : collecte SNMP Zabbix, seuils d’alerte, intégration GLPI et tableaux de bord de type NOC.</div>
+        <div class="proj-footer">
+          <div class="tags"><span class="tag">Zabbix</span><span class="tag">PRTG</span><span class="tag">SNMP</span><span class="tag">GLPI</span></div>
+          <a href="projects/monitoring-stack.html" class="btn-details">Voir le projet <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <hr class="section-divider">
+
+<hr class="section-divider"><section id="labs" class="reveal"><div class="section-tag"><svg class="ui-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 3h6m-5 0v6l-6 10a1.4 1.4 0 0 0 1.2 2h13.6a1.4 1.4 0 0 0 1.2-2L14 9V3M8 14h8"/></svg> Labs pédagogiques EVE-NG</div><h2>Les protocoles expliqués en laboratoire</h2><p class="labs-intro">J’utilise les labs réseau pour approfondir mes connaissances, tester des choix techniques et améliorer ma démarche de dépannage. Cet espace présentera cet apprentissage continu à travers des exercices EVE-NG reproductibles, des fondamentaux aux architectures résilientes et à l’automatisation.</p><p class="labs-growth">Comprendre le mécanisme. Construire la topologie. Tester la panne. Documenter le résultat.</p><div class="labs-note"><svg class="ui-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9l-6-6Zm0 0v6h6M8 13h8m-8 4h5"/></svg> <span>Une bibliothèque en évolution. Les sujets ci-dessous constituent mon programme de publication ; chaque tutoriel sera ajouté après réalisation, validation et documentation du lab.</span></div><div class="labs-grid"><article class="lab-card"><div class="lab-top"><svg class="ui-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="6" cy="5" r="2"/><circle cx="18" cy="19" r="2"/><path d="M6 7v8a4 4 0 0 0 4 4h6M14 5h6m-3-3 3 3-3 3M9 5h5"/></svg><span class="lab-status">À venir</span></div><span class="lab-category">Routage · EVE-NG</span><h3>Les fondamentaux de BGP</h3><p>Étudier le voisinage eBGP, les annonces de routes et la sélection des chemins dans une maquette dédiée.</p><div class="tags"><span class="tag">Voisinage eBGP</span><span class="tag">Annonces de routes</span></div><a class="btn-details" href="labs/bgp.html">Voir le programme <svg class="ui-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></a></article><article class="lab-card"><div class="lab-top"><svg class="ui-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="6" cy="5" r="2"/><circle cx="18" cy="19" r="2"/><path d="M6 7v8a4 4 0 0 0 4 4h6M14 5h6m-3-3 3 3-3 3M9 5h5"/></svg><span class="lab-status">À venir</span></div><span class="lab-category">Routage · EVE-NG</span><h3>Voisinages &amp; routage OSPF</h3><p>Explorer la formation des voisinages, la conception des aires et les vérifications utiles au dépannage OSPF.</p><div class="tags"><span class="tag">Formation des voisinages</span><span class="tag">Conception des aires</span></div><a class="btn-details" href="labs/ospf.html">Voir le programme <svg class="ui-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></a></article><article class="lab-card"><div class="lab-top"><svg class="ui-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="6" height="6" rx="1"/><rect x="15" y="15" width="6" height="6" rx="1"/><rect x="3" y="15" width="6" height="6" rx="1"/><path d="M6 9v6m0-3h12v3"/></svg><span class="lab-status">À venir</span></div><span class="lab-category">Commutation · EVE-NG</span><h3>VLAN &amp; routage inter-VLAN</h3><p>Suivre le trafic entre les VLAN, les trunks et les interfaces routées dans une topologie isolée.</p><div class="tags"><span class="tag">Ports access et trunk</span><span class="tag">Routage inter-VLAN</span></div><a class="btn-details" href="labs/vlan.html">Voir le programme <svg class="ui-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></a></article><article class="lab-card"><div class="lab-top"><svg class="ui-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m12 3 8 3v6c0 5-8 9-8 9s-8-4-8-9V6l8-3Z"/><path d="m8 12 3 3 5-6"/></svg><span class="lab-status">À venir</span></div><span class="lab-category">Sécurité · EVE-NG</span><h3>VPN IPsec site-à-site</h3><p>Étudier un tunnel site-à-site, ses besoins de routage et les étapes de sa validation.</p><div class="tags"><span class="tag">Conception du tunnel</span><span class="tag">Routage et politiques</span></div><a class="btn-details" href="labs/ipsec.html">Voir le programme <svg class="ui-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></a></article><article class="lab-card"><div class="lab-top"><svg class="ui-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="6" rx="2"/><rect x="3" y="14" width="18" height="6" rx="2"/><path d="M7 7h.01M7 17h.01M12 7h5m-5 10h5"/></svg><span class="lab-status">À venir</span></div><span class="lab-category">Routage · EVE-NG</span><h3>MPLS &amp; segmentation VRF</h3><p>Explorer la commutation de labels et l’isolation des flux entre instances de routage.</p><div class="tags"><span class="tag">MPLS / LDP</span><span class="tag">Isolation VRF</span></div><a class="btn-details" href="labs/mpls-vrf.html">Voir le programme <svg class="ui-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></a></article><article class="lab-card"><div class="lab-top"><svg class="ui-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="6" rx="2"/><rect x="3" y="14" width="18" height="6" rx="2"/><path d="M7 7h.01M7 17h.01M12 7h5m-5 10h5"/></svg><span class="lab-status">À venir</span></div><span class="lab-category">Commutation · EVE-NG</span><h3>Résilience STP &amp; LACP</h3><p>Étudier la prévention des boucles, l’agrégation de liens et le comportement d’une topologie redondante.</p><div class="tags"><span class="tag">STP / RSTP</span><span class="tag">Élection du pont racine</span></div><a class="btn-details" href="labs/switching-resilience.html">Voir le programme <svg class="ui-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></a></article><article class="lab-card"><div class="lab-top"><svg class="ui-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="6" rx="2"/><rect x="3" y="14" width="18" height="6" rx="2"/><path d="M7 7h.01M7 17h.01M12 7h5m-5 10h5"/></svg><span class="lab-status">À venir</span></div><span class="lab-category">WAN · EVE-NG</span><h3>Sélection des chemins SD-WAN</h3><p>Comparer les politiques de sélection de chemin et observer le basculement lors de la perte d’un lien WAN.</p><div class="tags"><span class="tag">Sondes SLA</span><span class="tag">Orientation par application</span></div><a class="btn-details" href="labs/sdwan-failover.html">Voir le programme <svg class="ui-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></a></article><article class="lab-card"><div class="lab-top"><svg class="ui-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="6" rx="2"/><rect x="3" y="14" width="18" height="6" rx="2"/><path d="M7 7h.01M7 17h.01M12 7h5m-5 10h5"/></svg><span class="lab-status">À venir</span></div><span class="lab-category">Sécurité · EVE-NG</span><h3>Haute disponibilité FortiGate</h3><p>Construire une maquette HA pour étudier la redondance des pare-feu et tester la continuité de service.</p><div class="tags"><span class="tag">Cluster actif/passif</span><span class="tag">Liens heartbeat</span></div><a class="btn-details" href="labs/fortigate-ha.html">Voir le programme <svg class="ui-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></a></article><article class="lab-card"><div class="lab-top"><svg class="ui-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="6" rx="2"/><rect x="3" y="14" width="18" height="6" rx="2"/><path d="M7 7h.01M7 17h.01M12 7h5m-5 10h5"/></svg><span class="lab-status">À venir</span></div><span class="lab-category">Automatisation · EVE-NG</span><h3>Automatisation réseau avec Ansible</h3><p>Développer des exercices reproductibles de sauvegarde, de déploiement et de vérification des configurations.</p><div class="tags"><span class="tag">Inventaire &amp; playbooks</span><span class="tag">Sauvegarde des configurations</span></div><a class="btn-details" href="labs/ansible-network.html">Voir le programme <svg class="ui-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></a></article><article class="lab-card"><div class="lab-top"><svg class="ui-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="6" rx="2"/><rect x="3" y="14" width="18" height="6" rx="2"/><path d="M7 7h.01M7 17h.01M12 7h5m-5 10h5"/></svg><span class="lab-status">À venir</span></div><span class="lab-category">Exploitation · EVE-NG</span><h3>Supervision SNMP &amp; alertes</h3><p>Suivre un événement réseau depuis la collecte SNMP jusqu’à l’alerte et au diagnostic.</p><div class="tags"><span class="tag">Collecte SNMP</span><span class="tag">Déclencheurs Zabbix</span></div><a class="btn-details" href="labs/snmp-zabbix.html">Voir le programme <svg class="ui-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></a></article></div></section>  <!-- CERTIFICATIONS -->
+  <section id="certs" class="reveal">
+    <div class="section-tag">Certifications</div>
+    <h2>Certifications &amp; formations</h2>
+    <table class="cert-table">
+      <thead>
+        <tr><th>Certification / formation</th><th>Organisme</th><th>Type</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Multicloud Network Associate</td><td>Aviatrix</td><td>Certification</td></tr>
+        <tr><td>CCNP: Core Networking</td><td>Cisco Networking Academy</td><td>Formation Academy</td></tr>
+        <tr><td>Network Defense</td><td>Cisco Networking Academy</td><td>Formation Academy</td></tr>
+        <tr><td>CCNA: Switching, Routing &amp; Wireless Essentials</td><td>Cisco Networking Academy</td><td>Formation Academy</td></tr>
+        <tr><td>Sécurité réseau</td><td>Cisco Networking Academy</td><td>Formation Academy</td></tr>
+        <tr><td>HCIA Cloud Computing</td><td>Huawei</td><td>Certification</td></tr>
+        <tr><td>HCIA Routing &amp; Switching</td><td>Huawei</td><td>Certification</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <hr class="section-divider">
+
+  <!-- EDUCATION -->
+  <section id="education" class="reveal"><div class="section-tag">Formation</div><h2>Un socle technique.<br>Une vision projet.</h2><p class="education-intro">Une formation d’ingénierie réseau complétée par le management et la conduite de projets.</p><div class="education-timeline"><article class="education-entry"><div class="education-date">2024 — 2026<span>MBA2</span></div><div class="education-content"><div class="education-heading"><span class="education-icon"><svg width="23" height="23" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m2 9 10-5 10 5-10 5L2 9Zm4 2v6c4 3 8 3 12 0v-6m4-2v7"/></svg></span><h3>Management &amp; gestion des projets</h3></div><p class="education-school">Gestion de projets, coordination et encadrement.</p><div class="education-tags"><span>Gestion de projets</span><span>Management</span></div></div></article><article class="education-entry"><div class="education-date">2021 — 2023<span>MASTER</span></div><div class="education-content"><div class="education-heading"><span class="education-icon"><svg width="23" height="23" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m2 9 10-5 10 5-10 5L2 9Zm4 2v6c4 3 8 3 12 0v-6m4-2v7"/></svg></span><h3>Réseaux &amp; Télécommunications</h3></div><p class="education-description">Diplôme obtenu en 2023. Réseaux d’entreprise, architecture des télécommunications et sécurité réseau.</p><p class="education-recognition"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="m12 3 8 3v6c0 5-8 9-8 9s-8-4-8-9V6l8-3Z"/><path d="m8 12 3 3 5-6"/></svg>ENIC-NARIC France · Attestation de comparabilité : niveau 7</p><div class="education-tags"><span>Réseaux</span><span>Télécommunications</span><span>Sécurité</span></div></div></article></div></section>
+
+  <hr class="section-divider">
+
+<hr class="section-divider">
+<section id="resume" class="reveal">
+<div class="section-tag">Curriculum vitæ</div><h2>Choisissez la langue de votre CV</h2>
+<p class="resume-intro">Mon expérience, mes projets et mes formations dans un CV PDF. Choisissez la version française ou anglaise.</p>
+<div class="resume-grid">
+<article class="resume-card"><span class="resume-lang">FR</span><div><h3>Version française</h3><p>Ingénieur Réseaux &amp; Sécurité</p><span class="resume-format">PDF · 1 page</span></div><div class="resume-actions"><a href="../assets/CV_Tarek_MEDJOUB.pdf" class="btn-primary" download="Tarek_MEDJOUB_CV_FR.pdf" lang="fr">Télécharger <svg class="ui-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12m-5-5 5 5 5-5M4 16v4h16v-4"/></svg></a><a href="../assets/CV_Tarek_MEDJOUB.pdf" target="_blank" rel="noopener">Aperçu <svg class="ui-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 3h7v7m0-7L10 14M10 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-5"/></svg></a></div></article>
+<article class="resume-card"><span class="resume-lang">EN</span><div><h3>Version anglaise</h3><p>Ingénieur Réseaux &amp; Sécurité</p><span class="resume-format">PDF · 1 page</span></div><div class="resume-actions"><a href="../assets/CV_Tarek_MEDJOUB_EN.pdf" class="btn-primary" download="Tarek_MEDJOUB_CV_EN.pdf">Télécharger <svg class="ui-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12m-5-5 5 5 5-5M4 16v4h16v-4"/></svg></a><a href="../assets/CV_Tarek_MEDJOUB_EN.pdf" target="_blank" rel="noopener">Aperçu <svg class="ui-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 3h7v7m0-7L10 14M10 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-5"/></svg></a></div></article>
+</div></section>
+  <!-- CONTACT -->
+  <section id="contact" class="reveal">
+    <div class="section-tag">Contact</div>
+    <h2>Parlons de votre infrastructure</h2>
+    <div class="contact-card">
+      <div class="contact-row">
+        <div class="contact-icon">
+          <svg width="18" height="18" fill="none" stroke="var(--accent)" stroke-width="1.8" viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M2 7l10 7 10-7"/></svg>
+        </div>
+        <div><div class="contact-label">E-mail</div><div class="contact-val"><a href="mailto:tarek.medjoub@outlook.fr">tarek.medjoub@outlook.fr</a></div></div>
+      </div>
+      <div class="contact-row">
+        <div class="contact-icon">
+          <svg width="18" height="18" fill="none" stroke="var(--accent)" stroke-width="1.8" viewBox="0 0 24 24"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+        </div>
+        <div><div class="contact-label">LinkedIn</div><div class="contact-val"><a href="https://linkedin.com/in/tarek-medjoub">linkedin.com/in/tarek-medjoub</a></div></div>
+      </div>
+      <div class="contact-row">
+        <div class="contact-icon"><svg class="ui-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 10c0 6-8 11-8 11S4 16 4 10a8 8 0 1 1 16 0Z"/><circle cx="12" cy="10" r="2.5"/></svg>
+        </div>
+        <div><div class="contact-label">Localisation</div><div class="contact-val">Paris, France</div></div>
+      </div>
+    </div>
+  </section>
+
+</div>
+
+<footer>
+  <p>© 2026 Tarek MEDJOUB — Ingénieur Réseaux, Sécurité &amp; Cloud</p>
+</footer><a class="back-top" href="#hero" aria-label="Retour en haut" hidden><svg class="ui-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 20V4m-6 6 6-6 6 6"/></svg></a>
+
+<script>
+document.documentElement.classList.add('js-ready');
+const menu=document.querySelector('.menu-toggle'),navigation=document.querySelector('#navigation');
+function closeMenu(){navigation.classList.remove('open');menu.setAttribute('aria-expanded','false')}
+menu.addEventListener('click',()=>{const open=menu.getAttribute('aria-expanded')!=='true';navigation.classList.toggle('open',open);menu.setAttribute('aria-expanded',String(open))});
+navigation.querySelectorAll('a').forEach(a=>a.addEventListener('click',closeMenu));
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeMenu()});
+document.querySelectorAll('[data-filter]').forEach(b=>b.addEventListener('click',()=>{document.querySelectorAll('[data-filter]').forEach(x=>{x.classList.toggle('selected',x===b);x.setAttribute('aria-pressed',String(x===b))});document.querySelectorAll('[data-category]').forEach(c=>c.hidden=b.dataset.filter!=='all'&&c.dataset.category!==b.dataset.filter)}));
+const backTop=document.querySelector('.back-top');window.addEventListener('scroll',()=>{backTop.hidden=window.scrollY<600},{passive:true});
+if('IntersectionObserver' in window){const observer=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting)navigation.querySelectorAll('a').forEach(a=>a.classList.toggle('active',a.hash==='#'+e.target.id))})},{rootMargin:'-10% 0px -65% 0px'});document.querySelectorAll('section[id]').forEach(s=>observer.observe(s))}
+</script>
+<script src="../language.js" defer></script></body>
+</html>
