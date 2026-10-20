@@ -81,7 +81,7 @@ h2{font-size:1.5rem;font-weight:700;letter-spacing:-.02em;margin-bottom:1.25rem;
 .btn-nav{display:inline-flex;align-items:center;gap:.5rem;font-size:.82rem;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:var(--muted);text-decoration:none;padding:.6rem 1.2rem;border:1px solid var(--border);border-radius:8px;transition:border-color .2s,color .2s;}
 .btn-nav:hover{border-color:var(--accent);color:var(--accent);}
 footer{border-top:1px solid var(--border);padding:2rem 0;text-align:center;color:var(--muted);font-size:.82rem;}
-.reveal{opacity:0;transform:translateY(20px);transition:opacity .6s ease,transform .6s ease;}
+.reveal{opacity:1;transform:none;transition:opacity .6s ease,transform .6s ease;}
 .reveal.visible{opacity:1;transform:none;}
 
 /* DEVICE TABLE */
@@ -136,8 +136,8 @@ footer{border-top:1px solid var(--border);padding:2rem 0;text-align:center;color
 .bgp-key{color:var(--muted);}
 .bgp-val{color:var(--text);font-family:'JetBrains Mono',monospace;}
 </style>
-</head>
-<body>
+<style>.language-switch{display:inline-flex;align-items:center;gap:3px;flex-shrink:0;padding:3px;border:1px solid var(--border);border-radius:8px;background:var(--card)}.language-switch a{font:600 .65rem 'Sora',sans-serif;color:var(--muted);padding:5px 7px;text-decoration:none;border-radius:5px}.language-switch a[aria-current="page"]{color:var(--navy);background:var(--accent)}.language-strip{max-width:900px;margin:0 auto;padding:1rem 2rem;display:flex;justify-content:flex-end;position:relative;z-index:2}.nav-inner{gap:.8rem}.nav-links{gap:.7rem}.nav-links a{font-size:.61rem}@media(max-width:700px){.nav-inner>.language-switch{margin-left:0}.menu-toggle{margin-left:auto}.nav-links{order:4}.language-strip{padding-inline:1.25rem}.hero h1{font-size:clamp(2rem,7vw,3rem)}}html[lang=fr] .hero h1{font-size:clamp(2rem,5.5vw,3rem)}html[lang=fr] .hero-inner{gap:2rem}</style></head>
+<body><div class="language-strip"><div class="language-switch" role="group" aria-label="Site language"><a href="sdwan.html" data-language="en" lang="en" hreflang="en" aria-current="page">EN</a><a href="../fr/projects/sdwan.html" data-language="fr" lang="fr" hreflang="fr">FR</a></div></div>
 <div class="noise"></div>
 <div class="grid-bg"></div>
 
@@ -161,15 +161,15 @@ footer{border-top:1px solid var(--border);padding:2rem 0;text-align:center;color
       <span class="tag">FortiGate</span><span class="tag">SD-WAN</span><span class="tag">BGP</span><span class="tag">VPN IPsec</span><span class="tag">OSPF</span>
       <span class="tag green">EVE-NG Lab</span><span class="tag green">Production Design</span>
     </div>
-    <p class="proj-summary">End-to-end migration of a multi-site enterprise network from static legacy WAN links to a centrally managed Fortinet SD-WAN architecture. The project delivered measurable improvements in inter-site routing efficiency, failover speed, operational visibility and policy-based traffic steering.</p>
+    <p class="proj-summary">Scope: enterprise migration with prior EVE-NG validation. Sub-second failover refers to laboratory measurements. Technical configurations below illustrate the design. </p><p class="proj-summary">End-to-end migration of a multi-site enterprise network from static legacy WAN links to a centrally managed Fortinet SD-WAN architecture. The project delivered measurable improvements in inter-site routing efficiency, failover speed, operational visibility and policy-based traffic steering.</p>
   </div>
 
   <!-- KPIs -->
   <div class="kpi-strip reveal">
     <div class="kpi"><div class="kpi-val">4</div><div class="kpi-label">Sites Connected</div></div>
-    <div class="kpi"><div class="kpi-val green">&lt;1s</div><div class="kpi-label">WAN Failover</div></div>
+    <div class="kpi"><div class="kpi-val green">&lt;1s</div><div class="kpi-label">WAN Failover · Lab</div></div>
     <div class="kpi"><div class="kpi-val">2</div><div class="kpi-label">ISP Links / Site</div></div>
-    <div class="kpi"><div class="kpi-val green">100%</div><div class="kpi-label">Policy-Based Routing</div></div>
+    <div class="kpi"><div class="kpi-val green">SD-WAN</div><div class="kpi-label">Application Steering</div></div>
   </div>
 
   <hr class="div">
@@ -700,5 +700,5 @@ const reveals=document.querySelectorAll('.reveal');
 const io=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');io.unobserve(e.target);}});},{threshold:0.1});
 reveals.forEach(r=>io.observe(r));
 </script>
-</body>
+<script src="../language.js" defer></script></body>
 </html>
