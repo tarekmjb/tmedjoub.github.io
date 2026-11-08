@@ -33,7 +33,7 @@ def home(lang):
   <div class="wrap hero-grid">
     <div class="hero-copy">
       <span class="eyebrow">Tarek Medjoub · {t('Network, Security &amp; Cloud Engineer', 'Ingénieur Réseaux, Sécurité &amp; Cloud')}</span>
-      <h1>{t('Networks built to <em>stay up</em>. <br>Secured. Monitored. Documented.', 'Des réseaux conçus pour <em>tenir</em>. <br>Sécurisés. Supervisés. Documentés.')}</h1>
+      <h1>{t('Resilient networks, <br><em>from the branch to the cloud</em>.', 'Des réseaux résilients, <br><em>de l’agence jusqu’au cloud</em>.')}</h1>
       <p class="hero-lede">{t('I design, secure and run multisite enterprise networks, from Fortinet SD-WAN and IPsec/BGP to hybrid connectivity with Azure and AWS.',
                               'Je conçois, sécurise et exploite des réseaux d’entreprise multisites : SD-WAN Fortinet, IPsec/BGP et connectivité hybride vers Azure et AWS.')}</p>
       <div class="cta">
@@ -159,7 +159,7 @@ def home(lang):
 <section class="band alt" id="expertise">
   <div class="wrap">
     <div class="band-head reveal">
-      <div><span class="kicker">{t('Expertise', 'Expertise')}</span><h2>{t('Five domains, one end-to-end view of the network', 'Cinq domaines, une vision de bout en bout du réseau')}</h2></div>
+      <div><span class="kicker">{t('Expertise', 'Expertise')}</span><h2>{t('End-to-end expertise, from layer 2 to the cloud', 'Une expertise de bout en bout, de la couche 2 au cloud')}</h2></div>
       <p>{t('Pick a domain to see what I do there, the technologies I use and where to see it in practice.', 'Choisissez un domaine pour voir ce que j’y fais, les technologies utilisées et où les voir en pratique.')}</p>
     </div>
     <div class="explorer reveal">
@@ -227,8 +227,8 @@ def home(lang):
       </ul>
       <a class="link-arrow light" href="projects/sdwan.html">{t('How it was built', 'Comment c’est construit')} {ico('arrow', 15)}</a>
     </div>
-    <figure class="topo reveal" aria-label="{t('Interactive SD-WAN and hybrid cloud topology simulation', 'Simulation interactive SD-WAN et cloud hybride')}">
-      <div class="topo-head"><span class="t">{t('SD-WAN overlay · hub-and-spoke + hybrid cloud', 'Overlay SD-WAN · étoile + cloud hybride')}</span><span class="live"><span class="led"></span><span id="liveTxt">…</span></span></div>
+    <figure class="topo reveal" id="topoFig" aria-label="{t('Interactive SD-WAN and hybrid cloud topology simulation', 'Simulation interactive SD-WAN et cloud hybride')}">
+      <div class="topo-head"><span class="t">{t('SD-WAN overlay · hub-and-spoke + hybrid cloud', 'Overlay SD-WAN · étoile + cloud hybride')}</span><span class="live"><span class="led"></span><span id="liveTxt">…</span></span><button class="fs-btn" id="fsBtn" type="button" aria-label="{t('Full screen', 'Plein écran')}" title="{t('Full screen', 'Plein écran')}"><svg class="i-open" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/></svg><svg class="i-close" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M9 4v5H4M15 4v5h5M9 20v-5H4M15 20v-5h5"/></svg><span>{t('Full screen', 'Plein écran')}</span></button></div>
       <svg id="topo" viewBox="0 0 530 400" role="img" aria-label="{t('Three branch sites with two ISP links each to an HQ hub, which connects to Azure and AWS over IPsec with BGP', 'Trois agences avec deux liens FAI chacune vers un hub HQ, relié à Azure et AWS en IPsec avec BGP')}"><g id="links"></g><g id="pkts"></g><g id="nodes"></g></svg>
       <div class="legend"><span><i style="--c:var(--green)"></i>{t('ISP-1 primary', 'ISP-1 principal')}</span><span><i class="d" style="--c:var(--green)"></i>{t('ISP-2 backup', 'ISP-2 secours')}</span><span><i class="d" style="--c:var(--violet)"></i>IPsec + BGP</span><span><i style="--c:var(--red)"></i>{t('down', 'coupé')}</span></div>
       <div class="sla"><div class="sla-head"><span>{t('SLA probe latency', 'Latence des sondes SLA')} · <select id="slaSite" aria-label="{t('Site', 'Agence')}"><option value="A">SITE-A</option><option value="B">SITE-B</option><option value="C">SITE-C</option></select></span><span class="vals"><span style="color:var(--green)">ISP-1 <b id="slaV1">—</b></span><span style="color:var(--violet)">ISP-2 <b id="slaV2">—</b></span><span style="color:var(--red)">{t('threshold 100 ms', 'seuil 100 ms')}</span></span></div><svg id="slaSvg" viewBox="0 0 400 58" preserveAspectRatio="none" aria-hidden="true"></svg></div>

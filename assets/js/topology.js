@@ -175,3 +175,33 @@
     requestAnimationFrame(tick);
   }
 })();
+
+/* Full-screen mode for the demo (Fullscreen API, with a CSS fallback for iPhone) */
+(() => {
+  const fig = document.getElementById('topoFig'), btn = document.getElementById('fsBtn');
+  if (!fig || !btn) return;
+  const FR = document.documentElement.lang === 'fr';
+  const label = btn.querySelector('span');
+  const native = !!(fig.requestFullscreen || fig.webkitRequestFullscreen);
+  const isFull = () => !!(document.fullscreenElement || document.webkitFullscreenElement) || fig.classList.contains('is-full');
+  const sync = () => {
+    const on = isFull();
+    fig.classList.toggle('full-on', on);
+    btn.setAttribute('aria-pressed', on);
+    label.textContent = on ? (FR ? 'Quitter' : 'Exit') : (FR ? 'Plein écran' : 'Full screen');
+    btn.title = btn.getAttribute('aria-label') ;
+    document.body.style.overflow = fig.classList.contains('is-full') ? 'hidden' : '';
+  };
+  const enter = () => {
+    if (native) (fig.requestFullscreen || fig.webkitRequestFullscreen).call(fig).catch?.(() => { fig.classList.add('is-full'); sync(); });
+    else { fig.classList.add('is-full'); sync(); }
+  };
+  const exit = () => {
+    if (document.fullscreenElement || document.webkitFullscreenElement) (document.exitFullscreen || document.webkitExitFullscreen).call(document);
+    fig.classList.remove('is-full'); sync();
+  };
+  btn.addEventListener('click', () => (isFull() ? exit() : enter()));
+  document.addEventListener('fullscreenchange', sync);
+  document.addEventListener('webkitfullscreenchange', sync);
+  document.addEventListener('keydown', e => { if (e.key === 'Escape' && fig.classList.contains('is-full')) exit(); });
+})();
