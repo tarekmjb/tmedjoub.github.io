@@ -6,7 +6,7 @@ def tools_page(lang):
     x = L(lang); t = x.t
     body = f"""
 <div class="wrap" id="top">
-  <div class="crumbs"><a class="back-btn" href="index.html">← {t('Back to home', 'Retour à l’accueil')}</a><a href="index.html">tarek@medjoub</a><span class="sep">/</span>{t('toolkit', 'outils')}</div>
+  <div class="crumbs"><a class="back-btn" href="index.html">← {t('Back to home', 'Retour à l’accueil')}</a><a href="index.html">{t('Home', 'Accueil')}</a><span class="sep">/</span>{t('Toolkit', 'Outils')}</div>
   <div class="doc-hero">
     <div class="kicker">{t('network toolkit', 'boîte à outils réseau')}</div>
     <h1>{t('Everyday network tools.', 'Outils réseau du quotidien.')}</h1>

@@ -38,8 +38,12 @@ def home(lang):
         ("O", t("Systems", "Systèmes"), t("& delivery", "& pilotage"),
          ["Windows Server (AD, DNS, DHCP, GPO)", "Linux", "Bash", "Ansible", "EVE-NG", t("IT project management", "Gestion de projet IT")], []),
     ]
+    ICONS = {"C": "M4 6h16M4 12h16M4 18h10", "W": "M3 12h4l3-8 4 16 3-8h4", "V": "M7 11V7a5 5 0 0 1 10 0v4M5 11h14v10H5z",
+             "S": "M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z", "H": "M4 12a8 8 0 0 1 14-5M20 12a8 8 0 0 1-14 5M18 3v4h-4M6 21v-4h4",
+             "K": "M7 18h10a4 4 0 0 0 .5-8A6 6 0 0 0 6 9a4.5 4.5 0 0 0 1 9z", "M": "M3 3v18h18M7 15l4-4 3 3 5-6",
+             "N": "M12 3v6M5 21v-6h14v6M12 9a3 3 0 1 0 0-.01", "O": "M4 5h16v11H4zM8 20h8M12 16v4"}
     rrows = "".join(
-        f'<div class="rrow"><span class="code">{c}</span><span class="dom">{d}<small>{s}</small></span>{chips(items, hl)}</div>'
+        f'<div class="skill-card"><div class="skill-head"><span class="skill-ico"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="{ICONS[c]}"/></svg></span><div><b>{d}</b><small>{s}</small></div></div>{chips(items, hl)}</div>'
         for c, d, s, items, hl in skills)
 
     # projects cards
@@ -67,7 +71,7 @@ def home(lang):
     CAT = {"bgp": "routing", "ospf": "routing", "mpls-vrf": "routing", "vlan": "switching", "switching-resilience": "switching",
            "ipsec": "vpn", "sdwan-failover": "fortinet", "fortigate-ha": "fortinet", "ansible-network": "ops", "snmp-zabbix": "ops"}
     labrows = "".join(
-        f"""<tr data-cat="{CAT[l['id']]}"><td>Gi0/{i + 1}</td><td><a href="labs/{l['id']}.html">{t(*l['title'])}</a></td><td class="desc">{t(*l['focus'])}</td>
+        f"""<tr data-cat="{CAT[l['id']]}"><td class="num">{i + 1:02d}</td><td><a href="labs/{l['id']}.html">{t(*l['title'])}</a></td><td class="desc">{t(*l['focus'])}</td>
 <td><span class="state" style="--c:var(--green)">{t('guide ready', 'guide prêt')}</span> <span class="lvl">{t(*l['level'])}</span></td></tr>"""
         for i, l in enumerate(LABS))
 
@@ -94,7 +98,7 @@ def home(lang):
     <figure class="topo" aria-label="{t('Interactive SD-WAN and hybrid cloud topology simulation', 'Simulation interactive SD-WAN et cloud hybride')}">
       <div class="topo-head">
         <div class="dots"><i></i><i></i><i></i></div>
-        <span class="t">sdwan-lab · hub-and-spoke + {t('hybrid cloud', 'cloud hybride')}</span>
+        <span class="t">{t('Interactive demo · SD-WAN failover', 'Démo interactive · bascule SD-WAN')}</span>
         <span class="live"><span class="led"></span><span id="liveTxt">…</span></span>
       </div>
       <svg id="topo" viewBox="0 0 530 400" role="img" aria-label="{t('Three branch sites with two ISP links each to an HQ hub, which connects to Azure and AWS over IPsec with BGP', 'Trois agences avec deux liens FAI chacune vers un hub HQ, relié à Azure et AWS en IPsec avec BGP')}">
@@ -138,7 +142,7 @@ def home(lang):
 <section class="quick" aria-labelledby="quickT">
   <div class="wrap">
     <div class="quick-card reveal">
-      <div class="quick-head"><span class="kicker" id="quickT" style="margin:0">{t('for recruiters · in 30 seconds', 'pour les recruteurs · en 30 secondes')}</span></div>
+      <div class="quick-head"><span class="kicker" id="quickT" style="margin:0">{t('For recruiters · in 30 seconds', 'Pour les recruteurs · en 30 secondes')}</span></div>
       <dl class="quick-grid">
         <div><dt>{t('Looking for', 'Recherche')}</dt><dd>{t('Network, Security or Cloud Engineer role', 'Poste d’ingénieur Réseaux, Sécurité ou Cloud')}</dd></div>
         <div><dt>{t('Based in', 'Basé à')}</dt><dd>Paris, France</dd></div>
@@ -168,26 +172,21 @@ def home(lang):
             'Aujourd’hui, j’étends les réseaux locaux vers le cloud : <strong>FortiGate vers Azure VPN Gateway et AWS Transit Gateway</strong> en IPsec avec BGP, supervisés depuis PRTG. Un MBA en management de projet complète le profil.')}</p>
       <p class="quote">{t('I don’t just make it work. I make it resilient, documented and observable.', 'Faire fonctionner ne suffit pas : je rends les réseaux résilients, documentés et observables.')}</p>
     </div>
-    <div class="term reveal">
-      <div class="term-head"><div class="dots"><i></i><i></i><i></i></div><span>tarek-medjoub · ssh</span></div>
-<pre class="term-body"><span class="p">tarek#</span> show version
-<span class="k">{t('Engineer', 'Ingénieur')} </span>  Tarek MEDJOUB
-<span class="k">{t('Role    ', 'Poste   ')} </span>  {t('Network, Security &amp; Cloud Engineer', 'Ingénieur Réseaux, Sécurité &amp; Cloud')}
-<span class="k">{t('Location', 'Lieu    ')} </span>  Paris, France
-<span class="k">Status   </span>  <span class="g">● {t('open to opportunities', 'ouvert aux opportunités')}</span>
-<span class="k">{t('Since   ', 'Depuis  ')} </span>  {t('2023 (production networks)', '2023 (réseaux en production)')}
-
-<span class="p">tarek#</span> show modules
-<span class="k">slot 1</span>   {t('Routing &amp; Switching', 'Routage &amp; Commutation')}   <span class="g">ok</span>
-<span class="k">slot 2</span>   {t('Fortinet Security    ', 'Sécurité Fortinet    ')}   <span class="g">ok</span>
-<span class="k">slot 3</span>   SD-WAN / VPN            <span class="g">ok</span>
-<span class="k">slot 4</span>   {t('Hybrid Cloud         ', 'Cloud hybride        ')}   <span class="g">ok</span>
-<span class="k">slot 5</span>   {t('Monitoring &amp; ITSM    ', 'Supervision &amp; ITSM   ')}   <span class="g">ok</span>
-<span class="k">slot 6</span>   {t('Project Management   ', 'Gestion de projet    ')}   <span class="v">MBA</span>
-
-<span class="p">tarek#</span> show interfaces languages
-<span class="k">FR, EN</span>     <span class="g">up/up</span></pre>
-    </div>
+    <aside class="glance reveal" aria-label="{t('Key facts', 'En bref')}">
+      <h3>{t('At a glance', 'En bref')}</h3>
+      <dl>
+        <div><dt>{t('Role', 'Poste')}</dt><dd>{t('Network, Security &amp; Cloud Engineer', 'Ingénieur Réseaux, Sécurité &amp; Cloud')}</dd></div>
+        <div><dt>{t('Location', 'Localisation')}</dt><dd>Paris, France</dd></div>
+        <div><dt>{t('Status', 'Statut')}</dt><dd><span class="dot-ok"></span>{t('Open to opportunities', 'Ouvert aux opportunités')}</dd></div>
+        <div><dt>{t('Experience', 'Expérience')}</dt><dd>{t('Production networks since 2023', 'Réseaux en production depuis 2023')}</dd></div>
+        <div><dt>{t('Languages', 'Langues')}</dt><dd>{t('French · English', 'Français · Anglais')}</dd></div>
+      </dl>
+      <h3>{t('Focus areas', 'Domaines clés')}</h3>
+      <ul class="focus">
+        <li>{t('Routing &amp; switching', 'Routage &amp; commutation')}</li><li>{t('Fortinet security', 'Sécurité Fortinet')}</li><li>SD-WAN / VPN</li>
+        <li>{t('Hybrid cloud', 'Cloud hybride')}</li><li>{t('Monitoring &amp; ITSM', 'Supervision &amp; ITSM')}</li><li>{t('Project management (MBA)', 'Gestion de projet (MBA)')}</li>
+      </ul>
+    </aside>
   </div>
 </section>
 
@@ -228,12 +227,13 @@ def home(lang):
     <div class="reveal">
       <div class="kicker">03 / {t('technical stack', 'environnement technique')}</div>
       <h2>{t('Skills &amp; expertise.', 'Compétences &amp; expertise.')}</h2>
-      <p class="intro">{t('My skills, laid out as a routing table. Highlighted entries are the ones I use most in production.', 'Mes compétences, présentées comme une table de routage. Les entrées en surbrillance sont celles que j’utilise le plus en production.')}</p>
+      <p class="intro">{t('Ten domains, from campus switching to hybrid cloud and monitoring.', 'Dix domaines, de la commutation campus au cloud hybride et à la supervision.')}</p>
     </div>
-    <div class="rtable reveal">
-      <div class="rcodes"><span class="p">tarek#</span>show ip route skills<br>Codes: C - core, S - {t('security', 'sécurité')}, W - WAN, V - VPN, H - {t('high availability', 'haute dispo')}, N - services, K - cloud, M - {t('monitoring', 'supervision')}, O - {t('systems', 'systèmes')}</div>
+    <div class="skills-grid reveal">
       {rrows}
     </div>
+    <p class="skills-note"><span class="chip hl">{t('highlighted', 'en surbrillance')}</span> {t('= used most in production', '= les plus utilisées en production')}</p>
+</div>
   </div>
 </section>
 
@@ -242,18 +242,17 @@ def home(lang):
     <div class="reveal">
       <div class="kicker">04 / {t('experience', 'expérience')}</div>
       <h2>{t('Experience &amp; responsibilities.', 'Expérience &amp; responsabilités.')}</h2>
-      <p class="intro">{t('My career as a traceroute: one hop per role, from my first Cisco configs to independent consulting.', 'Mon parcours en traceroute : un saut par poste, de mes premières configurations Cisco au conseil indépendant.')}</p>
+      <p class="intro">{t('From my first Cisco configurations to leading a team and independent consulting.', 'De mes premières configurations Cisco à l’encadrement d’équipe et au conseil indépendant.')}</p>
     </div>
     <div class="trace">
-      <div class="trace-cmd reveal"><span class="p">tarek#</span> traceroute career --from 2023 --to now</div>
-      <div class="hop reveal"><div class="hopn">1</div><div class="hopbody">
+      <div class="hop reveal"><div class="hopn">2023</div><div class="hopbody">
         <div class="hophead"><h3>{t('Network Engineer Intern', 'Stagiaire ingénieur réseau')}</h3><span class="when">{t('Feb 2023 → Jun 2023', 'févr. 2023 → juin 2023')}</span></div>
         <div class="hopmeta">3K Solutions · {t('Algeria · internship', 'Algérie · stage')}</div>
         <ul><li>{t('Configured Cisco equipment: IP addressing, VLANs and static routing.', 'Configuration d’équipements Cisco : adressage IP, VLAN et routage statique.')}</li>
             <li>{t('Ran connectivity tests and validated the configurations.', 'Tests de connectivité et validation des configurations.')}</li></ul>
         {chips(['Cisco IOS', 'VLAN', t('Static routing', 'Routage statique')])}
       </div></div>
-      <div class="hop reveal"><div class="hopn">2</div><div class="hopbody">
+      <div class="hop reveal"><div class="hopn">2023</div><div class="hopbody">
         <div class="hophead"><h3>{t('Team Leader &amp; Network Security Project Lead', 'Chef d’équipe &amp; chef de projet sécurité réseau')}</h3><span class="when">{t('Oct 2023 → Sep 2025', 'oct. 2023 → sept. 2025')}</span></div>
         <div class="hopmeta">Condor Electronics · {t('Algeria · multisite industrial network', 'Algérie · réseau industriel multisite')}</div>
         <ul><li>{t('Led a team of <strong>four technicians and two engineers</strong> running a multisite industrial network.', 'Encadrement d’une équipe de <strong>quatre techniciens et deux ingénieurs</strong> sur un réseau industriel multisite.')}</li>
@@ -262,13 +261,13 @@ def home(lang):
             <li>{t('Handled Zabbix / PRTG alerts and GLPI incident tickets.', 'Traitement des alertes Zabbix / PRTG et des tickets d’incident GLPI.')}</li></ul>
         {chips(['Fortinet SD-WAN', 'Ubiquiti', 'OSPF', 'ACL', 'Zabbix', 'PRTG', 'GLPI', t('Team leadership', 'Management d’équipe')], ['Fortinet SD-WAN'])}
       </div></div>
-      <div class="hop reveal"><div class="hopn">3</div><div class="hopbody">
+      <div class="hop reveal"><div class="hopn">2026</div><div class="hopbody">
         <div class="hophead"><h3>{t('Assistant Network &amp; Security Project Manager', 'Assistant chef de projet réseaux &amp; sécurité')}</h3><span class="when">{t('Mar 2026 → Sep 2026', 'mars 2026 → sept. 2026')}</span></div>
         <div class="hopmeta">SGHP · France · {t('internship', 'stage')}</div>
         <ul><li>{t('Supported a migration from on-premises infrastructure to the cloud.', 'Accompagnement d’une migration d’infrastructure locale vers le cloud.')}</li></ul>
         {chips([t('Cloud migration', 'Migration cloud'), t('Project management', 'Gestion de projet')])}
       </div></div>
-      <div class="hop now reveal"><div class="hopn">4</div><div class="hopbody">
+      <div class="hop now reveal"><div class="hopn">2026</div><div class="hopbody">
         <div class="hophead"><h3>{t('Network &amp; Security Engineer', 'Ingénieur réseaux &amp; sécurité')} <span class="pill-now">{t('current', 'actuel')}</span></h3><span class="when">{t('Aug 2026 → now', 'août 2026 → aujourd’hui')}</span></div>
         <div class="hopmeta">{t('Independent', 'Indépendant')} · France</div>
         <ul><li>{t('Audit network and security configurations.', 'Audit des configurations réseau et sécurité.')}</li>
@@ -276,10 +275,7 @@ def home(lang):
             <li>{t('Assess SD-WAN and cloud connectivity, and deliver documentation.', 'Évaluation du SD-WAN et de la connectivité cloud, avec documentation livrée.')}</li></ul>
         {chips(['Audit', t('Firewall policy', 'Politiques pare-feu'), 'VPN', 'SD-WAN', 'Cloud'], ['Audit'])}
       </div></div>
-      <div class="hop reveal"><div class="hopn" style="border-style:dashed;color:var(--amber)">5</div><div class="hopbody" style="border-style:dashed;background:transparent">
-        <div class="hophead"><h3 style="color:var(--amber)">{t('Your team?', 'Votre équipe ?')}</h3><span class="when">* * * request timed out</span></div>
-        <p style="color:var(--muted);margin-top:6px">{t('The next hop isn’t reachable yet.', 'Le prochain saut n’est pas encore joignable.')} <a href="#contact" class="more">{t('Add a route', 'Ajouter une route')} →</a></p>
-      </div></div>
+      <a class="next-role reveal" href="#contact"><span><b>{t('Your team could be next.', 'Votre équipe pourrait être la prochaine.')}</b>{t('Looking for a network, security or cloud engineer?', 'Vous cherchez un ingénieur réseaux, sécurité ou cloud ?')}</span><span class="btn primary">{t('Get in touch', 'Me contacter')} →</span></a>
     </div>
   </div>
 </section>
@@ -307,7 +303,7 @@ def home(lang):
     </div>
     <div class="labs-wrap reveal">
       <div class="labs-top">
-        <span class="cmd"><span class="p">tarek#</span> show interfaces status labs</span>
+        <span class="cmd"><b>{t('Lab guides', 'Guides de lab')}</b></span>
         <div class="prog"><span>{t('10 / 10 guides · captures &amp; .unl files coming', '10 / 10 guides · captures &amp; fichiers .unl à venir')}</span><div class="bar-p"><i style="width:100%"></i></div></div>
       </div>
       <div class="lab-filter" role="group" aria-label="{t('Filter labs', 'Filtrer les labs')}">
@@ -319,7 +315,7 @@ def home(lang):
         <button type="button" data-f="ops">{t('Automation &amp; monitoring', 'Automatisation &amp; supervision')} <i>2</i></button>
       </div>
       <table class="ifs">
-        <thead><tr><th>Port</th><th>Lab</th><th>{t('Focus', 'Objet')}</th><th>Status</th></tr></thead>
+        <thead><tr><th>#</th><th>Lab</th><th>{t('Focus', 'Objet')}</th><th>{t('Status', 'Statut')}</th></tr></thead>
         <tbody>{labrows}</tbody>
       </table>
     </div>
@@ -340,7 +336,7 @@ def home(lang):
     </div>
     <div class="two">
       <div class="list reveal">
-        <h3>// {t('CERTIFICATIONS &amp; TRAINING', 'CERTIFICATIONS &amp; FORMATIONS')}</h3>
+        <h3>{t('Certifications &amp; training', 'Certifications &amp; formations')}</h3>
         <div class="li"><span class="badge" style="--c:var(--violet)">AVIATRIX</span><div><b>Multicloud Network Associate</b><span>{t('Multicloud networking certification', 'Certification réseau multicloud')}</span></div></div>
         <div class="li"><span class="badge" style="--c:var(--red)">HUAWEI</span><div><b>HCIA Cloud Computing</b><span>{t('Huawei certification', 'Certification Huawei')}</span></div></div>
         <div class="li"><span class="badge" style="--c:var(--red)">HUAWEI</span><div><b>HCIA Routing &amp; Switching</b><span>{t('Huawei certification', 'Certification Huawei')}</span></div></div>
@@ -350,11 +346,11 @@ def home(lang):
       </div>
       <div>
         <div class="list reveal">
-          <h3>// {t('EDUCATION', 'FORMATION')}</h3>
+          <h3>{t('Education', 'Formation')}</h3>
           <div class="li"><span class="badge" style="--c:var(--amber)">2024–26</span><div><b>{t('MBA, Management &amp; Project Management', 'MBA Management &amp; Gestion de projet')}</b><span>{t('Leadership, planning and delivery of IT projects', 'Leadership, planification et conduite de projets IT')}</span></div></div>
           <div class="li"><span class="badge" style="--c:var(--amber)">2021–23</span><div><b>{t('Master’s in Networks &amp; Telecommunications', 'Master Réseaux &amp; Télécommunications')}</b><span>{t('Assessed by ENIC-NARIC France as comparable to level 7 (Master’s)', 'Attestation de comparabilité ENIC-NARIC France : niveau 7 (Master)')}</span></div></div>
         </div>
-        <div class="next reveal"><b>$ next-hop</b> → {t('official vendor exams (Fortinet FCP, Cisco CCNA) to formalise my hands-on experience.', 'examens officiels (Fortinet FCP, Cisco CCNA) pour valider mon expérience terrain.')}</div>
+        <div class="next reveal"><b>{t('Next step', 'Prochaine étape')}</b> {t('official vendor exams (Fortinet FCP, Cisco CCNA) to formalise my hands-on experience.', 'examens officiels (Fortinet FCP, Cisco CCNA) pour valider mon expérience terrain.')}</div>
       </div>
     </div>
   </div>
@@ -393,20 +389,20 @@ def home(lang):
           <div><small>{t('LOCATION', 'LOCALISATION')}</small><span>Paris, France</span></div></div>
       </div>
     </div>
-    <div class="term reveal">
-      <div class="term-head"><div class="dots"><i></i><i></i><i></i></div><span>compose-message.sh</span></div>
-      <form class="cf term-body" id="cf">
+    <div class="form-card reveal">
+      <h3>{t('Send a message', 'Envoyer un message')}</h3>
+      <form class="cf" id="cf">
         <div class="grid2">
-          <div><label for="cfName"><span class="p">$</span>{t('name', 'nom')} <span class="req" aria-hidden="true">*</span></label><input id="cfName" required autocomplete="name"></div>
-          <div><label for="cfEmail"><span class="p">$</span>email <span class="req" aria-hidden="true">*</span></label><input id="cfEmail" type="email" required autocomplete="email" placeholder="{t('you@company.com', 'vous@entreprise.fr')}" aria-describedby="cfEmailErr"><span class="ferr" id="cfEmailErr" role="alert"></span></div>
+          <div><label for="cfName">{t('Name', 'Nom')} <span class="req" aria-hidden="true">*</span></label><input id="cfName" required autocomplete="name"></div>
+          <div><label for="cfEmail">Email <span class="req" aria-hidden="true">*</span></label><input id="cfEmail" type="email" required autocomplete="email" placeholder="{t('you@company.com', 'vous@entreprise.fr')}" aria-describedby="cfEmailErr"><span class="ferr" id="cfEmailErr" role="alert"></span></div>
         </div>
         <div class="grid2">
-          <div><label for="cfOrg"><span class="p">$</span>{t('company', 'entreprise')}</label><input id="cfOrg" autocomplete="organization"></div>
-          <div><label for="cfTopic"><span class="p">$</span>{t('topic', 'sujet')}</label>
+          <div><label for="cfOrg">{t('Company', 'Entreprise')}</label><input id="cfOrg" autocomplete="organization"></div>
+          <div><label for="cfTopic">{t('Topic', 'Sujet')}</label>
           <select id="cfTopic"><option>{t('Job opportunity', 'Opportunité de poste')}</option><option>{t('Network / security audit', 'Audit réseau / sécurité')}</option><option>{t('SD-WAN or VPN project', 'Projet SD-WAN ou VPN')}</option><option>{t('Cloud connectivity', 'Connectivité cloud')}</option><option>{t('Something else', 'Autre')}</option></select></div>
         </div>
-        <div><label for="cfMsg"><span class="p">$</span>message <span class="req" aria-hidden="true">*</span></label><textarea id="cfMsg" required></textarea></div>
-        <button class="btn primary" type="submit" style="justify-self:start">./send --via mail →</button>
+        <div><label for="cfMsg">Message <span class="req" aria-hidden="true">*</span></label><textarea id="cfMsg" required></textarea></div>
+        <button class="btn primary" type="submit" style="justify-self:start">{t('Send message', 'Envoyer le message')} →</button>
         <span class="cf-hint">{t('* required. Opens your email client with the message pre-filled, including your address so I can reply.', '* obligatoire. Ouvre votre messagerie avec le message pré-rempli, votre adresse comprise pour que je puisse répondre.')}</span>
       </form>
     </div>
