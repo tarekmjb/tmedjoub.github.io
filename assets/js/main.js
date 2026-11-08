@@ -121,11 +121,19 @@
   const cf = $('#cf');
   cf && cf.addEventListener('submit', e => {
     e.preventDefault();
-    const n = $('#cfName').value.trim(), o = $('#cfOrg').value.trim(), tp = $('#cfTopic').value, m = $('#cfMsg').value.trim();
+    const em = $('#cfEmail'), err = $('#cfEmailErr');
+    const n = $('#cfName').value.trim(), mail = em.value.trim(), o = $('#cfOrg').value.trim(), tp = $('#cfTopic').value, m = $('#cfMsg').value.trim();
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(mail)) {
+      err.textContent = t('Please enter a valid email address so I can reply.', 'Indiquez une adresse e-mail valide pour que je puisse vous répondre.');
+      em.setAttribute('aria-invalid', 'true'); em.focus(); return;
+    }
+    err.textContent = ''; em.removeAttribute('aria-invalid');
     const subj = `[Portfolio] ${tp}${o ? ' — ' + o : ''}`;
-    const body = `${m}\n\n— ${n}${o ? ', ' + o : ''}`;
+    const body = `${m}\n\n— ${n}${o ? ', ' + o : ''}\n${t('Reply to', 'Répondre à')}: ${mail}`;
     location.href = `mailto:tarek.medjoub@outlook.fr?subject=${encodeURIComponent(subj)}&body=${encodeURIComponent(body)}`;
   });
+  const cfe = $('#cfEmail');
+  cfe && cfe.addEventListener('input', () => { if (cfe.getAttribute('aria-invalid')) { $('#cfEmailErr').textContent = ''; cfe.removeAttribute('aria-invalid'); } });
 
   /* ═════════ CONSOLE ═════════ */
   const SITE = {
