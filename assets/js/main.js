@@ -173,6 +173,7 @@
   <span class="p">cv</span> [en|fr|web]     download / view CV
   <span class="p">contact</span>            how to reach me
   <span class="p">ping tarek</span>         check availability
+  <span class="p">tools</span>              network toolkit (subnet, VLSM, MSS…)
   <span class="p">goto</span> &lt;section&gt;     jump to a homepage section
   <span class="p">theme</span> · <span class="p">fr</span> · <span class="p">en</span> · <span class="p">home</span> · <span class="p">clear</span> · <span class="p">exit</span>`,
 `<span class="k">commandes disponibles</span>
@@ -186,6 +187,7 @@
   <span class="p">cv</span> [fr|en|web]     télécharger / voir le CV
   <span class="p">contact</span>            me contacter
   <span class="p">ping tarek</span>         vérifier la disponibilité
+  <span class="p">tools</span>              outils réseau (sous-réseau, VLSM, MSS…)
   <span class="p">goto</span> &lt;section&gt;     aller à une section
   <span class="p">theme</span> · <span class="p">fr</span> · <span class="p">en</span> · <span class="p">home</span> · <span class="p">clear</span> · <span class="p">exit</span>`)),
     whoami: () => print(t(
@@ -251,6 +253,8 @@ ${t('location', 'lieu    ')}  Paris, France`),
     fr: () => { const a = $('[data-lang="fr"]'); a && nav2(a.getAttribute('href')); },
     en: () => { const a = $('[data-lang="en"]'); a && nav2(a.getAttribute('href')); },
     home: () => nav2(url('index.html')),
+    tools: () => nav2(url('tools.html')),
+    subnet: () => nav2(url('tools.html#subnet')),
     clear: () => { out.innerHTML = ''; },
     exit: () => close(),
     sudo: () => print(t('Permission denied 😉. Hire me and we can talk about privileges.', 'Permission refusée 😉. Recrutez-moi et on parlera de privilèges.'), 'r'),

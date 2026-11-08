@@ -14,10 +14,12 @@ Fortinet SD-WAN · multisite enterprise networks · IPsec/BGP · hybrid connecti
 | `projects/*.html` · `fr/projects/*.html` | 4 full case studies: SD-WAN, hybrid cloud, LAN, monitoring |
 | `labs/*.html` · `fr/labs/*.html` | 10 EVE-NG lab guides: topology, configs, verification, break/fix |
 | `cv.html` · `fr/cv.html` | Web CV, printable to PDF |
+| `tools.html` · `fr/tools.html` | Network toolkit: subnet calculator, VLSM planner, wildcard & ACL helper, IPsec MTU/MSS |
 | `assets/CV_Tarek_MEDJOUB*.pdf` | Designed PDF CVs (FR / EN) |
 | `assets/css/main.css` | All styles (dark / light theme) |
 | `assets/js/main.js` | Theme, navigation, interactive console, code copy, table of contents |
 | `assets/js/topology.js` | Homepage SD-WAN simulation |
+| `assets/js/tools.js` | Toolkit calculators (run in the browser) |
 | `assets/img/` | Favicon and social preview image (`og-image.png`, 1200×630) |
 | `404.html` | "Destination host unreachable" page |
 | `sitemap.xml` · `robots.txt` | SEO |
@@ -33,6 +35,7 @@ cd _build
 #   home.py           homepage (EN + FR side by side)
 #   projects_data.py  case studies
 #   labs_data.py      lab guides
+#   tools.py          network toolkit page
 #   build.py          web CV, 404, sitemap
 python3 build.py      # rewrites the HTML pages in the repository root
 ```

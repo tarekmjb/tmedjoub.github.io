@@ -67,6 +67,7 @@ def layout(lang, path, title, desc, body, *, home=False, doc=False, extra_js="",
         ("contact", "Contact"),
     ]
     nav = "\n".join(f'      <a href="{a(i)}">{lbl}</a>' for i, lbl in nav_items)
+    nav += f'\n      <a href="{root + lp}tools.html" class="nav-tools">{t("Toolkit", "Outils")}</a>'
     og_img = SITE + "assets/img/og-image.png"
     robots = '<meta name="robots" content="noindex">' if noindex else ""
     return f"""<!DOCTYPE html>
