@@ -397,14 +397,17 @@ def home(lang):
       <div class="term-head"><div class="dots"><i></i><i></i><i></i></div><span>compose-message.sh</span></div>
       <form class="cf term-body" id="cf">
         <div class="grid2">
-          <div><label for="cfName"><span class="p">$</span>{t('name', 'nom')}</label><input id="cfName" required autocomplete="name"></div>
-          <div><label for="cfOrg"><span class="p">$</span>{t('company', 'entreprise')}</label><input id="cfOrg" autocomplete="organization"></div>
+          <div><label for="cfName"><span class="p">$</span>{t('name', 'nom')} <span class="req" aria-hidden="true">*</span></label><input id="cfName" required autocomplete="name"></div>
+          <div><label for="cfEmail"><span class="p">$</span>email <span class="req" aria-hidden="true">*</span></label><input id="cfEmail" type="email" required autocomplete="email" placeholder="{t('you@company.com', 'vous@entreprise.fr')}" aria-describedby="cfEmailErr"><span class="ferr" id="cfEmailErr" role="alert"></span></div>
         </div>
-        <div><label for="cfTopic"><span class="p">$</span>{t('topic', 'sujet')}</label>
+        <div class="grid2">
+          <div><label for="cfOrg"><span class="p">$</span>{t('company', 'entreprise')}</label><input id="cfOrg" autocomplete="organization"></div>
+          <div><label for="cfTopic"><span class="p">$</span>{t('topic', 'sujet')}</label>
           <select id="cfTopic"><option>{t('Job opportunity', 'Opportunité de poste')}</option><option>{t('Network / security audit', 'Audit réseau / sécurité')}</option><option>{t('SD-WAN or VPN project', 'Projet SD-WAN ou VPN')}</option><option>{t('Cloud connectivity', 'Connectivité cloud')}</option><option>{t('Something else', 'Autre')}</option></select></div>
-        <div><label for="cfMsg"><span class="p">$</span>message</label><textarea id="cfMsg" required></textarea></div>
+        </div>
+        <div><label for="cfMsg"><span class="p">$</span>message <span class="req" aria-hidden="true">*</span></label><textarea id="cfMsg" required></textarea></div>
         <button class="btn primary" type="submit" style="justify-self:start">./send --via mail →</button>
-        <span class="note" style="all:unset;font-family:var(--mono);font-size:11px;color:var(--dim)">{t('Opens your email client with the message pre-filled.', 'Ouvre votre messagerie avec le message pré-rempli.')}</span>
+        <span class="cf-hint">{t('* required. Opens your email client with the message pre-filled, including your address so I can reply.', '* obligatoire. Ouvre votre messagerie avec le message pré-rempli, votre adresse comprise pour que je puisse répondre.')}</span>
       </form>
     </div>
   </div>

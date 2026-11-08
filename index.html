@@ -436,14 +436,17 @@
       <div class="term-head"><div class="dots"><i></i><i></i><i></i></div><span>compose-message.sh</span></div>
       <form class="cf term-body" id="cf">
         <div class="grid2">
-          <div><label for="cfName"><span class="p">$</span>name</label><input id="cfName" required autocomplete="name"></div>
-          <div><label for="cfOrg"><span class="p">$</span>company</label><input id="cfOrg" autocomplete="organization"></div>
+          <div><label for="cfName"><span class="p">$</span>name <span class="req" aria-hidden="true">*</span></label><input id="cfName" required autocomplete="name"></div>
+          <div><label for="cfEmail"><span class="p">$</span>email <span class="req" aria-hidden="true">*</span></label><input id="cfEmail" type="email" required autocomplete="email" placeholder="you@company.com" aria-describedby="cfEmailErr"><span class="ferr" id="cfEmailErr" role="alert"></span></div>
         </div>
-        <div><label for="cfTopic"><span class="p">$</span>topic</label>
+        <div class="grid2">
+          <div><label for="cfOrg"><span class="p">$</span>company</label><input id="cfOrg" autocomplete="organization"></div>
+          <div><label for="cfTopic"><span class="p">$</span>topic</label>
           <select id="cfTopic"><option>Job opportunity</option><option>Network / security audit</option><option>SD-WAN or VPN project</option><option>Cloud connectivity</option><option>Something else</option></select></div>
-        <div><label for="cfMsg"><span class="p">$</span>message</label><textarea id="cfMsg" required></textarea></div>
+        </div>
+        <div><label for="cfMsg"><span class="p">$</span>message <span class="req" aria-hidden="true">*</span></label><textarea id="cfMsg" required></textarea></div>
         <button class="btn primary" type="submit" style="justify-self:start">./send --via mail →</button>
-        <span class="note" style="all:unset;font-family:var(--mono);font-size:11px;color:var(--dim)">Opens your email client with the message pre-filled.</span>
+        <span class="cf-hint">* required. Opens your email client with the message pre-filled, including your address so I can reply.</span>
       </form>
     </div>
   </div>
