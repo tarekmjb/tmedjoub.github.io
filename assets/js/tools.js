@@ -304,7 +304,7 @@
   tabs.forEach((a, i) => {
     a.addEventListener('click', e => { e.preventDefault(); const id = a.getAttribute('href').slice(1); history.replaceState(null, '', '#' + id); show(id); });
     a.addEventListener('keydown', e => {
-      const k = e.key === 'ArrowRight' ? 1 : e.key === 'ArrowLeft' ? -1 : 0; if (!k) return;
+      const k = { ArrowRight: 1, ArrowDown: 1, ArrowLeft: -1, ArrowUp: -1 }[e.key] || 0; if (!k) return;
       e.preventDefault(); const n = tabs[(i + k + tabs.length) % tabs.length]; n.click(); n.focus();
     });
   });
