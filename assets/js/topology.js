@@ -151,7 +151,7 @@
   const tickSla = () => { spokes.forEach(s => { const sr = series[s]; sr.a.push(sample(s, 0)); sr.a.shift(); sr.b.push(sample(s, 1)); sr.b.shift(); }); draw(); };
   for (let i = 0; i < PTS; i++) tickSla();
   sel.addEventListener('change', draw);
-  if (!reduce) setInterval(tickSla, 500);
+  if (!reduce) setInterval(() => { if (!document.hidden && onScreen) tickSla(); }, 500);
 
   /* packets */
   const place = f => {
@@ -162,12 +162,14 @@
     f.el.setAttribute('cx', g.x1 + (g.x2 - g.x1) * p);
     f.el.setAttribute('cy', g.y1 + (g.y2 - g.y1) * p);
   };
+  let onScreen = true;
+  if ('IntersectionObserver' in window) new IntersectionObserver(es => { onScreen = es[0].isIntersecting; }).observe(svg);
   if (reduce) flows.forEach(place);
   else {
     let last = performance.now();
     const tick = now => {
       const dt = Math.min(.05, (now - last) / 1000); last = now;
-      if (!document.hidden) flows.forEach(f => { f.t = (f.t + dt * f.speed) % 1; place(f); });
+      if (!document.hidden && onScreen) flows.forEach(f => { f.t = (f.t + dt * f.speed) % 1; place(f); });
       requestAnimationFrame(tick);
     };
     requestAnimationFrame(tick);
