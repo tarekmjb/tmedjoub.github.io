@@ -25,6 +25,25 @@
     nav.addEventListener('click', e => { if (e.target.tagName === 'A') { nav.classList.remove('open'); mb.setAttribute('aria-expanded', false); } });
   }
 
+
+  /* ── mega menu: click / hover on desktop, accordion on mobile ── */
+  const mmBtns = $$('.mm-btn');
+  const desk = () => matchMedia('(min-width: 1061px)').matches;
+  const closeAll = except => mmBtns.forEach(b => { if (b !== except) { b.setAttribute('aria-expanded', 'false'); b.parentElement.classList.remove('open'); } });
+  const openMM = (b, on) => { b.setAttribute('aria-expanded', on); b.parentElement.classList.toggle('open', on); };
+  mmBtns.forEach(b => {
+    const li = b.parentElement; let tmr;
+    b.addEventListener('click', e => { e.stopPropagation(); const on = b.getAttribute('aria-expanded') !== 'true'; closeAll(b); openMM(b, on); });
+    li.addEventListener('mouseenter', () => { if (!desk()) return; clearTimeout(tmr); tmr = setTimeout(() => { closeAll(b); openMM(b, true); }, 90); });
+    li.addEventListener('mouseleave', () => { if (!desk()) return; clearTimeout(tmr); tmr = setTimeout(() => openMM(b, false), 160); });
+    li.querySelector('.mm-panel').addEventListener('click', e => { if (e.target.closest('a')) { closeAll(); nav && nav.classList.remove('open'); mb && mb.setAttribute('aria-expanded', false); } });
+  });
+  document.addEventListener('click', e => { if (!e.target.closest('.mm')) closeAll(); });
+  document.addEventListener('keydown', e => { if (e.key === 'Escape' && mmBtns.some(b => b.getAttribute('aria-expanded') === 'true')) { const b = mmBtns.find(b => b.getAttribute('aria-expanded') === 'true'); closeAll(); b.focus(); } });
+  /* header shadow once scrolled */
+  const bar = $('.bar');
+  if (bar) { const sc = () => bar.classList.toggle('scrolled', scrollY > 8); addEventListener('scroll', sc, { passive: true }); sc(); }
+
   /* ── toast + copy ── */
   const toast = msg => {
     const el = $('#toast'); if (!el) return;

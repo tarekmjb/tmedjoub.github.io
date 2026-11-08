@@ -5,13 +5,19 @@ from common import L, layout
 def tools_page(lang):
     x = L(lang); t = x.t
     body = f"""
-<div class="wrap" id="top">
+<section class="doc-band" id="top">
+  <div class="wrap">
   <div class="crumbs"><a class="back-btn" href="index.html">← {t('Back to home', 'Retour à l’accueil')}</a><a href="index.html">{t('Home', 'Accueil')}</a><span class="sep">/</span>{t('Toolkit', 'Outils')}</div>
   <div class="doc-hero">
     <div class="kicker">{t('network toolkit', 'boîte à outils réseau')}</div>
     <h1>{t('Everyday network tools.', 'Outils réseau du quotidien.')}</h1>
     <p class="sum">{t('The calculators I reach for when designing and troubleshooting networks. Everything runs in your browser: nothing is sent anywhere.',
                      'Les calculateurs que j’utilise pour concevoir et dépanner des réseaux. Tout s’exécute dans votre navigateur : rien n’est envoyé.')}</p>
+  </div>
+  </div>
+</section>
+<div class="wrap">
+  <div class="tools-nav">
     <div class="tool-tabs" role="tablist" aria-label="{t('Tools', 'Outils')}">
       <a href="#subnet" role="tab" id="tab-subnet" aria-controls="subnet" class="on"><b>01</b>{t('IPv4 subnet calculator', 'Calcul de sous-réseau IPv4')}</a>
       <a href="#ipv6" role="tab" id="tab-ipv6" aria-controls="ipv6"><b>02</b>{t('IPv6 calculator', 'Calcul IPv6')}</a>

@@ -1,392 +1,331 @@
+"""Homepage, enterprise-vendor style: hero band, services tiles, expertise explorer,
+featured work, live demo band, journey, resource center, credentials, CTA, contact."""
 from common import L, layout, EMAIL, LINKEDIN, SITE
 from labs_data import LABS
 from projects_data import PROJECTS
+from chrome import ico, EXPERTISE
 
 
 def home(lang):
     x = L(lang); t = x.t
-    lp = "fr/" if lang == "fr" else ""
     root = "../" if lang == "fr" else ""
     cv_en = root + "assets/CV_Tarek_MEDJOUB_EN.pdf"
     cv_fr = root + "assets/CV_Tarek_MEDJOUB.pdf"
     cv_main = cv_fr if lang == "fr" else cv_en
+    P = {p["id"]: p for p in PROJECTS}
+    LB = {l["id"]: l for l in LABS}
 
-    def chips(s, hl=()):
-        return '<div class="chips">' + "".join(
-            f'<span class="chip{" hl" if c in hl else ""}">{c}</span>' for c in s) + "</div>"
+    def chips(items, hl=()):
+        return '<div class="chips">' + "".join(f'<span class="chip{" hl" if c in hl else ""}">{c}</span>' for c in items) + "</div>"
 
-    # skills routing table
-    skills = [
-        ("C", t("Switching", "Commutation"), t("L2 · campus", "L2 · campus"),
-         ["VLAN 802.1Q", "STP / RSTP / MSTP", "EtherChannel / LACP", t("Port security", "Sécurité des ports"), "DHCP snooping", "DAI", "CDP / LLDP"], ["VLAN 802.1Q"]),
-        ("C", t("Routing", "Routage"), "L3 · IGP / EGP",
-         ["OSPF", "BGP", "EIGRP", t("Redistribution", "Redistribution"), "PBR", "IPv6 / OSPFv3"], ["OSPF", "BGP"]),
-        ("W", "WAN / SD-WAN", t("multisite", "multisite"),
-         ["Fortinet SD-WAN", t("Dual-ISP design", "Double opérateur"), t("SLA probes", "Sondes SLA"), "QoS", t("MPLS concepts", "Principes MPLS"), "FortiManager", "FortiAnalyzer"], ["Fortinet SD-WAN", t("Dual-ISP design", "Double opérateur")]),
-        ("V", "VPN", t("site-to-site · remote", "site à site · nomade"),
-         ["IPsec IKEv1/v2", "Hub-and-spoke", "SSL VPN", "GRE over IPsec", t("BGP over IPsec", "BGP sur IPsec"), t("Site-to-cloud VPN", "VPN site-à-cloud")], ["IPsec IKEv1/v2", t("BGP over IPsec", "BGP sur IPsec")]),
-        ("S", t("Security", "Sécurité"), t("perimeter · segmentation", "périmètre · segmentation"),
-         [t("FortiGate firewalls", "Pare-feu FortiGate"), t("DMZ & zone policies", "DMZ & politiques par zone"), "ACL", "IDS / IPS", t("App control", "Contrôle applicatif"), t("Segmentation", "Segmentation"), t("Hardening", "Durcissement")], [t("FortiGate firewalls", "Pare-feu FortiGate")]),
-        ("H", t("High availability", "Haute disponibilité"), t("resilience", "résilience"),
-         ["HSRP / VRRP", "FortiGate HA", t("Dual-ISP failover", "Bascule double FAI"), "BFD"], ["FortiGate HA"]),
-        ("K", "Cloud", t("hybrid", "hybride"),
-         ["Azure VPN Gateway", "AWS Transit Gateway", "Aviatrix", t("Hybrid architecture", "Architecture hybride"), t("PRTG cloud monitoring", "Supervision cloud PRTG")], ["Azure VPN Gateway", "AWS Transit Gateway"]),
-        ("M", t("Monitoring & ITSM", "Supervision & ITSM"), t("visibility", "visibilité"),
-         ["Zabbix", "PRTG", "ManageEngine OpManager", "GLPI", "SNMPv3", t("Alerting design", "Conception des alertes")], ["Zabbix", "PRTG"]),
-        ("N", t("Network services", "Services réseau"), t("design · docs", "conception · docs"),
-         ["DHCP", "DNS", "NTP", t("3-tier design", "Architecture 3 couches"), t("IP addressing plans", "Plans d’adressage"), "Documentation"], []),
-        ("O", t("Systems", "Systèmes"), t("& delivery", "& pilotage"),
-         ["Windows Server (AD, DNS, DHCP, GPO)", "Linux", "Bash", "Ansible", "EVE-NG", t("IT project management", "Gestion de projet IT")], []),
-    ]
-    ICONS = {"C": "M4 6h16M4 12h16M4 18h10", "W": "M3 12h4l3-8 4 16 3-8h4", "V": "M7 11V7a5 5 0 0 1 10 0v4M5 11h14v10H5z",
-             "S": "M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z", "H": "M4 12a8 8 0 0 1 14-5M20 12a8 8 0 0 1-14 5M18 3v4h-4M6 21v-4h4",
-             "K": "M7 18h10a4 4 0 0 0 .5-8A6 6 0 0 0 6 9a4.5 4.5 0 0 0 1 9z", "M": "M3 3v18h18M7 15l4-4 3 3 5-6",
-             "N": "M12 3v6M5 21v-6h14v6M12 9a3 3 0 1 0 0-.01", "O": "M4 5h16v11H4zM8 20h8M12 16v4"}
-    rrows = "".join(
-        f'<div class="skill-card"><div class="skill-head"><span class="skill-ico"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="{ICONS[c]}"/></svg></span><div><b>{d}</b><small>{s}</small></div></div>{chips(items, hl)}</div>'
-        for c, d, s, items, hl in skills)
-
-    # projects cards
-    arts = {
-        "sdwan": """<svg viewBox="0 0 400 150" preserveAspectRatio="xMidYMid slice"><path class="a-ok flow" d="M80 35 L200 75"/><path class="a-line" d="M80 45 L200 82" stroke-dasharray="4 4"/><path class="a-ok flow" d="M80 115 L200 75"/><path class="a-line" d="M80 105 L200 68" stroke-dasharray="4 4"/><path class="a-ok flow" d="M320 35 L200 75"/><path class="a-line" d="M320 45 L200 82" stroke-dasharray="4 4"/><rect class="a-box" x="40" y="25" width="56" height="24" rx="5"/><text class="a-txt" x="52" y="40">SITE-A</text><rect class="a-box" x="40" y="101" width="56" height="24" rx="5"/><text class="a-txt" x="52" y="116">SITE-B</text><rect class="a-box" x="304" y="25" width="56" height="24" rx="5"/><text class="a-txt" x="316" y="40">SITE-C</text><rect class="a-box" x="168" y="62" width="64" height="26" rx="5" style="stroke:var(--amber)"/><text class="a-txt" x="183" y="79" style="fill:var(--amber)">HUB</text><text class="a-txt" x="290" y="125">IKEv2 · AES-256</text></svg>""",
-        "hybrid-cloud": """<svg viewBox="0 0 400 150" preserveAspectRatio="xMidYMid slice"><path class="a-vi" d="M110 75 L270 40"/><path class="a-vi" d="M110 75 L270 110"/><rect class="a-box" x="50" y="60" width="74" height="30" rx="5" style="stroke:var(--amber)"/><text class="a-txt" x="58" y="79" style="fill:var(--amber)">FORTIGATE</text><rect class="a-box" x="262" y="25" width="90" height="30" rx="15" style="stroke:var(--violet)"/><text class="a-txt" x="276" y="44">AZURE VPN GW</text><rect class="a-box" x="262" y="95" width="90" height="30" rx="15" style="stroke:var(--violet)"/><text class="a-txt" x="280" y="114">AWS TGW</text><text class="a-txt" x="160" y="70">BGP / IPsec</text></svg>""",
-        "lan-optimization": """<svg viewBox="0 0 400 150" preserveAspectRatio="xMidYMid slice"><path class="a-hot" d="M200 30 L120 75 M200 30 L280 75"/><path class="a-line" d="M120 75 L70 120 M120 75 L170 120 M280 75 L230 120 M280 75 L330 120"/><rect class="a-box" x="172" y="18" width="56" height="22" rx="5" style="stroke:var(--amber)"/><text class="a-txt" x="187" y="32">CORE</text><rect class="a-box" x="96" y="64" width="48" height="22" rx="5"/><text class="a-txt" x="106" y="78">DIST</text><rect class="a-box" x="256" y="64" width="48" height="22" rx="5"/><text class="a-txt" x="266" y="78">DIST</text><rect class="a-box" x="52" y="112" width="36" height="18" rx="4"/><rect class="a-box" x="152" y="112" width="36" height="18" rx="4"/><rect class="a-box" x="212" y="112" width="36" height="18" rx="4"/><rect class="a-box" x="312" y="112" width="36" height="18" rx="4"/><text class="a-txt" x="56" y="124">V10</text><text class="a-txt" x="156" y="124">V20</text><text class="a-txt" x="216" y="124">V30</text><text class="a-txt" x="316" y="124">V40</text></svg>""",
-        "monitoring-stack": """<svg viewBox="0 0 400 150" preserveAspectRatio="xMidYMid slice"><polyline class="a-ok" points="30,110 70,100 100,104 130,80 160,90 190,60 220,72 250,40 280,96 300,104 330,88 370,92"/><path class="a-line" d="M30 50 L370 50" stroke-dasharray="3 5"/><circle cx="250" cy="40" r="5" style="fill:var(--red)"/><text class="a-txt" x="260" y="34" style="fill:var(--red)">trigger → GLPI</text><text class="a-txt" x="30" y="44">threshold</text></svg>""",
+    # ───────── illustrations (inline SVG, theme-aware) ─────────
+    ILL = {
+        "audit": '<svg viewBox="0 0 320 160" aria-hidden="true"><rect x="40" y="26" width="150" height="108" rx="10" class="il-card"/><path d="M60 54h90M60 74h110M60 94h70M60 114h96" class="il-line"/><circle cx="222" cy="88" r="36" class="il-ring"/><path d="M248 114l26 26" class="il-strong"/><path d="M206 88l11 11 22-24" class="il-ok"/></svg>',
+        "firewall": '<svg viewBox="0 0 320 160" aria-hidden="true"><path d="M160 22l62 22v42c0 34-26 52-62 60-36-8-62-26-62-60V44z" class="il-card"/><path d="M160 46l38 14v26c0 22-16 34-38 40" class="il-strong"/><path d="M30 80h50M240 80h50" class="il-line"/><circle cx="30" cy="80" r="6" class="il-dot"/><circle cx="290" cy="80" r="6" class="il-dot"/><path d="M84 72l10 8-10 8" class="il-x"/></svg>',
+        "sdwan": '<svg viewBox="0 0 320 160" aria-hidden="true"><circle cx="160" cy="80" r="22" class="il-ring"/><g class="il-line"><path d="M60 34L142 70M60 126L142 90M260 34L178 70M260 126L178 90"/></g><g class="il-dash"><path d="M66 46L144 78M66 114L144 82M254 46L176 78M254 114L176 82"/></g><g class="il-card"><rect x="30" y="20" width="44" height="28" rx="6"/><rect x="30" y="112" width="44" height="28" rx="6"/><rect x="246" y="20" width="44" height="28" rx="6"/><rect x="246" y="112" width="44" height="28" rx="6"/></g><circle cx="104" cy="52" r="5" class="il-dot"/><circle cx="214" cy="106" r="5" class="il-dot"/></svg>',
+        "cloud": '<svg viewBox="0 0 320 160" aria-hidden="true"><path d="M206 76a30 30 0 0 0-58-8 24 24 0 0 0-4 47h60a20 20 0 0 0 2-39z" class="il-card"/><rect x="40" y="96" width="70" height="40" rx="8" class="il-card"/><path d="M110 112C140 112 140 100 150 100" class="il-dash"/><path d="M58 112h34M58 122h22" class="il-line"/><path d="M230 50l40-22M230 110l40 22" class="il-line"/><circle cx="274" cy="26" r="9" class="il-ring"/><circle cx="274" cy="134" r="9" class="il-ring"/></svg>',
     }
-    pcards = ""
-    for p in PROJECTS:
-        facts = "".join(f"<div><b>{a}</b><span>{t(*b)}</span></div>" for a, b in p["facts"])
-        pcards += f"""
-      <article class="proj reveal">
-        <a class="art" href="projects/{p['id']}.html" aria-hidden="true" tabindex="-1">{arts[p['id']]}</a>
-        <div class="body">
-          <span class="tagline">{p['tagline']} · {t(*p['kind'])}</span>
-          <h3>{t(*p['title'])}</h3>
-          <p>{t(*p['card'])}</p>
-          {'<div class="facts">' + facts + '</div>' if facts else ''}
-          <div class="foot">{chips(p['chips'])}<a class="more" href="projects/{p['id']}.html">{t('Case study', 'Étude de cas')} →</a></div>
-        </div>
-      </article>"""
 
-    CAT = {"bgp": "routing", "ospf": "routing", "mpls-vrf": "routing", "vlan": "switching", "switching-resilience": "switching",
-           "ipsec": "vpn", "sdwan-failover": "fortinet", "fortigate-ha": "fortinet", "ansible-network": "ops", "snmp-zabbix": "ops"}
-    labrows = "".join(
-        f"""<tr data-cat="{CAT[l['id']]}"><td class="num">{i + 1:02d}</td><td><a href="labs/{l['id']}.html">{t(*l['title'])}</a></td><td class="desc">{t(*l['focus'])}</td>
-<td><span class="state" style="--c:var(--green)">{t('guide ready', 'guide prêt')}</span> <span class="lvl">{t(*l['level'])}</span></td></tr>"""
-        for i, l in enumerate(LABS))
-
-    body = f"""
-<section class="hero" id="top">
-  <div class="wrap">
-    <div>
-      <span class="status"><span class="led"></span>{t('Open to Network, Security &amp; Cloud roles · Paris', 'Ouvert aux postes Réseaux, Sécurité &amp; Cloud · Paris')}</span>
-      <h1><span class="name">TAREK MEDJOUB</span>{t('Network, Security &amp; <em>Cloud</em> Engineer.', 'Ingénieur Réseaux, Sécurité &amp; <em>Cloud</em>.')}</h1>
-      <p class="lede">{t('I design, secure and monitor <strong>multisite enterprise networks</strong>: Fortinet SD-WAN, IPsec/BGP and <strong>hybrid connectivity to Azure and AWS</strong>. I’ve run production networks, led a team and managed projects.',
-                         'Je conçois, sécurise et supervise des <strong>réseaux d’entreprise multisites</strong> : SD-WAN Fortinet, IPsec/BGP et <strong>connectivité hybride vers Azure et AWS</strong>. J’ai exploité des réseaux en production, encadré une équipe et piloté des projets.')}</p>
-      <div class="motto">
-        <span style="--c:var(--green)">{t('Connected.', 'Connecter.')}</span>
-        <span style="--c:var(--red)">{t('Secured.', 'Sécuriser.')}</span>
-        <span style="--c:var(--violet)">{t('Monitored.', 'Superviser.')}</span>
-      </div>
+    # ───────── 1. hero ─────────
+    hero = f"""
+<section class="hero-band" id="top">
+  <canvas class="mesh" id="mesh" aria-hidden="true"></canvas>
+  <div class="wrap hero-grid">
+    <div class="hero-copy">
+      <span class="eyebrow">Tarek Medjoub · {t('Network, Security &amp; Cloud Engineer', 'Ingénieur Réseaux, Sécurité &amp; Cloud')}</span>
+      <h1>{t('Networks built to <em>stay up</em>. <br>Secured. Monitored. Documented.', 'Des réseaux conçus pour <em>tenir</em>. <br>Sécurisés. Supervisés. Documentés.')}</h1>
+      <p class="hero-lede">{t('I design, secure and run multisite enterprise networks, from Fortinet SD-WAN and IPsec/BGP to hybrid connectivity with Azure and AWS.',
+                              'Je conçois, sécurise et exploite des réseaux d’entreprise multisites : SD-WAN Fortinet, IPsec/BGP et connectivité hybride vers Azure et AWS.')}</p>
       <div class="cta">
-        <a class="btn primary" href="#contact">{t('Let’s talk', 'Me contacter')} →</a>
-        <a class="btn" href="{cv_main}" download>↓ {t('Download CV', 'Télécharger le CV')}</a>
-        <a class="btn" href="#projects">{t('See my work', 'Voir mes projets')}</a>
+        <a class="btn primary lg" href="#work">{t('Explore my work', 'Découvrir mes réalisations')} {ico('arrow', 16)}</a>
+        <a class="btn ghost lg" href="#contact">{t('Contact me', 'Me contacter')}</a>
       </div>
     </div>
+    <div class="hero-feature">
+      <span class="hf-label">{t('Highlights', 'À la une')}</span>
+      <a class="hf-card" href="projects/sdwan.html"><span class="hf-type">{t('Case study', 'Étude de cas')}</span><b>{t('SD-WAN migration: failover from 3–5 min to ≈1.5 s', 'Migration SD-WAN : bascule de 3–5 min à ≈1,5 s')}</b><span class="hf-go">{ico('arrow', 16)}</span></a>
+      <a class="hf-card" href="projects/hybrid-cloud.html"><span class="hf-type">{t('Case study', 'Étude de cas')}</span><b>{t('One FortiGate, two clouds: Azure + AWS over BGP', 'Un FortiGate, deux clouds : Azure + AWS en BGP')}</b><span class="hf-go">{ico('arrow', 16)}</span></a>
+      <a class="hf-card" href="tools.html"><span class="hf-type">{t('Free tool', 'Outil gratuit')}</span><b>{t('Network toolkit: subnet, IPv6, VLSM, IPsec MSS', 'Outils réseau : sous-réseau, IPv6, VLSM, MSS IPsec')}</b><span class="hf-go">{ico('arrow', 16)}</span></a>
+    </div>
+  </div>
+  <div class="wrap">
+    <div class="hero-stats">
+      <div><b>4</b><span>{t('sites migrated to SD-WAN', 'sites migrés en SD-WAN')}</span></div>
+      <div><b>≈1.5 s</b><span>{t('failover in lab (was 3–5 min)', 'bascule en lab (contre 3–5 min)')}</span></div>
+      <div><b>6</b><span>{t('engineers &amp; technicians led', 'ingénieurs &amp; techniciens encadrés')}</span></div>
+      <div><b>2</b><span>{t('clouds connected: Azure + AWS', 'clouds connectés : Azure + AWS')}</span></div>
+      <div><b>10</b><span>{t('EVE-NG lab guides', 'guides de lab EVE-NG')}</span></div>
+    </div>
+  </div>
+</section>"""
 
-    <figure class="topo" aria-label="{t('Interactive SD-WAN and hybrid cloud topology simulation', 'Simulation interactive SD-WAN et cloud hybride')}">
-      <div class="topo-head">
-        <div class="dots"><i></i><i></i><i></i></div>
-        <span class="t">{t('Interactive demo · SD-WAN failover', 'Démo interactive · bascule SD-WAN')}</span>
-        <span class="live"><span class="led"></span><span id="liveTxt">…</span></span>
+    # ───────── 2. services tiles ─────────
+    svc = [("audit", "routing", t('Network &amp; security audit', 'Audit réseau &amp; sécurité'),
+            t('Switching, routing and firewall configurations reviewed against best practice, with prioritised findings.', 'Revue des configurations de commutation, routage et pare-feu face aux bonnes pratiques, avec constats priorisés.')),
+           ("firewall", "security", t('Firewall policy review', 'Revue des politiques de pare-feu'),
+            t('FortiGate rule bases, zones and DMZ, IPS profiles and hardening. Tighter policy, less exposure.', 'Règles FortiGate, zones et DMZ, profils IPS et durcissement. Moins de règles larges, moins d’exposition.')),
+           ("sdwan", "sdwan", t('VPN &amp; SD-WAN assessment', 'Évaluation VPN &amp; SD-WAN'),
+            t('IPsec and SSL VPN architecture, SD-WAN SLA rules, path steering and dual-ISP failover design.', 'Architecture VPN IPsec et SSL, règles SLA SD-WAN, orientation du trafic et bascule double opérateur.')),
+           ("cloud", "cloud", t('Cloud connectivity review', 'Revue de la connectivité cloud'),
+            t('Site-to-cloud VPN to Azure and AWS, BGP route propagation, filtering and monitoring.', 'VPN site-à-cloud vers Azure et AWS, propagation BGP, filtrage et supervision.'))]
+    tiles = "".join(f"""
+      <a class="tile reveal" href="#expertise-{exp}">
+        <div class="tile-art">{ILL[il]}</div>
+        <div class="tile-body"><h3>{ti}</h3><p>{de}</p><span class="link-arrow">{t('Learn more', 'En savoir plus')} {ico('arrow', 15)}</span></div>
+      </a>""" for il, exp, ti, de in svc)
+    services = f"""
+<section class="band" id="services">
+  <div class="wrap">
+    <div class="band-head reveal">
+      <div><span class="kicker">{t('Services', 'Services')}</span><h2>{t('How I can help your infrastructure', 'Comment je peux aider votre infrastructure')}</h2></div>
+      <p>{t('As an independent Network &amp; Security Engineer, I audit and strengthen existing networks. Every engagement ends with clear, usable documentation.', 'Ingénieur réseaux &amp; sécurité indépendant, j’audite et je renforce les réseaux existants. Chaque mission se termine par une documentation claire et exploitable.')}</p>
+    </div>
+    <div class="tiles">{tiles}
+    </div>
+    <ol class="process reveal" aria-label="{t('Working method', 'Méthode de travail')}">
+      <li><b>01</b><span>{t('Discover', 'Découvrir')}</span></li><li><b>02</b><span>{t('Audit', 'Auditer')}</span></li><li><b>03</b><span>{t('Design', 'Concevoir')}</span></li><li><b>04</b><span>{t('Validate in EVE-NG', 'Valider sous EVE-NG')}</span></li><li><b>05</b><span>{t('Document &amp; hand over', 'Documenter &amp; transmettre')}</span></li>
+    </ol>
+  </div>
+</section>"""
+
+    # ───────── 3. expertise explorer ─────────
+    EXP = {
+        "routing": (t('Campus and multisite designs that scale, with redundancy at every layer: VLAN segmentation, OSPF and BGP, gateway high availability and loop protection.',
+                      'Des architectures campus et multisites qui passent à l’échelle, redondantes à chaque couche : segmentation VLAN, OSPF et BGP, haute disponibilité des passerelles et protection contre les boucles.'),
+                    ["VLAN 802.1Q", "STP / RSTP / MSTP", "EtherChannel / LACP", "OSPF", "BGP", "EIGRP", "PBR", "IPv6", "HSRP / VRRP", "BFD"], ["OSPF", "BGP", "VLAN 802.1Q"],
+                    [("case", "lan-optimization"), ("lab", "bgp"), ("lab", "ospf"), ("lab", "switching-resilience"), ("tool", "subnet")]),
+        "security": (t('Perimeter and internal security on FortiGate: zone-based policies, DMZ design, IPS and application control, least-privilege segmentation and device hardening.',
+                       'Sécurité périmétrique et interne sur FortiGate : politiques par zone, conception DMZ, IPS et contrôle applicatif, segmentation au moindre privilège et durcissement.'),
+                     [t('FortiGate firewalls', 'Pare-feu FortiGate'), t('DMZ &amp; zone policies', 'DMZ &amp; politiques par zone'), "IDS / IPS", t('App control', 'Contrôle applicatif'), "ACL", "DHCP snooping", "DAI", t('Hardening', 'Durcissement'), "FortiGate HA"],
+                     [t('FortiGate firewalls', 'Pare-feu FortiGate'), "FortiGate HA"],
+                     [("case", "sdwan"), ("lab", "fortigate-ha"), ("lab", "vlan"), ("tool", "wildcard")]),
+        "sdwan": (t('WAN that reacts in seconds, not minutes: Fortinet SD-WAN with SLA probes, dual-ISP designs, encrypted IPsec overlays and dynamic routing in every tunnel.',
+                    'Un WAN qui réagit en secondes, pas en minutes : SD-WAN Fortinet avec sondes SLA, double opérateur, overlays IPsec chiffrés et routage dynamique dans chaque tunnel.'),
+                  ["Fortinet SD-WAN", t('SLA probes', 'Sondes SLA'), t('Dual-ISP design', 'Double opérateur'), "IPsec IKEv1/v2", "SSL VPN", "GRE over IPsec", t('BGP over IPsec', 'BGP sur IPsec'), "FortiManager", "FortiAnalyzer", "QoS"],
+                  ["Fortinet SD-WAN", "IPsec IKEv1/v2"],
+                  [("case", "sdwan"), ("lab", "sdwan-failover"), ("lab", "ipsec"), ("tool", "mss")]),
+        "cloud": (t('On-premises networks extended into the cloud the way enterprises need it: route-based IPsec, BGP everywhere, strict prefix filtering and one monitoring view.',
+                    'Des réseaux locaux étendus vers le cloud comme l’exigent les entreprises : IPsec route-based, BGP partout, filtrage strict des préfixes et une seule vue de supervision.'),
+                  ["Azure VPN Gateway", "AWS Transit Gateway", "Aviatrix", t('BGP route filtering', 'Filtrage BGP'), t('MSS clamping', 'Ajustement du MSS'), t('Hybrid architecture', 'Architecture hybride')],
+                  ["Azure VPN Gateway", "AWS Transit Gateway"],
+                  [("case", "hybrid-cloud"), ("lab", "ipsec"), ("lab", "bgp"), ("tool", "ipv6")]),
+        "ops": (t('Visibility and repeatability: SNMPv3 monitoring, alerts that open tickets automatically, and Ansible for backups and standard changes.',
+                  'Visibilité et reproductibilité : supervision SNMPv3, alertes qui ouvrent des tickets automatiquement, et Ansible pour les sauvegardes et changements standard.'),
+                ["Zabbix", "PRTG", "ManageEngine OpManager", "GLPI", "SNMPv3", "Ansible", "Bash", "Windows Server", "Linux", "EVE-NG"],
+                ["Zabbix", "PRTG", "GLPI"],
+                [("case", "monitoring-stack"), ("lab", "snmp-zabbix"), ("lab", "ansible-network"), ("tool", "vlsm")]),
+    }
+    TOOLN = {"subnet": t('IPv4 subnet calculator', 'Calcul de sous-réseau IPv4'), "ipv6": t('IPv6 calculator', 'Calcul IPv6'), "vlsm": t('VLSM planner', 'Planificateur VLSM'),
+             "wildcard": t('Wildcard &amp; ACL helper', 'Assistant wildcard &amp; ACL'), "mss": "IPsec MTU / MSS"}
+
+    def rel_link(kind, key):
+        if kind == "case": return f'<a href="projects/{key}.html"><span class="rl-type">{t("Case study", "Étude de cas")}</span>{t(*P[key]["title"])}{ico("arrow", 14)}</a>'
+        if kind == "lab": return f'<a href="labs/{key}.html"><span class="rl-type">{t("Lab", "Lab")}</span>{t(*LB[key]["title"])}{ico("arrow", 14)}</a>'
+        return f'<a href="tools.html#{key}"><span class="rl-type">{t("Tool", "Outil")}</span>{TOOLN[key]}{ico("arrow", 14)}</a>'
+
+    tabs = "".join(f'<button type="button" role="tab" id="xt-{k}" aria-controls="expertise-{k}" class="xt{" on" if i == 0 else ""}" aria-selected="{"true" if i == 0 else "false"}"><span class="xt-ico">{ico(k)}</span><span><b>{t(*n)}</b><small>{t(*d)}</small></span></button>'
+                   for i, (k, n, d) in enumerate(EXPERTISE))
+    panels = "".join(f"""
+        <div class="xp" role="tabpanel" id="expertise-{k}" aria-labelledby="xt-{k}"{'' if i == 0 else ' hidden'}>
+          <span class="xp-ico">{ico(k, 26)}</span>
+          <h3>{t(*n)}</h3>
+          <p>{EXP[k][0]}</p>
+          {chips(EXP[k][1], EXP[k][2])}
+          <div class="xp-rel"><span class="xp-rel-h">{t('Explore related work', 'Explorer les contenus liés')}</span>{''.join(rel_link(a, b) for a, b in EXP[k][3])}</div>
+        </div>""" for i, (k, n, d) in enumerate(EXPERTISE))
+    expertise = f"""
+<section class="band alt" id="expertise">
+  <div class="wrap">
+    <div class="band-head reveal">
+      <div><span class="kicker">{t('Expertise', 'Expertise')}</span><h2>{t('Five domains, one end-to-end view of the network', 'Cinq domaines, une vision de bout en bout du réseau')}</h2></div>
+      <p>{t('Pick a domain to see what I do there, the technologies I use and where to see it in practice.', 'Choisissez un domaine pour voir ce que j’y fais, les technologies utilisées et où les voir en pratique.')}</p>
+    </div>
+    <div class="explorer reveal">
+      <div class="xt-list" role="tablist" aria-label="{t('Expertise domains', 'Domaines d’expertise')}">{tabs}</div>
+      <div class="xp-wrap">{panels}
       </div>
-      <svg id="topo" viewBox="0 0 530 400" role="img" aria-label="{t('Three branch sites with two ISP links each to an HQ hub, which connects to Azure and AWS over IPsec with BGP', 'Trois agences avec deux liens FAI chacune vers un hub HQ, relié à Azure et AWS en IPsec avec BGP')}">
-        <g id="links"></g><g id="pkts"></g><g id="nodes"></g>
-      </svg>
-      <div class="legend">
-        <span><i style="--c:var(--green)"></i>{t('ISP-1 primary', 'ISP-1 principal')}</span>
-        <span><i class="d" style="--c:var(--green)"></i>{t('ISP-2 backup', 'ISP-2 secours')}</span>
-        <span><i class="d" style="--c:var(--violet)"></i>{t('IPsec + BGP to cloud', 'IPsec + BGP vers le cloud')}</span>
-        <span><i style="--c:var(--red)"></i>{t('down', 'coupé')}</span>
+    </div>
+  </div>
+</section>"""
+
+    # ───────── 4. featured work ─────────
+    arts = {
+        "sdwan": ILL["sdwan"], "hybrid-cloud": ILL["cloud"],
+        "lan-optimization": '<svg viewBox="0 0 320 160" aria-hidden="true"><g class="il-line"><path d="M160 34L96 80M160 34L224 80M96 80L60 126M96 80L132 126M224 80L188 126M224 80L260 126"/></g><g class="il-card"><rect x="134" y="20" width="52" height="26" rx="6"/><rect x="72" y="68" width="48" height="24" rx="6"/><rect x="200" y="68" width="48" height="24" rx="6"/><rect x="42" y="118" width="36" height="20" rx="5"/><rect x="114" y="118" width="36" height="20" rx="5"/><rect x="170" y="118" width="36" height="20" rx="5"/><rect x="242" y="118" width="36" height="20" rx="5"/></g><path d="M134 33h52" class="il-strong"/></svg>',
+        "monitoring-stack": '<svg viewBox="0 0 320 160" aria-hidden="true"><rect x="30" y="24" width="260" height="112" rx="10" class="il-card"/><path d="M50 52h220" class="il-dash"/><polyline points="50,116 82,104 106,108 130,86 156,94 182,64 206,76 232,46 252,98 270,92" class="il-strong" fill="none"/><circle cx="232" cy="46" r="6" class="il-alert"/></svg>',
+    }
+    big = ""
+    for i, pid in enumerate(["sdwan", "hybrid-cloud"]):
+        p = P[pid]
+        facts = "".join(f"<div><b>{a}</b><span>{t(*b)}</span></div>" for a, b in p["facts"])
+        big += f"""
+    <article class="split{' rev' if i else ''} reveal">
+      <div class="split-art">{arts[pid]}</div>
+      <div class="split-copy">
+        <span class="kicker">{t('Case study', 'Étude de cas')} · {p['tagline']}</span>
+        <h3>{t(*p['title'])}</h3>
+        <p>{t(*p['card'])}</p>
+        <div class="split-facts">{facts}</div>
+        <a class="btn primary" href="projects/{pid}.html">{t('Read the case study', 'Lire l’étude de cas')} {ico('arrow', 15)}</a>
       </div>
-      <div class="sla">
-        <div class="sla-head">
-          <span>{t('SLA probe latency', 'Latence des sondes SLA')} ·
-            <select id="slaSite" aria-label="{t('Site', 'Agence')}"><option value="A">SITE-A</option><option value="B">SITE-B</option><option value="C">SITE-C</option></select></span>
-          <span class="vals"><span style="color:var(--green)">ISP-1 <b id="slaV1">—</b></span><span style="color:var(--violet)">ISP-2 <b id="slaV2">—</b></span><span style="color:var(--red)">{t('threshold 100 ms', 'seuil 100 ms')}</span></span>
-        </div>
-        <svg id="slaSvg" viewBox="0 0 400 58" preserveAspectRatio="none" aria-hidden="true"></svg>
-      </div>
-      <div class="topo-ctl">
-        <button class="warn" id="failIsp1">⚡ {t('Fail ISP-1 on all sites', 'Couper ISP-1 sur toutes les agences')}</button>
-        <button id="restore">↺ {t('Restore', 'Rétablir')}</button>
-        <span class="hint">{t('tip: click any link to cut it', 'astuce : cliquez un lien pour le couper')}</span>
-      </div>
+    </article>"""
+    small = "".join(f"""
+      <a class="card-x reveal" href="projects/{pid}.html">
+        <div class="cx-art">{arts[pid]}</div>
+        <span class="kicker">{t('Case study', 'Étude de cas')}</span>
+        <h3>{t(*P[pid]['title'])}</h3><p>{t(*P[pid]['card'])}</p>
+        <span class="link-arrow">{t('Read more', 'Lire la suite')} {ico('arrow', 15)}</span>
+      </a>""" for pid in ["lan-optimization", "monitoring-stack"])
+    work = f"""
+<section class="band" id="work">
+  <div class="wrap">
+    <div class="band-head reveal">
+      <div><span class="kicker">{t('Featured work', 'Réalisations')}</span><h2>{t('Real migrations, validated designs', 'Des migrations réelles, des architectures validées')}</h2></div>
+      <p>{t('Each project has a full case study: context, architecture, configuration, validation and lessons learned.', 'Chaque projet a son étude de cas complète : contexte, architecture, configuration, validation et retours d’expérience.')}</p>
+    </div>
+    {big}
+    <div class="cx-grid">{small}
+    </div>
+  </div>
+</section>"""
+
+    # ───────── 5. live demo band ─────────
+    demo = f"""
+<section class="demo-band" id="demo">
+  <div class="wrap demo-grid">
+    <div class="demo-copy reveal">
+      <span class="kicker">{t('Live demo', 'Démo interactive')}</span>
+      <h2>{t('See SD-WAN failover in action', 'Voyez une bascule SD-WAN en direct')}</h2>
+      <p>{t('Three branches with two ISPs each, an HQ hub and IPsec/BGP tunnels to Azure and AWS. Cut a link and watch traffic move to the backup path while the SLA graph reacts.',
+            'Trois agences avec deux FAI chacune, un hub au siège et des tunnels IPsec/BGP vers Azure et AWS. Coupez un lien : le trafic bascule sur le chemin de secours et le graphe SLA réagit.')}</p>
+      <ul class="ticks">
+        <li>{t('Click any link to cut or restore it', 'Cliquez un lien pour le couper ou le rétablir')}</li>
+        <li>{t('“Fail ISP-1” simulates an outage on every site', '« Couper ISP-1 » simule une panne sur toutes les agences')}</li>
+        <li>{t('Based on the SD-WAN case study design', 'Basé sur l’architecture de l’étude de cas SD-WAN')}</li>
+      </ul>
+      <a class="link-arrow light" href="projects/sdwan.html">{t('How it was built', 'Comment c’est construit')} {ico('arrow', 15)}</a>
+    </div>
+    <figure class="topo reveal" aria-label="{t('Interactive SD-WAN and hybrid cloud topology simulation', 'Simulation interactive SD-WAN et cloud hybride')}">
+      <div class="topo-head"><span class="t">{t('SD-WAN overlay · hub-and-spoke + hybrid cloud', 'Overlay SD-WAN · étoile + cloud hybride')}</span><span class="live"><span class="led"></span><span id="liveTxt">…</span></span></div>
+      <svg id="topo" viewBox="0 0 530 400" role="img" aria-label="{t('Three branch sites with two ISP links each to an HQ hub, which connects to Azure and AWS over IPsec with BGP', 'Trois agences avec deux liens FAI chacune vers un hub HQ, relié à Azure et AWS en IPsec avec BGP')}"><g id="links"></g><g id="pkts"></g><g id="nodes"></g></svg>
+      <div class="legend"><span><i style="--c:var(--green)"></i>{t('ISP-1 primary', 'ISP-1 principal')}</span><span><i class="d" style="--c:var(--green)"></i>{t('ISP-2 backup', 'ISP-2 secours')}</span><span><i class="d" style="--c:var(--violet)"></i>IPsec + BGP</span><span><i style="--c:var(--red)"></i>{t('down', 'coupé')}</span></div>
+      <div class="sla"><div class="sla-head"><span>{t('SLA probe latency', 'Latence des sondes SLA')} · <select id="slaSite" aria-label="{t('Site', 'Agence')}"><option value="A">SITE-A</option><option value="B">SITE-B</option><option value="C">SITE-C</option></select></span><span class="vals"><span style="color:var(--green)">ISP-1 <b id="slaV1">—</b></span><span style="color:var(--violet)">ISP-2 <b id="slaV2">—</b></span><span style="color:var(--red)">{t('threshold 100 ms', 'seuil 100 ms')}</span></span></div><svg id="slaSvg" viewBox="0 0 400 58" preserveAspectRatio="none" aria-hidden="true"></svg></div>
+      <div class="topo-ctl"><button class="warn" id="failIsp1">{t('Fail ISP-1 on all sites', 'Couper ISP-1 partout')}</button><button id="restore">{t('Restore', 'Rétablir')}</button></div>
       <div class="log" id="log" aria-live="polite"></div>
     </figure>
   </div>
-</section>
+</section>"""
 
-<div class="stats">
-  <div class="wrap">
-    <div class="stat"><b>4</b><span>{t('sites on SD-WAN', 'sites en SD-WAN')}</span></div>
-    <div class="stat"><b>≈1.5<small>s</small></b><span>{t('failover in lab (was 3–5 min)', 'bascule en lab (contre 3–5 min)')}</span></div>
-    <div class="stat"><b>6</b><span>{t('engineers &amp; techs led', 'ingénieurs &amp; techniciens encadrés')}</span></div>
-    <div class="stat"><b>2</b><span>{t('clouds: Azure + AWS', 'clouds : Azure + AWS')}</span></div>
-    <div class="stat"><b>10</b><span>{t('EVE-NG lab guides', 'guides de lab EVE-NG')}</span></div>
-  </div>
-</div>
-
-
-<section class="quick" aria-labelledby="quickT">
-  <div class="wrap">
-    <div class="quick-card reveal">
-      <div class="quick-head"><span class="kicker" id="quickT" style="margin:0">{t('For recruiters · in 30 seconds', 'Pour les recruteurs · en 30 secondes')}</span></div>
-      <dl class="quick-grid">
-        <div><dt>{t('Looking for', 'Recherche')}</dt><dd>{t('Network, Security or Cloud Engineer role', 'Poste d’ingénieur Réseaux, Sécurité ou Cloud')}</dd></div>
+    # ───────── 6. about + journey ─────────
+    jobs = [
+        ("2023", t('Network Engineer Intern', 'Stagiaire ingénieur réseau'), "3K Solutions · " + t('Algeria', 'Algérie'),
+         t('Cisco configuration: IP addressing, VLANs, static routing, connectivity testing.', 'Configuration Cisco : adressage IP, VLAN, routage statique, tests de connectivité.'), False),
+        ("2023–2025", t('Team Leader &amp; Network Security Project Lead', 'Chef d’équipe &amp; chef de projet sécurité réseau'), "Condor Electronics · " + t('Algeria', 'Algérie'),
+         t('Led 4 technicians and 2 engineers on a multisite industrial network; migrated intersite links to Fortinet SD-WAN with Ubiquiti backup; audited VLAN, ACL and OSPF; handled Zabbix/PRTG alerts and GLPI tickets.',
+           'Encadrement de 4 techniciens et 2 ingénieurs sur un réseau industriel multisite ; migration vers le SD-WAN Fortinet avec secours Ubiquiti ; audit VLAN, ACL et OSPF ; alertes Zabbix/PRTG et tickets GLPI.'), False),
+        ("2026", t('Assistant Network &amp; Security Project Manager', 'Assistant chef de projet réseaux &amp; sécurité'), "SGHP · France",
+         t('Supported a migration from on-premises infrastructure to the cloud.', 'Accompagnement d’une migration d’infrastructure locale vers le cloud.'), False),
+        (t('2026 – now', '2026 – auj.'), t('Network &amp; Security Engineer', 'Ingénieur réseaux &amp; sécurité'), t('Independent · France', 'Indépendant · France'),
+         t('Audits of network and security configurations, firewall and VPN reviews, SD-WAN and cloud connectivity assessments, with documentation.', 'Audits de configurations réseau et sécurité, revues pare-feu et VPN, évaluations SD-WAN et cloud, avec documentation.'), True),
+    ]
+    journey = "".join(f"""
+      <li class="jr{' now' if now else ''} reveal"><span class="jr-year">{y}</span><div class="jr-card"><h3>{ti}</h3><span class="jr-org">{org}</span><p>{de}</p>{'<span class="pill-now">' + t('current', 'actuel') + '</span>' if now else ''}</div></li>""" for y, ti, org, de, now in jobs)
+    about = f"""
+<section class="band" id="about">
+  <div class="wrap about-v">
+    <div class="reveal">
+      <span class="kicker">{t('About', 'À propos')}</span>
+      <h2>{t('From network operations to project delivery', 'De l’exploitation réseau au pilotage de projets')}</h2>
+      <p class="lead">{t('My core is Cisco routing &amp; switching and Fortinet security across multisite networks. At Condor Electronics I became a team leader and moved intersite connectivity to Fortinet SD-WAN. Today I extend on-prem networks into Azure and AWS, and an MBA in project management completes the picture.',
+                         'Mon socle : routage &amp; commutation Cisco et sécurité Fortinet sur des réseaux multisites. Chez Condor Electronics, je suis devenu chef d’équipe et j’ai migré l’interconnexion vers le SD-WAN Fortinet. Aujourd’hui, j’étends les réseaux locaux vers Azure et AWS, et un MBA en management de projet complète le profil.')}</p>
+      <blockquote>{t('I don’t just make it work. I make it resilient, documented and observable.', 'Faire fonctionner ne suffit pas : je rends les réseaux résilients, documentés et observables.')}</blockquote>
+      <dl class="glance-row">
         <div><dt>{t('Based in', 'Basé à')}</dt><dd>Paris, France</dd></div>
-        <div><dt>{t('Core strengths', 'Points forts')}</dt><dd>{t('Fortinet SD-WAN &amp; firewalls · OSPF/BGP · IPsec · Azure/AWS connectivity', 'SD-WAN &amp; pare-feu Fortinet · OSPF/BGP · IPsec · connectivité Azure/AWS')}</dd></div>
-        <div><dt>{t('Beyond tech', 'Au-delà de la technique')}</dt><dd>{t('Led a team of 6 · MBA in project management', 'Chef d’une équipe de 6 · MBA management de projet')}</dd></div>
-      </dl>
-      <div class="quick-act">
-        <a class="btn primary" href="{cv_main}" download>↓ CV (PDF)</a>
-        <a class="btn" href="mailto:{EMAIL}">✉ {t('Email me', 'M’écrire')}</a>
-        <a class="btn" href="{LINKEDIN}" target="_blank" rel="noopener">in LinkedIn</a>
-        <a class="btn" href="projects/sdwan.html">{t('Best case study', 'Étude de cas phare')} →</a>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section class="sec" id="about">
-  <div class="wrap about-grid">
-    <div class="about-text reveal">
-      <div class="kicker">01 / {t('about', 'à propos')}</div>
-      <h2>{t('From network operations to project delivery.', 'De l’exploitation réseau au pilotage de projets.')}</h2>
-      <p>{t('My core is <strong>Cisco routing &amp; switching and Fortinet security</strong>: VLANs, OSPF/BGP, firewall policies, NAT and IPsec VPNs across multisite networks.',
-            'Mon socle : <strong>routage &amp; commutation Cisco et sécurité Fortinet</strong>. VLAN, OSPF/BGP, politiques de pare-feu, NAT et VPN IPsec sur des réseaux multisites.')}</p>
-      <p>{t('At Condor Electronics I became a <strong>team leader</strong>, running a multisite industrial network with four technicians and two engineers. I also moved its intersite connectivity to Fortinet SD-WAN.',
-            'Chez Condor Electronics, je suis devenu <strong>chef d’équipe</strong> : j’ai piloté un réseau industriel multisite avec quatre techniciens et deux ingénieurs, et migré son interconnexion vers le SD-WAN Fortinet.')}</p>
-      <p>{t('Today I extend on-prem networks into the cloud: <strong>FortiGate to Azure VPN Gateway and AWS Transit Gateway</strong> over IPsec with BGP, monitored centrally with PRTG. An MBA in project management completes the picture.',
-            'Aujourd’hui, j’étends les réseaux locaux vers le cloud : <strong>FortiGate vers Azure VPN Gateway et AWS Transit Gateway</strong> en IPsec avec BGP, supervisés depuis PRTG. Un MBA en management de projet complète le profil.')}</p>
-      <p class="quote">{t('I don’t just make it work. I make it resilient, documented and observable.', 'Faire fonctionner ne suffit pas : je rends les réseaux résilients, documentés et observables.')}</p>
-    </div>
-    <aside class="glance reveal" aria-label="{t('Key facts', 'En bref')}">
-      <h3>{t('At a glance', 'En bref')}</h3>
-      <dl>
-        <div><dt>{t('Role', 'Poste')}</dt><dd>{t('Network, Security &amp; Cloud Engineer', 'Ingénieur Réseaux, Sécurité &amp; Cloud')}</dd></div>
-        <div><dt>{t('Location', 'Localisation')}</dt><dd>Paris, France</dd></div>
-        <div><dt>{t('Status', 'Statut')}</dt><dd><span class="dot-ok"></span>{t('Open to opportunities', 'Ouvert aux opportunités')}</dd></div>
-        <div><dt>{t('Experience', 'Expérience')}</dt><dd>{t('Production networks since 2023', 'Réseaux en production depuis 2023')}</dd></div>
         <div><dt>{t('Languages', 'Langues')}</dt><dd>{t('French · English', 'Français · Anglais')}</dd></div>
+        <div><dt>{t('Looking for', 'Recherche')}</dt><dd>{t('Network, Security or Cloud role', 'Poste Réseaux, Sécurité ou Cloud')}</dd></div>
       </dl>
-      <h3>{t('Focus areas', 'Domaines clés')}</h3>
-      <ul class="focus">
-        <li>{t('Routing &amp; switching', 'Routage &amp; commutation')}</li><li>{t('Fortinet security', 'Sécurité Fortinet')}</li><li>SD-WAN / VPN</li>
-        <li>{t('Hybrid cloud', 'Cloud hybride')}</li><li>{t('Monitoring &amp; ITSM', 'Supervision &amp; ITSM')}</li><li>{t('Project management (MBA)', 'Gestion de projet (MBA)')}</li>
-      </ul>
-    </aside>
+    </div>
+    <div id="experience">
+      <span class="kicker">{t('Experience', 'Expérience')}</span>
+      <ol class="journey">{journey}
+      </ol>
+    </div>
   </div>
-</section>
+</section>"""
 
-<section class="sec" id="services">
+    # ───────── 7. resource center ─────────
+    res = []
+    for p in PROJECTS:
+        res.append(("case", t('Case study', 'Étude de cas'), t(*p['title']), t(*p['card']), f"projects/{p['id']}.html", p['tagline']))
+    for i, l in enumerate(LABS):
+        res.append(("lab", t('Lab guide', 'Guide de lab') + f" {i + 1:02d}", t(*l['title']), t(*l['focus']), f"labs/{l['id']}.html", f"{t(*l['level'])} · {l['time']}"))
+    for k, n in TOOLN.items():
+        res.append(("tool", t('Tool', 'Outil'), n, t('Free, runs in your browser, no data sent.', 'Gratuit, dans votre navigateur, aucune donnée envoyée.'), f"tools.html#{k}", t('Network toolkit', 'Outils réseau')))
+    cards = "".join(f"""
+      <a class="res {k}" data-k="{k}" href="{h}"><span class="res-top"><span class="res-ico">{ico({'case': 'case', 'lab': 'lab', 'tool': 'tool'}[k])}</span><span class="res-type">{ty}</span></span><b>{ti}</b><span class="res-desc">{de}</span><span class="res-meta">{me}</span></a>"""
+                    for k, ty, ti, de, h, me in res)
+    resources = f"""
+<section class="band alt" id="resources">
   <div class="wrap">
-    <div class="reveal">
-      <div class="kicker">02 / {t('what i do', 'ce que je fais')}</div>
-      <h2>{t('How I can help your infrastructure.', 'Comment je peux aider votre infrastructure.')}</h2>
-      <p class="intro">{t('As an independent Network &amp; Security Engineer, I audit and strengthen existing infrastructure. Every engagement ends with clear, usable documentation.',
-                           'En tant qu’ingénieur réseaux &amp; sécurité indépendant, j’audite et je renforce les infrastructures existantes. Chaque mission se termine par une documentation claire et exploitable.')}</p>
+    <div class="band-head reveal">
+      <div><span class="kicker">{t('Resource center', 'Centre de ressources')}</span><h2>{t('Guides, case studies and tools', 'Guides, études de cas et outils')}</h2></div>
+      <p>{t('Everything I publish, in one place. Lab guides cover topology, configs, verification and break/fix exercises.', 'Tout ce que je publie, au même endroit. Les guides de lab couvrent topologie, configurations, vérifications et exercices de panne.')}</p>
     </div>
-    <div class="cards4">
-      <article class="card reveal"><div class="ico"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg></div>
-        <span class="num">svc-01</span><h3>{t('Network &amp; security audit', 'Audit réseau &amp; sécurité')}</h3>
-        <p>{t('Review of switching, routing and firewall configurations (VLAN, ACL, OSPF/BGP), with prioritised findings.', 'Revue des configurations de commutation, routage et pare-feu (VLAN, ACL, OSPF/BGP), avec constats priorisés.')}</p></article>
-      <article class="card reveal"><div class="ico"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"/></svg></div>
-        <span class="num">svc-02</span><h3>{t('Firewall policy review', 'Revue des politiques de pare-feu')}</h3>
-        <p>{t('FortiGate rule bases, zones &amp; DMZ, segmentation, IPS profiles and hardening. Tighter policy, less exposure.', 'Règles FortiGate, zones &amp; DMZ, segmentation, profils IPS et durcissement. Moins de règles larges, moins d’exposition.')}</p></article>
-      <article class="card reveal"><div class="ico"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="5" cy="12" r="2.5"/><circle cx="19" cy="6" r="2.5"/><circle cx="19" cy="18" r="2.5"/><path d="M7.3 11l9.4-4M7.3 13l9.4 4"/></svg></div>
-        <span class="num">svc-03</span><h3>{t('VPN &amp; SD-WAN assessment', 'Évaluation VPN &amp; SD-WAN')}</h3>
-        <p>{t('IPsec / SSL VPN architecture, SD-WAN SLA rules, path steering and dual-ISP failover design.', 'Architecture VPN IPsec / SSL, règles SLA SD-WAN, orientation du trafic et bascule double opérateur.')}</p></article>
-      <article class="card reveal"><div class="ico"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M7 18h10a4 4 0 0 0 .5-8A6 6 0 0 0 6 9a4.5 4.5 0 0 0 1 9z"/></svg></div>
-        <span class="num">svc-04</span><h3>{t('Cloud connectivity review', 'Revue de la connectivité cloud')}</h3>
-        <p>{t('Site-to-cloud VPN to Azure VPN Gateway and AWS Transit Gateway, BGP route propagation and monitoring.', 'VPN site-à-cloud vers Azure VPN Gateway et AWS Transit Gateway, propagation BGP et supervision.')}</p></article>
+    <div class="res-filter reveal" role="group" aria-label="{t('Filter resources', 'Filtrer les ressources')}">
+      <button type="button" class="on" data-f="all">{t('All', 'Tout')} <i>{len(res)}</i></button>
+      <button type="button" data-f="case">{t('Case studies', 'Études de cas')} <i>{len(PROJECTS)}</i></button>
+      <button type="button" data-f="lab">{t('Lab guides', 'Guides de lab')} <i>{len(LABS)}</i></button>
+      <button type="button" data-f="tool">{t('Tools', 'Outils')} <i>{len(TOOLN)}</i></button>
     </div>
-    <div class="method reveal" aria-label="{t('Working method', 'Méthode de travail')}">
-      <div><b>01</b><h4>{t('Discover', 'Découvrir')}</h4><p>{t('Inventory, diagrams, current flows.', 'Inventaire, schémas, flux existants.')}</p></div>
-      <div><b>02</b><h4>{t('Audit', 'Auditer')}</h4><p>{t('Configs against best practice.', 'Configurations vs bonnes pratiques.')}</p></div>
-      <div><b>03</b><h4>{t('Design', 'Concevoir')}</h4><p>{t('Target architecture &amp; plan.', 'Architecture cible &amp; plan.')}</p></div>
-      <div><b>04</b><h4>{t('Validate', 'Valider')}</h4><p>{t('Test in EVE-NG before production.', 'Tester sous EVE-NG avant la production.')}</p></div>
-      <div><b>05</b><h4>{t('Document', 'Documenter')}</h4><p>{t('Runbooks, diagrams, handover.', 'Procédures, schémas, passation.')}</p></div>
+    <div class="res-grid" id="resGrid">{cards}
     </div>
+    <div class="res-more"><button type="button" class="btn" id="resMore">{t('Show all resources', 'Afficher toutes les ressources')}</button></div>
   </div>
-</section>
+</section>"""
 
-<section class="sec" id="stack">
+    # ───────── 8. credentials ─────────
+    creds = f"""
+<section class="band" id="certs">
   <div class="wrap">
-    <div class="reveal">
-      <div class="kicker">03 / {t('technical stack', 'environnement technique')}</div>
-      <h2>{t('Skills &amp; expertise.', 'Compétences &amp; expertise.')}</h2>
-      <p class="intro">{t('Ten domains, from campus switching to hybrid cloud and monitoring.', 'Dix domaines, de la commutation campus au cloud hybride et à la supervision.')}</p>
+    <div class="band-head reveal">
+      <div><span class="kicker">{t('Credentials', 'Certifications &amp; formation')}</span><h2>{t('A technical foundation. A project mindset.', 'Un socle technique. Un esprit projet.')}</h2></div>
+      <p>{t('Vendor certifications and academy training, a Master’s in networks and an MBA in project management.', 'Certifications constructeur et formations, un Master réseaux et un MBA en management de projet.')}</p>
     </div>
-    <div class="skills-grid reveal">
-      {rrows}
+    <div class="cred-grid reveal">
+      <div class="cred"><span class="cred-v" style="--c:#6d28d9">Aviatrix</span><b>Multicloud Network Associate</b><small>{t('Certification', 'Certification')}</small></div>
+      <div class="cred"><span class="cred-v" style="--c:#c7000b">Huawei</span><b>HCIA Cloud Computing</b><small>{t('Certification', 'Certification')}</small></div>
+      <div class="cred"><span class="cred-v" style="--c:#c7000b">Huawei</span><b>HCIA Routing &amp; Switching</b><small>{t('Certification', 'Certification')}</small></div>
+      <div class="cred"><span class="cred-v" style="--c:#0a7ea4">Cisco NetAcad</span><b>CCNP: Core Networking</b><small>{t('Academy training', 'Formation académique')}</small></div>
+      <div class="cred"><span class="cred-v" style="--c:#0a7ea4">Cisco NetAcad</span><b>CCNA: SRWE</b><small>{t('Academy training', 'Formation académique')}</small></div>
+      <div class="cred"><span class="cred-v" style="--c:#0a7ea4">Cisco NetAcad</span><b>Network Defense · Network Security</b><small>{t('Academy training', 'Formation académique')}</small></div>
     </div>
-    <p class="skills-note"><span class="chip hl">{t('highlighted', 'en surbrillance')}</span> {t('= used most in production', '= les plus utilisées en production')}</p>
-</div>
-  </div>
-</section>
-
-<section class="sec" id="experience">
-  <div class="wrap">
-    <div class="reveal">
-      <div class="kicker">04 / {t('experience', 'expérience')}</div>
-      <h2>{t('Experience &amp; responsibilities.', 'Expérience &amp; responsabilités.')}</h2>
-      <p class="intro">{t('From my first Cisco configurations to leading a team and independent consulting.', 'De mes premières configurations Cisco à l’encadrement d’équipe et au conseil indépendant.')}</p>
-    </div>
-    <div class="trace">
-      <div class="hop reveal"><div class="hopn">2023</div><div class="hopbody">
-        <div class="hophead"><h3>{t('Network Engineer Intern', 'Stagiaire ingénieur réseau')}</h3><span class="when">{t('Feb 2023 → Jun 2023', 'févr. 2023 → juin 2023')}</span></div>
-        <div class="hopmeta">3K Solutions · {t('Algeria · internship', 'Algérie · stage')}</div>
-        <ul><li>{t('Configured Cisco equipment: IP addressing, VLANs and static routing.', 'Configuration d’équipements Cisco : adressage IP, VLAN et routage statique.')}</li>
-            <li>{t('Ran connectivity tests and validated the configurations.', 'Tests de connectivité et validation des configurations.')}</li></ul>
-        {chips(['Cisco IOS', 'VLAN', t('Static routing', 'Routage statique')])}
-      </div></div>
-      <div class="hop reveal"><div class="hopn">2023</div><div class="hopbody">
-        <div class="hophead"><h3>{t('Team Leader &amp; Network Security Project Lead', 'Chef d’équipe &amp; chef de projet sécurité réseau')}</h3><span class="when">{t('Oct 2023 → Sep 2025', 'oct. 2023 → sept. 2025')}</span></div>
-        <div class="hopmeta">Condor Electronics · {t('Algeria · multisite industrial network', 'Algérie · réseau industriel multisite')}</div>
-        <ul><li>{t('Led a team of <strong>four technicians and two engineers</strong> running a multisite industrial network.', 'Encadrement d’une équipe de <strong>quatre techniciens et deux ingénieurs</strong> sur un réseau industriel multisite.')}</li>
-            <li>{t('Migrated intersite connectivity to <strong>Fortinet SD-WAN</strong>, with Ubiquiti links as backup paths.', 'Migration de l’interconnexion des sites vers le <strong>SD-WAN Fortinet</strong>, avec des liens Ubiquiti en secours.')}</li>
-            <li>{t('Audited VLAN, ACL and OSPF configurations across sites.', 'Audit des configurations VLAN, ACL et OSPF sur l’ensemble des sites.')}</li>
-            <li>{t('Handled Zabbix / PRTG alerts and GLPI incident tickets.', 'Traitement des alertes Zabbix / PRTG et des tickets d’incident GLPI.')}</li></ul>
-        {chips(['Fortinet SD-WAN', 'Ubiquiti', 'OSPF', 'ACL', 'Zabbix', 'PRTG', 'GLPI', t('Team leadership', 'Management d’équipe')], ['Fortinet SD-WAN'])}
-      </div></div>
-      <div class="hop reveal"><div class="hopn">2026</div><div class="hopbody">
-        <div class="hophead"><h3>{t('Assistant Network &amp; Security Project Manager', 'Assistant chef de projet réseaux &amp; sécurité')}</h3><span class="when">{t('Mar 2026 → Sep 2026', 'mars 2026 → sept. 2026')}</span></div>
-        <div class="hopmeta">SGHP · France · {t('internship', 'stage')}</div>
-        <ul><li>{t('Supported a migration from on-premises infrastructure to the cloud.', 'Accompagnement d’une migration d’infrastructure locale vers le cloud.')}</li></ul>
-        {chips([t('Cloud migration', 'Migration cloud'), t('Project management', 'Gestion de projet')])}
-      </div></div>
-      <div class="hop now reveal"><div class="hopn">2026</div><div class="hopbody">
-        <div class="hophead"><h3>{t('Network &amp; Security Engineer', 'Ingénieur réseaux &amp; sécurité')} <span class="pill-now">{t('current', 'actuel')}</span></h3><span class="when">{t('Aug 2026 → now', 'août 2026 → aujourd’hui')}</span></div>
-        <div class="hopmeta">{t('Independent', 'Indépendant')} · France</div>
-        <ul><li>{t('Audit network and security configurations.', 'Audit des configurations réseau et sécurité.')}</li>
-            <li>{t('Review firewall policies and VPN architectures.', 'Revue des politiques de pare-feu et des architectures VPN.')}</li>
-            <li>{t('Assess SD-WAN and cloud connectivity, and deliver documentation.', 'Évaluation du SD-WAN et de la connectivité cloud, avec documentation livrée.')}</li></ul>
-        {chips(['Audit', t('Firewall policy', 'Politiques pare-feu'), 'VPN', 'SD-WAN', 'Cloud'], ['Audit'])}
-      </div></div>
-      <a class="next-role reveal" href="#contact"><span><b>{t('Your team could be next.', 'Votre équipe pourrait être la prochaine.')}</b>{t('Looking for a network, security or cloud engineer?', 'Vous cherchez un ingénieur réseaux, sécurité ou cloud ?')}</span><span class="btn primary">{t('Get in touch', 'Me contacter')} →</span></a>
+    <div class="edu-row reveal">
+      <div class="edu"><span>2024 – 2026</span><b>{t('MBA, Management &amp; Project Management', 'MBA Management &amp; Gestion de projet')}</b></div>
+      <div class="edu"><span>2021 – 2023</span><b>{t('Master’s in Networks &amp; Telecommunications', 'Master Réseaux &amp; Télécommunications')}</b><small>{t('ENIC-NARIC France: comparable to level 7', 'ENIC-NARIC France : comparable au niveau 7')}</small></div>
+      <div class="edu next"><span>{t('Next step', 'Prochaine étape')}</span><b>{t('Fortinet FCP · Cisco CCNA exams', 'Examens Fortinet FCP · Cisco CCNA')}</b></div>
     </div>
   </div>
-</section>
+</section>"""
 
-<section class="sec" id="projects">
-  <div class="wrap">
-    <div class="reveal">
-      <div class="kicker">05 / {t('featured work', 'réalisations')}</div>
-      <h2>{t('Projects.', 'Projets.')}</h2>
-      <p class="intro">{t('Architectures I’ve designed and validated, from production migrations to multi-cloud lab builds. Each one has a full case study: architecture, configs, validation and lessons learned.',
-                           'Des architectures conçues et validées, des migrations en production aux maquettes multi-cloud. Chacune a son étude de cas complète : architecture, configurations, validation et retours d’expérience.')}</p>
-    </div>
-    <div class="proj-grid">{pcards}
-    </div>
+    # ───────── 9. CTA band + contact ─────────
+    cta = f"""
+<section class="cta-band">
+  <div class="wrap cta-inner reveal">
+    <div><h2>{t('Let’s build a network that stays up.', 'Construisons un réseau qui tient.')}</h2><p>{t('Hiring, planning an audit or migrating to SD-WAN or the cloud? Let’s talk.', 'Un recrutement, un audit ou une migration SD-WAN ou cloud ? Parlons-en.')}</p></div>
+    <div class="cta"><a class="btn white lg" href="#contact">{t('Contact me', 'Me contacter')}</a><a class="btn ghost lg" href="{cv_main}" download>{t('Download CV', 'Télécharger le CV')}</a><a class="btn ghost lg" href="cv.html">{t('Web CV', 'CV web')}</a></div>
   </div>
-</section>
-
-<section class="sec" id="labs">
-  <div class="wrap">
-    <div class="reveal">
-      <div class="kicker">06 / {t('eve-ng learning labs', 'labs eve-ng')}</div>
-      <h2>{t('Protocols, explained in the lab.', 'Les protocoles, expliqués en lab.')}</h2>
-      <p class="intro">{t('Ten hands-on EVE-NG lab guides. Each covers topology, addressing, configs, verification commands and break/fix exercises.',
-                           'Dix guides de lab EVE-NG. Chacun couvre topologie, adressage, configurations, commandes de vérification et exercices de panne.')}</p>
-    </div>
-    <div class="labs-wrap reveal">
-      <div class="labs-top">
-        <span class="cmd"><b>{t('Lab guides', 'Guides de lab')}</b></span>
-        <div class="prog"><span>{t('10 / 10 guides · captures &amp; .unl files coming', '10 / 10 guides · captures &amp; fichiers .unl à venir')}</span><div class="bar-p"><i style="width:100%"></i></div></div>
-      </div>
-      <div class="lab-filter" role="group" aria-label="{t('Filter labs', 'Filtrer les labs')}">
-        <button type="button" class="on" data-f="all">{t('All', 'Tous')} <i>10</i></button>
-        <button type="button" data-f="routing">{t('Routing', 'Routage')} <i>3</i></button>
-        <button type="button" data-f="switching">{t('Switching', 'Commutation')} <i>2</i></button>
-        <button type="button" data-f="vpn">VPN <i>1</i></button>
-        <button type="button" data-f="fortinet">Fortinet <i>2</i></button>
-        <button type="button" data-f="ops">{t('Automation &amp; monitoring', 'Automatisation &amp; supervision')} <i>2</i></button>
-      </div>
-      <table class="ifs">
-        <thead><tr><th>#</th><th>Lab</th><th>{t('Focus', 'Objet')}</th><th>{t('Status', 'Statut')}</th></tr></thead>
-        <tbody>{labrows}</tbody>
-      </table>
-    </div>
-    <a class="tool-teaser reveal" href="tools.html">
-      <span class="ico"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M7 9h4M7 13h10M7 17h6"/></svg></span>
-      <span><b>{t('Network toolkit', 'Boîte à outils réseau')}</b><small>{t('Subnet calculator · VLSM planner · wildcard &amp; ACL helper · IPsec MTU/MSS', 'Calcul de sous-réseau · planificateur VLSM · wildcard &amp; ACL · MTU/MSS IPsec')}</small></span>
-      <span class="more">{t('Open', 'Ouvrir')} →</span>
-    </a>
-  </div>
-</section>
-
-<section class="sec" id="certs">
-  <div class="wrap">
-    <div class="reveal">
-      <div class="kicker">07 / {t('credentials', 'certifications &amp; formation')}</div>
-      <h2>{t('A technical foundation. A project mindset.', 'Un socle technique. Un esprit projet.')}</h2>
-      <p class="intro">{t('Certifications and academy training on the technical side, plus a Master’s and an MBA.', 'Certifications et formations côté technique, complétées par un Master et un MBA.')}</p>
-    </div>
-    <div class="two">
-      <div class="list reveal">
-        <h3>{t('Certifications &amp; training', 'Certifications &amp; formations')}</h3>
-        <div class="li"><span class="badge" style="--c:var(--violet)">AVIATRIX</span><div><b>Multicloud Network Associate</b><span>{t('Multicloud networking certification', 'Certification réseau multicloud')}</span></div></div>
-        <div class="li"><span class="badge" style="--c:var(--red)">HUAWEI</span><div><b>HCIA Cloud Computing</b><span>{t('Huawei certification', 'Certification Huawei')}</span></div></div>
-        <div class="li"><span class="badge" style="--c:var(--red)">HUAWEI</span><div><b>HCIA Routing &amp; Switching</b><span>{t('Huawei certification', 'Certification Huawei')}</span></div></div>
-        <div class="li"><span class="badge" style="--c:var(--green)">CISCO NA</span><div><b>CCNP: Core Networking</b><span>{t('Cisco Networking Academy training', 'Formation Cisco Networking Academy')}</span></div></div>
-        <div class="li"><span class="badge" style="--c:var(--green)">CISCO NA</span><div><b>CCNA: Switching, Routing &amp; Wireless Essentials</b><span>{t('Cisco Networking Academy training', 'Formation Cisco Networking Academy')}</span></div></div>
-        <div class="li"><span class="badge" style="--c:var(--green)">CISCO NA</span><div><b>Network Defense · Network Security</b><span>{t('Cisco Networking Academy training', 'Formation Cisco Networking Academy')}</span></div></div>
-      </div>
-      <div>
-        <div class="list reveal">
-          <h3>{t('Education', 'Formation')}</h3>
-          <div class="li"><span class="badge" style="--c:var(--amber)">2024–26</span><div><b>{t('MBA, Management &amp; Project Management', 'MBA Management &amp; Gestion de projet')}</b><span>{t('Leadership, planning and delivery of IT projects', 'Leadership, planification et conduite de projets IT')}</span></div></div>
-          <div class="li"><span class="badge" style="--c:var(--amber)">2021–23</span><div><b>{t('Master’s in Networks &amp; Telecommunications', 'Master Réseaux &amp; Télécommunications')}</b><span>{t('Assessed by ENIC-NARIC France as comparable to level 7 (Master’s)', 'Attestation de comparabilité ENIC-NARIC France : niveau 7 (Master)')}</span></div></div>
-        </div>
-        <div class="next reveal"><b>{t('Next step', 'Prochaine étape')}</b> {t('official vendor exams (Fortinet FCP, Cisco CCNA) to formalise my hands-on experience.', 'examens officiels (Fortinet FCP, Cisco CCNA) pour valider mon expérience terrain.')}</div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section class="sec" id="resume">
-  <div class="wrap">
-    <div class="reveal">
-      <div class="kicker">08 / {t('resume', 'cv')}</div>
-      <h2>{t('Choose your CV.', 'Choisissez votre CV.')}</h2>
-      <p class="intro">{t('One-page PDFs in English and French, plus a web version you can read here and print.', 'PDF d’une page en français et en anglais, plus une version web lisible ici et imprimable.')}</p>
-    </div>
-    <div class="cv cv3">
-      <div class="cvcard reveal"><div class="paper"><i></i><i></i><i style="width:80%"></i><i></i><i style="width:60%"></i><i></i><span>EN</span></div>
-        <div><h3>English CV</h3><p>1 page · PDF</p><div class="row"><a class="btn primary" href="{cv_en}" download>↓ {t('Download', 'Télécharger')}</a><a class="btn" href="{cv_en}" target="_blank" rel="noopener">{t('Preview', 'Aperçu')}</a></div></div></div>
-      <div class="cvcard reveal"><div class="paper"><i></i><i></i><i style="width:75%"></i><i></i><i style="width:55%"></i><i></i><span>FR</span></div>
-        <div><h3>CV en français</h3><p>1 page · PDF</p><div class="row"><a class="btn primary" href="{cv_fr}" download>↓ {t('Download', 'Télécharger')}</a><a class="btn" href="{cv_fr}" target="_blank" rel="noopener">{t('Preview', 'Aperçu')}</a></div></div></div>
-      <div class="cvcard reveal"><div class="paper"><i></i><i></i><i style="width:70%"></i><i></i><i style="width:65%"></i><i></i><span>WEB</span></div>
-        <div><h3>{t('Web CV', 'CV web')}</h3><p>{t('Readable · printable', 'Lisible · imprimable')}</p><div class="row"><a class="btn primary" href="cv.html">{t('Open', 'Ouvrir')} →</a></div></div></div>
-    </div>
-  </div>
-</section>
-
-<section class="sec" id="contact">
+</section>"""
+    contact = f"""
+<section class="band" id="contact">
   <div class="wrap contact">
     <div class="reveal">
-      <div class="kicker">09 / contact</div>
-      <h2>{t('Let’s talk infrastructure.', 'Parlons infrastructure.')}</h2>
-      <p class="big">{t('A role, an audit or a network that needs fixing?', 'Un poste, un audit ou un réseau à remettre d’aplomb ?')} <span style="color:var(--amber)">{t('Send me a packet.', 'Envoyez-moi un paquet.')}</span></p>
+      <span class="kicker">Contact</span>
+      <h2>{t('Let’s talk infrastructure', 'Parlons infrastructure')}</h2>
+      <p class="lead">{t('A role, an audit or a network that needs fixing? I usually reply within one business day.', 'Un poste, un audit ou un réseau à remettre d’aplomb ? Je réponds généralement sous un jour ouvré.')}</p>
       <div class="clinks">
-        <a class="clink" href="mailto:{EMAIL}"><span class="ico"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg></span>
-          <div><small>EMAIL</small><span>{EMAIL}</span></div><button class="copy" type="button" data-copy="{EMAIL}">{t('copy', 'copier')}</button></a>
-        <a class="clink" href="{LINKEDIN}" target="_blank" rel="noopener"><span class="ico"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M4.98 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5zM3 9.5h4V21H3zM9.5 9.5h3.8v1.6h.06c.53-1 1.83-2.06 3.77-2.06 4.03 0 4.77 2.65 4.77 6.1V21h-4v-5.1c0-1.22-.02-2.78-1.7-2.78-1.7 0-1.96 1.33-1.96 2.7V21h-4z"/></svg></span>
-          <div><small>LINKEDIN</small><span>in/tarek-medjoub</span></div></a>
-        <div class="clink" style="cursor:default"><span class="ico"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 21s-7-6.2-7-11.5A7 7 0 0 1 19 9.5C19 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg></span>
-          <div><small>{t('LOCATION', 'LOCALISATION')}</small><span>Paris, France</span></div></div>
+        <a class="clink" href="mailto:{EMAIL}"><span class="ico">{ico('mail')}</span><div><small>EMAIL</small><span>{EMAIL}</span></div><button class="copy" type="button" data-copy="{EMAIL}">{t('copy', 'copier')}</button></a>
+        <a class="clink" href="{LINKEDIN}" target="_blank" rel="noopener"><span class="ico"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M4.98 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5zM3 9.5h4V21H3zM9.5 9.5h3.8v1.6h.06c.53-1 1.83-2.06 3.77-2.06 4.03 0 4.77 2.65 4.77 6.1V21h-4v-5.1c0-1.22-.02-2.78-1.7-2.78-1.7 0-1.96 1.33-1.96 2.7V21h-4z"/></svg></span><div><small>LINKEDIN</small><span>in/tarek-medjoub</span></div></a>
+        <div class="clink" style="cursor:default"><span class="ico"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 21s-7-6.2-7-11.5A7 7 0 0 1 19 9.5C19 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg></span><div><small>{t('LOCATION', 'LOCALISATION')}</small><span>Paris, France</span></div></div>
       </div>
     </div>
     <div class="form-card reveal">
@@ -398,29 +337,27 @@ def home(lang):
         </div>
         <div class="grid2">
           <div><label for="cfOrg">{t('Company', 'Entreprise')}</label><input id="cfOrg" autocomplete="organization"></div>
-          <div><label for="cfTopic">{t('Topic', 'Sujet')}</label>
-          <select id="cfTopic"><option>{t('Job opportunity', 'Opportunité de poste')}</option><option>{t('Network / security audit', 'Audit réseau / sécurité')}</option><option>{t('SD-WAN or VPN project', 'Projet SD-WAN ou VPN')}</option><option>{t('Cloud connectivity', 'Connectivité cloud')}</option><option>{t('Something else', 'Autre')}</option></select></div>
+          <div><label for="cfTopic">{t('Topic', 'Sujet')}</label><select id="cfTopic"><option>{t('Job opportunity', 'Opportunité de poste')}</option><option>{t('Network / security audit', 'Audit réseau / sécurité')}</option><option>{t('SD-WAN or VPN project', 'Projet SD-WAN ou VPN')}</option><option>{t('Cloud connectivity', 'Connectivité cloud')}</option><option>{t('Something else', 'Autre')}</option></select></div>
         </div>
         <div><label for="cfMsg">Message <span class="req" aria-hidden="true">*</span></label><textarea id="cfMsg" required></textarea></div>
-        <button class="btn primary" type="submit" style="justify-self:start">{t('Send message', 'Envoyer le message')} →</button>
+        <button class="btn primary" type="submit" style="justify-self:start">{t('Send message', 'Envoyer le message')} {ico('arrow', 15)}</button>
         <span class="cf-hint">{t('* required. Opens your email client with the message pre-filled, including your address so I can reply.', '* obligatoire. Ouvre votre messagerie avec le message pré-rempli, votre adresse comprise pour que je puisse répondre.')}</span>
       </form>
     </div>
   </div>
-</section>
-"""
+</section>"""
+
+    body = hero + services + expertise + work + demo + about + resources + creds + cta + contact
     jsonld = """<script type="application/ld+json">
 {"@context":"https://schema.org","@type":"Person","name":"Tarek Medjoub","jobTitle":"%s",
 "email":"mailto:%s","url":"%s","address":{"@type":"PostalAddress","addressLocality":"Paris","addressCountry":"FR"},
 "sameAs":["%s"],"knowsLanguage":["fr","en"],
-"knowsAbout":["Fortinet SD-WAN","FortiGate","BGP","OSPF","IPsec VPN","Azure VPN Gateway","AWS Transit Gateway","Zabbix","PRTG","Network security"],
-"alumniOf":[{"@type":"EducationalOrganization","name":"Master's in Networks & Telecommunications"}]}
+"knowsAbout":["Fortinet SD-WAN","FortiGate","BGP","OSPF","IPsec VPN","Azure VPN Gateway","AWS Transit Gateway","Zabbix","PRTG","Network security"]}
 </script>""" % (t("Network, Security & Cloud Engineer", "Ingénieur Réseaux, Sécurité & Cloud"), EMAIL, SITE, LINKEDIN)
-    root_js = "../" if lang == "fr" else ""
     return layout(
         lang, "index.html",
         t("Tarek MEDJOUB · Network, Security & Cloud Engineer", "Tarek MEDJOUB · Ingénieur Réseaux, Sécurité & Cloud"),
         t("Network, Security & Cloud Engineer in Paris. Fortinet SD-WAN, multisite networks, IPsec/BGP and hybrid connectivity to Azure and AWS.",
           "Ingénieur Réseaux, Sécurité & Cloud à Paris. SD-WAN Fortinet, réseaux multisites, IPsec/BGP et connectivité hybride vers Azure et AWS."),
         body, home=True, jsonld=jsonld,
-        extra_js=f'<script src="{root_js}assets/js/topology.js" defer></script>')
+        extra_js=f'<script src="{root}assets/js/topology.js" defer></script><script src="{root}assets/js/home.js" defer></script>')

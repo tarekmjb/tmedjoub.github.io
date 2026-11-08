@@ -20,6 +20,39 @@ def write(rel, content):
     written.append(rel)
 
 
+LAB_FOR = {"sdwan": ["sdwan-failover", "ipsec", "fortigate-ha"], "hybrid-cloud": ["ipsec", "bgp", "sdwan-failover"],
+           "lan-optimization": ["vlan", "switching-resilience", "ospf"], "monitoring-stack": ["snmp-zabbix", "ansible-network", "fortigate-ha"]}
+TOOL_FOR = {"sdwan": "mss", "hybrid-cloud": "mss", "lan-optimization": "vlsm", "monitoring-stack": "subnet"}
+TOOL_NAME = {"mss": ("IPsec MTU / MSS calculator", "Calcul MTU / MSS IPsec"), "vlsm": ("VLSM planner", "Planificateur VLSM"),
+             "subnet": ("IPv4 subnet calculator", "Calcul de sous-réseau IPv4")}
+PROJ_FOR_LAB = {"bgp": "hybrid-cloud", "ospf": "lan-optimization", "vlan": "lan-optimization", "ipsec": "sdwan", "mpls-vrf": "sdwan",
+                "switching-resilience": "lan-optimization", "sdwan-failover": "sdwan", "fortigate-ha": "sdwan",
+                "ansible-network": "monitoring-stack", "snmp-zabbix": "monitoring-stack"}
+
+
+def related_for_project(x, pid):
+    t = x.t; out = []
+    for p in [p for p in PROJECTS if p["id"] != pid][:2]:
+        out.append((t("Case study", "Étude de cas"), t(*p["title"]), p["tagline"], p["id"] + ".html"))
+    labs = {l["id"]: l for l in LABS}
+    for lid in LAB_FOR[pid][:1]:
+        l = labs[lid]; out.append((t("Lab guide", "Guide de lab"), t(*l["title"]), t(*l["focus"]), f"../labs/{lid}.html"))
+    tk = TOOL_FOR[pid]
+    out.append((t("Tool", "Outil"), t(*TOOL_NAME[tk]), t("Free, runs in your browser", "Gratuit, dans votre navigateur"), f"../tools.html#{tk}"))
+    return out
+
+
+def related_for_lab(x, idx):
+    t = x.t; out = []
+    for k in (1, 2):
+        l = LABS[(idx + k) % len(LABS)]
+        out.append((t("Lab guide", "Guide de lab"), t(*l["title"]), t(*l["focus"]), l["id"] + ".html"))
+    p = next(p for p in PROJECTS if p["id"] == PROJ_FOR_LAB[LABS[idx]["id"]])
+    out.append((t("In production", "En production"), t(*p["title"]), p["tagline"], f"../projects/{p['id']}.html"))
+    out.append((t("Tool", "Outil"), t("Network toolkit", "Outils réseau"), t("Subnet, VLSM, wildcard, MSS", "Sous-réseau, VLSM, wildcard, MSS"), "../tools.html"))
+    return out
+
+
 def project_page(lang, idx):
     x = L(lang); t = x.t
     p = PROJECTS[idx]; m = META[p["id"]]
@@ -34,7 +67,8 @@ def project_page(lang, idx):
         kpis=[(a, t(*b)) for a, b in m["kpis"]],
         sections=BUILDERS[p["id"]](x),
         pn=((t(*prv["title"]), prv["id"] + ".html"), (t(*nxt["title"]), nxt["id"] + ".html")),
-        back=(home_href + "#projects", t("Back to projects", "Retour aux projets")))
+        back=(home_href + "#projects", t("Back to projects", "Retour aux projets")),
+        related=related_for_project(x, p["id"]))
     write(("fr/" if lang == "fr" else "") + f"projects/{p['id']}.html",
           layout(lang, f"projects/{p['id']}.html", f"{t(*p['title'])} · Tarek MEDJOUB", t(*p["card"])[:158], body, doc=True))
 
@@ -47,13 +81,14 @@ def lab_page(lang, idx):
     status = f'<span class="status-pill" style="--c:var(--green)">{t("guide ready · lab captures coming", "guide prêt · captures du lab à venir")}</span>'
     body = doc_page(
         x,
-        crumbs=[f'<a href="{home_href}">{t("Home", "Accueil")}</a>', f'<a href="{home_href}#labs">Labs</a>', t(*lab["title"])],
+        crumbs=[f'<a href="{home_href}">{t("Home", "Accueil")}</a>', f'<a href="{home_href}#resources">Labs</a>', t(*lab["title"])],
         kicker=f'EVE-NG lab {idx + 1:02d} · {lab["tags"]}',
         title=t(*lab["title"]), summary=t(*lab["objective"]),
         metas=[(t("Level:", "Niveau :"), t(*lab["level"])), (t("Time:", "Durée :"), lab["time"]), (t("Focus:", "Objet :"), t(*lab["focus"]))],
         kpis=None, sections=lab_sections(x, lab), status=status,
         pn=((t(*prv["title"]), prv["id"] + ".html"), (t(*nxt["title"]), nxt["id"] + ".html")),
-        back=(home_href + "#labs", t("Back to labs", "Retour aux labs")))
+        back=(home_href + "#resources", t("Back to resources", "Retour aux ressources")),
+        related=related_for_lab(x, idx))
     write(("fr/" if lang == "fr" else "") + f"labs/{lab['id']}.html",
           layout(lang, f"labs/{lab['id']}.html", f"{t(*lab['title'])} · EVE-NG lab · Tarek MEDJOUB", t(*lab["objective"])[:158], body, doc=True))
 
