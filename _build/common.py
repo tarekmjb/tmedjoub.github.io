@@ -66,6 +66,8 @@ def layout(lang, path, title, desc, body, *, home=False, doc=False, extra_js="",
         ("resume", "CV"),
         ("contact", "Contact"),
     ]
+    from chrome import header as _hdr, utility_bar, footer
+    mega = _hdr(x, root, lp, home)
     nav = "\n".join(f'      <a href="{a(i)}">{lbl}</a>' for i, lbl in nav_items)
     nav += f'\n      <a href="{root + lp}tools.html" class="nav-tools">{t("Toolkit", "Outils")}</a>'
     og_img = SITE + "assets/img/og-image.png"
@@ -105,19 +107,17 @@ def layout(lang, path, title, desc, body, *, home=False, doc=False, extra_js="",
 <body>
 <a class="skip" href="#main">{t('Skip to content', 'Aller au contenu')}</a>
 {'<div class="progress" aria-hidden="true"></div>' if doc else ''}
+{utility_bar(x, en_href, fr_href, lang)}
 <header class="bar">
   <div class="wrap">
     <a href="{root + lp + 'index.html' if not home else '#top'}" class="brand" aria-label="Tarek Medjoub · {t('home', 'accueil')}"><span class="brand-mark" aria-hidden="true">TM</span><span class="brand-txt">Tarek Medjoub<small>{t('Network · Security · Cloud', 'Réseaux · Sécurité · Cloud')}</small></span></a>
     <nav class="links" id="nav" aria-label="{t('Main', 'Principale')}">
-{nav}
+      <ul class="mm-list">{mega}</ul>
     </nav>
     <div class="tools">
-      <button class="btn-ico menu-btn" id="menuBtn" aria-label="Menu" aria-expanded="false">☰</button>
       <button class="btn-ico" id="themeBtn" title="{t('Toggle theme', 'Changer de thème')}" aria-label="{t('Toggle light/dark theme', 'Basculer thème clair/sombre')}"><svg class="i-moon" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg><svg class="i-sun" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg></button>
-      <div class="lang" role="group" aria-label="{t('Language', 'Langue')}">
-        <a href="{en_href}" data-lang="en" hreflang="en"{' class="on" aria-current="true"' if lang == 'en' else ''}>EN</a>
-        <a href="{fr_href}" data-lang="fr" hreflang="fr"{' class="on" aria-current="true"' if lang == 'fr' else ''}>FR</a>
-      </div>
+      <a class="btn primary btn-sm hdr-cta" href="{home_href}#contact">{t('Contact me', 'Me contacter')}</a>
+      <button class="btn-ico menu-btn" id="menuBtn" aria-label="Menu" aria-expanded="false" aria-controls="nav"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
     </div>
   </div>
 </header>
@@ -126,12 +126,7 @@ def layout(lang, path, title, desc, body, *, home=False, doc=False, extra_js="",
 {body}
 </main>
 
-<footer>
-  <div class="wrap">
-    <span>© <span class="yr">2026</span> Tarek Medjoub · Paris · <a href="mailto:{EMAIL}">{EMAIL}</a></span>
-    <span class="foot-links"><a href="{LINKEDIN}" target="_blank" rel="noopener">LinkedIn</a><a href="{root + lp}cv.html">CV</a><a href="{root + lp}tools.html">{t('Toolkit', 'Outils')}</a></span>
-  </div>
-</footer>
+{footer(x, root, lp, home)}
 
 <button class="totop" id="toTop" type="button" aria-label="{t('Back to top', 'Retour en haut')}" title="{t('Back to top', 'Retour en haut')}"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5M5 12l7-7 7 7"/></svg><span>{t('top', 'haut')}</span></button>
 <button class="fab" id="fab" aria-label="{t('Open interactive console', 'Ouvrir la console interactive')}" title="{t('Console (/ or Ctrl+K)', 'Console (/ ou Ctrl+K)')}"><b>&gt;_</b></button>
@@ -203,7 +198,7 @@ def topo_svg(nodes, links, w=640, h=300, zones=(), caption=""):
     return "".join(out)
 
 
-def doc_page(x, *, crumbs, kicker, title, summary, metas, kpis, sections, pn, status=None, back=None):
+def doc_page(x, *, crumbs, kicker, title, summary, metas, kpis, sections, pn, status=None, back=None, related=None):
     """Generic case-study / lab page body. sections: list of (id, toc_label, html)."""
     t = x.t
     crumb = '<span class="sep">/</span>'.join(crumbs)
@@ -225,20 +220,30 @@ def doc_page(x, *, crumbs, kicker, title, summary, metas, kpis, sections, pn, st
         back_top = f'<a class="back-btn" href="{bh}">← {bl}</a>'
         back_end = (f'<div class="end-nav"><a class="back-btn" href="{bh}">← {bl}</a>'
                     f'<a class="back-btn" href="#top" data-top>↑ {t("Back to top", "Retour en haut")}</a></div>')
+    rel = ""
+    if related:
+        rel = (f'<section class="related"><div class="wrap"><div class="kicker">{t("Keep exploring", "Continuer la découverte")}</div><h2>{t("Discover more", "Pour aller plus loin")}</h2><div class="rel-grid">'
+               + "".join(f'<a class="rel-card" href="{h}"><span class="rel-type">{ty}</span><b>{ti}</b><span class="rel-desc">{de}</span><span class="rel-go">{t("Explore", "Découvrir")} →</span></a>' for ty, ti, de, h in related)
+               + '</div></div></section>')
     return f"""
-<div class="wrap" id="top">
-  <div class="crumbs">{back_top}{crumb}</div>
-  <div class="doc-hero">
-    <div class="kicker">{kicker}</div>
-    <h1>{title}</h1>
-    <p class="sum">{summary}</p>
-    {st}
-    <div class="meta-row">{meta}</div>
-    {kp}
+<section class="doc-band" id="top">
+  <div class="wrap">
+    <div class="crumbs">{back_top}{crumb}</div>
+    <div class="doc-hero">
+      <div class="kicker">{kicker}</div>
+      <h1>{title}</h1>
+      <p class="sum">{summary}</p>
+      {st}
+      <div class="meta-row">{meta}</div>
+    </div>
   </div>
+</section>
+<div class="wrap">
+  {kp}
   <div class="doc">
     <nav class="toc" aria-label="{t('On this page', 'Sur cette page')}"><b>{t('ON THIS PAGE', 'SUR CETTE PAGE')}</b>{toc}</nav>
     <div class="doc-body">{secs}{pnh}{back_end}</div>
   </div>
 </div>
+{rel}
 """
