@@ -50,12 +50,34 @@ def home(lang):
   </div>
   <div class="wrap">
     <div class="hero-stats">
-      <div><b>4</b><span>{t('sites migrated to SD-WAN', 'sites migrés en SD-WAN')}</span></div>
-      <div><b>≈1.5 s</b><span>{t('failover in lab (was 3–5 min)', 'bascule en lab (contre 3–5 min)')}</span></div>
-      <div><b>6</b><span>{t('engineers &amp; technicians led', 'ingénieurs &amp; techniciens encadrés')}</span></div>
-      <div><b>2</b><span>{t('clouds connected: Azure + AWS', 'clouds connectés : Azure + AWS')}</span></div>
-      <div><b>10</b><span>{t('EVE-NG lab guides', 'guides de lab EVE-NG')}</span></div>
+      <div><b data-count="4">4</b><span>{t('sites migrated to SD-WAN', 'sites migrés en SD-WAN')}</span></div>
+      <div><b data-count="1.5" data-pre="≈" data-suf=" s" data-dec="1">{t('≈1.5 s', '≈1,5 s')}</b><span>{t('failover in lab (was 3–5 min)', 'bascule en lab (contre 3–5 min)')}</span></div>
+      <div><b data-count="6">6</b><span>{t('engineers &amp; technicians led', 'ingénieurs &amp; techniciens encadrés')}</span></div>
+      <div><b data-count="2">2</b><span>{t('clouds connected: Azure + AWS', 'clouds connectés : Azure + AWS')}</span></div>
+      <div><b data-count="10">10</b><span>{t('EVE-NG lab guides', 'guides de lab EVE-NG')}</span></div>
     </div>
+  </div>
+</section>"""
+
+
+    # ───────── sticky section nav + technology strip ─────────
+    subnav = f"""
+<nav class="subnav" aria-label="{t('Page sections', 'Sections de la page')}">
+  <div class="wrap">
+    <div class="subnav-links">
+      <a href="#services">{t('Services', 'Services')}</a><a href="#expertise">{t('Expertise', 'Expertise')}</a><a href="#work">{t('Work', 'Réalisations')}</a><a href="#demo">{t('Live demo', 'Démo')}</a><a href="#about">{t('About', 'À propos')}</a><a href="#resources">{t('Resources', 'Ressources')}</a><a href="#certs">{t('Credentials', 'Certifications')}</a>
+    </div>
+  </div>
+  <span class="subnav-prog" aria-hidden="true"></span>
+</nav>"""
+    TECH = ["Fortinet FortiGate", "FortiManager", "FortiAnalyzer", "Fortinet SD-WAN", "Cisco IOS / IOS-XE", "Huawei", "Ubiquiti", "Microsoft Azure", "AWS", "Aviatrix",
+            "Zabbix", "PRTG", "GLPI", "ManageEngine OpManager", "EVE-NG", "Ansible", "Windows Server", "Linux", "Wireshark"]
+    row = "".join(f"<li>{x}</li>" for x in TECH)
+    marquee = f"""
+<section class="tech-strip" aria-label="{t('Technologies I work with', 'Technologies utilisées')}">
+  <div class="wrap tech-inner">
+    <span class="tech-h">{t('Technologies I work with', 'Technologies que j’utilise')}</span>
+    <div class="marquee"><ul class="mq-track">{row}</ul><ul class="mq-track" aria-hidden="true">{row}</ul></div>
   </div>
 </section>"""
 
@@ -347,7 +369,7 @@ def home(lang):
   </div>
 </section>"""
 
-    body = hero + services + expertise + work + demo + about + resources + creds + cta + contact
+    body = hero + subnav + marquee + services + expertise + work + demo + about + resources + creds + cta + contact
     jsonld = """<script type="application/ld+json">
 {"@context":"https://schema.org","@type":"Person","name":"Tarek Medjoub","jobTitle":"%s",
 "email":"mailto:%s","url":"%s","address":{"@type":"PostalAddress","addressLocality":"Paris","addressCountry":"FR"},
