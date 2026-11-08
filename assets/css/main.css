@@ -1347,3 +1347,20 @@ footer.fat .wrap{display:block}
 .tk .tool-out .kv td{overflow-wrap:anywhere;min-width:0}
 .tk .fld-2{grid-column:span 2}
 @media (max-width:860px){.tk .fld-2{grid-column:1/-1}.tk #v6Out .kv tr{grid-template-columns:42% 1fr}}
+
+/* demo: full-screen button + mode */
+.topo-head{gap:12px}
+.topo-head .live{margin-left:auto}
+.fs-btn{display:inline-flex;align-items:center;gap:6px;font:600 12.5px var(--ui);color:var(--text);background:var(--bg2);border:1px solid var(--line2);border-radius:8px;padding:5px 10px;cursor:pointer;transition:border-color .2s,color .2s}
+.fs-btn:hover{border-color:var(--amber);color:var(--amber)}
+.fs-btn .i-close{display:none}
+.topo.full-on .fs-btn .i-open{display:none}
+.topo.full-on .fs-btn .i-close{display:block}
+.topo:fullscreen,.topo:-webkit-full-screen,.topo.is-full{display:flex;flex-direction:column;width:100vw;height:100vh;max-width:none;border-radius:0;border:0;background:var(--panel);overflow:auto}
+.topo.is-full{position:fixed;inset:0;z-index:200}
+.topo.full-on #topo{flex:1;min-height:0;width:100%;height:auto;max-height:calc(100vh - 290px)}
+.topo.full-on .topo-head{padding:14px 22px;font-size:15px}
+.topo.full-on .legend,.topo.full-on .topo-ctl,.topo.full-on .sla,.topo.full-on .log{padding-left:22px;padding-right:22px}
+.topo.full-on .log{height:110px}
+.topo.full-on .sla svg{height:70px}
+@media (max-width:560px){.fs-btn span{display:none}.fs-btn{padding:5px 7px}.topo.full-on #topo{max-height:calc(100vh - 330px)}}
