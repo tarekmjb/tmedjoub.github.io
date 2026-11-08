@@ -12,15 +12,15 @@ def tools_page(lang):
     <h1>{t('Everyday network tools.', 'Outils réseau du quotidien.')}</h1>
     <p class="sum">{t('The calculators I reach for when designing and troubleshooting networks. Everything runs in your browser: nothing is sent anywhere.',
                      'Les calculateurs que j’utilise pour concevoir et dépanner des réseaux. Tout s’exécute dans votre navigateur : rien n’est envoyé.')}</p>
-    <div class="tool-tabs" role="tablist">
-      <a href="#subnet" class="on">{t('Subnet calculator', 'Calcul de sous-réseau')}</a>
-      <a href="#vlsm">{t('VLSM planner', 'Planificateur VLSM')}</a>
-      <a href="#wildcard">{t('Wildcard &amp; ACL', 'Wildcard &amp; ACL')}</a>
-      <a href="#mss">IPsec MTU / MSS</a>
+    <div class="tool-tabs" role="tablist" aria-label="{t('Tools', 'Outils')}">
+      <a href="#subnet" role="tab" id="tab-subnet" aria-controls="subnet" class="on"><b>01</b>{t('Subnet calculator', 'Calcul de sous-réseau')}</a>
+      <a href="#vlsm" role="tab" id="tab-vlsm" aria-controls="vlsm"><b>02</b>{t('VLSM planner', 'Planificateur VLSM')}</a>
+      <a href="#wildcard" role="tab" id="tab-wildcard" aria-controls="wildcard"><b>03</b>{t('Wildcard &amp; ACL', 'Wildcard &amp; ACL')}</a>
+      <a href="#mss" role="tab" id="tab-mss" aria-controls="mss"><b>04</b>IPsec MTU / MSS</a>
     </div>
   </div>
 
-  <section class="tool" id="subnet">
+  <section class="tool" id="subnet" role="tabpanel" aria-labelledby="tab-subnet">
     <div class="tool-in">
       <h2>{t('Subnet calculator', 'Calcul de sous-réseau')}</h2>
       <p>{t('Enter an address with a prefix or a mask.', 'Saisissez une adresse avec un préfixe ou un masque.')}</p>
@@ -31,7 +31,7 @@ def tools_page(lang):
     <div class="tool-out" id="snOut" aria-live="polite"></div>
   </section>
 
-  <section class="tool" id="vlsm">
+  <section class="tool" id="vlsm" role="tabpanel" aria-labelledby="tab-vlsm">
     <div class="tool-in">
       <h2>{t('VLSM planner', 'Planificateur VLSM')}</h2>
       <p>{t('One segment per line: <code>name hosts</code>. Largest segments are placed first to avoid gaps.', 'Un segment par ligne : <code>nom hôtes</code>. Les plus grands segments sont placés en premier pour éviter les trous.')}</p>
@@ -49,7 +49,7 @@ WAN-link-2 2</textarea>
     <div class="tool-out" id="vlOut" aria-live="polite"></div>
   </section>
 
-  <section class="tool" id="wildcard">
+  <section class="tool" id="wildcard" role="tabpanel" aria-labelledby="tab-wildcard">
     <div class="tool-in">
       <h2>{t('Wildcard &amp; ACL helper', 'Assistant wildcard &amp; ACL')}</h2>
       <p>{t('Convert between prefix, mask and wildcard, and get ready-to-paste ACL and object syntax.', 'Conversion entre préfixe, masque et wildcard, avec la syntaxe ACL et objet prête à coller.')}</p>
@@ -61,7 +61,7 @@ WAN-link-2 2</textarea>
     <div class="tool-out" id="wcOut" aria-live="polite"></div>
   </section>
 
-  <section class="tool" id="mss">
+  <section class="tool" id="mss" role="tabpanel" aria-labelledby="tab-mss">
     <div class="tool-in">
       <h2>IPsec MTU / MSS</h2>
       <p>{t('Estimate tunnel overhead and the <code>ip mtu</code> / <code>adjust-mss</code> values to configure. Worst-case padding is assumed.', 'Estimation de l’en-tête du tunnel et des valeurs <code>ip mtu</code> / <code>adjust-mss</code> à configurer. Le pire cas de bourrage est pris en compte.')}</p>

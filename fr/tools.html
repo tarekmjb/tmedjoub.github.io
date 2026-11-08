@@ -68,15 +68,15 @@
     <div class="kicker">boîte à outils réseau</div>
     <h1>Outils réseau du quotidien.</h1>
     <p class="sum">Les calculateurs que j’utilise pour concevoir et dépanner des réseaux. Tout s’exécute dans votre navigateur : rien n’est envoyé.</p>
-    <div class="tool-tabs" role="tablist">
-      <a href="#subnet" class="on">Calcul de sous-réseau</a>
-      <a href="#vlsm">Planificateur VLSM</a>
-      <a href="#wildcard">Wildcard &amp; ACL</a>
-      <a href="#mss">IPsec MTU / MSS</a>
+    <div class="tool-tabs" role="tablist" aria-label="Outils">
+      <a href="#subnet" role="tab" id="tab-subnet" aria-controls="subnet" class="on"><b>01</b>Calcul de sous-réseau</a>
+      <a href="#vlsm" role="tab" id="tab-vlsm" aria-controls="vlsm"><b>02</b>Planificateur VLSM</a>
+      <a href="#wildcard" role="tab" id="tab-wildcard" aria-controls="wildcard"><b>03</b>Wildcard &amp; ACL</a>
+      <a href="#mss" role="tab" id="tab-mss" aria-controls="mss"><b>04</b>IPsec MTU / MSS</a>
     </div>
   </div>
 
-  <section class="tool" id="subnet">
+  <section class="tool" id="subnet" role="tabpanel" aria-labelledby="tab-subnet">
     <div class="tool-in">
       <h2>Calcul de sous-réseau</h2>
       <p>Saisissez une adresse avec un préfixe ou un masque.</p>
@@ -87,7 +87,7 @@
     <div class="tool-out" id="snOut" aria-live="polite"></div>
   </section>
 
-  <section class="tool" id="vlsm">
+  <section class="tool" id="vlsm" role="tabpanel" aria-labelledby="tab-vlsm">
     <div class="tool-in">
       <h2>Planificateur VLSM</h2>
       <p>Un segment par ligne : <code>nom hôtes</code>. Les plus grands segments sont placés en premier pour éviter les trous.</p>
@@ -105,7 +105,7 @@ WAN-link-2 2</textarea>
     <div class="tool-out" id="vlOut" aria-live="polite"></div>
   </section>
 
-  <section class="tool" id="wildcard">
+  <section class="tool" id="wildcard" role="tabpanel" aria-labelledby="tab-wildcard">
     <div class="tool-in">
       <h2>Assistant wildcard &amp; ACL</h2>
       <p>Conversion entre préfixe, masque et wildcard, avec la syntaxe ACL et objet prête à coller.</p>
@@ -117,7 +117,7 @@ WAN-link-2 2</textarea>
     <div class="tool-out" id="wcOut" aria-live="polite"></div>
   </section>
 
-  <section class="tool" id="mss">
+  <section class="tool" id="mss" role="tabpanel" aria-labelledby="tab-mss">
     <div class="tool-in">
       <h2>IPsec MTU / MSS</h2>
       <p>Estimation de l’en-tête du tunnel et des valeurs <code>ip mtu</code> / <code>adjust-mss</code> à configurer. Le pire cas de bourrage est pris en compte.</p>
@@ -152,7 +152,7 @@ WAN-link-2 2</textarea>
 <button class="fab" id="fab" aria-label="Ouvrir la console interactive"><b>&gt;_</b><span>console</span></button>
 <div class="con-back" id="conBack" role="dialog" aria-modal="true" aria-label="Console interactive">
   <div class="con">
-    <div class="term-head"><div class="dots"><i></i><i></i><i></i></div><span>tarek@medjoub · console interactive</span><span style="margin-left:auto">échap pour fermer</span></div>
+    <div class="term-head"><div class="dots"><i></i><i></i><i></i></div><span>tarek@medjoub · console interactive</span><span class="con-hint">échap pour fermer</span><button class="con-x" id="conClose" type="button" aria-label="Fermer la console" title="Fermer">✕</button></div>
     <div class="con-out" id="conOut"></div>
     <div class="con-sug" id="conSug"></div>
     <div class="con-in"><span class="p">guest@portfolio:~$</span><input id="conIn" autocomplete="off" spellcheck="false" aria-label="Commande"></div>

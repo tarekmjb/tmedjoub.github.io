@@ -149,10 +149,28 @@
     const b = e.target.closest('button[data-c]'); if (!b) return;
     navigator.clipboard && navigator.clipboard.writeText(b.dataset.c).then(() => { b.textContent = '✓'; setTimeout(() => (b.textContent = 'copy'), 1200); });
   });
-  /* tabs highlight */
+  /* tabs: one tool visible at a time, linkable with #subnet, #vlsm, #wildcard, #mss */
   const tabs = [...document.querySelectorAll('.tool-tabs a')];
-  if ('IntersectionObserver' in window) {
-    const io = new IntersectionObserver(es => es.forEach(en => { if (en.isIntersecting) tabs.forEach(a => a.classList.toggle('on', a.getAttribute('href') === '#' + en.target.id)); }), { rootMargin: '-45% 0px -50% 0px' });
-    document.querySelectorAll('section.tool').forEach(s => io.observe(s));
-  }
+  const panels = [...document.querySelectorAll('section.tool')];
+  document.body.classList.add('tools-tabbed');
+  const show = (id, focus) => {
+    if (!panels.some(p => p.id === id)) id = panels[0].id;
+    panels.forEach(p => { p.hidden = p.id !== id; });
+    tabs.forEach(a => {
+      const on = a.getAttribute('href') === '#' + id;
+      a.classList.toggle('on', on); a.setAttribute('aria-selected', on); a.tabIndex = on ? 0 : -1;
+      if (on && focus) a.focus();
+    });
+    const inp = document.querySelector('#' + id + ' .tin');
+    if (focus === 'input' && inp) inp.focus();
+  };
+  tabs.forEach((a, i) => {
+    a.addEventListener('click', e => { e.preventDefault(); const id = a.getAttribute('href').slice(1); history.replaceState(null, '', '#' + id); show(id); });
+    a.addEventListener('keydown', e => {
+      const k = e.key === 'ArrowRight' ? 1 : e.key === 'ArrowLeft' ? -1 : 0; if (!k) return;
+      e.preventDefault(); const n = tabs[(i + k + tabs.length) % tabs.length]; n.click(); n.focus();
+    });
+  });
+  addEventListener('hashchange', () => show(location.hash.slice(1)));
+  show(location.hash.slice(1));
 })();

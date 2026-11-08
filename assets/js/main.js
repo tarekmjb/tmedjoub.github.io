@@ -293,6 +293,7 @@ ${t('location', 'lieu    ')}  Paris, France`),
   };
   function close() { back.classList.remove('open'); }
   $$('#fab, #conBtn').forEach(b => (b.onclick = open));
+  $('#conClose') && ($('#conClose').onclick = close);
   back.addEventListener('click', e => { if (e.target === back) close(); });
   inp.addEventListener('keydown', e => {
     if (e.key === 'Enter') { run(inp.value); inp.value = ''; }
