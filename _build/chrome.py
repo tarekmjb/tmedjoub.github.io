@@ -1,24 +1,46 @@
 """Site-wide header (utility bar + mega menu) and footer, vendor-site style."""
 from common import EMAIL, LINKEDIN
 
+# Duotone icons: a soft filled shape (d1) + a stroke drawn with pathLength=100 (d2), animated in CSS.
 ICON = {
-    "routing": "M4 6h16M4 12h16M4 18h10",
-    "security": "M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z",
-    "sdwan": "M3 12h4l3-8 4 16 3-8h4",
-    "cloud": "M7 18h10a4 4 0 0 0 .5-8A6 6 0 0 0 6 9a4.5 4.5 0 0 0 1 9z",
-    "ops": "M3 3v18h18M7 15l4-4 3 3 5-6",
-    "case": "M4 7h16v12H4zM9 7V5h6v2",
-    "lab": "M9 3v6l-5 9a2 2 0 0 0 2 3h12a2 2 0 0 0 2-3l-5-9V3M8 3h8",
-    "tool": "M14.7 6.3a4 4 0 0 0-5.4 5.4L3 18l3 3 6.3-6.3a4 4 0 0 0 5.4-5.4l-2.5 2.5-2.4-.6-.6-2.4z",
-    "user": "M12 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM4 21a8 8 0 0 1 16 0",
-    "mail": "M3 5h18v14H3zM3 7l9 6 9-6",
-    "arrow": "M5 12h14M13 6l6 6-6 6",
+    # name: (soft fill elements, stroke path)
+    "routing": ('<rect class="d1" x="3" y="9" width="18" height="7" rx="2"/>',
+                "M5 9h14a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2zM7 12.5h.01M10 12.5h.01M14 7V3M12 5l2-2 2 2M10 18v3M8 19l2 2 2-2"),
+    "security": ('<path class="d1" d="M12 3l7 2.6v5.6c0 4.6-3 7.6-7 8.8-4-1.2-7-4.2-7-8.8V5.6z"/>',
+                 "M12 3l7 2.6v5.6c0 4.6-3 7.6-7 8.8-4-1.2-7-4.2-7-8.8V5.6zM9 11.5l2.2 2.2L15.5 9.5"),
+    "sdwan": ('<circle class="d1" cx="14" cy="12" r="4"/>',
+              "M14 8a4 4 0 1 1 0 8 4 4 0 0 1 0-8zM4 5a1.6 1.6 0 1 0 .01 0M4 19a1.6 1.6 0 1 0 .01 0M5.3 6.2l5.5 3.6M5.3 17.8l5.5-3.6M18 12h3"),
+    "cloud": ('<path class="d1" d="M7 18h10a4 4 0 0 0 .5-8A6 6 0 0 0 6 9a4.5 4.5 0 0 0 1 9z"/>',
+              "M7 18h10a4 4 0 0 0 .5-8A6 6 0 0 0 6 9a4.5 4.5 0 0 0 1 9zM12 15v-5M9.5 12.5L12 10l2.5 2.5"),
+    "ops": ('<path class="d1" d="M4 20V15l4-4 3 3 5-6 4 3v9z"/>',
+            "M3 3v18h18M7 15l4-4 3 3 5-6M19 8h.01"),
+    "case": ('<rect class="d1" x="3" y="7" width="18" height="12" rx="2"/>',
+             "M5 7h14a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V9a2 2 0 0 1 2-2zM9 7V5h6v2M3 12h18"),
+    "lab": ('<path class="d1" d="M6.5 15h11l1.8 3.2A2 2 0 0 1 17.6 21H6.4a2 2 0 0 1-1.7-2.8z"/>',
+            "M9 3v6l-5 9a2 2 0 0 0 1.8 3h12.4a2 2 0 0 0 1.8-3l-5-9V3M8 3h8M6.5 15h11"),
+    "tool": ('<circle class="d1" cx="17" cy="7" r="4"/>',
+             "M14.7 6.3a4 4 0 0 0-5.4 5.4L3 18l3 3 6.3-6.3a4 4 0 0 0 5.4-5.4l-2.5 2.5-2.4-.6-.6-2.4z"),
+    "user": ('<circle class="d1" cx="12" cy="8" r="4"/>', "M12 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM4 21a8 8 0 0 1 16 0"),
+    "mail": ('<rect class="d1" x="3" y="5" width="18" height="14" rx="2"/>', "M5 5h14a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2zM3 7l9 6 9-6"),
+    "arrow": ("", "M5 12h14M13 6l6 6-6 6"),
+    # toolkit
+    "subnet": ('<rect class="d1" x="3" y="3" width="8" height="8" rx="1.5"/>',
+               "M4.5 3h15A1.5 1.5 0 0 1 21 4.5v15a1.5 1.5 0 0 1-1.5 1.5h-15A1.5 1.5 0 0 1 3 19.5v-15A1.5 1.5 0 0 1 4.5 3zM3 11h18M11 3v18M16 11v10"),
+    "ipv6": ('<circle class="d1" cx="12" cy="12" r="9"/>',
+             "M12 3a9 9 0 1 1 0 18 9 9 0 0 1 0-18zM3 12h18M12 3c3 3.5 3 14.5 0 18M12 3c-3 3.5-3 14.5 0 18"),
+    "vlsm": ('<rect class="d1" x="3" y="3" width="18" height="9" rx="1.5"/>',
+             "M4.5 3h15A1.5 1.5 0 0 1 21 4.5v15a1.5 1.5 0 0 1-1.5 1.5h-15A1.5 1.5 0 0 1 3 19.5v-15A1.5 1.5 0 0 1 4.5 3zM3 12h18M12 12v9M16.5 12v9"),
+    "wildcard": ('<path class="d1" d="M12 3l7 2.6v5.6c0 4.6-3 7.6-7 8.8-4-1.2-7-4.2-7-8.8V5.6z"/>',
+                 "M12 3l7 2.6v5.6c0 4.6-3 7.6-7 8.8-4-1.2-7-4.2-7-8.8V5.6zM9 10h6M9 13.5h4"),
+    "mss": ('<rect class="d1" x="2" y="8" width="20" height="8" rx="4"/>',
+            "M6 8h12a4 4 0 0 1 0 8H6a4 4 0 0 1 0-8zM7 12h10M14 10l2 2-2 2"),
 }
 
 
 def ico(name, size=18):
-    return (f'<svg width="{size}" height="{size}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" '
-            f'stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="{ICON[name]}"/></svg>')
+    soft, stroke = ICON[name]
+    return (f'<svg class="ico-d" width="{size}" height="{size}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" '
+            f'stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">{soft}<path class="d2" pathLength="100" d="{stroke}"/></svg>')
 
 
 EXPERTISE = [

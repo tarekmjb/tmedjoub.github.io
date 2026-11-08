@@ -2,12 +2,8 @@
 from common import VER, L, layout
 
 
-IC = {k: f'<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="{d}"/></svg>' for k, d in {
-    "subnet": "M3 6h18M3 12h18M3 18h18M9 3v18",
-    "ipv6": "M12 3a9 9 0 1 0 0 18 9 9 0 0 0 0-18zM3 12h18M12 3c3 3.5 3 14.5 0 18M12 3c-3 3.5-3 14.5 0 18",
-    "vlsm": "M4 4h16v16H4zM4 12h16M12 12v8M16 12v8",
-    "wildcard": "M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6zM9 12h6",
-    "mss": "M3 12h4l3-8 4 16 3-8h4"}.items()}
+from chrome import ico
+IC = {k: ico(k) for k in ("subnet", "ipv6", "vlsm", "wildcard", "mss")}
 
 
 def tools_page(lang):

@@ -31,7 +31,7 @@ def root_of(lang, path):
 
 
 HEAD_THEME = (
-    "<script>(function(){try{var t=localStorage.getItem('tm-theme');"
+    "<script>(function(){try{localStorage.removeItem('tm-theme');var t=sessionStorage.getItem('tm-theme');"
     "if(t!=='dark')t='light';"
     "document.documentElement.dataset.theme=t;}catch(e){}})();</script>"
 )
