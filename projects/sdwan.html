@@ -1,315 +1,119 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="light" data-root="../">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>SD-WAN Enterprise Migration — Tarek MEDJOUB</title>
-<link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
-<style>
-:root {
-  --navy:#0a0e1a;--card:#131b2e;--card2:#1a2540;
-  --accent:#00d4ff;--accent2:#00ff9d;
-  --text:#e8eaf6;--muted:#8892a4;--border:rgba(0,212,255,0.15);
-}
-*{margin:0;padding:0;box-sizing:border-box;}
-body{font-family:'Sora',sans-serif;background:var(--navy);color:var(--text);line-height:1.7;overflow-x:hidden;}
-.noise{position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");pointer-events:none;z-index:0;opacity:.4;}
-.grid-bg{position:fixed;inset:0;background-image:linear-gradient(rgba(0,212,255,0.03) 1px,transparent 1px),linear-gradient(90deg,rgba(0,212,255,0.03) 1px,transparent 1px);background-size:60px 60px;pointer-events:none;z-index:0;}
-.wrap{max-width:860px;margin:0 auto;padding:0 2rem;position:relative;z-index:1;}
-nav{position:sticky;top:0;background:rgba(10,14,26,.92);backdrop-filter:blur(16px);border-bottom:1px solid var(--border);padding:.9rem 0;z-index:100;}
-.nav-inner{display:flex;align-items:center;justify-content:space-between;}
-.logo{font-size:1.1rem;font-weight:700;letter-spacing:-.01em;text-decoration:none;color:var(--text);}
-.logo span{color:var(--accent);}
-.back-btn{display:inline-flex;align-items:center;gap:.5rem;color:var(--muted);font-size:.85rem;text-decoration:none;letter-spacing:.04em;transition:color .2s;}
-.back-btn:hover{color:var(--accent);}
-.back-btn svg{transition:transform .2s;}
-.back-btn:hover svg{transform:translateX(-3px);}
+<title>SD-WAN Enterprise Migration · Tarek MEDJOUB</title>
+<meta name="description" content="Moved a four-site enterprise from MPLS and static routes to a hub-and-spoke Fortinet SD-WAN: two ISPs per site, IPsec IKEv2 / AES-256 and BGP/OSPF. Validated ">
+<meta name="author" content="Tarek Medjoub">
 
-/* HERO */
-.proj-hero{padding:5rem 0 3rem;position:relative;}
-.proj-hero-glow{position:absolute;top:-150px;right:-200px;width:600px;height:600px;background:radial-gradient(circle,rgba(0,212,255,.07) 0%,transparent 70%);pointer-events:none;}
-.proj-tag{font-size:.72rem;font-weight:600;letter-spacing:.15em;text-transform:uppercase;color:var(--accent);margin-bottom:.75rem;display:flex;align-items:center;gap:.6rem;}
-.proj-tag::before{content:'';width:24px;height:1px;background:var(--accent);}
-.proj-hero h1{font-size:clamp(2rem,5vw,3.2rem);font-weight:700;letter-spacing:-.03em;line-height:1.1;margin-bottom:1rem;}
-.proj-hero h1 span{color:var(--accent);}
-.proj-meta-row{display:flex;flex-wrap:wrap;gap:.5rem;margin-bottom:1.5rem;}
-.tag{font-size:.72rem;font-weight:600;padding:.3rem .7rem;border-radius:6px;background:rgba(0,212,255,.08);border:1px solid rgba(0,212,255,.2);color:var(--accent);font-family:'JetBrains Mono',monospace;}
-.tag.green{background:rgba(0,255,157,.06);border-color:rgba(0,255,157,.2);color:var(--accent2);}
-.proj-summary{font-size:1rem;color:var(--muted);line-height:1.85;max-width:680px;}
+<meta name="theme-color" content="#f3efe6">
+<link rel="canonical" href="https://tarekmjb.github.io/tmedjoub.github.io/projects/sdwan.html">
+<link rel="alternate" hreflang="en" href="https://tarekmjb.github.io/tmedjoub.github.io/projects/sdwan.html">
+<link rel="alternate" hreflang="fr" href="https://tarekmjb.github.io/tmedjoub.github.io/fr/projects/sdwan.html">
+<link rel="alternate" hreflang="x-default" href="https://tarekmjb.github.io/tmedjoub.github.io/projects/sdwan.html">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="en_GB">
+<meta property="og:title" content="SD-WAN Enterprise Migration · Tarek MEDJOUB">
+<meta property="og:description" content="Moved a four-site enterprise from MPLS and static routes to a hub-and-spoke Fortinet SD-WAN: two ISPs per site, IPsec IKEv2 / AES-256 and BGP/OSPF. Validated ">
+<meta property="og:url" content="https://tarekmjb.github.io/tmedjoub.github.io/projects/sdwan.html">
+<meta property="og:image" content="https://tarekmjb.github.io/tmedjoub.github.io/assets/img/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://tarekmjb.github.io/tmedjoub.github.io/assets/img/og-image.png">
+<link rel="icon" type="image/svg+xml" href="../assets/img/favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/css/main.css">
+<script>(function(){try{var t=localStorage.getItem('tm-theme');if(t!=='dark')t='light';document.documentElement.dataset.theme=t;}catch(e){}})();</script>
 
-/* KPI STRIP */
-.kpi-strip{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:1px;background:var(--border);border:1px solid var(--border);border-radius:12px;overflow:hidden;margin:3rem 0;}
-.kpi{background:var(--card);padding:1.5rem 1.25rem;text-align:center;}
-.kpi-val{font-size:1.6rem;font-weight:700;color:var(--accent);font-family:'JetBrains Mono',monospace;line-height:1;}
-.kpi-val.green{color:var(--accent2);}
-.kpi-label{font-size:.72rem;color:var(--muted);text-transform:uppercase;letter-spacing:.1em;margin-top:.4rem;}
-
-/* DIVIDER */
-hr.div{border:none;border-top:1px solid var(--border);margin:3rem 0;}
-
-/* SECTION */
-.sec-title{font-size:.72rem;font-weight:600;letter-spacing:.15em;text-transform:uppercase;color:var(--accent);margin-bottom:.75rem;display:flex;align-items:center;gap:.6rem;}
-.sec-title::before{content:'';width:24px;height:1px;background:var(--accent);}
-h2{font-size:1.5rem;font-weight:700;letter-spacing:-.02em;margin-bottom:1.25rem;}
-
-/* TOPOLOGY */
-.topology-box{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:2rem;margin-bottom:1.5rem;overflow-x:auto;}
-.topo-svg{display:block;margin:0 auto;}
-
-/* STEPS */
-.steps{display:flex;flex-direction:column;gap:0;position:relative;}
-.steps::before{content:'';position:absolute;left:18px;top:0;bottom:0;width:1px;background:linear-gradient(to bottom,var(--accent),var(--accent2),transparent);}
-.step{display:flex;gap:1.25rem;padding:1.5rem 0;}
-.step-num{width:36px;height:36px;border-radius:50%;background:var(--card2);border:1px solid var(--accent);display:flex;align-items:center;justify-content:center;font-size:.78rem;font-weight:700;font-family:'JetBrains Mono',monospace;color:var(--accent);flex-shrink:0;z-index:1;}
-.step-body h3{font-size:.9rem;font-weight:700;color:var(--text);margin-bottom:.3rem;}
-.step-body p{font-size:.85rem;color:var(--muted);line-height:1.75;}
-
-/* CODE BLOCK */
-.code-block{background:#0d1220;border:1px solid rgba(0,212,255,.12);border-radius:10px;padding:1.25rem 1.5rem;overflow-x:auto;margin:1rem 0;}
-.code-block pre{font-family:'JetBrains Mono',monospace;font-size:.78rem;color:#a8d8ea;line-height:1.8;white-space:pre;}
-.code-label{font-size:.68rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:.5rem;}
-
-/* RESULTS */
-.results-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1rem;margin-top:1rem;}
-.result-card{background:var(--card);border:1px solid rgba(0,255,157,.15);border-radius:10px;padding:1.25rem;}
-.result-icon{font-size:1.4rem;margin-bottom:.5rem;}
-.result-title{font-size:.82rem;font-weight:700;color:var(--accent2);margin-bottom:.3rem;}
-.result-desc{font-size:.8rem;color:var(--muted);line-height:1.6;}
-
-/* NAV FOOTER */
-.proj-nav{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem;padding:3rem 0;}
-.btn-nav{display:inline-flex;align-items:center;gap:.5rem;font-size:.82rem;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:var(--muted);text-decoration:none;padding:.6rem 1.2rem;border:1px solid var(--border);border-radius:8px;transition:border-color .2s,color .2s;}
-.btn-nav:hover{border-color:var(--accent);color:var(--accent);}
-footer{border-top:1px solid var(--border);padding:2rem 0;text-align:center;color:var(--muted);font-size:.82rem;}
-.reveal{opacity:1;transform:none;transition:opacity .6s ease,transform .6s ease;}
-.reveal.visible{opacity:1;transform:none;}
-
-/* DEVICE TABLE */
-.device-table{width:100%;border-collapse:collapse;margin:1.25rem 0;}
-.device-table th{text-align:left;font-size:.7rem;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);border-bottom:1px solid var(--border);padding:.5rem .75rem .5rem 0;}
-.device-table td{padding:.7rem .75rem .7rem 0;font-size:.8rem;border-bottom:1px solid rgba(255,255,255,.04);color:var(--muted);font-family:'JetBrains Mono',monospace;}
-.device-table td:first-child{color:var(--text);font-family:'Sora',sans-serif;font-weight:600;}
-.device-table td:nth-child(2){color:var(--accent);}
-
-/* FAILOVER TIMELINE */
-.failover-strip{display:flex;align-items:stretch;gap:0;margin:1.5rem 0;overflow-x:auto;}
-.fo-step{flex:1;min-width:120px;background:var(--card);border:1px solid var(--border);padding:1rem .85rem;position:relative;text-align:center;}
-.fo-step:not(:last-child)::after{content:'→';position:absolute;right:-14px;top:50%;transform:translateY(-50%);color:var(--accent);font-size:.9rem;z-index:2;}
-.fo-step:first-child{border-radius:8px 0 0 8px;}
-.fo-step:last-child{border-radius:0 8px 8px 0;}
-.fo-time{font-family:'JetBrains Mono',monospace;font-size:.9rem;font-weight:700;color:var(--accent);margin-bottom:.25rem;}
-.fo-time.green{color:var(--accent2);}
-.fo-label{font-size:.7rem;color:var(--muted);line-height:1.4;}
-
-/* FIREWALL POLICY TABLE */
-.fw-table{width:100%;border-collapse:collapse;margin:1rem 0;}
-.fw-table th{text-align:left;font-size:.68rem;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);border-bottom:1px solid var(--border);padding:.4rem .6rem .4rem 0;}
-.fw-table td{padding:.6rem .6rem .6rem 0;font-size:.75rem;border-bottom:1px solid rgba(255,255,255,.04);color:var(--muted);font-family:'JetBrains Mono',monospace;}
-.fw-table td:first-child{color:var(--text);font-family:'Sora',sans-serif;font-weight:500;font-size:.78rem;}
-.fw-act{display:inline-block;font-size:.65rem;font-weight:700;padding:.15rem .45rem;border-radius:4px;}
-.fw-act.allow{background:rgba(0,255,157,.12);color:var(--accent2);border:1px solid rgba(0,255,157,.25);}
-.fw-act.deny{background:rgba(255,60,60,.1);color:#ff6060;border:1px solid rgba(255,60,60,.2);}
-
-/* CHALLENGE CARDS */
-.challenges-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:1rem;margin-top:1.25rem;}
-.challenge-card{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:1.25rem;}
-.ch-problem{font-size:.72rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#ff8a65;margin-bottom:.5rem;}
-.ch-solution{font-size:.8rem;color:var(--muted);line-height:1.65;}
-.ch-solution strong{color:var(--accent2);font-weight:600;}
-
-/* TIMELINE */
-.migration-timeline{margin:1.5rem 0;display:flex;flex-direction:column;gap:.75rem;}
-.tl-row{display:grid;grid-template-columns:100px 1fr;gap:1.25rem;align-items:start;}
-.tl-date{font-family:'JetBrains Mono',monospace;font-size:.75rem;color:var(--accent);font-weight:700;padding-top:.1rem;}
-.tl-card{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:.85rem 1.1rem;}
-.tl-card h4{font-size:.82rem;font-weight:700;color:var(--text);margin-bottom:.25rem;}
-.tl-card p{font-size:.78rem;color:var(--muted);line-height:1.6;}
-
-/* BGP SUMMARY BOX */
-.bgp-box{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin:1.25rem 0;}
-@media(max-width:600px){.bgp-box{grid-template-columns:1fr;}}
-.bgp-peer{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:1.1rem;}
-.bgp-peer-title{font-size:.78rem;font-weight:700;color:var(--accent);margin-bottom:.5rem;display:flex;align-items:center;gap:.5rem;}
-.bgp-peer-title::before{content:'';width:8px;height:8px;border-radius:50%;background:var(--accent2);}
-.bgp-row{display:flex;justify-content:space-between;font-size:.75rem;padding:.2rem 0;border-bottom:1px solid rgba(255,255,255,.04);}
-.bgp-row:last-child{border:none;}
-.bgp-key{color:var(--muted);}
-.bgp-val{color:var(--text);font-family:'JetBrains Mono',monospace;}
-</style>
-<style>.language-switch{display:inline-flex;align-items:center;gap:3px;flex-shrink:0;padding:3px;border:1px solid var(--border);border-radius:8px;background:var(--card)}.language-switch a{font:600 .65rem 'Sora',sans-serif;color:var(--muted);padding:5px 7px;text-decoration:none;border-radius:5px}.language-switch a[aria-current="page"]{color:var(--navy);background:var(--accent)}.language-strip{max-width:900px;margin:0 auto;padding:1rem 2rem;display:flex;justify-content:flex-end;position:relative;z-index:2}.nav-inner{gap:.8rem}.nav-links{gap:.7rem}.nav-links a{font-size:.61rem}@media(max-width:700px){.nav-inner>.language-switch{margin-left:0}.menu-toggle{margin-left:auto}.nav-links{order:4}.language-strip{padding-inline:1.25rem}.hero h1{font-size:clamp(2rem,7vw,3rem)}}html[lang=fr] .hero h1{font-size:clamp(2rem,5.5vw,3rem)}html[lang=fr] .hero-inner{gap:2rem}</style></head>
-<body><div class="language-strip"><div class="language-switch" role="group" aria-label="Site language"><a href="sdwan.html" data-language="en" lang="en" hreflang="en" aria-current="page">EN</a><a href="../fr/projects/sdwan.html" data-language="fr" lang="fr" hreflang="fr">FR</a></div></div>
-<div class="noise"></div>
-<div class="grid-bg"></div>
-
-<nav>
-  <div class="wrap nav-inner">
-    <a href="../index.html" class="logo">Tarek <span>MEDJOUB</span></a>
-    <a href="../index.html#projects" class="back-btn">
-      <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
-      Back to Projects
-    </a>
-  </div>
-</nav>
-
-<div class="wrap">
-
-  <div class="proj-hero">
-    <div class="proj-hero-glow"></div>
-    <div class="proj-tag">SD-WAN · Fortinet · Enterprise</div>
-    <h1>SD-WAN <span>Enterprise</span><br>Migration</h1>
-    <div class="proj-meta-row">
-      <span class="tag">FortiGate</span><span class="tag">SD-WAN</span><span class="tag">BGP</span><span class="tag">VPN IPsec</span><span class="tag">OSPF</span>
-      <span class="tag green">EVE-NG Lab</span><span class="tag green">Production Design</span>
-    </div>
-    <p class="proj-summary">Scope: enterprise migration with prior EVE-NG validation. Sub-second failover refers to laboratory measurements. Technical configurations below illustrate the design. </p><p class="proj-summary">End-to-end migration of a multi-site enterprise network from static legacy WAN links to a centrally managed Fortinet SD-WAN architecture. The project delivered measurable improvements in inter-site routing efficiency, failover speed, operational visibility and policy-based traffic steering.</p>
-  </div>
-
-  <!-- KPIs -->
-  <div class="kpi-strip reveal">
-    <div class="kpi"><div class="kpi-val">4</div><div class="kpi-label">Sites Connected</div></div>
-    <div class="kpi"><div class="kpi-val green">&lt;1s</div><div class="kpi-label">WAN Failover · Lab</div></div>
-    <div class="kpi"><div class="kpi-val">2</div><div class="kpi-label">ISP Links / Site</div></div>
-    <div class="kpi"><div class="kpi-val green">SD-WAN</div><div class="kpi-label">Application Steering</div></div>
-  </div>
-
-  <hr class="div">
-
-  <!-- TOPOLOGY -->
-  <section class="reveal">
-    <div class="sec-title">Architecture</div>
-    <h2>Network Topology</h2>
-    <div class="topology-box">
-      <svg class="topo-svg" viewBox="0 0 740 340" width="700" xmlns="http://www.w3.org/2000/svg" font-family="JetBrains Mono, monospace">
-        <!-- Internet cloud -->
-        <ellipse cx="370" cy="50" rx="90" ry="32" fill="none" stroke="rgba(0,212,255,0.3)" stroke-width="1.5" stroke-dasharray="5,3"/>
-        <text x="370" y="55" text-anchor="middle" fill="#8892a4" font-size="11" font-weight="600">INTERNET / MPLS</text>
-
-        <!-- HQ -->
-        <rect x="20" y="130" width="150" height="80" rx="8" fill="#131b2e" stroke="rgba(0,212,255,0.5)" stroke-width="1.5"/>
-        <text x="95" y="162" text-anchor="middle" fill="#00d4ff" font-size="10" font-weight="700">HQ — FortiGate</text>
-        <text x="95" y="178" text-anchor="middle" fill="#8892a4" font-size="9">FG-200E · HUB</text>
-        <text x="95" y="194" text-anchor="middle" fill="#8892a4" font-size="9">ISP1 + ISP2</text>
-
-        <!-- Site A -->
-        <rect x="200" y="240" width="130" height="70" rx="8" fill="#131b2e" stroke="rgba(0,212,255,0.3)" stroke-width="1.5"/>
-        <text x="265" y="268" text-anchor="middle" fill="#00d4ff" font-size="10" font-weight="700">Site A</text>
-        <text x="265" y="284" text-anchor="middle" fill="#8892a4" font-size="9">FG-100F · SPOKE</text>
-        <text x="265" y="298" text-anchor="middle" fill="#8892a4" font-size="9">BGP + OSPF</text>
-
-        <!-- Site B -->
-        <rect x="350" y="240" width="130" height="70" rx="8" fill="#131b2e" stroke="rgba(0,212,255,0.3)" stroke-width="1.5"/>
-        <text x="415" y="268" text-anchor="middle" fill="#00d4ff" font-size="10" font-weight="700">Site B</text>
-        <text x="415" y="284" text-anchor="middle" fill="#8892a4" font-size="9">FG-100F · SPOKE</text>
-        <text x="415" y="298" text-anchor="middle" fill="#8892a4" font-size="9">BGP + OSPF</text>
-
-        <!-- Site C -->
-        <rect x="500" y="240" width="130" height="70" rx="8" fill="#131b2e" stroke="rgba(0,212,255,0.3)" stroke-width="1.5"/>
-        <text x="565" y="268" text-anchor="middle" fill="#00d4ff" font-size="10" font-weight="700">Site C</text>
-        <text x="565" y="284" text-anchor="middle" fill="#8892a4" font-size="9">FG-60F · SPOKE</text>
-        <text x="565" y="298" text-anchor="middle" fill="#8892a4" font-size="9">BGP + OSPF</text>
-
-        <!-- FortiManager -->
-        <rect x="570" y="130" width="150" height="80" rx="8" fill="#131b2e" stroke="rgba(0,255,157,0.4)" stroke-width="1.5"/>
-        <text x="645" y="162" text-anchor="middle" fill="#00ff9d" font-size="10" font-weight="700">FortiManager</text>
-        <text x="645" y="178" text-anchor="middle" fill="#8892a4" font-size="9">Centralized Mgmt</text>
-        <text x="645" y="194" text-anchor="middle" fill="#8892a4" font-size="9">SD-WAN Policies</text>
-
-        <!-- Lines: HQ to Internet -->
-        <line x1="95" y1="130" x2="300" y2="82" stroke="rgba(0,212,255,0.4)" stroke-width="1.5" stroke-dasharray="4,3"/>
-        <!-- HQ to Sites (IPsec tunnels) -->
-        <line x1="170" y1="185" x2="230" y2="250" stroke="rgba(0,212,255,0.6)" stroke-width="1.5"/>
-        <line x1="170" y1="185" x2="380" y2="250" stroke="rgba(0,212,255,0.6)" stroke-width="1.5"/>
-        <line x1="170" y1="185" x2="530" y2="250" stroke="rgba(0,212,255,0.6)" stroke-width="1.5"/>
-        <!-- HQ to FortiManager -->
-        <line x1="170" y1="168" x2="570" y2="168" stroke="rgba(0,255,157,0.35)" stroke-width="1" stroke-dasharray="4,3"/>
-
-        <!-- Labels -->
-        <text x="270" y="226" fill="rgba(0,212,255,0.7)" font-size="8">IPsec VPN</text>
-        <text x="340" y="226" fill="rgba(0,212,255,0.7)" font-size="8">+ BGP</text>
-      </svg>
-    </div>
-    <p style="font-size:.82rem;color:var(--muted);line-height:1.7;">Hub-and-spoke SD-WAN topology. HQ FortiGate acts as the central hub with dual ISP links. Each spoke site maintains two IPsec tunnels to HQ (one per ISP) providing active-active or active-passive WAN redundancy with automatic failover managed by SD-WAN SLA rules.</p>
-  </section>
-
-  <hr class="div">
-
-  <!-- STEPS -->
-  <section class="reveal">
-    <div class="sec-title">Methodology</div>
-    <h2>Implementation Steps</h2>
-    <div class="steps">
-      <div class="step">
-        <div class="step-num">01</div>
-        <div class="step-body">
-          <h3>Audit &amp; Baseline Assessment</h3>
-          <p>Documented existing WAN topology, BGP peering tables, routing policies and inter-site latency baselines. Identified bottlenecks in static route failover and lack of application-aware traffic steering.</p>
-        </div>
-      </div>
-      <div class="step">
-        <div class="step-num">02</div>
-        <div class="step-body">
-          <h3>EVE-NG Lab Validation</h3>
-          <p>Built a full replica of the 4-site topology in EVE-NG with FortiGate VMs. Validated SD-WAN rules, BGP advertisement, OSPF redistribution and failover behavior before any production change.</p>
-        </div>
-      </div>
-      <div class="step">
-        <div class="step-num">03</div>
-        <div class="step-body">
-          <h3>IPsec Tunnel Provisioning</h3>
-          <p>Configured dual IPsec tunnels per spoke (one per ISP) using IKEv2 with AES-256/SHA-256. Set up BGP peering over each tunnel with different administrative distances to control preferred path.</p>
-        </div>
-      </div>
-      <div class="step">
-        <div class="step-num">04</div>
-        <div class="step-body">
-          <h3>SD-WAN Rules &amp; SLA Probes</h3>
-          <p>Defined SD-WAN performance SLA probes (latency, jitter, packet loss thresholds). Created traffic steering rules per application type: VoIP → ISP1, bulk data → ISP2, critical apps → lowest latency link.</p>
-        </div>
-      </div>
-      <div class="step">
-        <div class="step-num">05</div>
-        <div class="step-body">
-          <h3>FortiManager Central Push &amp; Cutover</h3>
-          <p>Pushed final configuration from FortiManager to all spoke devices simultaneously during maintenance window. Ran parallel monitoring on PRTG to validate routing convergence and SLA probe results.</p>
-        </div>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<div class="progress" aria-hidden="true"></div>
+<header class="bar">
+  <div class="wrap">
+    <a href="../index.html" class="host" aria-label="Tarek Medjoub"><b>tarek</b>@medjoub:~#<span class="cur" aria-hidden="true"></span></a>
+    <nav class="links" id="nav" aria-label="Main">
+      <a href="../index.html#about">About</a>
+      <a href="../index.html#services">Services</a>
+      <a href="../index.html#stack">Skills</a>
+      <a href="../index.html#experience">Experience</a>
+      <a href="../index.html#projects">Projects</a>
+      <a href="../index.html#labs">Labs</a>
+      <a href="../index.html#certs">Certs</a>
+      <a href="../index.html#resume">CV</a>
+      <a href="../index.html#contact">Contact</a>
+    </nav>
+    <div class="tools">
+      <button class="btn-ico menu-btn" id="menuBtn" aria-label="Menu" aria-expanded="false">☰</button>
+      <button class="btn-ico" id="conBtn" title="Open console (/ · Ctrl+K)" aria-label="Open console">&gt;_</button>
+      <button class="btn-ico" id="themeBtn" title="Toggle theme" aria-label="Toggle light/dark theme">◐</button>
+      <div class="lang" role="group" aria-label="Language">
+        <a href="../projects/sdwan.html" data-lang="en" hreflang="en" class="on" aria-current="true">EN</a>
+        <a href="../fr/projects/sdwan.html" data-lang="fr" hreflang="fr">FR</a>
       </div>
     </div>
-  </section>
+  </div>
+</header>
 
-  <hr class="div">
+<main id="main">
 
-  <!-- CONFIG -->
-  <section class="reveal">
-    <div class="sec-title">Configuration</div>
-    <h2>Key Config Extracts</h2>
-
-    <div class="code-label">SD-WAN Zone &amp; Member Definition (FortiGate HQ)</div>
-    <div class="code-block"><pre>config system sdwan
+<div class="wrap" id="top">
+  <div class="crumbs"><a class="back-btn" href="../index.html#projects">← Back to projects</a><a href="../index.html">tarek@medjoub</a><span class="sep">/</span><a href="../index.html#projects">projects</a><span class="sep">/</span>sdwan</div>
+  <div class="doc-hero">
+    <div class="kicker">case study · Fortinet · SD-WAN · BGP</div>
+    <h1>SD-WAN Enterprise Migration</h1>
+    <p class="sum">Moved a four-site enterprise from MPLS and static routes to a hub-and-spoke Fortinet SD-WAN: two ISPs per site, IPsec IKEv2 / AES-256 and BGP/OSPF. Validated in EVE-NG before cutover.</p>
+    
+    <div class="meta-row"><span class="meta">Role:<b>Network security project lead</b></span><span class="meta">Stack:<b>FortiGate 7.4 · FortiManager · FortiAnalyzer</b></span><span class="meta">Validation:<b>EVE-NG</b></span></div>
+    <div class="kpis"><div class="kpi"><b>4</b><span>sites</span></div><div class="kpi"><b>≈1.5 s</b><span>lab failover</span></div><div class="kpi"><b>3–5 min</b><span>before (static routes)</span></div><div class="kpi"><b>90 d</b><span>log retention</span></div></div>
+  </div>
+  <div class="doc">
+    <nav class="toc" aria-label="On this page"><b>ON THIS PAGE</b><a href="#overview">Context</a><a href="#architecture">Architecture</a><a href="#design">Design choices</a><a href="#implementation">Implementation</a><a href="#config">Configuration</a><a href="#security">Security policy</a><a href="#validation">Validation</a><a href="#lessons">Lessons learned</a><a href="#operations">Operations</a></nav>
+    <div class="doc-body"><section id="overview">
+<h2>Context &amp; objectives</h2>
+<div class="note"><div>Configurations are sanitised and simplified for publication. Failover times are <strong>lab measurements</strong> taken in EVE-NG with FortiGate 7.4 VMs.</div></div>
+<p>The company connected its sites with a legacy WAN: MPLS plus static routes. When a link failed, traffic stayed black-holed until the static route was changed, typically <strong>3 to 5 minutes</strong>. There was no visibility per application and part of the MPLS traffic was unencrypted.</p>
+<h3>Objectives</h3>
+<ul class="bul"><li>Faster, automatic failover between links.</li><li>Application-aware steering (VoIP, bulk data, business apps).</li><li>Encrypt all intersite traffic, replacing clear-text MPLS segments.</li><li>Reduce bandwidth cost by sending bulk traffic over a cheaper second ISP.</li><li>Central management and logs (FortiManager, FortiAnalyzer).</li></ul></section><section id="architecture">
+<h2>Architecture</h2>
+<p>A <strong>hub-and-spoke</strong> overlay: the HQ FortiGate is the hub, each branch is a spoke with <strong>two IPsec tunnels</strong> to HQ, one per ISP. BGP runs over each tunnel, so routing follows tunnel health; OSPF carries the routes into each LAN.</p>
+<figure class="figure topo-fig"><svg viewBox="0 0 680 300" role="img" aria-label="Hub-and-spoke overlay: two IPsec tunnels per spoke (one per ISP), BGP over each tunnel, OSPF towards the LANs."><line class="lk h" x1="110" y1="50" x2="300" y2="90"/><line class="lk h" x1="110" y1="150" x2="300" y2="90"/><line class="lk h" x1="110" y1="250" x2="300" y2="90"/><line class="lk " x1="110" y1="50" x2="300" y2="210"/><line class="lk " x1="110" y1="150" x2="300" y2="210"/><line class="lk " x1="110" y1="250" x2="300" y2="210"/><line class="lk h" x1="300" y1="90" x2="490" y2="150"/><text class="lt" x="401" y="115">100M</text><line class="lk " x1="300" y1="210" x2="490" y2="150"/><text class="lt" x="401" y="175">50M</text><line class="lk t" x1="490" y1="150" x2="600" y2="60"/><line class="lk t" x1="490" y1="150" x2="600" y2="240"/><g class="nd fw" transform="translate(53,33)"><rect width="114" height="34" rx="6"/><text x="9" y="15">FG-SITE-A</text><text class="s" x="9" y="27">FG-100F · AS65002</text></g><g class="nd fw" transform="translate(53,133)"><rect width="114" height="34" rx="6"/><text x="9" y="15">FG-SITE-B</text><text class="s" x="9" y="27">FG-100F · AS65003</text></g><g class="nd fw" transform="translate(53,233)"><rect width="114" height="34" rx="6"/><text x="9" y="15">FG-SITE-C</text><text class="s" x="9" y="27">FG-60F · AS65004</text></g><g class="nd cl" transform="translate(261,73)"><rect width="78" height="34" rx="6"/><text x="9" y="15">ISP-1</text><text class="s" x="9" y="27">primary</text></g><g class="nd cl" transform="translate(261,193)"><rect width="78" height="34" rx="6"/><text x="9" y="15">ISP-2</text><text class="s" x="9" y="27">backup</text></g><g class="nd rt" transform="translate(433,133)"><rect width="114" height="34" rx="6"/><text x="9" y="15">FG-HQ (hub)</text><text class="s" x="9" y="27">FG-200E · AS65001</text></g><g class="nd sv" transform="translate(543,43)"><rect width="114" height="34" rx="6"/><text x="9" y="15">FortiManager</text><text class="s" x="9" y="27">mgmt VLAN</text></g><g class="nd sv" transform="translate(539,223)"><rect width="122" height="34" rx="6"/><text x="9" y="15">FortiAnalyzer</text><text class="s" x="9" y="27">90-day logs</text></g></svg><figcaption>Hub-and-spoke overlay: two IPsec tunnels per spoke (one per ISP), BGP over each tunnel, OSPF towards the LANs.</figcaption></figure>
+<div class="tbl-wrap"><table class="t"><thead><tr><th>Site</th><th>Device</th><th>Role</th><th>ISP-1 / ISP-2</th><th>AS</th><th>LAN</th></tr></thead><tbody><tr><td>HQ</td><td>FG-200E</td><td>SD-WAN hub</td><td>100 / 50 Mb/s</td><td>65001</td><td>10.1.0.0/16</td></tr><tr><td>Site A</td><td>FG-100F</td><td>Spoke</td><td>50 / 30 Mb/s</td><td>65002</td><td>10.2.0.0/16</td></tr><tr><td>Site B</td><td>FG-100F</td><td>Spoke</td><td>50 / 30 Mb/s</td><td>65003</td><td>10.3.0.0/16</td></tr><tr><td>Site C</td><td>FG-60F</td><td>Spoke</td><td>20 / 20 Mb/s</td><td>65004</td><td>10.4.0.0/16</td></tr></tbody></table></div>
+<h3>Overlay addressing (Site A example)</h3>
+<div class="tbl-wrap"><table class="t"><thead><tr><th>Tunnel</th><th>Subnet</th><th>HQ</th><th>Spoke</th><th>BGP preference</th></tr></thead><tbody><tr><td>HQ-ISP1</td><td>10.255.1.0/30</td><td>.1</td><td>.2</td><td>local-pref 200 (preferred)</td></tr><tr><td>HQ-ISP2</td><td>10.255.2.0/30</td><td>.1</td><td>.2</td><td>local-pref 100 (backup)</td></tr></tbody></table></div></section><section id="design">
+<h2>Design choices</h2>
+<div class="dgrid"><div class="dcard"><span class=why>why hub-and-spoke</span><b>Central inspection</b><span>All spoke internet traffic is backhauled through HQ for IPS and application control. One policy point, one log source.</span></div><div class="dcard"><span class=why>why BGP over IPsec</span><b>Dynamic routing per tunnel</b><span>A failed tunnel withdraws its routes on its own. No static routes to update, and new sites only need a new neighbor.</span></div><div class="dcard"><span class=why>why SLA probes</span><b>Performance, not just link state</b><span>A link can be up but unusable. Probes measure latency, jitter and loss, and steer each application to the link that meets its SLA.</span></div><div class="dcard"><span class=why>why BFD</span><b>Stable BGP on small links</b><span>Short BGP timers caused flaps on 20 Mb/s links. BFD detects failures fast while BGP keeps conservative 10 s / 30 s timers.</span></div></div></section><section id="implementation">
+<h2>Implementation</h2>
+<div class="steps"><div class="step"><div><h4>Audit &amp; baseline</h4><p>Documented peering, routing policies and latency per site. Root causes: static-route failover and no application-aware steering.</p></div></div><div class="step"><div><h4>Full replica in EVE-NG</h4><p>Four FortiGate 7.4 VMs (2 vCPU / 2 GB each) on a 32 GB host. Every rule and failure case was tested here first.</p></div></div><div class="step"><div><h4>IPsec provisioning</h4><p>IKEv2, AES-256 / SHA-256, DH group 14 with PFS, DPD. Two route-based tunnels per spoke, BGP on each.</p></div></div><div class="step"><div><h4>SD-WAN rules &amp; SLA probes</h4><p>VoIP prefers ISP-1, bulk data goes to ISP-2, business apps take the lowest-latency member.</p></div></div><div class="step"><div><h4>FortiManager push &amp; cutover</h4><p>HQ first, in a Saturday 02:00–06:00 window with a rollback snapshot. Spokes on following nights, about 45 minutes each, watched in PRTG.</p></div></div><div class="step"><div><h4>Stabilisation &amp; handover</h4><p>One week of parallel PRTG / FortiAnalyzer monitoring, SLA threshold tuning, then runbooks handed to operations.</p></div></div></div></section><section id="config">
+<h2>Key configuration</h2>
+<h3>SD-WAN members, SLA probe and VoIP rule (spoke)</h3>
+<div class="code"><div class="ch"><span>FortiOS 7.4 · FG-SITE-A</span><button type="button">copy</button></div><pre>config system sdwan
     set status enable
     config zone
-        edit "SDWAN-ZONE"
+        edit &quot;SDWAN-ZONE&quot;
         next
     end
     config members
         edit 1
-            set interface "ISP1-WAN"
-            set gateway 203.0.113.1
+            set interface &quot;HQ-ISP1&quot;
+            set zone &quot;SDWAN-ZONE&quot;
         next
         edit 2
-            set interface "ISP2-WAN"
-            set gateway 198.51.100.1
+            set interface &quot;HQ-ISP2&quot;
+            set zone &quot;SDWAN-ZONE&quot;
         next
-    end</pre></div>
-
-    <div class="code-label">Performance SLA Probe</div>
-    <div class="code-block"><pre>config system sdwan
+    end
     config health-check
-        edit "SLA-VOIP"
-            set server "8.8.8.8"
-            set protocol ping
+        edit &quot;SLA-VOIP&quot;
+            set server &quot;10.1.0.10&quot;
             set interval 500
             set failtime 3
             set recoverytime 5
+            set members 1 2
             config sla
                 edit 1
                     set latency-threshold 100
@@ -318,387 +122,155 @@ footer{border-top:1px solid var(--border);padding:2rem 0;text-align:center;color
                 next
             end
         next
-    end</pre></div>
-
-    <div class="code-label">SD-WAN Traffic Steering Rule (VoIP preferred ISP1)</div>
-    <div class="code-block"><pre>config system sdwan
+    end
     config service
         edit 1
-            set name "VoIP-Preferred-ISP1"
+            set name &quot;VoIP-Preferred-ISP1&quot;
             set mode sla
-            set dst "VoIP-Servers"
+            set dst &quot;VOIP-SERVERS&quot;
             config sla
-                edit "SLA-VOIP"
+                edit &quot;SLA-VOIP&quot;
                     set id 1
                 next
             end
             set priority-members 1 2
         next
-    end</pre></div>
-  </section>
-
-  <hr class="div">
-
-  <!-- RESULTS -->
-  <section class="reveal">
-    <div class="sec-title">Outcomes</div>
-    <h2>Results &amp; Impact</h2>
-    <div class="results-grid">
-      <div class="result-card">
-        <div class="result-icon">⚡</div>
-        <div class="result-title">Sub-second Failover</div>
-        <div class="result-desc">WAN link failover dropped from 3–5 minutes (static routes) to under 1 second with SD-WAN SLA-triggered path switching.</div>
-      </div>
-      <div class="result-card">
-        <div class="result-icon">📊</div>
-        <div class="result-title">Application Visibility</div>
-        <div class="result-desc">Gained per-application traffic visibility through FortiManager SD-WAN dashboards — zero visibility previously with legacy WAN.</div>
-      </div>
-      <div class="result-card">
-        <div class="result-icon">🔒</div>
-        <div class="result-title">Encrypted Backbone</div>
-        <div class="result-desc">All inter-site traffic encrypted end-to-end via IKEv2/AES-256 IPsec tunnels, replacing unencrypted MPLS segments.</div>
-      </div>
-      <div class="result-card">
-        <div class="result-icon">🎯</div>
-        <div class="result-title">Policy-Based Routing</div>
-        <div class="result-desc">VoIP, video and critical apps automatically steered to best-performing link. Bulk traffic offloaded to secondary ISP, reducing costs.</div>
-      </div>
-    </div>
-  </section>
-
-  <hr class="div">
-
-  <!-- DEVICE INVENTORY -->
-  <section class="reveal">
-    <div class="sec-title">Lab &amp; Production Devices</div>
-    <h2>Equipment Inventory</h2>
-    <table class="device-table">
-      <thead>
-        <tr><th>Site</th><th>Device</th><th>Model</th><th>Role</th><th>WAN Links</th></tr>
-      </thead>
-      <tbody>
-        <tr><td>HQ</td><td>FortiGate HQ</td><td>FG-200E</td><td>SD-WAN Hub</td><td>ISP1 (100M) + ISP2 (50M)</td></tr>
-        <tr><td>Site A</td><td>FortiGate-A</td><td>FG-100F</td><td>SD-WAN Spoke</td><td>ISP1 (50M) + ISP2 (30M)</td></tr>
-        <tr><td>Site B</td><td>FortiGate-B</td><td>FG-100F</td><td>SD-WAN Spoke</td><td>ISP1 (50M) + ISP2 (30M)</td></tr>
-        <tr><td>Site C</td><td>FortiGate-C</td><td>FG-60F</td><td>SD-WAN Spoke</td><td>ISP1 (20M) + ISP2 (20M)</td></tr>
-        <tr><td>HQ</td><td>FortiManager</td><td>FMG-VM</td><td>Centralized Mgmt</td><td>Management VLAN only</td></tr>
-        <tr><td>HQ</td><td>FortiAnalyzer</td><td>FAZ-VM</td><td>Log &amp; Analytics</td><td>Management VLAN only</td></tr>
-      </tbody>
-    </table>
-    <p style="font-size:.8rem;color:var(--muted);line-height:1.65;margin-top:.75rem;">EVE-NG lab used FortiGate 7.4 KVM images running on a host with 32GB RAM. Each VM allocated 2 vCPUs and 2GB RAM. FortiManager and FortiAnalyzer ran as lightweight VMs on the same hypervisor.</p>
-  </section>
-
-  <hr class="div">
-
-  <!-- MIGRATION TIMELINE -->
-  <section class="reveal">
-    <div class="sec-title">Project Timeline</div>
-    <h2>Migration Phases</h2>
-    <div class="migration-timeline">
-      <div class="tl-row">
-        <div class="tl-date">Week 1–2</div>
-        <div class="tl-card">
-          <h4>Discovery &amp; Design</h4>
-          <p>Full audit of existing WAN (MPLS + static routes). Documented peering tables, latency baselines per site, bandwidth utilization, and identified critical application flows requiring QoS treatment.</p>
-        </div>
-      </div>
-      <div class="tl-row">
-        <div class="tl-date">Week 3–4</div>
-        <div class="tl-card">
-          <h4>EVE-NG Lab Build &amp; Validation</h4>
-          <p>Deployed full 4-site replica in EVE-NG. Tested all SD-WAN rules, BGP failover, SLA probe behavior, FortiManager policy push, and firewall policy enforcement. Validated failover convergence times and routing stability.</p>
-        </div>
-      </div>
-      <div class="tl-row">
-        <div class="tl-date">Week 5</div>
-        <div class="tl-card">
-          <h4>FortiManager &amp; FortiAnalyzer Staging</h4>
-          <p>Pre-staged all device configurations in FortiManager. Created SD-WAN policy packages, address objects, firewall policies and routing configurations ready for push. FAZ log forwarding configured per device.</p>
-        </div>
-      </div>
-      <div class="tl-row">
-        <div class="tl-date">Week 6</div>
-        <div class="tl-card">
-          <h4>Production Cutover — HQ First</h4>
-          <p>Maintenance window Saturday 02:00–06:00. HQ FortiGate migrated first as hub — SD-WAN enabled, ISP2 added, IPsec tunnels pre-built but inactive. Rolled back plan in place (saved legacy config snapshot).</p>
-        </div>
-      </div>
-      <div class="tl-row">
-        <div class="tl-date">Week 7</div>
-        <div class="tl-card">
-          <h4>Spoke Sites Rollout</h4>
-          <p>Sites A, B, C migrated on consecutive nights. Each spoke cutover took ~45 minutes: tunnel activation → BGP peering → SD-WAN rule enforcement → PRTG baseline capture. Zero production impact across all sites.</p>
-        </div>
-      </div>
-      <div class="tl-row">
-        <div class="tl-date">Week 8</div>
-        <div class="tl-card">
-          <h4>Stabilization &amp; Handover</h4>
-          <p>One week of parallel monitoring on PRTG and FortiAnalyzer. Tuned SLA probe thresholds based on real traffic patterns. Delivered runbook, topology diagrams and incident response procedures to operations team.</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <hr class="div">
-
-  <!-- BGP DETAIL -->
-  <section class="reveal">
-    <div class="sec-title">Routing Design</div>
-    <h2>BGP Architecture</h2>
-    <p style="font-size:.88rem;color:var(--muted);line-height:1.8;margin-bottom:1.5rem;">BGP runs over each IPsec tunnel interface — two sessions per spoke (one per ISP path). Different local-preference and weight values enforce preferred/backup path selection. OSPF redistributes BGP learned routes into the LAN for seamless reachability.</p>
-    <div class="bgp-box">
-      <div class="bgp-peer">
-        <div class="bgp-peer-title">HQ ↔ Site A (Primary — ISP1)</div>
-        <div class="bgp-row"><span class="bgp-key">HQ AS</span><span class="bgp-val">65001</span></div>
-        <div class="bgp-row"><span class="bgp-key">Site A AS</span><span class="bgp-val">65002</span></div>
-        <div class="bgp-row"><span class="bgp-key">Tunnel IP (HQ)</span><span class="bgp-val">10.255.1.1/30</span></div>
-        <div class="bgp-row"><span class="bgp-key">Tunnel IP (Spoke)</span><span class="bgp-val">10.255.1.2/30</span></div>
-        <div class="bgp-row"><span class="bgp-key">Local Preference</span><span class="bgp-val">200 (preferred)</span></div>
-        <div class="bgp-row"><span class="bgp-key">Keepalive / Hold</span><span class="bgp-val">10s / 30s</span></div>
-      </div>
-      <div class="bgp-peer">
-        <div class="bgp-peer-title">HQ ↔ Site A (Backup — ISP2)</div>
-        <div class="bgp-row"><span class="bgp-key">HQ AS</span><span class="bgp-val">65001</span></div>
-        <div class="bgp-row"><span class="bgp-key">Site A AS</span><span class="bgp-val">65002</span></div>
-        <div class="bgp-row"><span class="bgp-key">Tunnel IP (HQ)</span><span class="bgp-val">10.255.2.1/30</span></div>
-        <div class="bgp-row"><span class="bgp-key">Tunnel IP (Spoke)</span><span class="bgp-val">10.255.2.2/30</span></div>
-        <div class="bgp-row"><span class="bgp-key">Local Preference</span><span class="bgp-val">100 (backup)</span></div>
-        <div class="bgp-row"><span class="bgp-key">Keepalive / Hold</span><span class="bgp-val">10s / 30s</span></div>
-      </div>
-    </div>
-
-    <div class="code-label">BGP Full Config — FortiGate HQ</div>
-    <div class="code-block"><pre>config router bgp
-    set as 65001
-    set router-id 10.0.0.1
-    set ibgp-multipath enable
-    set ebgp-multipath enable
-    config neighbor
-        edit "10.255.1.2"
-            set remote-as 65002
-            set interface "VPN-SiteA-ISP1"
-            set update-source "VPN-SiteA-ISP1"
-            set local-preference 200
-            set soft-reconfiguration enable
-            set keepalive-timer 10
-            set holdtime-timer 30
-        next
-        edit "10.255.2.2"
-            set remote-as 65002
-            set interface "VPN-SiteA-ISP2"
-            set update-source "VPN-SiteA-ISP2"
-            set local-preference 100
-            set soft-reconfiguration enable
-            set keepalive-timer 10
-            set holdtime-timer 30
-        next
-    end
-    config network
-        edit 1
-            set prefix 10.1.0.0 255.255.0.0
-        next
     end
 end</pre></div>
-
-    <div class="code-label">OSPF Redistribution of BGP Routes into LAN</div>
-    <div class="code-block"><pre>config router ospf
-    set router-id 10.0.0.1
-    config redistribute bgp
-        set status enable
-        set metric 20
-        set metric-type 2
-    end
-    config area
-        edit 0.0.0.0
-        next
-    end
-    config network
-        edit 1
-            set prefix 10.1.0.0 255.255.0.0
-            set area 0.0.0.0
-        next
-    end
-end</pre></div>
-  </section>
-
-  <hr class="div">
-
-  <!-- FIREWALL POLICIES -->
-  <section class="reveal">
-    <div class="sec-title">Security</div>
-    <h2>Firewall Policy Design</h2>
-    <p style="font-size:.88rem;color:var(--muted);line-height:1.8;margin-bottom:1.25rem;">Inter-site firewall policies enforced on the SD-WAN zone. Each site has explicit allow rules for required application flows — implicit deny blocks all other inter-site traffic. UTM profiles (IPS + Application Control) applied to all outbound internet rules.</p>
-    <table class="fw-table">
-      <thead>
-        <tr><th>Policy Name</th><th>From</th><th>To</th><th>Service</th><th>UTM</th><th>Action</th></tr>
-      </thead>
-      <tbody>
-        <tr><td>Inter-Site Corporate</td><td>any-site-LAN</td><td>SDWAN-ZONE</td><td>HTTPS, SMB, RDP</td><td>IPS</td><td><span class="fw-act allow">ALLOW</span></td></tr>
-        <tr><td>VoIP Inter-Site</td><td>any-site-LAN</td><td>SDWAN-ZONE</td><td>SIP, RTP</td><td>—</td><td><span class="fw-act allow">ALLOW</span></td></tr>
-        <tr><td>HQ-to-Internet</td><td>HQ-LAN</td><td>ISP1, ISP2</td><td>ALL</td><td>IPS + AppCtrl</td><td><span class="fw-act allow">ALLOW</span></td></tr>
-        <tr><td>Spoke-Internet via HQ</td><td>Spoke-LAN</td><td>SDWAN-ZONE</td><td>HTTP, HTTPS</td><td>IPS</td><td><span class="fw-act allow">ALLOW</span></td></tr>
-        <tr><td>Block Spoke Direct Internet</td><td>Spoke-LAN</td><td>ISP-WAN</td><td>ALL</td><td>—</td><td><span class="fw-act deny">DENY</span></td></tr>
-        <tr><td>Block Unknown Inter-Site</td><td>SDWAN-ZONE</td><td>any</td><td>ALL</td><td>—</td><td><span class="fw-act deny">DENY</span></td></tr>
-      </tbody>
-    </table>
-    <p style="font-size:.78rem;color:var(--muted);margin-top:.75rem;line-height:1.6;">All spoke internet traffic backhauled through HQ FortiGate for centralized UTM inspection. FortiAnalyzer collects all session logs for 90-day retention and compliance reporting.</p>
-  </section>
-
-  <hr class="div">
-
-  <!-- FAILOVER SCENARIO -->
-  <section class="reveal">
-    <div class="sec-title">Resilience</div>
-    <h2>Failover Scenario — ISP1 Down</h2>
-    <p style="font-size:.88rem;color:var(--muted);line-height:1.8;margin-bottom:1.5rem;">When ISP1 fails at a spoke site, the SD-WAN SLA probe detects degradation within 1.5 seconds. BGP session over ISP1 tunnel drops (hold-timer expiry or DPD), and traffic seamlessly shifts to the pre-established ISP2 tunnel. The sequence below was measured during EVE-NG lab testing.</p>
-    <div class="failover-strip">
-      <div class="fo-step">
-        <div class="fo-time">t=0s</div>
-        <div class="fo-label">ISP1 link fails at spoke</div>
-      </div>
-      <div class="fo-step">
-        <div class="fo-time">t=0.5s</div>
-        <div class="fo-label">SLA probe detects packet loss &gt;2%</div>
-      </div>
-      <div class="fo-step">
-        <div class="fo-time">t=1.0s</div>
-        <div class="fo-label">SD-WAN marks ISP1 SLA as failed</div>
-      </div>
-      <div class="fo-step">
-        <div class="fo-time">t=1.5s</div>
-        <div class="fo-label">Traffic steered to ISP2 tunnel</div>
-      </div>
-      <div class="fo-step">
-        <div class="fo-time green">t=1.5s</div>
-        <div class="fo-label">Full connectivity restored — ISP2 active</div>
-      </div>
-    </div>
-
-    <div class="code-label">SD-WAN Failover — Diagnostic Commands</div>
-    <div class="code-block"><pre># Check SLA probe status per member
-diagnose sys sdwan health-check
-
-# View current SD-WAN routing decision
-diagnose sys sdwan service
-
-# Verify BGP neighbor state
-get router info bgp summary
-
-# Live traffic path per session
-diagnose sys sdwan intf-sla-log ISP1-WAN
-diagnose sys sdwan intf-sla-log ISP2-WAN
-
-# Confirm active member after failover
-diagnose sys sdwan member</pre></div>
-  </section>
-
-  <hr class="div">
-
-  <!-- CHALLENGES & LESSONS -->
-  <section class="reveal">
-    <div class="sec-title">Lessons Learned</div>
-    <h2>Challenges &amp; Solutions</h2>
-    <div class="challenges-grid">
-      <div class="challenge-card">
-        <div class="ch-problem">⚠ BGP flapping on low-bandwidth tunnels</div>
-        <div class="ch-solution">Keepalive timers too aggressive on 20Mbps ISP2 links caused false BGP drops. <strong>Fixed</strong> by tuning keepalive/hold to 10s/30s and adding BFD with minimum 300ms intervals.</div>
-      </div>
-      <div class="challenge-card">
-        <div class="ch-problem">⚠ OSPF redistribution loop</div>
-        <div class="ch-solution">BGP routes redistributed into OSPF then re-learned via OSPF created a routing loop. <strong>Fixed</strong> with route-map tagging on redistribution + deny rule on tag re-import.</div>
-      </div>
-      <div class="challenge-card">
-        <div class="ch-problem">⚠ FortiManager push failures on config delta</div>
-        <div class="ch-solution">FortiManager policy push failed when device configs diverged from ADOM baseline. <strong>Fixed</strong> by running retrieve-config before each push and resolving conflicts in staging ADOM first.</div>
-      </div>
-      <div class="challenge-card">
-        <div class="ch-problem">⚠ VoIP quality on SLA failover switch</div>
-        <div class="ch-solution">Active calls dropped during ISP failover due to SIP session not surviving path change. <strong>Fixed</strong> by enabling SIP session helper on both tunnels and reducing SLA probe interval to 500ms.</div>
-      </div>
-      <div class="challenge-card">
-        <div class="ch-problem">⚠ Asymmetric routing after cutover</div>
-        <div class="ch-solution">Return traffic from HQ came back via ISP2 while outbound used ISP1 — causing firewall state mismatch. <strong>Fixed</strong> with SD-WAN zone-based policy routing ensuring symmetric paths per session.</div>
-      </div>
-      <div class="challenge-card">
-        <div class="ch-problem">⚠ EVE-NG to production config delta</div>
-        <div class="ch-solution">Lab used static IPs; production used PPPoE on ISP1. <strong>Fixed</strong> by adding a production-specific config layer in FortiManager on top of the lab-validated base template.</div>
-      </div>
-    </div>
-  </section>
-
-  <hr class="div">
-
-  <!-- ADDITIONAL CONFIGS -->
-  <section class="reveal">
-    <div class="sec-title">Additional Configs</div>
-    <h2>IPsec Phase 2 &amp; DPD Settings</h2>
-
-    <div class="code-label">IPsec Phase 2 — Spoke to HQ (ISP1 Tunnel)</div>
-    <div class="code-block"><pre>config vpn ipsec phase2-interface
-    edit "VPN-HQ-ISP1-P2"
-        set phase1name "VPN-HQ-ISP1"
+<h3>IPsec tunnel to HQ over ISP-1</h3>
+<div class="code"><div class="ch"><span>FortiOS 7.4 · FG-SITE-A</span><button type="button">copy</button></div><pre>config vpn ipsec phase1-interface
+    edit &quot;HQ-ISP1&quot;
+        set interface &quot;wan1&quot;
+        set ike-version 2
+        set proposal aes256-sha256
+        set dhgrp 14
+        set remote-gw 203.0.113.1
+        set dpd on-idle
+        set dpd-retrycount 3
+        set dpd-retryinterval 5
+        set psksecret ENC ********
+    next
+end
+config vpn ipsec phase2-interface
+    edit &quot;HQ-ISP1-P2&quot;
+        set phase1name &quot;HQ-ISP1&quot;
         set proposal aes256-sha256
         set pfs enable
         set dhgrp 14
-        set auto-negotiate enable
         set keylifeseconds 3600
-        set src-addr-type subnet
-        set dst-addr-type subnet
-        set src-subnet 10.2.0.0 255.255.0.0
-        set dst-subnet 10.0.0.0 255.255.0.0
+    next
+end
+config system interface
+    edit &quot;HQ-ISP1&quot;
+        set ip 10.255.1.2 255.255.255.255
+        set remote-ip 10.255.1.1 255.255.255.252
     next
 end</pre></div>
-
-    <div class="code-label">DPD (Dead Peer Detection) — Aggressive Mode for Fast Recovery</div>
-    <div class="code-block"><pre>config vpn ipsec phase1-interface
-    edit "VPN-HQ-ISP1"
-        set dpd enable
-        set dpd-retrycount 3
-        set dpd-retryinterval 5
-        set idle-timeout disable
+<h3>BGP: prefer ISP-1, BFD for fast detection, redistribute into OSPF</h3>
+<div class="code"><div class="ch"><span>FortiOS 7.4 · FG-SITE-A</span><button type="button">copy</button></div><pre>config router route-map
+    edit &quot;RM-ISP1-IN&quot;
+        config rule
+            edit 1
+                set set-local-preference 200
+            next
+        end
+    next
+    edit &quot;RM-ISP2-IN&quot;
+        config rule
+            edit 1
+                set set-local-preference 100
+            next
+        end
     next
 end
-# DPD triggers tunnel re-establishment within 15s of peer failure
-# Combined with SD-WAN SLA probe = &lt;2s end-to-end failover</pre></div>
-
-    <div class="code-label">FortiManager — Assign Policy Package to Device</div>
-    <div class="code-block"><pre># FortiManager CLI — assign SDWAN policy package to all spokes
-config dvmdb device
-    edit "FortiGate-SiteA"
-        set policy-package "SDWAN-Spokes-PP"
-    next
-    edit "FortiGate-SiteB"
-        set policy-package "SDWAN-Spokes-PP"
-    next
-    edit "FortiGate-SiteC"
-        set policy-package "SDWAN-Spokes-PP"
-    next
+config router bgp
+    set as 65002
+    set router-id 10.2.255.1
+    set keepalive-timer 10
+    set holdtime-timer 30
+    config neighbor
+        edit &quot;10.255.1.1&quot;
+            set remote-as 65001
+            set route-map-in &quot;RM-ISP1-IN&quot;
+            set soft-reconfiguration enable
+            set bfd enable
+        next
+        edit &quot;10.255.2.1&quot;
+            set remote-as 65001
+            set route-map-in &quot;RM-ISP2-IN&quot;
+            set soft-reconfiguration enable
+            set bfd enable
+        next
+    end
+    config network
+        edit 1
+            set prefix 10.2.0.0 255.255.0.0
+        next
+    end
 end
-
-# Push config to all devices simultaneously
-execute fmprofile install package SDWAN-Spokes-PP</pre></div>
-  </section>
-
-  <!-- NAV -->
-  <div class="proj-nav">
-    <a href="../index.html#projects" class="btn-nav">
-      <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
-      All Projects
-    </a>
-    <a href="lan-optimization.html" class="btn-nav">
-      LAN Architecture Optimization
-      <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-    </a>
+config router ospf
+    config redistribute &quot;bgp&quot;
+        set status enable
+        set metric 20
+        set metric-type 2
+        set routemap &quot;RM-TAG-BGP&quot;
+    end
+end</pre></div>
+<p><code>local-preference</code> is applied <strong>inbound</strong> on the spoke, so it only influences the spoke’s own choice of path, which is exactly what we want. The route-map <code>RM-TAG-BGP</code> tags redistributed routes so they are never re-imported (see lessons learned).</p></section><section id="security">
+<h2>Security policy</h2>
+<p>Policies apply to the SD-WAN zone, not to individual tunnels, so a failover never needs a policy change. Anything not listed is denied by the implicit deny.</p>
+<div class="tbl-wrap"><table class="t"><thead><tr><th>Flow</th><th>Services</th><th>Inspection</th><th>Action</th></tr></thead><tbody><tr><td>Site ↔ site (corporate)</td><td>HTTPS, SMB, RDP</td><td>IPS</td><td><span style="color:var(--green)">allow</span></td></tr><tr><td>VoIP</td><td>SIP, RTP</td><td>none (latency)</td><td><span style="color:var(--green)">allow</span></td></tr><tr><td>HQ → Internet</td><td>any</td><td>IPS + application control</td><td><span style="color:var(--green)">allow</span></td></tr><tr><td>Spoke → Internet (via HQ)</td><td>HTTP, HTTPS</td><td>IPS</td><td><span style="color:var(--green)">allow</span></td></tr><tr><td>Spoke → ISP directly</td><td>any</td><td>—</td><td><span style="color:var(--red)">deny</span></td></tr><tr><td>Unknown intersite</td><td>any</td><td>—</td><td><span style="color:var(--red)">deny</span></td></tr></tbody></table></div>
+<p>FortiAnalyzer keeps session logs for <strong>90 days</strong>.</p></section><section id="validation">
+<h2>Validation &amp; results</h2>
+<p>Detection time is driven by the probe settings: <code>interval 500 ms × failtime 3 = 1.5 s</code>. The lab measurement matched that figure.</p>
+<div class="ftl">
+  <div class="mono" style="font-size:12px;color:var(--muted)">Failover timeline: ISP-1 failure at Site A (EVE-NG lab)</div>
+  <div class="ftl-track"><div class="ftl-line"></div>
+    <div class="ftl-pt" style="left:0%;--c:var(--red)"><i></i><b>t = 0 s</b></div>
+    <div class="ftl-pt" style="left:33.3%;--c:var(--red)"><i></i><b>0.5 s</b></div>
+    <div class="ftl-pt" style="left:66.6%;--c:var(--amber)"><i></i><b>1.0 s</b></div>
+    <div class="ftl-pt" style="left:100%;--c:var(--green)"><i></i><b>1.5 s</b></div>
   </div>
-
+  <div class="ftl-legend">
+    <div style="--c:var(--red)"><b>0 s</b>ISP-1 link fails</div>
+    <div style="--c:var(--red)"><b>0.5 s</b>First probe lost</div>
+    <div style="--c:var(--amber)"><b>1.0 s</b>Packet loss over the SLA threshold</div>
+    <div style="--c:var(--green)"><b>1.5 s</b>3rd failed probe: member marked dead, traffic on ISP-2</div>
+  </div>
+  <div class="ftl-cmp">
+    <div style="--c:var(--red)"><span>Before: static routes</span><b>3–5 min</b><div class="ftl-bar"><i style="width:100%"></i></div></div>
+    <div style="--c:var(--green)"><span>After: SD-WAN SLA steering</span><b>≈1.5 s</b><div class="ftl-bar"><i style="width:1.5%"></i></div></div>
+  </div>
 </div>
-<footer><p>&copy; 2026 Tarek MEDJOUB — Network &amp; Security Engineer</p></footer>
-<script>
-const reveals=document.querySelectorAll('.reveal');
-const io=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');io.unobserve(e.target);}});},{threshold:0.1});
-reveals.forEach(r=>io.observe(r));
-</script>
-<script src="../language.js" defer></script></body>
+<ul class="bul"><li><strong>Failover:</strong> from 3–5 minutes with static routes to about 1.5 s with SLA steering (lab).</li><li><strong>Visibility:</strong> per-application traffic dashboards in FortiManager / FortiAnalyzer, where there were none before.</li><li><strong>Encryption:</strong> all intersite traffic now runs in IPsec tunnels.</li><li><strong>Cutover:</strong> HQ plus three spokes migrated in maintenance windows with no reported production impact.</li></ul></section><section id="lessons">
+<h2>Lessons learned</h2>
+<div class="tbl-wrap"><table class="t"><thead><tr><th>Problem</th><th>Fix</th></tr></thead><tbody><tr><td>BGP flapping on the 20 Mb/s ISP-2 links</td><td>Conservative timers (10 s / 30 s) plus BFD at 300 ms for fast detection.</td></tr><tr><td>OSPF ↔ BGP redistribution loop</td><td>Tag routes on redistribution and deny that tag on re-import.</td></tr><tr><td>FortiManager push failures from config drift</td><td>Retrieve the device config before every push; resolve conflicts in a staging ADOM.</td></tr><tr><td>Active VoIP calls dropped on failover</td><td>SIP session helper on both tunnels and a 500 ms probe interval.</td></tr><tr><td>Asymmetric routing after cutover</td><td>Zone-based policy routing keeps each session on one path.</td></tr><tr><td>Lab ≠ production (PPPoE on ISP-1)</td><td>Production-specific FortiManager layer on top of the validated base template.</td></tr></tbody></table></div></section><section id="operations">
+<h2>Day-2 operations</h2>
+<div class="tbl-wrap"><table class="t"><thead><tr><th>Command</th><th>What it tells you</th></tr></thead><tbody><tr><td><code>diagnose sys sdwan health-check</code></td><td>SLA probe status per member</td></tr><tr><td><code>diagnose sys sdwan service</code></td><td>Which member each rule is using right now</td></tr><tr><td><code>diagnose sys sdwan member</code></td><td>Member state after a failover</td></tr><tr><td><code>get router info bgp summary</code></td><td>BGP neighbor state and prefixes received</td></tr><tr><td><code>diagnose vpn tunnel list</code></td><td>IPsec SAs, counters and DPD state</td></tr></tbody></table></div></section><div class="pn"><a href="monitoring-stack.html"><small>← previous</small><span>Monitoring & Alerting Stack</span></a><a class="r" href="hybrid-cloud.html"><small>next →</small><span>Hybrid Cloud Architecture</span></a></div><div class="end-nav"><a class="back-btn" href="../index.html#projects">← Back to projects</a><a class="back-btn" href="#top" data-top>↑ Back to top</a></div></div>
+  </div>
+</div>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>© <span class="yr">2026</span> Tarek Medjoub · Paris · <a href="mailto:tarek.medjoub@outlook.fr">tarek.medjoub@outlook.fr</a></span>
+    <span>Press <kbd>/</kbd> or <kbd>Ctrl</kbd>+<kbd>K</kbd> to open the console</span>
+  </div>
+</footer>
+
+<button class="totop" id="toTop" type="button" aria-label="Back to top" title="Back to top"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5M5 12l7-7 7 7"/></svg><span>top</span></button>
+<button class="fab" id="fab" aria-label="Open interactive console"><b>&gt;_</b><span>console</span></button>
+<div class="con-back" id="conBack" role="dialog" aria-modal="true" aria-label="Interactive console">
+  <div class="con">
+    <div class="term-head"><div class="dots"><i></i><i></i><i></i></div><span>tarek@medjoub · interactive console</span><span style="margin-left:auto">esc to close</span></div>
+    <div class="con-out" id="conOut"></div>
+    <div class="con-sug" id="conSug"></div>
+    <div class="con-in"><span class="p">guest@portfolio:~$</span><input id="conIn" autocomplete="off" spellcheck="false" aria-label="Command"></div>
+  </div>
+</div>
+<div class="toast" id="toast" role="status"></div>
+<script src="../assets/js/main.js" defer></script>
+
+</body>
 </html>
