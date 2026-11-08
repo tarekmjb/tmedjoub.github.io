@@ -632,3 +632,20 @@ table.kv{width:100%;border-collapse:collapse;font-size:14px;margin-bottom:14px}
 .tool[hidden]{display:none!important}
 @keyframes toolIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
 @media (max-width:900px){.tools-tabbed .tool-tabs{grid-template-columns:1fr 1fr}.tools-tabbed .tool-tabs a:nth-child(2){border-right:0}.tools-tabbed .tool-tabs a:nth-child(-n+2){border-bottom:1px solid var(--line)}.tools-tabbed .tool{padding:20px}}
+
+/* subnet calculator v2 */
+.tools-tabbed .tool-tabs{grid-template-columns:repeat(5,1fr)}
+.tool-wide{grid-template-areas:"in out" "full full"}
+.tool-wide .tool-in{grid-area:in}.tool-wide .tool-out{grid-area:out}
+.tool-full{grid-area:full;min-width:0}
+.tool-full h3{font-family:var(--display);font-size:20px;margin:6px 0 10px}
+.radios{display:flex;gap:6px;flex-wrap:wrap}
+.radios label{display:inline-flex;align-items:center;gap:6px;font-family:var(--mono);font-size:13.5px;border:1px solid var(--line2);background:var(--panel);border-radius:8px;padding:8px 14px;cursor:pointer;transition:.2s}
+.radios label:has(input:checked){border-color:var(--amber);background:var(--amber-soft);color:var(--text)}
+.radios input{accent-color:var(--amber);margin:0}
+.nets{max-height:420px;overflow:auto}
+.nets thead th{position:sticky;top:0;background:var(--panel);z-index:1}
+.nets tr.cur td{background:var(--amber-soft);color:var(--text);font-weight:500}
+.nets tr.cur td:first-child{box-shadow:inset 3px 0 0 var(--amber)}
+@media (max-width:1060px){.tools-tabbed .tool-tabs{grid-template-columns:repeat(3,1fr)}.tools-tabbed .tool-tabs a{border-bottom:1px solid var(--line)}}
+@media (max-width:900px){.tool-wide{grid-template-areas:"in" "out" "full"}.tools-tabbed .tool-tabs{grid-template-columns:1fr 1fr}.tools-tabbed .tool-tabs a:nth-child(2n){border-right:0}}
