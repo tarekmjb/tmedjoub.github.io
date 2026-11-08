@@ -115,12 +115,22 @@ def layout(lang, path, title, desc, body, *, home=False, doc=False, extra_js="",
       <ul class="mm-list">{mega}</ul>
     </nav>
     <div class="tools">
+      <button class="search-btn" id="searchBtn" type="button" aria-label="{t('Search the site', 'Rechercher sur le site')}" aria-haspopup="dialog"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg><span>{t('Search', 'Rechercher')}</span><kbd>Ctrl K</kbd></button>
       <button class="btn-ico" id="themeBtn" title="{t('Toggle theme', 'Changer de thème')}" aria-label="{t('Toggle light/dark theme', 'Basculer thème clair/sombre')}"><svg class="i-moon" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg><svg class="i-sun" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg></button>
       <a class="btn primary btn-sm hdr-cta" href="{home_href}#contact">{t('Contact me', 'Me contacter')}</a>
       <button class="btn-ico menu-btn" id="menuBtn" aria-label="Menu" aria-expanded="false" aria-controls="nav"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
     </div>
   </div>
 </header>
+<div class="sd-back" id="sdBack" hidden>
+  <div class="sd" role="dialog" aria-modal="true" aria-label="{t('Search', 'Recherche')}">
+    <div class="sd-in"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>
+      <input id="sdIn" type="search" autocomplete="off" spellcheck="false" placeholder="{t('Search case studies, labs, tools, topics…', 'Rechercher études de cas, labs, outils, sujets…')}" aria-label="{t('Search', 'Recherche')}" aria-controls="sdRes" aria-autocomplete="list">
+      <button class="sd-x" id="sdClose" type="button" aria-label="{t('Close search', 'Fermer la recherche')}">Esc</button></div>
+    <div class="sd-res" id="sdRes" role="listbox" aria-label="{t('Results', 'Résultats')}"></div>
+    <div class="sd-foot"><span><kbd>↑</kbd><kbd>↓</kbd> {t('navigate', 'naviguer')}</span><span><kbd>Enter</kbd> {t('open', 'ouvrir')}</span><span><kbd>Esc</kbd> {t('close', 'fermer')}</span></div>
+  </div>
+</div>
 
 <main id="main">
 {body}
@@ -129,7 +139,7 @@ def layout(lang, path, title, desc, body, *, home=False, doc=False, extra_js="",
 {footer(x, root, lp, home)}
 
 <button class="totop" id="toTop" type="button" aria-label="{t('Back to top', 'Retour en haut')}" title="{t('Back to top', 'Retour en haut')}"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5M5 12l7-7 7 7"/></svg><span>{t('top', 'haut')}</span></button>
-<button class="fab" id="fab" aria-label="{t('Open interactive console', 'Ouvrir la console interactive')}" title="{t('Console (/ or Ctrl+K)', 'Console (/ ou Ctrl+K)')}"><b>&gt;_</b></button>
+<button class="fab" id="fab" aria-label="{t('Open interactive console', 'Ouvrir la console interactive')}" title="{t('Console (press ` to toggle)', 'Console (touche ` pour ouvrir)')}"><b>&gt;_</b></button>
 <div class="con-back" id="conBack" role="dialog" aria-modal="true" aria-label="{t('Interactive console', 'Console interactive')}">
   <div class="con">
     <div class="term-head"><div class="dots"><i></i><i></i><i></i></div><span>tarek@medjoub · {t('interactive console', 'console interactive')}</span><span class="con-hint">{t('esc to close', 'échap pour fermer')}</span><button class="con-x" id="conClose" type="button" aria-label="{t('Close console', 'Fermer la console')}" title="{t('Close', 'Fermer')}">✕</button></div>
@@ -139,6 +149,7 @@ def layout(lang, path, title, desc, body, *, home=False, doc=False, extra_js="",
   </div>
 </div>
 <div class="toast" id="toast" role="status"></div>
+<script src="{root}assets/js/search-index.js" defer></script>
 <script src="{root}assets/js/main.js" defer></script>
 {extra_js}
 </body>
@@ -202,6 +213,10 @@ def doc_page(x, *, crumbs, kicker, title, summary, metas, kpis, sections, pn, st
     """Generic case-study / lab page body. sections: list of (id, toc_label, html)."""
     t = x.t
     crumb = '<span class="sep">/</span>'.join(crumbs)
+    import re as _re
+    _txt = _re.sub(r"<pre>.*?</pre>", " ", "".join(h for _, _, h in sections), flags=_re.S)
+    _mins = max(2, round(len(_re.sub(r"<[^>]+>", " ", _txt).split()) / 220))
+    metas = list(metas) + [(t("Reading time:", "Lecture :"), f"{_mins} min")]
     meta = "".join(f'<span class="meta">{k}<b>{v}</b></span>' for k, v in metas)
     kp = ""
     if kpis:
@@ -220,6 +235,10 @@ def doc_page(x, *, crumbs, kicker, title, summary, metas, kpis, sections, pn, st
         back_top = f'<a class="back-btn" href="{bh}">← {bl}</a>'
         back_end = (f'<div class="end-nav"><a class="back-btn" href="{bh}">← {bl}</a>'
                     f'<a class="back-btn" href="#top" data-top>↑ {t("Back to top", "Retour en haut")}</a></div>')
+    _home = back[0].split("#")[0] if back else "index.html"
+    toc_cta = (f'<div class="toc-cta"><b>{t("Need this on your network?", "Besoin de ça sur votre réseau ?")}</b>'
+               f'<p>{t("I can audit, design or migrate it for you.", "Je peux l’auditer, le concevoir ou le migrer pour vous.")}</p>'
+               f'<a class="btn primary btn-sm" href="{_home}#contact">{t("Contact me", "Me contacter")}</a></div>')
     rel = ""
     if related:
         rel = (f'<section class="related"><div class="wrap"><div class="kicker">{t("Keep exploring", "Continuer la découverte")}</div><h2>{t("Discover more", "Pour aller plus loin")}</h2><div class="rel-grid">'
@@ -241,7 +260,7 @@ def doc_page(x, *, crumbs, kicker, title, summary, metas, kpis, sections, pn, st
 <div class="wrap">
   {kp}
   <div class="doc">
-    <nav class="toc" aria-label="{t('On this page', 'Sur cette page')}"><b>{t('ON THIS PAGE', 'SUR CETTE PAGE')}</b>{toc}</nav>
+    <aside class="toc-wrap"><nav class="toc" aria-label="{t('On this page', 'Sur cette page')}"><b>{t('ON THIS PAGE', 'SUR CETTE PAGE')}</b>{toc}</nav>{toc_cta}</aside>
     <div class="doc-body">{secs}{pnh}{back_end}</div>
   </div>
 </div>

@@ -71,6 +71,21 @@
     btn && btn.addEventListener('click', () => copy(raw, t('config copied', 'configuration copiée')));
   });
 
+
+  /* ── staggered reveals for card grids ── */
+  $$('.tiles,.res-grid,.cx-grid,.cred-grid,.rel-grid,.skills-grid,.edu-row').forEach(g => {
+    [...g.children].forEach((c, i) => { c.classList.add('reveal'); c.style.transitionDelay = Math.min(i, 8) * 60 + 'ms'; });
+  });
+  /* ── cursor spotlight on cards ── */
+  if (matchMedia('(hover: hover)').matches && !reduce) {
+    document.addEventListener('pointermove', e => {
+      const c = e.target.closest('.tile,.res,.card-x,.rel-card,.hf-card,.cred,.jr-card,.mm-feature,.split-art');
+      if (!c) return;
+      const r = c.getBoundingClientRect();
+      c.style.setProperty('--mx', (e.clientX - r.left) + 'px'); c.style.setProperty('--my', (e.clientY - r.top) + 'px');
+    }, { passive: true });
+  }
+
   /* ── reveal on scroll ── */
   if ('IntersectionObserver' in window && !reduce) {
     const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } }), { threshold: .1 });
@@ -153,6 +168,86 @@
   });
   const cfe = $('#cfEmail');
   cfe && cfe.addEventListener('input', () => { if (cfe.getAttribute('aria-invalid')) { $('#cfEmailErr').textContent = ''; cfe.removeAttribute('aria-invalid'); } });
+
+
+  /* ═════════ SITE SEARCH (Ctrl+K or /) ═════════ */
+  (() => {
+    const sb = $('#sdBack'), si = $('#sdIn'), sr = $('#sdRes'), btn = $('#searchBtn');
+    if (!sb) return;
+    const norm = s => s.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '');
+    let items = [], sel = 0, lastFocus = null;
+    const data = () => (window.SEARCH_INDEX && window.SEARCH_INDEX[LANG]) || [];
+    const ICO = { case: 'M4 7h16v12H4zM9 7V5h6v2', lab: 'M9 3v6l-5 9a2 2 0 0 0 2 3h12a2 2 0 0 0 2-3l-5-9V3M8 3h8', tool: 'M14.7 6.3a4 4 0 0 0-5.4 5.4L3 18l3 3 6.3-6.3a4 4 0 0 0 5.4-5.4l-2.5 2.5-2.4-.6-.6-2.4z', sec: 'M4 6h16M4 12h10M4 18h14', act: 'M5 12h14M13 6l6 6-6 6' };
+    const kindOf = y => /lab/i.test(y) ? 'lab' : /tool|outil/i.test(y) ? 'tool' : /case|étude/i.test(y) ? 'case' : 'sec';
+    const actions = () => [
+      { y: t('Action', 'Action'), t: t('Contact Tarek', 'Contacter Tarek'), d: 'tarek.medjoub@outlook.fr', u: LP + 'index.html#contact', a: 'go' },
+      { y: t('Action', 'Action'), t: t('Download CV (PDF)', 'Télécharger le CV (PDF)'), d: t('One page', 'Une page'), u: LANG === 'fr' ? 'assets/CV_Tarek_MEDJOUB.pdf' : 'assets/CV_Tarek_MEDJOUB_EN.pdf', a: 'go' },
+      { y: t('Action', 'Action'), t: t('Switch light / dark theme', 'Basculer thème clair / sombre'), d: '', a: 'theme' },
+      { y: t('Action', 'Action'), t: t('Open the network console', 'Ouvrir la console réseau'), d: t('Type commands like “show version”', 'Tapez des commandes comme « show version »'), a: 'console' }
+    ];
+    const featured = () => {
+      const d = data(), pick = u => d.find(i => i.u === LP + u);
+      return [pick('projects/sdwan.html'), pick('projects/hybrid-cloud.html'), pick('tools.html#subnet'), pick('labs/bgp.html'), pick('index.html#expertise-security')].filter(Boolean).concat(actions().slice(0, 2));
+    };
+    const hl = (txt, terms) => {
+      let h = esc(txt);
+      terms.forEach(q => { if (q.length < 2) return; const i = norm(h).indexOf(q); if (i >= 0) h = h.slice(0, i) + '<mark>' + h.slice(i, i + q.length) + '</mark>' + h.slice(i + q.length); });
+      return h;
+    };
+    const run = q => {
+      const terms = norm(q).split(/\s+/).filter(Boolean);
+      if (!terms.length) { items = featured(); render(items, [], t('Suggested', 'Suggestions')); return; }
+      const scored = [];
+      data().concat(actions()).forEach(it => {
+        const T = norm(it.t), D = norm(it.d || ''), K = norm(it.k || ''), Y = norm(it.y);
+        let sc = 0;
+        for (const w of terms) {
+          if (T.includes(w)) sc += T.startsWith(w) ? 12 : 8; else if (K.includes(w) || Y.includes(w)) sc += 4; else if (D.includes(w)) sc += 2; else { sc = 0; break; }
+        }
+        if (sc) scored.push([sc - (it.t.includes('›') ? 3 : 0), it]);
+      });
+      scored.sort((a, b) => b[0] - a[0]);
+      items = scored.slice(0, 12).map(x => x[1]);
+      render(items, terms, items.length ? `${items.length} ${t('results', 'résultats')}` : '');
+    };
+    const render = (list, terms, head) => {
+      sel = 0;
+      if (!list.length) { sr.innerHTML = `<div class="sd-empty">${t('No results. Try “BGP”, “subnet”, “Azure” or “failover”.', 'Aucun résultat. Essayez « BGP », « sous-réseau », « Azure » ou « bascule ».')}</div>`; return; }
+      sr.innerHTML = (head ? `<div class="sd-head">${head}</div>` : '') + list.map((it, i) => {
+        const k = it.a ? 'act' : kindOf(it.y);
+        return `<a class="sd-item k-${k}" role="option" id="sdo${i}" aria-selected="${i === 0}" href="${it.u ? BASE + it.u : '#'}" data-i="${i}">
+          <span class="sd-ico"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="${ICO[k]}"/></svg></span>
+          <span class="sd-txt"><b>${hl(it.t, terms)}</b>${it.d ? `<small>${hl(it.d, terms)}</small>` : ''}</span><span class="sd-type">${esc(it.y)}</span></a>`;
+      }).join('');
+      mark();
+    };
+    const mark = () => { $$('.sd-item', sr).forEach((a, i) => a.setAttribute('aria-selected', i === sel)); const c = $('#sdo' + sel); if (c) { c.scrollIntoView({ block: 'nearest' }); si.setAttribute('aria-activedescendant', c.id); } };
+    const act = (i, ev) => {
+      const it = items[i]; if (!it) return;
+      if (it.a === 'theme') { ev && ev.preventDefault(); setTheme(root.dataset.theme === 'dark' ? 'light' : 'dark'); closeS(); return; }
+      if (it.a === 'console') { ev && ev.preventDefault(); closeS(); setTimeout(() => $('#fab') && $('#fab').click(), 50); return; }
+      if (!ev) location.href = BASE + it.u;
+      closeS(true);
+    };
+    const openS = () => { lastFocus = document.activeElement; sb.hidden = false; requestAnimationFrame(() => sb.classList.add('open')); si.value = ''; run(''); si.focus(); document.body.style.overflow = 'hidden'; };
+    const closeS = (keep) => { sb.classList.remove('open'); sb.hidden = true; document.body.style.overflow = ''; if (!keep && lastFocus) lastFocus.focus(); };
+    btn && btn.addEventListener('click', openS);
+    $('#sdClose').addEventListener('click', () => closeS());
+    sb.addEventListener('click', e => { if (e.target === sb) closeS(); });
+    si.addEventListener('input', () => run(si.value));
+    si.addEventListener('keydown', e => {
+      if (e.key === 'ArrowDown') { e.preventDefault(); sel = Math.min(items.length - 1, sel + 1); mark(); }
+      else if (e.key === 'ArrowUp') { e.preventDefault(); sel = Math.max(0, sel - 1); mark(); }
+      else if (e.key === 'Enter') { e.preventDefault(); act(sel); }
+      else if (e.key === 'Escape') { e.preventDefault(); closeS(); }
+    });
+    sr.addEventListener('click', e => { const a = e.target.closest('.sd-item'); if (a) act(+a.dataset.i, e); });
+    sr.addEventListener('mousemove', e => { const a = e.target.closest('.sd-item'); if (a && +a.dataset.i !== sel) { sel = +a.dataset.i; mark(); } });
+    document.addEventListener('keydown', e => {
+      const typing = /INPUT|TEXTAREA|SELECT/.test(document.activeElement.tagName);
+      if ((e.key.toLowerCase() === 'k' && (e.ctrlKey || e.metaKey)) || (e.key === '/' && !typing)) { e.preventDefault(); sb.hidden ? openS() : closeS(); }
+    });
+  })();
 
   /* ═════════ CONSOLE ═════════ */
   const SITE = {
@@ -322,7 +417,7 @@ ${t('location', 'lieu    ')}  Paris, France`),
   });
   document.addEventListener('keydown', e => {
     const typing = /INPUT|TEXTAREA|SELECT/.test(document.activeElement.tagName);
-    if ((e.key.toLowerCase() === 'k' && (e.ctrlKey || e.metaKey)) || (e.key === '/' && !typing)) { e.preventDefault(); back.classList.contains('open') ? close() : open(); }
+    if (e.key === '`' && !typing) { e.preventDefault(); back.classList.contains('open') ? close() : open(); }
     if (e.key === 'Escape') close();
   });
 })();
