@@ -6,6 +6,7 @@ from common import L, layout, doc_page, SITE, EMAIL, LINKEDIN, esc
 from home import home
 from projects_data import PROJECTS, BUILDERS, META
 from labs_data import LABS, lab_sections
+from tools import tools_page
 
 OUT = os.path.abspath(sys.argv[1] if len(sys.argv) > 1 else os.path.join(os.path.dirname(__file__), ".."))
 written = []
@@ -147,7 +148,7 @@ def seo_files():
     urls = []
     for lang in ("en", "fr"):
         pre = "fr/" if lang == "fr" else ""
-        urls += [pre + "index.html", pre + "cv.html"]
+        urls += [pre + "index.html", pre + "cv.html", pre + "tools.html"]
         urls += [pre + f"projects/{p['id']}.html" for p in PROJECTS]
         urls += [pre + f"labs/{l['id']}.html" for l in LABS]
     sm = ['<?xml version="1.0" encoding="UTF-8"?>', '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">']
@@ -165,6 +166,7 @@ if __name__ == "__main__":
     for lang in ("en", "fr"):
         write(("fr/" if lang == "fr" else "") + "index.html", home(lang))
         cv_page(lang)
+        write(("fr/" if lang == "fr" else "") + "tools.html", tools_page(lang))
         for i in range(len(PROJECTS)):
             project_page(lang, i)
         for i in range(len(LABS)):

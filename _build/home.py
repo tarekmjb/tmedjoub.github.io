@@ -323,6 +323,11 @@ def home(lang):
         <tbody>{labrows}</tbody>
       </table>
     </div>
+    <a class="tool-teaser reveal" href="tools.html">
+      <span class="ico"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M7 9h4M7 13h10M7 17h6"/></svg></span>
+      <span><b>{t('Network toolkit', 'Boîte à outils réseau')}</b><small>{t('Subnet calculator · VLSM planner · wildcard &amp; ACL helper · IPsec MTU/MSS', 'Calcul de sous-réseau · planificateur VLSM · wildcard &amp; ACL · MTU/MSS IPsec')}</small></span>
+      <span class="more">{t('Open', 'Ouvrir')} →</span>
+    </a>
   </div>
 </section>
 
