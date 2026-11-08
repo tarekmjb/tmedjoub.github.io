@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Outils réseau · Tarek MEDJOUB</title>
-<meta name="description" content="Outils réseau gratuits : calcul de sous-réseau, planificateur VLSM, assistant wildcard &amp; ACL, calcul MTU/MSS IPsec.">
+<meta name="description" content="Outils réseau gratuits : calculateurs de sous-réseau IPv4 et IPv6, planificateur VLSM, assistant wildcard &amp; ACL, calcul MTU/MSS IPsec.">
 <meta name="author" content="Tarek Medjoub">
 
 <meta name="theme-color" content="#f3efe6">
@@ -15,7 +15,7 @@
 <meta property="og:type" content="website">
 <meta property="og:locale" content="fr_FR">
 <meta property="og:title" content="Outils réseau · Tarek MEDJOUB">
-<meta property="og:description" content="Outils réseau gratuits : calcul de sous-réseau, planificateur VLSM, assistant wildcard &amp; ACL, calcul MTU/MSS IPsec.">
+<meta property="og:description" content="Outils réseau gratuits : calculateurs de sous-réseau IPv4 et IPv6, planificateur VLSM, assistant wildcard &amp; ACL, calcul MTU/MSS IPsec.">
 <meta property="og:url" content="https://tarekmjb.github.io/tmedjoub.github.io/fr/tools.html">
 <meta property="og:image" content="https://tarekmjb.github.io/tmedjoub.github.io/assets/img/og-image.png">
 <meta property="og:image:width" content="1200">
@@ -69,22 +69,48 @@
     <h1>Outils réseau du quotidien.</h1>
     <p class="sum">Les calculateurs que j’utilise pour concevoir et dépanner des réseaux. Tout s’exécute dans votre navigateur : rien n’est envoyé.</p>
     <div class="tool-tabs" role="tablist" aria-label="Outils">
-      <a href="#subnet" role="tab" id="tab-subnet" aria-controls="subnet" class="on"><b>01</b>Calcul de sous-réseau</a>
-      <a href="#vlsm" role="tab" id="tab-vlsm" aria-controls="vlsm"><b>02</b>Planificateur VLSM</a>
-      <a href="#wildcard" role="tab" id="tab-wildcard" aria-controls="wildcard"><b>03</b>Wildcard &amp; ACL</a>
-      <a href="#mss" role="tab" id="tab-mss" aria-controls="mss"><b>04</b>IPsec MTU / MSS</a>
+      <a href="#subnet" role="tab" id="tab-subnet" aria-controls="subnet" class="on"><b>01</b>Calcul de sous-réseau IPv4</a>
+      <a href="#ipv6" role="tab" id="tab-ipv6" aria-controls="ipv6"><b>02</b>Calcul IPv6</a>
+      <a href="#vlsm" role="tab" id="tab-vlsm" aria-controls="vlsm"><b>03</b>Planificateur VLSM</a>
+      <a href="#wildcard" role="tab" id="tab-wildcard" aria-controls="wildcard"><b>04</b>Wildcard &amp; ACL</a>
+      <a href="#mss" role="tab" id="tab-mss" aria-controls="mss"><b>05</b>IPsec MTU / MSS</a>
     </div>
   </div>
 
-  <section class="tool" id="subnet" role="tabpanel" aria-labelledby="tab-subnet">
+  <section class="tool tool-wide" id="subnet" role="tabpanel" aria-labelledby="tab-subnet">
     <div class="tool-in">
-      <h2>Calcul de sous-réseau</h2>
-      <p>Saisissez une adresse avec un préfixe ou un masque.</p>
-      <label class="fl" for="snIn">Adresse</label>
-      <input id="snIn" class="tin" value="10.10.20.37/26" spellcheck="false" autocomplete="off">
-      <div class="ex">Essayez: <button type="button" data-ex="snIn">192.168.1.130/25</button><button type="button" data-ex="snIn">172.16.5.4 255.255.252.0</button><button type="button" data-ex="snIn">10.255.1.2/30</button></div>
+      <h2>Calculateur de sous-réseau IPv4</h2>
+      <p>Choisissez une classe pour filtrer les masques, sélectionnez un sous-réseau, saisissez une adresse IP. Vous pouvez aussi coller <code>10.0.0.1/24</code> directement dans le champ adresse.</p>
+      <div class="calc-form">
+        <span class="fl">Classe de réseau</span>
+        <div class="radios" role="radiogroup" aria-label="Classe de réseau">
+          <label><input type="radio" name="snClass" value="any" checked> Toutes</label>
+          <label><input type="radio" name="snClass" value="A"> A</label>
+          <label><input type="radio" name="snClass" value="B"> B</label>
+          <label><input type="radio" name="snClass" value="C"> C</label>
+        </div>
+        <label class="fl" for="snMask">Sous-réseau</label>
+        <select id="snMask" class="tin"></select>
+        <label class="fl" for="snIn">Adresse IP</label>
+        <input id="snIn" class="tin" value="10.10.20.37" spellcheck="false" autocomplete="off" inputmode="decimal">
+        <div class="ex">Essayez: <button type="button" data-ex="snIn">192.168.1.130/25</button><button type="button" data-ex="snIn">172.16.5.4/22</button><button type="button" data-ex="snIn">10.255.1.2/30</button></div>
+      </div>
     </div>
     <div class="tool-out" id="snOut" aria-live="polite"></div>
+    <div class="tool-full" id="snNets"></div>
+  </section>
+
+  <section class="tool tool-wide" id="ipv6" role="tabpanel" aria-labelledby="tab-ipv6">
+    <div class="tool-in">
+      <h2>Calculateur de sous-réseau IPv6</h2>
+      <p>Saisissez une adresse IPv6 (compressée ou complète) et une longueur de préfixe.</p>
+      <label class="fl" for="v6Pfx">Longueur de préfixe</label>
+      <select id="v6Pfx" class="tin"></select>
+      <label class="fl" for="v6In">Adresse IP</label>
+      <input id="v6In" class="tin" value="2001:db8:85a3::8a2e:370:7334" spellcheck="false" autocomplete="off">
+      <div class="ex">Essayez: <button type="button" data-ex="v6In">fe80::1ff:fe23:4567:890a</button><button type="button" data-ex="v6In">fd12:3456:789a:1::1</button><button type="button" data-ex="v6In">2a01:cb00:1234::/48</button></div>
+    </div>
+    <div class="tool-out" id="v6Out" aria-live="polite"></div>
   </section>
 
   <section class="tool" id="vlsm" role="tabpanel" aria-labelledby="tab-vlsm">

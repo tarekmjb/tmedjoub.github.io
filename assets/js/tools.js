@@ -49,21 +49,133 @@
   const err = msg => `<div class="terr">⚠ ${msg}</div>`;
   const fmt = n => n.toLocaleString(FR ? 'fr-FR' : 'en-GB');
 
-  /* ── 1. subnet calculator ── */
-  const snIn = $('#snIn'), snOut = $('#snOut');
+  /* ── 1. IPv4 subnet calculator (calculator.net style) ── */
+  const snIn = $('#snIn'), snOut = $('#snOut'), snMask = $('#snMask'), snNets = $('#snNets');
+  const classMin = { any: 1, A: 8, B: 16, C: 24 };
+  const fillMasks = (keep) => {
+    const cls = document.querySelector('input[name="snClass"]:checked').value, min = classMin[cls];
+    let cur = keep != null ? keep : +snMask.value || 24;
+    if (cur < min) cur = min;
+    let h = '';
+    for (let p = 32; p >= min; p--) h += `<option value="${p}"${p === cur ? ' selected' : ''}>${n2ip(pfx2mask(p))} /${p}</option>`;
+    snMask.innerHTML = h;
+  };
+  const ipClass = ip => { const a = ip >>> 24; return a < 128 ? 'A' : a < 192 ? 'B' : a < 224 ? 'C' : a < 240 ? 'D (multicast)' : 'E (' + t('reserved', 'réservée') + ')'; };
+  const hex4 = n => n.toString(16).padStart(4, '0');
   const sn = () => {
-    const r = parse(snIn.value);
-    if (!r) { snOut.innerHTML = err(t('Use a format like 10.0.0.1/24 or 10.0.0.1 255.255.255.0', 'Format attendu : 10.0.0.1/24 ou 10.0.0.1 255.255.255.0')); return; }
-    const b = block(r.ip, r.p);
-    snOut.innerHTML = `<div class="big mono">${n2ip(b.net)}<span>/${r.p}</span></div>` + rows([
-      [t('Network', 'Réseau'), n2ip(b.net), 1],
-      [t('Broadcast', 'Diffusion'), r.p >= 31 ? '—' : n2ip(b.bc), 1],
-      [t('Host range', 'Plage d’hôtes'), `${n2ip(b.first)} – ${n2ip(b.last)}`, 1],
-      [t('Usable hosts', 'Hôtes utilisables'), fmt(b.usable) + (r.p === 31 ? ' (RFC 3021 p2p)' : ''), 0],
-      [t('Mask', 'Masque'), n2ip(b.mask), 1],
-      ['Wildcard', n2ip(b.wc), 1],
-      [t('Address type', 'Type d’adresse'), kind(r.ip), 0],
-      [t('Mask in binary', 'Masque en binaire'), `<span class="binm">${bin(b.mask)}</span>`, 1]
+    let raw = snIn.value.trim();
+    const m = raw.match(/^([\d.]+)\s*(?:\/\s*(\d{1,2})|\s+([\d.]+))$/);
+    if (m) {   // pasted "ip/p" or "ip mask": move the prefix into the dropdown
+      const p = m[2] != null ? +m[2] : mask2pfx(ip2n(m[3]) ?? -1);
+      if (p != null && p >= 1 && p <= 32) {
+        if (p < classMin[document.querySelector('input[name="snClass"]:checked').value]) document.querySelector('input[name="snClass"][value="any"]').checked = true;
+        fillMasks(p); snIn.value = m[1]; raw = m[1];
+      }
+    }
+    const ip = ip2n(raw), p = +snMask.value;
+    if (ip == null) { snOut.innerHTML = err(t('Enter a valid IPv4 address, e.g. 10.0.0.1', 'Saisissez une adresse IPv4 valide, ex. 10.0.0.1')); snNets.innerHTML = ''; return; }
+    const b = block(ip, p);
+    const o = [ip >>> 24, (ip >>> 16) & 255, (ip >>> 8) & 255, ip & 255];
+    snOut.innerHTML = `<div class="big mono">${n2ip(b.net)}<span>/${p}</span></div>` + rows([
+      [t('IP address', 'Adresse IP'), n2ip(ip), 1],
+      [t('Network address', 'Adresse réseau'), n2ip(b.net), 1],
+      [t('Usable host IP range', 'Plage d’hôtes utilisables'), `${n2ip(b.first)} – ${n2ip(b.last)}`, 1],
+      [t('Broadcast address', 'Adresse de diffusion'), p >= 31 ? '—' : n2ip(b.bc), 1],
+      [t('Total number of hosts', 'Nombre total d’adresses'), fmt(b.size), 0],
+      [t('Number of usable hosts', 'Hôtes utilisables'), fmt(b.usable) + (p === 31 ? ' (RFC 3021)' : ''), 0],
+      [t('Subnet mask', 'Masque de sous-réseau'), n2ip(b.mask), 1],
+      [t('Wildcard mask', 'Masque générique (wildcard)'), n2ip(b.wc), 1],
+      [t('Binary subnet mask', 'Masque en binaire'), `<span class="binm">${bin(b.mask)}</span>`, 1],
+      [t('IP class', 'Classe IP'), ipClass(ip), 0],
+      [t('CIDR notation', 'Notation CIDR'), '/' + p, 1],
+      [t('IP type', 'Type d’adresse'), kind(ip), 0],
+      [t('Short', 'Forme courte'), `${n2ip(ip)} /${p}`, 1],
+      [t('Binary ID', 'ID binaire'), `<span class="binm">${(ip >>> 0).toString(2).padStart(32, '0')}</span>`, 1],
+      [t('Integer ID', 'ID entier'), String(ip >>> 0), 1],
+      [t('Hex ID', 'ID hexadécimal'), '0x' + (ip >>> 0).toString(16).padStart(8, '0'), 1],
+      ['in-addr.arpa', `${o[3]}.${o[2]}.${o[1]}.${o[0]}.in-addr.arpa`, 1],
+      [t('IPv4-mapped address', 'Adresse IPv4 mappée'), `::ffff:${hex4((ip >>> 16) & 0xffff)}:${hex4(ip & 0xffff)}`, 1],
+      [t('6to4 prefix', 'Préfixe 6to4'), `2002:${hex4((ip >>> 16) & 0xffff)}:${hex4(ip & 0xffff)}::/48`, 1]
+    ]);
+    // all possible networks inside the classful-style parent (/24, /16 or /8)
+    const parentP = p >= 24 ? 24 : p >= 16 ? 16 : p >= 8 ? 8 : 0;
+    const count = 2 ** (p - parentP), pnet = (ip & pfx2mask(parentP)) >>> 0, size = 2 ** (32 - p);
+    const label = parentP === 24 ? `${o[0]}.${o[1]}.${o[2]}.*` : parentP === 16 ? `${o[0]}.${o[1]}.*.*` : parentP === 8 ? `${o[0]}.*.*.*` : '*.*.*.*';
+    const MAX = 256, shown = Math.min(count, MAX);
+    let trs = '';
+    const start = count > MAX ? Math.max(0, Math.min(count - MAX, Math.floor((b.net - pnet) / size) - MAX / 2)) : 0;
+    for (let i = start; i < start + shown; i++) {
+      const net = pnet + i * size, bb = block(net, p), cur = net === b.net;
+      trs += `<tr${cur ? ' class="cur"' : ''}><td class="mono">${n2ip(net)}</td><td class="mono">${n2ip(bb.first)} – ${n2ip(bb.last)}</td><td class="mono">${p >= 31 ? '—' : n2ip(bb.bc)}</td></tr>`;
+    }
+    snNets.innerHTML = `<h3>${t(`All ${fmt(count)} possible /${p} networks for ${label}`, `Les ${fmt(count)} réseaux /${p} possibles pour ${label}`)}</h3>` +
+      (count > MAX ? `<p class="tnote">${t(`Showing ${MAX} networks around yours.`, `Affichage de ${MAX} réseaux autour du vôtre.`)}</p>` : '') +
+      `<div class="tbl-wrap nets"><table class="t"><thead><tr><th>${t('Network address', 'Adresse réseau')}</th><th>${t('Usable host range', 'Plage d’hôtes utilisables')}</th><th>${t('Broadcast address', 'Adresse de diffusion')}</th></tr></thead><tbody>${trs}</tbody></table></div>`;
+    const cur = snNets.querySelector('tr.cur'), wrap = snNets.querySelector('.nets');
+    if (cur && wrap) wrap.scrollTop = cur.offsetTop - wrap.clientHeight / 2;
+  };
+  document.querySelectorAll('input[name="snClass"]').forEach(r => r.addEventListener('change', () => { fillMasks(); sn(); }));
+  fillMasks(26);
+
+  /* ── 1b. IPv6 subnet calculator (BigInt) ── */
+  const v6In = $('#v6In'), v6Pfx = $('#v6Pfx'), v6Out = $('#v6Out');
+  v6Pfx.innerHTML = Array.from({ length: 128 }, (_, i) => 128 - i).map(p => `<option value="${p}"${p === 64 ? ' selected' : ''}>/${p}${p === 64 ? ' *' : ''}</option>`).join('');
+  const v6parse = str => {
+    let s = str.trim().toLowerCase();
+    if (!s || /[^0-9a-f:.]/.test(s) || (s.match(/::/g) || []).length > 1) return null;
+    let tail = [];
+    const v4 = s.match(/(\d+\.\d+\.\d+\.\d+)$/);
+    if (v4) { const n = ip2n(v4[1]); if (n == null) return null; tail = [(n >>> 16).toString(16), (n & 0xffff).toString(16)]; s = s.slice(0, -v4[1].length) + 'x'; }
+    let [l, r] = s.includes('::') ? s.split('::') : [s, null];
+    const L = l ? l.split(':') : [], R = r != null ? (r ? r.split(':') : []) : [];
+    const fix = arr => arr.flatMap(x => (x === 'x' ? tail : [x]));
+    const Lf = fix(L), Rf = fix(R);
+    let groups;
+    if (r == null) groups = Lf; else { const fill = 8 - Lf.length - Rf.length; if (fill < 1) return null; groups = [...Lf, ...Array(fill).fill('0'), ...Rf]; }
+    if (groups.length !== 8 || groups.some(g => !/^[0-9a-f]{1,4}$/.test(g))) return null;
+    return groups.reduce((acc, g) => (acc << 16n) + BigInt(parseInt(g, 16)), 0n);
+  };
+  const v6groups = n => Array.from({ length: 8 }, (_, i) => Number((n >> BigInt(112 - 16 * i)) & 0xffffn));
+  const v6full = n => v6groups(n).map(g => g.toString(16).padStart(4, '0')).join(':');
+  const v6short = n => {
+    const g = v6groups(n).map(x => x.toString(16));
+    let best = [-1, 0], cur = [-1, 0];
+    g.forEach((x, i) => { if (x === '0') { if (cur[0] < 0) cur = [i, 0]; cur[1]++; if (cur[1] > best[1]) best = [...cur]; } else cur = [-1, 0]; });
+    if (best[1] < 2) return g.join(':');
+    return (g.slice(0, best[0]).join(':') + '::' + g.slice(best[0] + best[1]).join(':'));
+  };
+  const v6type = n => {
+    const top = Number(n >> 112n);
+    if (n === 0n) return t('unspecified', 'non spécifiée');
+    if (n === 1n) return 'loopback';
+    if ((n >> 32n) === 0xffffn) return t('IPv4-mapped', 'IPv4 mappée') + ' (' + n2ip(Number(n & 0xffffffffn)) + ')';
+    if ((top & 0xffc0) === 0xfe80) return t('link-local', 'lien local');
+    if ((top & 0xfe00) === 0xfc00) return t('unique local (ULA)', 'locale unique (ULA)');
+    if ((top & 0xff00) === 0xff00) return 'multicast';
+    if (top === 0x2001 && Number((n >> 96n) & 0xffffn) === 0x0db8) return t('documentation (2001:db8::/32)', 'documentation (2001:db8::/32)');
+    if (top === 0x2002) return '6to4';
+    if ((top & 0xe000) === 0x2000) return t('global unicast', 'unicast globale');
+    return t('reserved / other', 'réservée / autre');
+  };
+  const v6 = () => {
+    let raw = v6In.value.trim();
+    const m = raw.match(/^(.+)\/(\d{1,3})$/);
+    if (m && +m[2] >= 1 && +m[2] <= 128) { v6Pfx.value = m[2]; v6In.value = raw = m[1].trim(); }
+    const n = v6parse(raw), p = BigInt(+v6Pfx.value);
+    if (n == null) { v6Out.innerHTML = err(t('Enter a valid IPv6 address, e.g. 2001:db8::1', 'Saisissez une adresse IPv6 valide, ex. 2001:db8::1')); return; }
+    const all = (1n << 128n) - 1n, host = (1n << (128n - p)) - 1n, mask = all ^ host;
+    const net = n & mask, last = net | host, total = 1n << (128n - p);
+    const totalTxt = total.toLocaleString(FR ? 'fr-FR' : 'en-GB') + (p <= 64n ? ` (2<sup>${128n - p}</sup>)` : '');
+    v6Out.innerHTML = `<div class="big mono">${v6short(net)}<span>/${p}</span></div>` + rows([
+      [t('IP address', 'Adresse IP'), v6short(n), 1],
+      [t('Full IP address', 'Adresse complète'), v6full(n), 1],
+      [t('Network', 'Réseau'), `${v6short(net)}/${p}`, 1],
+      [t('Prefix length', 'Longueur de préfixe'), '/' + p, 1],
+      [t('Network range', 'Plage du réseau'), `${v6full(net)}<br>${v6full(last)}`, 1],
+      [t('Total IP addresses', 'Nombre total d’adresses'), totalTxt, 0],
+      [t('Address type', 'Type d’adresse'), v6type(n), 0],
+      [t('Subnets of /64 inside', 'Sous-réseaux /64 contenus'), p <= 64n ? (1n << (64n - p)).toLocaleString(FR ? 'fr-FR' : 'en-GB') : '—', 0],
+      ['ip6.arpa', `<span class="binm">${v6full(n).replace(/:/g, '').split('').reverse().join('.')}.ip6.arpa</span>`, 1]
     ]);
   };
 
@@ -142,7 +254,7 @@
 
   /* ── wiring ── */
   const on = (els, fn) => { els.forEach(e => e && ['input', 'change'].forEach(ev => e.addEventListener(ev, fn))); fn(); };
-  on([snIn], sn); on([vlBase, vlReq], vl); on([wcIn, wcAct], wc);
+  on([snIn, snMask], sn); on([v6In, v6Pfx], v6); on([vlBase, vlReq], vl); on([wcIn, wcAct], wc);
   on(['#msMtu', '#msEnc', '#msNat', '#msGre', '#msPpp'].map(s => $(s)), ms);
   document.querySelectorAll('[data-ex]').forEach(b => b.addEventListener('click', () => { const i = document.getElementById(b.dataset.ex); i.value = b.textContent; i.dispatchEvent(new Event('input')); }));
   document.addEventListener('click', e => {

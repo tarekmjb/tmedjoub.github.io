@@ -13,22 +13,49 @@ def tools_page(lang):
     <p class="sum">{t('The calculators I reach for when designing and troubleshooting networks. Everything runs in your browser: nothing is sent anywhere.',
                      'Les calculateurs que j’utilise pour concevoir et dépanner des réseaux. Tout s’exécute dans votre navigateur : rien n’est envoyé.')}</p>
     <div class="tool-tabs" role="tablist" aria-label="{t('Tools', 'Outils')}">
-      <a href="#subnet" role="tab" id="tab-subnet" aria-controls="subnet" class="on"><b>01</b>{t('Subnet calculator', 'Calcul de sous-réseau')}</a>
-      <a href="#vlsm" role="tab" id="tab-vlsm" aria-controls="vlsm"><b>02</b>{t('VLSM planner', 'Planificateur VLSM')}</a>
-      <a href="#wildcard" role="tab" id="tab-wildcard" aria-controls="wildcard"><b>03</b>{t('Wildcard &amp; ACL', 'Wildcard &amp; ACL')}</a>
-      <a href="#mss" role="tab" id="tab-mss" aria-controls="mss"><b>04</b>IPsec MTU / MSS</a>
+      <a href="#subnet" role="tab" id="tab-subnet" aria-controls="subnet" class="on"><b>01</b>{t('IPv4 subnet calculator', 'Calcul de sous-réseau IPv4')}</a>
+      <a href="#ipv6" role="tab" id="tab-ipv6" aria-controls="ipv6"><b>02</b>{t('IPv6 calculator', 'Calcul IPv6')}</a>
+      <a href="#vlsm" role="tab" id="tab-vlsm" aria-controls="vlsm"><b>03</b>{t('VLSM planner', 'Planificateur VLSM')}</a>
+      <a href="#wildcard" role="tab" id="tab-wildcard" aria-controls="wildcard"><b>04</b>{t('Wildcard &amp; ACL', 'Wildcard &amp; ACL')}</a>
+      <a href="#mss" role="tab" id="tab-mss" aria-controls="mss"><b>05</b>IPsec MTU / MSS</a>
     </div>
   </div>
 
-  <section class="tool" id="subnet" role="tabpanel" aria-labelledby="tab-subnet">
+  <section class="tool tool-wide" id="subnet" role="tabpanel" aria-labelledby="tab-subnet">
     <div class="tool-in">
-      <h2>{t('Subnet calculator', 'Calcul de sous-réseau')}</h2>
-      <p>{t('Enter an address with a prefix or a mask.', 'Saisissez une adresse avec un préfixe ou un masque.')}</p>
-      <label class="fl" for="snIn">{t('Address', 'Adresse')}</label>
-      <input id="snIn" class="tin" value="10.10.20.37/26" spellcheck="false" autocomplete="off">
-      <div class="ex">{t('Try', 'Essayez')}: <button type="button" data-ex="snIn">192.168.1.130/25</button><button type="button" data-ex="snIn">172.16.5.4 255.255.252.0</button><button type="button" data-ex="snIn">10.255.1.2/30</button></div>
+      <h2>{t('IPv4 subnet calculator', 'Calculateur de sous-réseau IPv4')}</h2>
+      <p>{t('Pick a class to filter the masks, choose a subnet, enter an IP address. You can also paste <code>10.0.0.1/24</code> straight into the address field.',
+            'Choisissez une classe pour filtrer les masques, sélectionnez un sous-réseau, saisissez une adresse IP. Vous pouvez aussi coller <code>10.0.0.1/24</code> directement dans le champ adresse.')}</p>
+      <div class="calc-form">
+        <span class="fl">{t('Network class', 'Classe de réseau')}</span>
+        <div class="radios" role="radiogroup" aria-label="{t('Network class', 'Classe de réseau')}">
+          <label><input type="radio" name="snClass" value="any" checked> {t('Any', 'Toutes')}</label>
+          <label><input type="radio" name="snClass" value="A"> A</label>
+          <label><input type="radio" name="snClass" value="B"> B</label>
+          <label><input type="radio" name="snClass" value="C"> C</label>
+        </div>
+        <label class="fl" for="snMask">{t('Subnet', 'Sous-réseau')}</label>
+        <select id="snMask" class="tin"></select>
+        <label class="fl" for="snIn">{t('IP address', 'Adresse IP')}</label>
+        <input id="snIn" class="tin" value="10.10.20.37" spellcheck="false" autocomplete="off" inputmode="decimal">
+        <div class="ex">{t('Try', 'Essayez')}: <button type="button" data-ex="snIn">192.168.1.130/25</button><button type="button" data-ex="snIn">172.16.5.4/22</button><button type="button" data-ex="snIn">10.255.1.2/30</button></div>
+      </div>
     </div>
     <div class="tool-out" id="snOut" aria-live="polite"></div>
+    <div class="tool-full" id="snNets"></div>
+  </section>
+
+  <section class="tool tool-wide" id="ipv6" role="tabpanel" aria-labelledby="tab-ipv6">
+    <div class="tool-in">
+      <h2>{t('IPv6 subnet calculator', 'Calculateur de sous-réseau IPv6')}</h2>
+      <p>{t('Enter an IPv6 address (compressed or full) and a prefix length.', 'Saisissez une adresse IPv6 (compressée ou complète) et une longueur de préfixe.')}</p>
+      <label class="fl" for="v6Pfx">{t('Prefix length', 'Longueur de préfixe')}</label>
+      <select id="v6Pfx" class="tin"></select>
+      <label class="fl" for="v6In">{t('IP address', 'Adresse IP')}</label>
+      <input id="v6In" class="tin" value="2001:db8:85a3::8a2e:370:7334" spellcheck="false" autocomplete="off">
+      <div class="ex">{t('Try', 'Essayez')}: <button type="button" data-ex="v6In">fe80::1ff:fe23:4567:890a</button><button type="button" data-ex="v6In">fd12:3456:789a:1::1</button><button type="button" data-ex="v6In">2a01:cb00:1234::/48</button></div>
+    </div>
+    <div class="tool-out" id="v6Out" aria-live="polite"></div>
   </section>
 
   <section class="tool" id="vlsm" role="tabpanel" aria-labelledby="tab-vlsm">
@@ -86,6 +113,6 @@ WAN-link-2 2</textarea>
     root = "../" if lang == "fr" else ""
     return layout(lang, "tools.html",
                   t("Network toolkit · Tarek MEDJOUB", "Outils réseau · Tarek MEDJOUB"),
-                  t("Free network tools: subnet calculator, VLSM planner, wildcard & ACL helper, IPsec MTU/MSS calculator.",
-                    "Outils réseau gratuits : calcul de sous-réseau, planificateur VLSM, assistant wildcard & ACL, calcul MTU/MSS IPsec."),
+                  t("Free network tools: IPv4 and IPv6 subnet calculators, VLSM planner, wildcard & ACL helper, IPsec MTU/MSS calculator.",
+                    "Outils réseau gratuits : calculateurs de sous-réseau IPv4 et IPv6, planificateur VLSM, assistant wildcard & ACL, calcul MTU/MSS IPsec."),
                   body, extra_js=f'<script src="{root}assets/js/tools.js" defer></script>')
