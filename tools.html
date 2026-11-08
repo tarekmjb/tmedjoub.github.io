@@ -68,15 +68,15 @@
     <div class="kicker">network toolkit</div>
     <h1>Everyday network tools.</h1>
     <p class="sum">The calculators I reach for when designing and troubleshooting networks. Everything runs in your browser: nothing is sent anywhere.</p>
-    <div class="tool-tabs" role="tablist">
-      <a href="#subnet" class="on">Subnet calculator</a>
-      <a href="#vlsm">VLSM planner</a>
-      <a href="#wildcard">Wildcard &amp; ACL</a>
-      <a href="#mss">IPsec MTU / MSS</a>
+    <div class="tool-tabs" role="tablist" aria-label="Tools">
+      <a href="#subnet" role="tab" id="tab-subnet" aria-controls="subnet" class="on"><b>01</b>Subnet calculator</a>
+      <a href="#vlsm" role="tab" id="tab-vlsm" aria-controls="vlsm"><b>02</b>VLSM planner</a>
+      <a href="#wildcard" role="tab" id="tab-wildcard" aria-controls="wildcard"><b>03</b>Wildcard &amp; ACL</a>
+      <a href="#mss" role="tab" id="tab-mss" aria-controls="mss"><b>04</b>IPsec MTU / MSS</a>
     </div>
   </div>
 
-  <section class="tool" id="subnet">
+  <section class="tool" id="subnet" role="tabpanel" aria-labelledby="tab-subnet">
     <div class="tool-in">
       <h2>Subnet calculator</h2>
       <p>Enter an address with a prefix or a mask.</p>
@@ -87,7 +87,7 @@
     <div class="tool-out" id="snOut" aria-live="polite"></div>
   </section>
 
-  <section class="tool" id="vlsm">
+  <section class="tool" id="vlsm" role="tabpanel" aria-labelledby="tab-vlsm">
     <div class="tool-in">
       <h2>VLSM planner</h2>
       <p>One segment per line: <code>name hosts</code>. Largest segments are placed first to avoid gaps.</p>
@@ -105,7 +105,7 @@ WAN-link-2 2</textarea>
     <div class="tool-out" id="vlOut" aria-live="polite"></div>
   </section>
 
-  <section class="tool" id="wildcard">
+  <section class="tool" id="wildcard" role="tabpanel" aria-labelledby="tab-wildcard">
     <div class="tool-in">
       <h2>Wildcard &amp; ACL helper</h2>
       <p>Convert between prefix, mask and wildcard, and get ready-to-paste ACL and object syntax.</p>
@@ -117,7 +117,7 @@ WAN-link-2 2</textarea>
     <div class="tool-out" id="wcOut" aria-live="polite"></div>
   </section>
 
-  <section class="tool" id="mss">
+  <section class="tool" id="mss" role="tabpanel" aria-labelledby="tab-mss">
     <div class="tool-in">
       <h2>IPsec MTU / MSS</h2>
       <p>Estimate tunnel overhead and the <code>ip mtu</code> / <code>adjust-mss</code> values to configure. Worst-case padding is assumed.</p>
@@ -152,7 +152,7 @@ WAN-link-2 2</textarea>
 <button class="fab" id="fab" aria-label="Open interactive console"><b>&gt;_</b><span>console</span></button>
 <div class="con-back" id="conBack" role="dialog" aria-modal="true" aria-label="Interactive console">
   <div class="con">
-    <div class="term-head"><div class="dots"><i></i><i></i><i></i></div><span>tarek@medjoub · interactive console</span><span style="margin-left:auto">esc to close</span></div>
+    <div class="term-head"><div class="dots"><i></i><i></i><i></i></div><span>tarek@medjoub · interactive console</span><span class="con-hint">esc to close</span><button class="con-x" id="conClose" type="button" aria-label="Close console" title="Close">✕</button></div>
     <div class="con-out" id="conOut"></div>
     <div class="con-sug" id="conSug"></div>
     <div class="con-in"><span class="p">guest@portfolio:~$</span><input id="conIn" autocomplete="off" spellcheck="false" aria-label="Command"></div>

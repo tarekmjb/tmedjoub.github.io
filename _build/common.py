@@ -138,7 +138,7 @@ def layout(lang, path, title, desc, body, *, home=False, doc=False, extra_js="",
 <button class="fab" id="fab" aria-label="{t('Open interactive console', 'Ouvrir la console interactive')}"><b>&gt;_</b><span>console</span></button>
 <div class="con-back" id="conBack" role="dialog" aria-modal="true" aria-label="{t('Interactive console', 'Console interactive')}">
   <div class="con">
-    <div class="term-head"><div class="dots"><i></i><i></i><i></i></div><span>tarek@medjoub · {t('interactive console', 'console interactive')}</span><span style="margin-left:auto">{t('esc to close', 'échap pour fermer')}</span></div>
+    <div class="term-head"><div class="dots"><i></i><i></i><i></i></div><span>tarek@medjoub · {t('interactive console', 'console interactive')}</span><span class="con-hint">{t('esc to close', 'échap pour fermer')}</span><button class="con-x" id="conClose" type="button" aria-label="{t('Close console', 'Fermer la console')}" title="{t('Close', 'Fermer')}">✕</button></div>
     <div class="con-out" id="conOut"></div>
     <div class="con-sug" id="conSug"></div>
     <div class="con-in"><span class="p">guest@portfolio:~$</span><input id="conIn" autocomplete="off" spellcheck="false" aria-label="{t('Command', 'Commande')}"></div>
