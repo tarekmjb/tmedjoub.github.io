@@ -79,7 +79,7 @@ def layout(lang, path, title, desc, body, *, home=False, doc=False, extra_js="",
 <meta name="description" content="{esc(desc)}">
 <meta name="author" content="Tarek Medjoub">
 {robots}
-<meta name="theme-color" content="#f3efe6">
+<meta name="theme-color" content="#ffffff">
 <link rel="canonical" href="{canon}">
 <link rel="alternate" hreflang="en" href="{SITE}{alt_path if lang == 'fr' else path}">
 <link rel="alternate" hreflang="fr" href="{SITE}fr/{path if lang == 'fr' else alt_path}">
@@ -97,7 +97,7 @@ def layout(lang, path, title, desc, body, *, home=False, doc=False, extra_js="",
 <link rel="icon" type="image/svg+xml" href="{root}{FAVICON}">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="{root}assets/css/main.css">
 {HEAD_THEME}
 {jsonld}
@@ -107,14 +107,13 @@ def layout(lang, path, title, desc, body, *, home=False, doc=False, extra_js="",
 {'<div class="progress" aria-hidden="true"></div>' if doc else ''}
 <header class="bar">
   <div class="wrap">
-    <a href="{root + lp + 'index.html' if not home else '#top'}" class="host" aria-label="Tarek Medjoub"><b>tarek</b>@medjoub:~#<span class="cur" aria-hidden="true"></span></a>
+    <a href="{root + lp + 'index.html' if not home else '#top'}" class="brand" aria-label="Tarek Medjoub · {t('home', 'accueil')}"><span class="brand-mark" aria-hidden="true">TM</span><span class="brand-txt">Tarek Medjoub<small>{t('Network · Security · Cloud', 'Réseaux · Sécurité · Cloud')}</small></span></a>
     <nav class="links" id="nav" aria-label="{t('Main', 'Principale')}">
 {nav}
     </nav>
     <div class="tools">
       <button class="btn-ico menu-btn" id="menuBtn" aria-label="Menu" aria-expanded="false">☰</button>
-      <button class="btn-ico" id="conBtn" title="{t('Open console', 'Ouvrir la console')} (/ · Ctrl+K)" aria-label="{t('Open console', 'Ouvrir la console')}">&gt;_</button>
-      <button class="btn-ico" id="themeBtn" title="{t('Toggle theme', 'Changer de thème')}" aria-label="{t('Toggle light/dark theme', 'Basculer thème clair/sombre')}">◐</button>
+      <button class="btn-ico" id="themeBtn" title="{t('Toggle theme', 'Changer de thème')}" aria-label="{t('Toggle light/dark theme', 'Basculer thème clair/sombre')}"><svg class="i-moon" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg><svg class="i-sun" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg></button>
       <div class="lang" role="group" aria-label="{t('Language', 'Langue')}">
         <a href="{en_href}" data-lang="en" hreflang="en"{' class="on" aria-current="true"' if lang == 'en' else ''}>EN</a>
         <a href="{fr_href}" data-lang="fr" hreflang="fr"{' class="on" aria-current="true"' if lang == 'fr' else ''}>FR</a>
@@ -130,12 +129,12 @@ def layout(lang, path, title, desc, body, *, home=False, doc=False, extra_js="",
 <footer>
   <div class="wrap">
     <span>© <span class="yr">2026</span> Tarek Medjoub · Paris · <a href="mailto:{EMAIL}">{EMAIL}</a></span>
-    <span>{t('Press', 'Appuyez sur')} <kbd>/</kbd> {t('or', 'ou')} <kbd>Ctrl</kbd>+<kbd>K</kbd> {t('to open the console', 'pour ouvrir la console')}</span>
+    <span class="foot-links"><a href="{LINKEDIN}" target="_blank" rel="noopener">LinkedIn</a><a href="{root + lp}cv.html">CV</a><a href="{root + lp}tools.html">{t('Toolkit', 'Outils')}</a></span>
   </div>
 </footer>
 
 <button class="totop" id="toTop" type="button" aria-label="{t('Back to top', 'Retour en haut')}" title="{t('Back to top', 'Retour en haut')}"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5M5 12l7-7 7 7"/></svg><span>{t('top', 'haut')}</span></button>
-<button class="fab" id="fab" aria-label="{t('Open interactive console', 'Ouvrir la console interactive')}"><b>&gt;_</b><span>console</span></button>
+<button class="fab" id="fab" aria-label="{t('Open interactive console', 'Ouvrir la console interactive')}" title="{t('Console (/ or Ctrl+K)', 'Console (/ ou Ctrl+K)')}"><b>&gt;_</b></button>
 <div class="con-back" id="conBack" role="dialog" aria-modal="true" aria-label="{t('Interactive console', 'Console interactive')}">
   <div class="con">
     <div class="term-head"><div class="dots"><i></i><i></i><i></i></div><span>tarek@medjoub · {t('interactive console', 'console interactive')}</span><span class="con-hint">{t('esc to close', 'échap pour fermer')}</span><button class="con-x" id="conClose" type="button" aria-label="{t('Close console', 'Fermer la console')}" title="{t('Close', 'Fermer')}">✕</button></div>

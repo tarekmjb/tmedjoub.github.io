@@ -27,7 +27,7 @@ def project_page(lang, idx):
     home_href = "../index.html"
     body = doc_page(
         x,
-        crumbs=[f'<a href="{home_href}">tarek@medjoub</a>', f'<a href="{home_href}#projects">{t("projects", "projets")}</a>', p["id"]],
+        crumbs=[f'<a href="{home_href}">{t("Home", "Accueil")}</a>', f'<a href="{home_href}#projects">{t("Projects", "Projets")}</a>', t(*p["title"])],
         kicker=f'{t("case study", "étude de cas")} · {p["tagline"]}',
         title=t(*p["title"]), summary=t(*p["card"]),
         metas=[(t(*k) + ":", t(*v)) for k, v in m["metas"]],
@@ -47,7 +47,7 @@ def lab_page(lang, idx):
     status = f'<span class="status-pill" style="--c:var(--green)">{t("guide ready · lab captures coming", "guide prêt · captures du lab à venir")}</span>'
     body = doc_page(
         x,
-        crumbs=[f'<a href="{home_href}">tarek@medjoub</a>', f'<a href="{home_href}#labs">labs</a>', lab["id"]],
+        crumbs=[f'<a href="{home_href}">{t("Home", "Accueil")}</a>', f'<a href="{home_href}#labs">Labs</a>', t(*lab["title"])],
         kicker=f'EVE-NG lab {idx + 1:02d} · {lab["tags"]}',
         title=t(*lab["title"]), summary=t(*lab["objective"]),
         metas=[(t("Level:", "Niveau :"), t(*lab["level"])), (t("Time:", "Durée :"), lab["time"]), (t("Focus:", "Objet :"), t(*lab["focus"]))],
@@ -69,7 +69,7 @@ def cv_page(lang):
 
     body = f"""
 <div class="wrap" id="top">
-  <div class="crumbs"><a class="back-btn" href="index.html#resume">← {t('Back to home', 'Retour à l’accueil')}</a><a href="index.html">tarek@medjoub</a><span class="sep">/</span>cv</div>
+  <div class="crumbs"><a class="back-btn" href="index.html#resume">← {t('Back to home', 'Retour à l’accueil')}</a><a href="index.html">{t('Home', 'Accueil')}</a><span class="sep">/</span>CV</div>
   <article class="cvpage">
     <header class="cv-top">
       <div><h1>Tarek MEDJOUB</h1><div class="role">{t('Network, Security &amp; Cloud Engineer', 'Ingénieur Réseaux, Sécurité &amp; Cloud')}</div></div>
@@ -158,7 +158,7 @@ def seo_files():
     sm.append("</urlset>")
     write("sitemap.xml", "\n".join(sm) + "\n")
     write("robots.txt", f"User-agent: *\nAllow: /\n\nSitemap: {SITE}sitemap.xml\n")
-    write("assets/img/favicon.svg", """<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><rect width="32" height="32" rx="7" fill="#0b0d10"/><path d="M7 8L16 16M7 24L16 16M16 16L25 16" stroke="#e8e3d8" stroke-width="1.6"/><circle cx="16" cy="16" r="4.2" fill="#ffb547"/><circle cx="7" cy="8" r="2.6" fill="#5ee39a"/><circle cx="7" cy="24" r="2.6" fill="#5ee39a"/><circle cx="25" cy="16" r="2.6" fill="#a78bfa"/></svg>
+    write("assets/img/favicon.svg", """<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><rect width="32" height="32" rx="8" fill="#1d4ed8"/><text x="16" y="21" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-weight="800" font-size="13" fill="#fff">TM</text></svg>
 """)
 
 
