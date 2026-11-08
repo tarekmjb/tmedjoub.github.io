@@ -12,7 +12,7 @@
   const esc = s => String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
 
   /* ── theme ── */
-  const setTheme = th => { root.dataset.theme = th; try { localStorage.setItem('tm-theme', th); } catch (e) {} };
+  const setTheme = th => { root.dataset.theme = th; try { sessionStorage.setItem('tm-theme', th); } catch (e) {} };
   $('#themeBtn') && ($('#themeBtn').onclick = () => setTheme(root.dataset.theme === 'dark' ? 'light' : 'dark'));
 
   /* ── language memory ── */
@@ -71,6 +71,21 @@
     btn && btn.addEventListener('click', () => copy(raw, t('config copied', 'configuration copiée')));
   });
 
+
+
+  /* ── duotone icons draw themselves in when they first become visible ── */
+  if ('IntersectionObserver' in window && !reduce) {
+    root.classList.add('js-ico');
+    const iio = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('go'); iio.unobserve(e.target); } }), { threshold: .4 });
+    $$('.ico-d').forEach(i => iio.observe(i));
+    // icons inside panels that open later (mega menu, explorer, tool tabs) draw when shown
+    new MutationObserver(ms => ms.forEach(m => {
+      const el = m.target; if (!(el instanceof Element)) return;
+      if ((m.attributeName === 'hidden' && !el.hidden) || (m.attributeName === 'class' && el.classList.contains('open'))) {
+        $$('.ico-d', el).forEach(i => { i.classList.remove('go'); void i.getBoundingClientRect(); i.classList.add('go'); });
+      }
+    })).observe(document.body, { subtree: true, attributes: true, attributeFilter: ['hidden', 'class'] });
+  }
 
   /* ── staggered reveals for card grids ── */
   $$('.tiles,.res-grid,.cx-grid,.cred-grid,.rel-grid,.skills-grid,.edu-row').forEach(g => {

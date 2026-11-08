@@ -1364,3 +1364,39 @@ footer.fat .wrap{display:block}
 .topo.full-on .log{height:110px}
 .topo.full-on .sla svg{height:70px}
 @media (max-width:560px){.fs-btn span{display:none}.fs-btn{padding:5px 7px}.topo.full-on #topo{max-height:calc(100vh - 330px)}}
+
+/* ════════ Duotone animated icons ════════ */
+.ico-d{overflow:visible}
+.ico-d .d1{fill:currentColor;stroke:none;opacity:.18;transform-box:fill-box;transform-origin:center;transition:opacity .35s,transform .45s cubic-bezier(.34,1.56,.64,1)}
+.ico-d .d2{stroke-dasharray:100;stroke-dashoffset:0}
+.js-ico .ico-d:not(.go) .d2{stroke-dashoffset:100}
+.js-ico .ico-d:not(.go) .d1{opacity:0;transform:scale(.6)}
+.ico-d.go .d2{animation:icoDraw 1s cubic-bezier(.65,0,.35,1) both}
+.ico-d.go .d1{animation:icoPop .6s .25s cubic-bezier(.34,1.56,.64,1) both}
+@keyframes icoDraw{from{stroke-dashoffset:100}to{stroke-dashoffset:0}}
+@keyframes icoPop{from{opacity:0;transform:scale(.6)}to{opacity:.18;transform:none}}
+/* hover: redraw + soft shape grows */
+:is(.tile,.res,.xt,.mm-item,.mm-link,.tool-tabs a,.rel-card,.hf-card,.card-x,.skill-card,.clink,.xp-rel a,.sd-item,.link-arrow,.btn):hover .ico-d .d2{animation:icoDraw .8s cubic-bezier(.65,0,.35,1)}
+:is(.tile,.res,.xt,.mm-item,.tool-tabs a,.rel-card,.card-x,.skill-card,.clink):hover .ico-d .d1{opacity:.32;transform:scale(1.18)}
+/* icon tiles: gradient, depth, motion */
+.mm-ico,.xt-ico,.xp-ico,.res-ico,.tk-ico,.skill-ico,.clink .ico,.card .ico{background:linear-gradient(135deg,var(--amber-soft),color-mix(in srgb,var(--violet) 12%,transparent));box-shadow:inset 0 0 0 1px color-mix(in srgb,currentColor 14%,transparent);transition:transform .35s cubic-bezier(.34,1.56,.64,1),box-shadow .3s,background .3s}
+.res.lab .res-ico{background:linear-gradient(135deg,var(--green-soft),color-mix(in srgb,var(--amber) 8%,transparent))}
+.res.tool .res-ico{background:linear-gradient(135deg,var(--violet-soft),color-mix(in srgb,var(--amber) 8%,transparent))}
+:is(.mm-item,.res,.xt,.tool-tabs a,.skill-card,.clink):hover :is(.mm-ico,.res-ico,.xt-ico,.tk-ico,.skill-ico,.ico){transform:translateY(-2px) rotate(-6deg);box-shadow:inset 0 0 0 1px color-mix(in srgb,currentColor 25%,transparent),0 8px 18px -8px color-mix(in srgb,var(--amber) 55%,transparent)}
+.xt.on .xt-ico,.tools-tabbed .tk .tool-tabs a.on .tk-ico{background:linear-gradient(135deg,var(--amber),color-mix(in srgb,var(--amber) 60%,var(--violet)));box-shadow:0 8px 20px -8px color-mix(in srgb,var(--amber) 70%,transparent)}
+.xt.on .ico-d .d1,.tools-tabbed .tk .tool-tabs a.on .ico-d .d1{opacity:.3}
+/* big explorer icon: gentle float + orbit ring */
+.xp-ico{position:relative;width:64px;height:64px;border-radius:18px}
+.xp-ico::before{content:"";position:absolute;inset:-6px;border-radius:22px;border:1.5px dashed color-mix(in srgb,var(--amber) 35%,transparent);animation:icoSpin 14s linear infinite}
+.xp-ico svg{animation:icoFloat 3.5s ease-in-out infinite}
+@keyframes icoSpin{to{transform:rotate(360deg)}}
+@keyframes icoFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-3px)}}
+@media (prefers-reduced-motion:reduce){
+  .ico-d .d2,.ico-d .d1,.xp-ico::before,.xp-ico svg{animation:none!important}
+  .js-ico .ico-d:not(.go) .d2{stroke-dashoffset:0}.js-ico .ico-d:not(.go) .d1{opacity:.18;transform:none}
+}
+.xt-ico svg,.mm-ico svg,.tk-ico svg,.res-ico svg,.skill-ico svg{width:20px;height:20px}
+.xp-ico svg{width:32px;height:32px}
+.xp-ico::before{inset:-9px;border-radius:50%}
+.xp-ico::after{content:"";position:absolute;width:8px;height:8px;border-radius:50%;background:var(--amber);top:-13px;left:50%;margin-left:-4px;box-shadow:0 0 10px var(--amber);transform-origin:4px 45px;animation:icoSpin 6s linear infinite}
+@media (prefers-reduced-motion:reduce){.xp-ico::after{animation:none}}
