@@ -1,5 +1,7 @@
 """Shared layout + helpers for the static site generator."""
 import html as _html
+import time as _time
+VER = _time.strftime("%Y%m%d%H%M")
 
 SITE = "https://tarekmjb.github.io/tmedjoub.github.io/"
 EMAIL = "tarek.medjoub@outlook.fr"
@@ -100,7 +102,7 @@ def layout(lang, path, title, desc, body, *, home=False, doc=False, extra_js="",
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="{root}assets/css/main.css">
+<link rel="stylesheet" href="{root}assets/css/main.css?v={VER}">
 {HEAD_THEME}
 {jsonld}
 </head>
@@ -149,8 +151,8 @@ def layout(lang, path, title, desc, body, *, home=False, doc=False, extra_js="",
   </div>
 </div>
 <div class="toast" id="toast" role="status"></div>
-<script src="{root}assets/js/search-index.js" defer></script>
-<script src="{root}assets/js/main.js" defer></script>
+<script src="{root}assets/js/search-index.js?v={VER}" defer></script>
+<script src="{root}assets/js/main.js?v={VER}" defer></script>
 {extra_js}
 </body>
 </html>

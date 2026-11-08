@@ -1,6 +1,6 @@
 """Homepage, enterprise-vendor style: hero band, services tiles, expertise explorer,
 featured work, live demo band, journey, resource center, credentials, CTA, contact."""
-from common import L, layout, EMAIL, LINKEDIN, SITE
+from common import VER, L, layout, EMAIL, LINKEDIN, SITE
 from labs_data import LABS
 from projects_data import PROJECTS
 from chrome import ico, EXPERTISE
@@ -382,4 +382,4 @@ def home(lang):
         t("Network, Security & Cloud Engineer in Paris. Fortinet SD-WAN, multisite networks, IPsec/BGP and hybrid connectivity to Azure and AWS.",
           "Ingénieur Réseaux, Sécurité & Cloud à Paris. SD-WAN Fortinet, réseaux multisites, IPsec/BGP et connectivité hybride vers Azure et AWS."),
         body, home=True, jsonld=jsonld,
-        extra_js=f'<script src="{root}assets/js/topology.js" defer></script><script src="{root}assets/js/home.js" defer></script>')
+        extra_js=f'<script src="{root}assets/js/topology.js?v={VER}" defer></script><script src="{root}assets/js/home.js?v={VER}" defer></script>')

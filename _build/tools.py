@@ -1,5 +1,5 @@
 """Network toolkit page: subnet calculator, VLSM planner, wildcard/ACL helper, IPsec MTU/MSS."""
-from common import L, layout
+from common import VER, L, layout
 
 
 IC = {k: f'<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="{d}"/></svg>' for k, d in {
@@ -148,4 +148,4 @@ WAN-link-2 2</textarea></div>
                   t("Network toolkit · Tarek MEDJOUB", "Outils réseau · Tarek MEDJOUB"),
                   t("Free network tools: IPv4 and IPv6 subnet calculators, VLSM planner, wildcard & ACL helper, IPsec MTU/MSS calculator.",
                     "Outils réseau gratuits : calculateurs de sous-réseau IPv4 et IPv6, planificateur VLSM, assistant wildcard & ACL, calcul MTU/MSS IPsec."),
-                  body, extra_js=f'<script src="{root}assets/js/tools.js" defer></script>')
+                  body, extra_js=f'<script src="{root}assets/js/tools.js?v={VER}" defer></script>')
