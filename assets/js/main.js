@@ -92,6 +92,28 @@
     $$('[data-top]').forEach(a => a.addEventListener('click', goTop));
   }
 
+
+  /* ── lab filter (homepage) ── */
+  const lf = $('.lab-filter');
+  if (lf) lf.addEventListener('click', e => {
+    const b = e.target.closest('button'); if (!b) return;
+    $$('button', lf).forEach(x => { x.classList.toggle('on', x === b); x.setAttribute('aria-pressed', x === b); });
+    const f = b.dataset.f;
+    $$('.ifs tbody tr').forEach(r => r.classList.toggle('hide', f !== 'all' && r.dataset.cat !== f));
+  });
+
+  /* ── heading anchors on case studies / labs: click to copy a direct link ── */
+  $$('.doc-body section[id] > h2').forEach(h => {
+    const id = h.parentElement.id, a = document.createElement('a');
+    a.className = 'anc'; a.href = '#' + id; a.textContent = '#';
+    a.setAttribute('aria-label', t('Copy link to this section', 'Copier le lien vers cette section'));
+    a.addEventListener('click', e => {
+      e.preventDefault(); history.replaceState(null, '', '#' + id);
+      copy(location.href, t('link copied', 'lien copié'));
+    });
+    h.appendChild(a);
+  });
+
   /* ── year ── */
   $$('.yr').forEach(el => (el.textContent = new Date().getFullYear()));
 

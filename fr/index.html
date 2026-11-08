@@ -128,6 +128,27 @@
   </div>
 </div>
 
+
+<section class="quick" aria-labelledby="quickT">
+  <div class="wrap">
+    <div class="quick-card reveal">
+      <div class="quick-head"><span class="kicker" id="quickT" style="margin:0">pour les recruteurs · en 30 secondes</span></div>
+      <dl class="quick-grid">
+        <div><dt>Recherche</dt><dd>Poste d’ingénieur Réseaux, Sécurité ou Cloud</dd></div>
+        <div><dt>Basé à</dt><dd>Paris, France</dd></div>
+        <div><dt>Points forts</dt><dd>SD-WAN &amp; pare-feu Fortinet · OSPF/BGP · IPsec · connectivité Azure/AWS</dd></div>
+        <div><dt>Au-delà de la technique</dt><dd>Chef d’une équipe de 6 · MBA management de projet</dd></div>
+      </dl>
+      <div class="quick-act">
+        <a class="btn primary" href="../assets/CV_Tarek_MEDJOUB.pdf" download>↓ CV (PDF)</a>
+        <a class="btn" href="mailto:tarek.medjoub@outlook.fr">✉ M’écrire</a>
+        <a class="btn" href="https://linkedin.com/in/tarek-medjoub" target="_blank" rel="noopener">in LinkedIn</a>
+        <a class="btn" href="projects/sdwan.html">Étude de cas phare →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
 <section class="sec" id="about">
   <div class="wrap about-grid">
     <div class="about-text reveal">
@@ -317,19 +338,27 @@
         <span class="cmd"><span class="p">tarek#</span> show interfaces status labs</span>
         <div class="prog"><span>10 / 10 guides · captures &amp; fichiers .unl à venir</span><div class="bar-p"><i style="width:100%"></i></div></div>
       </div>
+      <div class="lab-filter" role="group" aria-label="Filtrer les labs">
+        <button type="button" class="on" data-f="all">Tous <i>10</i></button>
+        <button type="button" data-f="routing">Routage <i>3</i></button>
+        <button type="button" data-f="switching">Commutation <i>2</i></button>
+        <button type="button" data-f="vpn">VPN <i>1</i></button>
+        <button type="button" data-f="fortinet">Fortinet <i>2</i></button>
+        <button type="button" data-f="ops">Automatisation &amp; supervision <i>2</i></button>
+      </div>
       <table class="ifs">
         <thead><tr><th>Port</th><th>Lab</th><th>Objet</th><th>Status</th></tr></thead>
-        <tbody><tr><td>Gi0/1</td><td><a href="labs/bgp.html">Fondamentaux BGP</a></td><td class="desc">Voisinage eBGP, annonces, sélection de chemin</td>
-<td><span class="state" style="--c:var(--green)">guide prêt</span></td></tr><tr><td>Gi0/2</td><td><a href="labs/ospf.html">OSPF multi-zones</a></td><td class="desc">Zones, types de LSA, agrégation, zones stub</td>
-<td><span class="state" style="--c:var(--green)">guide prêt</span></td></tr><tr><td>Gi0/3</td><td><a href="labs/vlan.html">VLAN & routage inter-VLAN</a></td><td class="desc">Trunks, SVI, router-on-a-stick</td>
-<td><span class="state" style="--c:var(--green)">guide prêt</span></td></tr><tr><td>Gi0/4</td><td><a href="labs/ipsec.html">VPN IPsec site à site</a></td><td class="desc">IKEv2, VTI route-based, dépannage</td>
-<td><span class="state" style="--c:var(--green)">guide prêt</span></td></tr><tr><td>Gi0/5</td><td><a href="labs/mpls-vrf.html">MPLS L3VPN & VRF</a></td><td class="desc">LDP, VRF, MP-BGP VPNv4, route targets</td>
-<td><span class="state" style="--c:var(--green)">guide prêt</span></td></tr><tr><td>Gi0/6</td><td><a href="labs/switching-resilience.html">Résilience STP & LACP</a></td><td class="desc">Placement de la racine, protections, EtherChannel</td>
-<td><span class="state" style="--c:var(--green)">guide prêt</span></td></tr><tr><td>Gi0/7</td><td><a href="labs/sdwan-failover.html">SD-WAN : sélection de chemin & bascule</a></td><td class="desc">Sondes SLA, règles d’orientation, temps de bascule</td>
-<td><span class="state" style="--c:var(--green)">guide prêt</span></td></tr><tr><td>Gi0/8</td><td><a href="labs/fortigate-ha.html">Cluster FortiGate HA</a></td><td class="desc">FGCP actif-passif, reprise de session, tests de bascule</td>
-<td><span class="state" style="--c:var(--green)">guide prêt</span></td></tr><tr><td>Gi0/9</td><td><a href="labs/ansible-network.html">Automatisation réseau Ansible</a></td><td class="desc">Inventaire, sauvegardes, changements idempotents</td>
-<td><span class="state" style="--c:var(--green)">guide prêt</span></td></tr><tr><td>Gi0/10</td><td><a href="labs/snmp-zabbix.html">Supervision SNMPv3 avec Zabbix</a></td><td class="desc">SNMPv3 authPriv, modèles, déclencheurs</td>
-<td><span class="state" style="--c:var(--green)">guide prêt</span></td></tr></tbody>
+        <tbody><tr data-cat="routing"><td>Gi0/1</td><td><a href="labs/bgp.html">Fondamentaux BGP</a></td><td class="desc">Voisinage eBGP, annonces, sélection de chemin</td>
+<td><span class="state" style="--c:var(--green)">guide prêt</span> <span class="lvl">Intermédiaire</span></td></tr><tr data-cat="routing"><td>Gi0/2</td><td><a href="labs/ospf.html">OSPF multi-zones</a></td><td class="desc">Zones, types de LSA, agrégation, zones stub</td>
+<td><span class="state" style="--c:var(--green)">guide prêt</span> <span class="lvl">Intermédiaire</span></td></tr><tr data-cat="switching"><td>Gi0/3</td><td><a href="labs/vlan.html">VLAN & routage inter-VLAN</a></td><td class="desc">Trunks, SVI, router-on-a-stick</td>
+<td><span class="state" style="--c:var(--green)">guide prêt</span> <span class="lvl">Débutant</span></td></tr><tr data-cat="vpn"><td>Gi0/4</td><td><a href="labs/ipsec.html">VPN IPsec site à site</a></td><td class="desc">IKEv2, VTI route-based, dépannage</td>
+<td><span class="state" style="--c:var(--green)">guide prêt</span> <span class="lvl">Intermédiaire</span></td></tr><tr data-cat="routing"><td>Gi0/5</td><td><a href="labs/mpls-vrf.html">MPLS L3VPN & VRF</a></td><td class="desc">LDP, VRF, MP-BGP VPNv4, route targets</td>
+<td><span class="state" style="--c:var(--green)">guide prêt</span> <span class="lvl">Avancé</span></td></tr><tr data-cat="switching"><td>Gi0/6</td><td><a href="labs/switching-resilience.html">Résilience STP & LACP</a></td><td class="desc">Placement de la racine, protections, EtherChannel</td>
+<td><span class="state" style="--c:var(--green)">guide prêt</span> <span class="lvl">Intermédiaire</span></td></tr><tr data-cat="fortinet"><td>Gi0/7</td><td><a href="labs/sdwan-failover.html">SD-WAN : sélection de chemin & bascule</a></td><td class="desc">Sondes SLA, règles d’orientation, temps de bascule</td>
+<td><span class="state" style="--c:var(--green)">guide prêt</span> <span class="lvl">Intermédiaire</span></td></tr><tr data-cat="fortinet"><td>Gi0/8</td><td><a href="labs/fortigate-ha.html">Cluster FortiGate HA</a></td><td class="desc">FGCP actif-passif, reprise de session, tests de bascule</td>
+<td><span class="state" style="--c:var(--green)">guide prêt</span> <span class="lvl">Intermédiaire</span></td></tr><tr data-cat="ops"><td>Gi0/9</td><td><a href="labs/ansible-network.html">Automatisation réseau Ansible</a></td><td class="desc">Inventaire, sauvegardes, changements idempotents</td>
+<td><span class="state" style="--c:var(--green)">guide prêt</span> <span class="lvl">Intermédiaire</span></td></tr><tr data-cat="ops"><td>Gi0/10</td><td><a href="labs/snmp-zabbix.html">Supervision SNMPv3 avec Zabbix</a></td><td class="desc">SNMPv3 authPriv, modèles, déclencheurs</td>
+<td><span class="state" style="--c:var(--green)">guide prêt</span> <span class="lvl">Débutant</span></td></tr></tbody>
       </table>
     </div>
   </div>

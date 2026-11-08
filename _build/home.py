@@ -64,9 +64,11 @@ def home(lang):
         </div>
       </article>"""
 
+    CAT = {"bgp": "routing", "ospf": "routing", "mpls-vrf": "routing", "vlan": "switching", "switching-resilience": "switching",
+           "ipsec": "vpn", "sdwan-failover": "fortinet", "fortigate-ha": "fortinet", "ansible-network": "ops", "snmp-zabbix": "ops"}
     labrows = "".join(
-        f"""<tr><td>Gi0/{i + 1}</td><td><a href="labs/{l['id']}.html">{t(*l['title'])}</a></td><td class="desc">{t(*l['focus'])}</td>
-<td><span class="state" style="--c:var(--green)">{t('guide ready', 'guide prêt')}</span></td></tr>"""
+        f"""<tr data-cat="{CAT[l['id']]}"><td>Gi0/{i + 1}</td><td><a href="labs/{l['id']}.html">{t(*l['title'])}</a></td><td class="desc">{t(*l['focus'])}</td>
+<td><span class="state" style="--c:var(--green)">{t('guide ready', 'guide prêt')}</span> <span class="lvl">{t(*l['level'])}</span></td></tr>"""
         for i, l in enumerate(LABS))
 
     body = f"""
@@ -131,6 +133,27 @@ def home(lang):
     <div class="stat"><b>10</b><span>{t('EVE-NG lab guides', 'guides de lab EVE-NG')}</span></div>
   </div>
 </div>
+
+
+<section class="quick" aria-labelledby="quickT">
+  <div class="wrap">
+    <div class="quick-card reveal">
+      <div class="quick-head"><span class="kicker" id="quickT" style="margin:0">{t('for recruiters · in 30 seconds', 'pour les recruteurs · en 30 secondes')}</span></div>
+      <dl class="quick-grid">
+        <div><dt>{t('Looking for', 'Recherche')}</dt><dd>{t('Network, Security or Cloud Engineer role', 'Poste d’ingénieur Réseaux, Sécurité ou Cloud')}</dd></div>
+        <div><dt>{t('Based in', 'Basé à')}</dt><dd>Paris, France</dd></div>
+        <div><dt>{t('Core strengths', 'Points forts')}</dt><dd>{t('Fortinet SD-WAN &amp; firewalls · OSPF/BGP · IPsec · Azure/AWS connectivity', 'SD-WAN &amp; pare-feu Fortinet · OSPF/BGP · IPsec · connectivité Azure/AWS')}</dd></div>
+        <div><dt>{t('Beyond tech', 'Au-delà de la technique')}</dt><dd>{t('Led a team of 6 · MBA in project management', 'Chef d’une équipe de 6 · MBA management de projet')}</dd></div>
+      </dl>
+      <div class="quick-act">
+        <a class="btn primary" href="{cv_main}" download>↓ CV (PDF)</a>
+        <a class="btn" href="mailto:{EMAIL}">✉ {t('Email me', 'M’écrire')}</a>
+        <a class="btn" href="{LINKEDIN}" target="_blank" rel="noopener">in LinkedIn</a>
+        <a class="btn" href="projects/sdwan.html">{t('Best case study', 'Étude de cas phare')} →</a>
+      </div>
+    </div>
+  </div>
+</section>
 
 <section class="sec" id="about">
   <div class="wrap about-grid">
@@ -286,6 +309,14 @@ def home(lang):
       <div class="labs-top">
         <span class="cmd"><span class="p">tarek#</span> show interfaces status labs</span>
         <div class="prog"><span>{t('10 / 10 guides · captures &amp; .unl files coming', '10 / 10 guides · captures &amp; fichiers .unl à venir')}</span><div class="bar-p"><i style="width:100%"></i></div></div>
+      </div>
+      <div class="lab-filter" role="group" aria-label="{t('Filter labs', 'Filtrer les labs')}">
+        <button type="button" class="on" data-f="all">{t('All', 'Tous')} <i>10</i></button>
+        <button type="button" data-f="routing">{t('Routing', 'Routage')} <i>3</i></button>
+        <button type="button" data-f="switching">{t('Switching', 'Commutation')} <i>2</i></button>
+        <button type="button" data-f="vpn">VPN <i>1</i></button>
+        <button type="button" data-f="fortinet">Fortinet <i>2</i></button>
+        <button type="button" data-f="ops">{t('Automation &amp; monitoring', 'Automatisation &amp; supervision')} <i>2</i></button>
       </div>
       <table class="ifs">
         <thead><tr><th>Port</th><th>Lab</th><th>{t('Focus', 'Objet')}</th><th>Status</th></tr></thead>
