@@ -86,7 +86,8 @@
       [t('Subnet mask', 'Masque de sous-réseau'), n2ip(b.mask), 1],
       [t('Wildcard mask', 'Masque générique (wildcard)'), n2ip(b.wc), 1],
       [t('Binary subnet mask', 'Masque en binaire'), `<span class="binm">${bin(b.mask)}</span>`, 1],
-      [t('IP class', 'Classe IP'), ipClass(ip), 0],
+      [t('IP class', 'Classe IP'), ipClass(ip) + ` <small class="dimtxt">${t('by first octet', 'selon le premier octet')} · ${p >= 24 ? 'C' : p >= 16 ? 'B' : p >= 8 ? 'A' : '—'} ${t('by mask length', 'selon la longueur du masque')}</small>`, 0],
+      [t('Network / host bits', 'Bits réseau / hôte'), `${p} / ${32 - p}`, 1],
       [t('CIDR notation', 'Notation CIDR'), '/' + p, 1],
       [t('IP type', 'Type d’adresse'), kind(ip), 0],
       [t('Short', 'Forme courte'), `${n2ip(ip)} /${p}`, 1],
@@ -94,8 +95,10 @@
       [t('Integer ID', 'ID entier'), String(ip >>> 0), 1],
       [t('Hex ID', 'ID hexadécimal'), '0x' + (ip >>> 0).toString(16).padStart(8, '0'), 1],
       ['in-addr.arpa', `${o[3]}.${o[2]}.${o[1]}.${o[0]}.in-addr.arpa`, 1],
-      [t('IPv4-mapped address', 'Adresse IPv4 mappée'), `::ffff:${hex4((ip >>> 16) & 0xffff)}:${hex4(ip & 0xffff)}`, 1],
-      [t('6to4 prefix', 'Préfixe 6to4'), `2002:${hex4((ip >>> 16) & 0xffff)}:${hex4(ip & 0xffff)}::/48`, 1]
+      [t('IPv4-mapped address', 'Adresse IPv4 mappée'), `::ffff:${hex4((ip >>> 16) & 0xffff)}:${hex4(ip & 0xffff)}<br>::ffff:${n2ip(ip)}`, 1],
+      [t('6to4 prefix', 'Préfixe 6to4'), `2002:${hex4((ip >>> 16) & 0xffff)}:${hex4(ip & 0xffff)}::/48`, 1],
+      [t('Previous network', 'Réseau précédent'), b.net === 0 ? '—' : `${n2ip((b.net - b.size) >>> 0)}/${p}`, 1],
+      [t('Next network', 'Réseau suivant'), b.bc === 0xFFFFFFFF ? '—' : `${n2ip((b.bc + 1) >>> 0)}/${p}`, 1]
     ]);
     // all possible networks inside the classful-style parent (/24, /16 or /8)
     const parentP = p >= 24 ? 24 : p >= 16 ? 16 : p >= 8 ? 8 : 0;
@@ -114,7 +117,7 @@
     const cur = snNets.querySelector('tr.cur'), wrap = snNets.querySelector('.nets');
     if (cur && wrap) wrap.scrollTop = cur.offsetTop - wrap.clientHeight / 2;
   };
-  document.querySelectorAll('input[name="snClass"]').forEach(r => r.addEventListener('change', () => { fillMasks(); sn(); }));
+  document.querySelectorAll('input[name="snClass"]').forEach(r => r.addEventListener('change', () => fillMasks()));
   fillMasks(26);
 
   /* ── 1b. IPv6 subnet calculator (BigInt) ── */
@@ -252,11 +255,33 @@
       `<div class="tnote">${t('Estimate with worst-case padding. Validate with ping -f -l (Windows) or ping -M do -s (Linux) across the tunnel.', 'Estimation avec le pire cas de bourrage. À valider avec ping -f -l (Windows) ou ping -M do -s (Linux) à travers le tunnel.')}</div>`;
   };
 
-  /* ── wiring ── */
-  const on = (els, fn) => { els.forEach(e => e && ['input', 'change'].forEach(ev => e.addEventListener(ev, fn))); fn(); };
-  on([snIn, snMask], sn); on([v6In, v6Pfx], v6); on([vlBase, vlReq], vl); on([wcIn, wcAct], wc);
-  on(['#msMtu', '#msEnc', '#msNat', '#msGre', '#msPpp'].map(s => $(s)), ms);
-  document.querySelectorAll('[data-ex]').forEach(b => b.addEventListener('click', () => { const i = document.getElementById(b.dataset.ex); i.value = b.textContent; i.dispatchEvent(new Event('input')); }));
+  /* ── wiring: compute when Calculate is clicked (or Enter pressed) ── */
+  const placeholder = t('Enter your values and click <b>Calculate</b>.', 'Saisissez vos valeurs et cliquez sur <b>Calculer</b>.');
+  const forms = {
+    snForm: { run: sn, outs: [snOut, snNets], reset: () => { snIn.value = ''; document.querySelector('input[name="snClass"][value="any"]').checked = true; fillMasks(24); } },
+    v6Form: { run: v6, outs: [v6Out], reset: () => { v6In.value = ''; v6Pfx.value = '64'; } },
+    vlForm: { run: vl, outs: [vlOut], reset: () => { vlBase.value = ''; vlReq.value = ''; } },
+    wcForm: { run: wc, outs: [wcOut], reset: () => { wcIn.value = ''; wcAct.value = 'permit'; } },
+    msForm: { run: ms, outs: [$('#msOut')], reset: () => { $('#msMtu').value = 1500; $('#msEnc').value = 'cbc256'; ['#msNat', '#msGre', '#msPpp'].forEach(x => ($(x).checked = false)); } }
+  };
+  Object.entries(forms).forEach(([id, f]) => {
+    const form = document.getElementById(id);
+    form.addEventListener('submit', e => {
+      e.preventDefault(); f.run();
+      const out = f.outs[0]; out.classList.remove('flash'); void out.offsetWidth; out.classList.add('flash');
+      if (matchMedia('(max-width: 900px)').matches) out.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+    form.querySelector('[data-clear]').addEventListener('click', () => {
+      f.reset(); f.outs[0].innerHTML = `<div class="tempty">${placeholder}</div>`; f.outs.slice(1).forEach(o => (o.innerHTML = ''));
+      const first = form.querySelector('.tin'); first && first.focus();
+    });
+    f.run();   // show an example on load
+  });
+  // textarea: Ctrl/Cmd+Enter submits
+  vlReq.addEventListener('keydown', e => { if (e.key === 'Enter' && (e.ctrlKey || e.metaKey)) { e.preventDefault(); document.getElementById('vlForm').requestSubmit(); } });
+  document.querySelectorAll('[data-ex]').forEach(b => b.addEventListener('click', () => {
+    const i = document.getElementById(b.dataset.ex); i.value = b.textContent; i.closest('form').requestSubmit();
+  }));
   document.addEventListener('click', e => {
     const b = e.target.closest('button[data-c]'); if (!b) return;
     navigator.clipboard && navigator.clipboard.writeText(b.dataset.c).then(() => { b.textContent = '✓'; setTimeout(() => (b.textContent = 'copy'), 1200); });
