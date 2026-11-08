@@ -1,317 +1,199 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Hybrid Cloud Connectivity Lab — Tarek MEDJOUB</title><style>
-:root {
-  --navy: #0a0e1a;
-  --navy2: #0f1629;
-  --card: #131b2e;
-  --card2: #1a2540;
-  --accent: #00d4ff;
-  --accent2: #00ff9d;
-  --text: #e8eaf6;
-  --muted: #8892a4;
-  --border: rgba(0,212,255,0.15);
-}
-* { margin:0; padding:0; box-sizing:border-box; }
-body {
-  font-family:'Sora',sans-serif;
-  background:var(--navy);
-  color:var(--text);
-  line-height:1.7;
-  overflow-x:hidden;
-}
-.noise {
-  position:fixed;inset:0;
-  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
-  pointer-events:none;z-index:0;opacity:.4;
-}
-.grid-bg {
-  position:fixed;inset:0;
-  background-image:linear-gradient(rgba(0,212,255,0.03) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(0,212,255,0.03) 1px, transparent 1px);
-  background-size:60px 60px;
-  pointer-events:none;z-index:0;
-}
-.wrap { max-width:900px;margin:0 auto;padding:0 2rem;position:relative;z-index:1; }
+<!DOCTYPE html>
+<html lang="en" data-theme="light" data-root="../">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hybrid Cloud Architecture · Tarek MEDJOUB</title>
+<meta name="description" content="An on-premises FortiGate connected to Azure VPN Gateway and AWS Transit Gateway with route-based IPsec, BGP route exchange, strict prefix filtering and centra">
+<meta name="author" content="Tarek Medjoub">
 
-/* NAV */
-nav {
-  position:sticky;top:0;
-  background:rgba(10,14,26,.92);
-  backdrop-filter:blur(16px);
-  border-bottom:1px solid var(--border);
-  padding:.9rem 0;
-  z-index:100;
-}
-.nav-inner { display:flex;align-items:center;justify-content:space-between; }
-.logo { font-size:1.1rem;font-weight:700;letter-spacing:-.01em; }
-.logo span { color:var(--accent); }
-.nav-links { display:flex;gap:2rem; }
-.nav-links a { color:var(--muted);font-size:.85rem;text-decoration:none;letter-spacing:.05em;text-transform:uppercase;transition:color .2s; }
-.nav-links a:hover { color:var(--accent); }
+<meta name="theme-color" content="#f3efe6">
+<link rel="canonical" href="https://tarekmjb.github.io/tmedjoub.github.io/projects/hybrid-cloud.html">
+<link rel="alternate" hreflang="en" href="https://tarekmjb.github.io/tmedjoub.github.io/projects/hybrid-cloud.html">
+<link rel="alternate" hreflang="fr" href="https://tarekmjb.github.io/tmedjoub.github.io/fr/projects/hybrid-cloud.html">
+<link rel="alternate" hreflang="x-default" href="https://tarekmjb.github.io/tmedjoub.github.io/projects/hybrid-cloud.html">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="en_GB">
+<meta property="og:title" content="Hybrid Cloud Architecture · Tarek MEDJOUB">
+<meta property="og:description" content="An on-premises FortiGate connected to Azure VPN Gateway and AWS Transit Gateway with route-based IPsec, BGP route exchange, strict prefix filtering and centra">
+<meta property="og:url" content="https://tarekmjb.github.io/tmedjoub.github.io/projects/hybrid-cloud.html">
+<meta property="og:image" content="https://tarekmjb.github.io/tmedjoub.github.io/assets/img/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://tarekmjb.github.io/tmedjoub.github.io/assets/img/og-image.png">
+<link rel="icon" type="image/svg+xml" href="../assets/img/favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/css/main.css">
+<script>(function(){try{var t=localStorage.getItem('tm-theme');if(t!=='dark')t='light';document.documentElement.dataset.theme=t;}catch(e){}})();</script>
 
-/* HERO */
-.hero {
-  min-height:90vh;display:flex;align-items:center;
-  padding:6rem 0 4rem;
-  position:relative;
-}
-.hero-inner {
-  display:grid;
-  grid-template-columns:1fr 300px;
-  gap:3rem;
-  align-items:center;
-  width:100%;
-}
-@media(max-width:700px){ .hero-inner{grid-template-columns:1fr;} }
-.snapshot-card {
-  background:var(--card);
-  border:1px solid var(--border);
-  border-radius:16px;
-  padding:1.5rem;
-  display:flex;
-  flex-direction:column;
-  gap:0;
-  min-height:340px;
-}
-.snapshot-title {
-  font-size:.72rem;font-weight:700;letter-spacing:.12em;
-  text-transform:uppercase;color:var(--text);
-  padding-bottom:.75rem;
-  margin-bottom:.5rem;
-  border-bottom:1px solid var(--border);
-  flex-shrink:0;
-}
-.snap-item {
-  flex:1;
-  display:flex;
-  flex-direction:column;
-  justify-content:center;
-  padding:.5rem 0;
-  border-bottom:1px solid rgba(255,255,255,.06);
-}
-.snap-item:last-child { border-bottom:none; }
-.snap-val { font-size:1rem;font-weight:700;margin-bottom:.2rem; }
-.snap-val.c1{color:var(--accent);}
-.snap-val.c2{color:var(--accent2);}
-.snap-val.c3{color:var(--accent2);}
-.snap-val.c4{color:var(--accent2);}
-.snap-desc { font-size:.8rem;color:var(--muted);line-height:1.4; }
-.hero-glow {
-  position:absolute;top:-200px;right:-200px;
-  width:700px;height:700px;
-  background:radial-gradient(circle, rgba(0,212,255,.06) 0%, transparent 70%);
-  pointer-events:none;
-}
-.hero-glow2 {
-  position:absolute;bottom:-100px;left:-100px;
-  width:500px;height:500px;
-  background:radial-gradient(circle, rgba(0,255,157,.04) 0%, transparent 70%);
-  pointer-events:none;
-}
-.badge-pill {
-  display:inline-flex;align-items:center;gap:.5rem;
-  border:1px solid rgba(0,255,157,.3);
-  background:rgba(0,255,157,.06);
-  color:var(--accent2);
-  font-size:.75rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;
-  padding:.4rem 1rem;border-radius:99px;margin-bottom:1.5rem;
-}
-.badge-pill::before { content:'';width:6px;height:6px;border-radius:50%;background:var(--accent2);animation:pulse 2s infinite; }
-@keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:.5;transform:scale(1.4)} }
-h1 {
-  font-size:clamp(2.8rem,6vw,4.5rem);
-  font-weight:700;
-  line-height:1.05;
-  letter-spacing:-.03em;
-  margin-bottom:.5rem;
-}
-h1 .accent { color:var(--accent);display:block; }
-.hero-sub {
-  font-size:1.05rem;color:var(--muted);
-  max-width:540px;margin:1.2rem 0 2rem;
-  line-height:1.8;
-}
-.hero-ctas { display:flex;gap:1rem;flex-wrap:wrap;margin-bottom:3rem; }
-.btn-primary {
-  padding:.75rem 1.75rem;
-  background:var(--accent);color:#000;
-  font-weight:700;font-size:.9rem;
-  border-radius:8px;text-decoration:none;
-  transition:transform .15s,box-shadow .15s;
-}
-.btn-primary:hover { transform:translateY(-2px);box-shadow:0 8px 30px rgba(0,212,255,.3); }
-.btn-outline {
-  padding:.75rem 1.75rem;
-  border:1px solid var(--border);color:var(--text);
-  font-weight:600;font-size:.9rem;
-  border-radius:8px;text-decoration:none;
-  transition:border-color .2s,background .2s;
-}
-.btn-outline:hover { border-color:var(--accent);background:rgba(0,212,255,.05); }
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<div class="progress" aria-hidden="true"></div>
+<header class="bar">
+  <div class="wrap">
+    <a href="../index.html" class="host" aria-label="Tarek Medjoub"><b>tarek</b>@medjoub:~#<span class="cur" aria-hidden="true"></span></a>
+    <nav class="links" id="nav" aria-label="Main">
+      <a href="../index.html#about">About</a>
+      <a href="../index.html#services">Services</a>
+      <a href="../index.html#stack">Skills</a>
+      <a href="../index.html#experience">Experience</a>
+      <a href="../index.html#projects">Projects</a>
+      <a href="../index.html#labs">Labs</a>
+      <a href="../index.html#certs">Certs</a>
+      <a href="../index.html#resume">CV</a>
+      <a href="../index.html#contact">Contact</a>
+    </nav>
+    <div class="tools">
+      <button class="btn-ico menu-btn" id="menuBtn" aria-label="Menu" aria-expanded="false">☰</button>
+      <button class="btn-ico" id="conBtn" title="Open console (/ · Ctrl+K)" aria-label="Open console">&gt;_</button>
+      <button class="btn-ico" id="themeBtn" title="Toggle theme" aria-label="Toggle light/dark theme">◐</button>
+      <div class="lang" role="group" aria-label="Language">
+        <a href="../projects/hybrid-cloud.html" data-lang="en" hreflang="en" class="on" aria-current="true">EN</a>
+        <a href="../fr/projects/hybrid-cloud.html" data-lang="fr" hreflang="fr">FR</a>
+      </div>
+    </div>
+  </div>
+</header>
 
-/* SECTION */
-section { padding:5rem 0; }
-.section-tag {
-  font-size:.72rem;font-weight:600;letter-spacing:.15em;text-transform:uppercase;
-  color:var(--accent);margin-bottom:.75rem;
-  display:flex;align-items:center;gap:.6rem;
-}
-.section-tag::before { content:'';width:24px;height:1px;background:var(--accent); }
-h2 { font-size:2rem;font-weight:700;letter-spacing:-.02em;margin-bottom:.5rem; }
-.section-divider { border:none;border-top:1px solid var(--border);margin:5rem 0 0; }
+<main id="main">
 
-/* ABOUT */
-.about-text { font-size:1rem;color:var(--muted);line-height:1.9;max-width:720px; }
-.about-text + .about-text { margin-top:1rem; }
+<div class="wrap" id="top">
+  <div class="crumbs"><a class="back-btn" href="../index.html#projects">← Back to projects</a><a href="../index.html">tarek@medjoub</a><span class="sep">/</span><a href="../index.html#projects">projects</a><span class="sep">/</span>hybrid-cloud</div>
+  <div class="doc-hero">
+    <div class="kicker">case study · FortiGate · Azure · AWS</div>
+    <h1>Hybrid Cloud Architecture</h1>
+    <p class="sum">An on-premises FortiGate connected to Azure VPN Gateway and AWS Transit Gateway with route-based IPsec, BGP route exchange, strict prefix filtering and centralised PRTG monitoring.</p>
+    
+    <div class="meta-row"><span class="meta">Type:<b>Lab project</b></span><span class="meta">Stack:<b>FortiGate · Azure VPN GW · AWS TGW · PRTG</b></span></div>
+    <div class="kpis"><div class="kpi"><b>2</b><span>clouds</span></div><div class="kpi"><b>3</b><span>BGP peers</span></div><div class="kpi"><b>IKEv2</b><span>route-based IPsec</span></div><div class="kpi"><b>1</b><span>monitoring view</span></div></div>
+  </div>
+  <div class="doc">
+    <nav class="toc" aria-label="On this page"><b>ON THIS PAGE</b><a href="#overview">Context</a><a href="#architecture">Architecture</a><a href="#design">Design choices</a><a href="#implementation">Implementation</a><a href="#config">Configuration</a><a href="#validation">Validation</a><a href="#considerations">Pitfalls</a></nav>
+    <div class="doc-body"><section id="overview">
+<h2>Context &amp; objectives</h2>
+<div class="note"><div>Lab project. Addressing, ASNs and IPs are lab values (documentation ranges for public IPs). Pre-shared keys are redacted.</div></div>
+<p>Most companies end up with workloads in more than one cloud. The goal of this lab was to connect one on-premises site to <strong>Azure and AWS at the same time</strong>, the way an enterprise would: encrypted, dynamically routed, filtered and monitored from one place.</p>
+<ul class="bul"><li>Route-based IPsec (IKEv2) from a FortiGate to Azure VPN Gateway and AWS Transit Gateway.</li><li>BGP everywhere: no static routes towards the cloud, new VNets / VPCs appear automatically.</li><li>Strict filtering: on-prem advertises only its LAN, accepts only the expected cloud prefixes.</li><li>One monitoring view (PRTG) for tunnels, BGP sessions and end-to-end latency.</li></ul></section><section id="architecture">
+<h2>Architecture</h2>
+<figure class="figure topo-fig"><svg viewBox="0 0 680 290" role="img" aria-label="Route-based IPsec from one FortiGate to both clouds. BGP learns cloud prefixes dynamically; prefix lists stop any route leak."><rect class="zone" x="400" y="20" width="270" height="90" rx="10"/><text class="zt" x="410" y="36">Azure · France Central</text><rect class="zone" x="400" y="180" width="270" height="90" rx="10"/><text class="zt" x="410" y="196">AWS · eu-west-3</text><line class="lk h" x1="90" y1="140" x2="250" y2="140"/><line class="lk " x1="250" y1="140" x2="250" y2="250"/><text class="lt" x="256" y="190">SNMP</text><line class="lk t" x1="250" y1="140" x2="470" y2="60"/><text class="lt" x="366" y="95">IKEv2 + eBGP multihop</text><line class="lk t" x1="250" y1="140" x2="470" y2="220"/><text class="lt" x="366" y="175">2 tunnels + eBGP</text><line class="lk " x1="470" y1="60" x2="600" y2="60"/><line class="lk " x1="470" y1="220" x2="600" y2="220"/><text class="lt" x="541" y="215">attach</text><g class="nd sw" transform="translate(21,123)"><rect width="138" height="34" rx="6"/><text x="9" y="15">LAN 10.1.0.0/16</text><text class="s" x="9" y="27">on-premises</text></g><g class="nd fw" transform="translate(173,123)"><rect width="154" height="34" rx="6"/><text x="9" y="15">FG-HQ</text><text class="s" x="9" y="27">AS65001 · lo 10.1.255.1</text></g><g class="nd sv" transform="translate(211,233)"><rect width="78" height="34" rx="6"/><text x="9" y="15">PRTG</text><text class="s" x="9" y="27">monitoring</text></g><g class="nd cl" transform="translate(413,43)"><rect width="114" height="34" rx="6"/><text x="9" y="15">Azure VPN GW</text><text class="s" x="9" y="27">AS65515 · VpnGw1</text></g><g class="nd sw" transform="translate(555,43)"><rect width="90" height="34" rx="6"/><text x="9" y="15">VNet hub</text><text class="s" x="9" y="27">10.100.0.0/16</text></g><g class="nd cl" transform="translate(431,203)"><rect width="78" height="34" rx="6"/><text x="9" y="15">AWS TGW</text><text class="s" x="9" y="27">AS64512</text></g><g class="nd sw" transform="translate(555,203)"><rect width="90" height="34" rx="6"/><text x="9" y="15">VPC</text><text class="s" x="9" y="27">10.200.0.0/16</text></g></svg><figcaption>Route-based IPsec from one FortiGate to both clouds. BGP learns cloud prefixes dynamically; prefix lists stop any route leak.</figcaption></figure>
+<div class="tbl-wrap"><table class="t"><thead><tr><th>Element</th><th>ASN</th><th>Prefix / address</th><th>Notes</th></tr></thead><tbody><tr><td>FG-HQ</td><td>65001</td><td>10.1.0.0/16 · BGP lo 10.1.255.1</td><td>Public IP 203.0.113.10</td></tr><tr><td>Azure VPN Gateway</td><td>65515</td><td>VNet 10.100.0.0/16 · GatewaySubnet 10.100.255.0/27</td><td>Route-based, BGP enabled</td></tr><tr><td>AWS Transit Gateway</td><td>64512</td><td>VPC 10.200.0.0/16</td><td>Inside CIDRs 169.254.10.0/30 and 169.254.11.0/30</td></tr></tbody></table></div></section><section id="design">
+<h2>Design choices</h2>
+<div class="dgrid"><div class="dcard"><span class=why>route-based, not policy-based</span><b>Tunnels as interfaces</b><span>Routing decides what goes into a tunnel, so BGP, SD-WAN and firewall policies all work on top of it.</span></div><div class="dcard"><span class=why>Transit Gateway, not a VGW</span><b>Scales to many VPCs</b><span>One VPN attachment serves every VPC attached to the TGW. Propagation fills the TGW route table automatically.</span></div><div class="dcard"><span class=why>prefix lists in &amp; out</span><b>No route leaks</b><span>Without filters, the FortiGate could re-advertise AWS routes to Azure and become an unplanned transit between clouds.</span></div><div class="dcard"><span class=why>MSS clamping</span><b>No silent drops</b><span>IPsec overhead lowers the usable MTU. TCP MSS is clamped to 1350 on cloud-bound policies to avoid fragmentation issues.</span></div></div></section><section id="implementation">
+<h2>Implementation</h2>
+<div class="steps"><div class="step"><div><h4>Plan addressing &amp; ASNs</h4><p>Non-overlapping prefixes for on-prem, Azure and AWS; private ASNs per domain (65001, 65515, 64512).</p></div></div><div class="step"><div><h4>Azure side</h4><p>VNet with GatewaySubnet, route-based VPN Gateway with BGP, a Local Network Gateway describing the FortiGate, then the connection.</p></div></div><div class="step"><div><h4>AWS side</h4><p>Transit Gateway, VPC attachment, Customer Gateway (FortiGate public IP + ASN) and a Site-to-Site VPN attached to the TGW: two tunnels.</p></div></div><div class="step"><div><h4>FortiGate side</h4><p>Three IPsec interfaces, three BGP neighbors, prefix lists, firewall policies with MSS clamping.</p></div></div><div class="step"><div><h4>Monitoring</h4><p>PRTG sensors for tunnel status, BGP state and ping latency to a test VM in each cloud.</p></div></div></div></section><section id="config">
+<h2>Key configuration</h2>
+<h3>Azure (CLI)</h3>
+<div class="code"><div class="ch"><span>az cli</span><button type="button">copy</button></div><pre># Route-based VPN gateway with BGP (ASN 65515)
+az network vnet-gateway create -g rg-hybrid -n vgw-hub \
+  --vnet vnet-hub --public-ip-addresses pip-vgw \
+  --gateway-type Vpn --vpn-type RouteBased --sku VpnGw1 --asn 65515
 
-/* TECH STACK */
-.stack-grid { display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:1rem;margin-top:2rem; }
-.stack-card {
-  background:var(--card);border:1px solid var(--border);border-radius:12px;
-  padding:1.5rem;transition:border-color .2s,transform .2s;
-}
-.stack-card:hover { border-color:rgba(0,212,255,.4);transform:translateY(-3px); }
-.stack-title { font-size:.8rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);margin-bottom:.75rem; }
-.stack-desc { font-size:.82rem;color:var(--muted);margin-bottom:1rem;line-height:1.6; }
-.tags { display:flex;flex-wrap:wrap;gap:.4rem; }
-.tag {
-  font-size:.72rem;font-weight:600;
-  padding:.3rem .7rem;border-radius:6px;
-  background:rgba(0,212,255,.08);
-  border:1px solid rgba(0,212,255,.2);
-  color:var(--accent);
-  font-family:'JetBrains Mono',monospace;
-}
+# The FortiGate, seen from Azure
+az network local-gateway create -g rg-hybrid -n lng-onprem \
+  --gateway-ip-address 203.0.113.10 --asn 65001 \
+  --bgp-peering-address 10.1.255.1 --local-address-prefixes 10.1.255.1/32
 
-/* NETWORKING EXPANDED */
-.net-grid { display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1rem;margin-top:1.5rem; }
-.net-card {
-  background:var(--card);border:1px solid var(--border);border-radius:12px;
-  padding:1.5rem;transition:border-color .2s,transform .2s;position:relative;overflow:hidden;
-}
-.net-card::before {
-  content:'';position:absolute;top:0;left:0;right:0;height:2px;
-  background:linear-gradient(90deg,var(--accent),var(--accent2));
-  opacity:0;transition:opacity .2s;
-}
-.net-card:hover { border-color:rgba(0,212,255,.45);transform:translateY(-3px); }
-.net-card:hover::before { opacity:1; }
-.net-card-header { display:flex;align-items:center;gap:.75rem;margin-bottom:.85rem; }
-.net-icon {
-  width:34px;height:34px;border-radius:8px;
-  background:rgba(0,212,255,.1);border:1px solid rgba(0,212,255,.2);
-  display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:.9rem;
-}
-.net-title { font-size:.8rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--accent); }
-.net-bullets { list-style:none;display:flex;flex-direction:column;gap:.35rem;margin-bottom:1rem; }
-.net-bullets li { font-size:.78rem;color:var(--muted);line-height:1.6;display:flex;gap:.5rem; }
-.net-bullets li::before { content:'▸';color:var(--accent2);flex-shrink:0;font-size:.65rem;margin-top:.25rem; }
-.net-bullets li strong { color:var(--text);font-weight:600; }
-.net-tags { display:flex;flex-wrap:wrap;gap:.35rem;margin-top:.85rem; }
-.net-tag {
-  font-size:.68rem;font-weight:600;padding:.25rem .6rem;border-radius:5px;
-  background:rgba(0,212,255,.07);border:1px solid rgba(0,212,255,.18);
-  color:var(--accent);font-family:'JetBrains Mono',monospace;
-}
-.net-tag.g { background:rgba(0,255,157,.06);border-color:rgba(0,255,157,.18);color:var(--accent2); }
-.skills-subnav { display:flex;flex-wrap:wrap;gap:.5rem;margin-top:1.5rem;margin-bottom:.25rem; }
-.skills-subnav span {
-  font-size:.72rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;
-  padding:.35rem .9rem;border-radius:99px;
-  border:1px solid var(--border);color:var(--muted);cursor:default;
-}
-.skills-subnav span.active { border-color:var(--accent);color:var(--accent);background:rgba(0,212,255,.07); }
+az network vpn-connection create -g rg-hybrid -n cn-onprem \
+  --vnet-gateway1 vgw-hub --local-gateway2 lng-onprem \
+  --shared-key &quot;&lt;redacted&gt;&quot; --enable-bgp</pre></div>
+<h3>AWS (CLI)</h3>
+<div class="code"><div class="ch"><span>aws cli</span><button type="button">copy</button></div><pre>aws ec2 create-transit-gateway --options \
+  AmazonSideAsn=64512,VpnEcmpSupport=enable,DefaultRouteTablePropagation=enable
 
-/* EXPERIENCE */
-.exp-list { display:flex;flex-direction:column;gap:1.5rem;margin-top:2rem; }
-.exp-card {
-  background:var(--card);border:1px solid var(--border);border-radius:12px;
-  padding:1.75rem;position:relative;overflow:hidden;
-  transition:border-color .2s;
-}
-.exp-card::before {
-  content:'';position:absolute;left:0;top:0;bottom:0;
-  width:3px;background:linear-gradient(to bottom,var(--accent),var(--accent2));
-  border-radius:3px 0 0 3px;
-}
-.exp-card:hover { border-color:rgba(0,212,255,.35); }
-.exp-role { font-size:1rem;font-weight:700;color:var(--accent);margin-bottom:.3rem; }
-.exp-meta { font-size:.8rem;color:var(--muted);margin-bottom:1rem;font-family:'JetBrains Mono',monospace; }
-.exp-bullets { list-style:none;display:flex;flex-direction:column;gap:.5rem; }
-.exp-bullets li { font-size:.88rem;color:var(--muted);line-height:1.7;display:flex;gap:.6rem; }
-.exp-bullets li::before { content:'▸';color:var(--accent);flex-shrink:0;margin-top:.05rem; }
-.exp-tech { display:flex;flex-wrap:wrap;gap:.4rem;margin-top:1rem; }
-.exp-tech .tag { background:rgba(0,255,157,.06);border-color:rgba(0,255,157,.2);color:var(--accent2); }
+aws ec2 create-customer-gateway --type ipsec.1 \
+  --public-ip 203.0.113.10 --bgp-asn 65001
 
-/* PROJECTS */
-.proj-grid { display:grid;grid-template-columns:repeat(auto-fit,minmax(380px,1fr));gap:1rem;margin-top:2rem; }
-@media(max-width:600px){ .proj-grid{grid-template-columns:1fr;} }
-.proj-card {
-  background:var(--card);border:1px solid var(--border);border-radius:12px;
-  padding:1.5rem;transition:border-color .2s,transform .2s;
-  display:flex;flex-direction:column;
-}
-.proj-card:hover { border-color:rgba(0,212,255,.4);transform:translateY(-3px); }
-.proj-title { font-size:1rem;font-weight:700;color:var(--accent);margin-bottom:.5rem; }
-.proj-desc { font-size:.85rem;color:var(--muted);line-height:1.75;margin-bottom:1rem;flex:1; }
-.proj-footer { display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:.75rem;margin-top:.5rem; }
-.btn-details {
-  display:inline-flex;align-items:center;gap:.4rem;
-  font-size:.78rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;
-  color:var(--navy);background:var(--accent);
-  padding:.45rem 1.1rem;border-radius:6px;
-  text-decoration:none;
-  transition:transform .15s,box-shadow .15s,background .15s;
-  white-space:nowrap;
-}
-.btn-details:hover { transform:translateY(-2px);box-shadow:0 6px 20px rgba(0,212,255,.3); }
-.btn-details svg { transition:transform .2s; }
-.btn-details:hover svg { transform:translateX(3px); }
+aws ec2 create-vpn-connection --type ipsec.1 \
+  --customer-gateway-id cgw-0abc --transit-gateway-id tgw-0def \
+  --options &quot;TunnelOptions=[{TunnelInsideCidr=169.254.10.0/30},{TunnelInsideCidr=169.254.11.0/30}]&quot;</pre></div>
+<h3>FortiGate: BGP with filtering</h3>
+<div class="code"><div class="ch"><span>FortiOS 7.4 · FG-HQ</span><button type="button">copy</button></div><pre>config router prefix-list
+    edit &quot;PL-ONPREM-OUT&quot;
+        config rule
+            edit 1
+                set prefix 10.1.0.0 255.255.0.0
+            next
+        end
+    next
+    edit &quot;PL-AZURE-IN&quot;
+        config rule
+            edit 1
+                set prefix 10.100.0.0 255.255.0.0
+                set le 24
+            next
+        end
+    next
+    edit &quot;PL-AWS-IN&quot;
+        config rule
+            edit 1
+                set prefix 10.200.0.0 255.255.0.0
+                set le 24
+            next
+        end
+    next
+end
+config router bgp
+    set as 65001
+    set router-id 10.1.255.1
+    set ebgp-multipath enable
+    config neighbor
+        edit &quot;10.100.255.30&quot;
+            set remote-as 65515
+            set ebgp-enforce-multihop enable
+            set update-source &quot;lo-bgp&quot;
+            set prefix-list-in &quot;PL-AZURE-IN&quot;
+            set prefix-list-out &quot;PL-ONPREM-OUT&quot;
+        next
+        edit &quot;169.254.10.1&quot;
+            set remote-as 64512
+            set prefix-list-in &quot;PL-AWS-IN&quot;
+            set prefix-list-out &quot;PL-ONPREM-OUT&quot;
+        next
+        edit &quot;169.254.11.1&quot;
+            set remote-as 64512
+            set prefix-list-in &quot;PL-AWS-IN&quot;
+            set prefix-list-out &quot;PL-ONPREM-OUT&quot;
+        next
+    end
+    config network
+        edit 1
+            set prefix 10.1.0.0 255.255.0.0
+        next
+    end
+end</pre></div>
+<p>Azure’s BGP peer address sits inside the GatewaySubnet (here <code>10.100.255.30</code>), so the FortiGate reaches it through the tunnel with eBGP multihop from a loopback. On AWS, the peers are the <code>.1</code> addresses of each inside /30, and <code>ebgp-multipath</code> lets both tunnels carry traffic.</p></section><section id="validation">
+<h2>Validation test plan</h2>
+<div class="tbl-wrap"><table class="t"><thead><tr><th>Test</th><th>How</th><th>Expected result</th></tr></thead><tbody><tr><td>BGP sessions</td><td><code>get router info bgp summary</code></td><td>3 neighbors Established</td></tr><tr><td>Routes learned on-prem</td><td><code>get router info routing-table bgp</code></td><td>10.100.0.0/16, 10.200.0.0/16</td></tr><tr><td>Routes learned by Azure</td><td><code>az network vnet-gateway list-learned-routes</code></td><td>10.1.0.0/16 only</td></tr><tr><td>Routes in AWS</td><td>TGW route table</td><td>10.1.0.0/16 via VPN attachment (propagated)</td></tr><tr><td>No transit between clouds</td><td>Azure VM → AWS VM ping</td><td>Fails, by design</td></tr><tr><td>AWS tunnel redundancy</td><td>Shut tunnel 1</td><td>Traffic continues on tunnel 2</td></tr><tr><td>End-to-end apps</td><td>ICMP + TCP 443 to each test VM</td><td>Reachable, latency in PRTG</td></tr></tbody></table></div></section><section id="considerations">
+<h2>Things to watch</h2>
+<ul class="bul"><li>Azure VPN Gateway creation can take <strong>30+ minutes</strong>: start it first.</li><li>AWS tunnel inside CIDRs must be /30s from 169.254.0.0/16, avoiding the ranges AWS reserves.</li><li>Overlapping prefixes between sites and clouds break everything. Plan the addressing before the first tunnel.</li><li>Without inbound prefix lists, a mistake in a cloud route table can reach your LAN.</li></ul></section><div class="pn"><a href="sdwan.html"><small>← previous</small><span>SD-WAN Enterprise Migration</span></a><a class="r" href="lan-optimization.html"><small>next →</small><span>LAN Architecture Optimisation</span></a></div><div class="end-nav"><a class="back-btn" href="../index.html#projects">← Back to projects</a><a class="back-btn" href="#top" data-top>↑ Back to top</a></div></div>
+  </div>
+</div>
 
-/* CERTS */
-.cert-table { width:100%;border-collapse:collapse;margin-top:2rem; }
-.cert-table th { text-align:left;font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);border-bottom:1px solid var(--border);padding:.6rem 1rem .6rem 0; }
-.cert-table td { padding:.85rem 1rem .85rem 0;font-size:.88rem;border-bottom:1px solid rgba(255,255,255,.04);color:var(--muted); }
-.cert-table td:first-child { color:var(--text);font-weight:500; }
-.cert-table td:last-child { font-family:'JetBrains Mono',monospace;color:var(--accent); }
+</main>
 
-/* EDU */
-.edu-grid { display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:1rem;margin-top:2rem; }
-.edu-card { background:var(--card);border:1px solid var(--border);border-radius:12px;padding:1.5rem; }
-.edu-title { font-size:.9rem;font-weight:700;color:var(--accent);margin-bottom:.4rem;line-height:1.4; }
-.edu-year { font-size:.78rem;font-family:'JetBrains Mono',monospace;color:var(--accent2);margin-bottom:.5rem; }
-.edu-badge {
-  display:inline-flex;align-items:center;gap:.4rem;
-  margin-top:.75rem;padding:.35rem .75rem;border-radius:6px;
-  background:rgba(0,255,157,.07);border:1px solid rgba(0,255,157,.25);
-  font-size:.72rem;font-weight:700;color:var(--accent2);letter-spacing:.04em;
-}
-.edu-badge svg { flex-shrink:0; }
-.edu-desc { font-size:.82rem;color:var(--muted);line-height:1.7; }
+<footer>
+  <div class="wrap">
+    <span>© <span class="yr">2026</span> Tarek Medjoub · Paris · <a href="mailto:tarek.medjoub@outlook.fr">tarek.medjoub@outlook.fr</a></span>
+    <span>Press <kbd>/</kbd> or <kbd>Ctrl</kbd>+<kbd>K</kbd> to open the console</span>
+  </div>
+</footer>
 
-/* CONTACT */
-.contact-card {
-  background:var(--card);border:1px solid var(--border);border-radius:16px;
-  padding:2.5rem;margin-top:2rem;
-  display:flex;flex-direction:column;gap:1rem;
-  max-width:560px;
-}
-.contact-row { display:flex;align-items:center;gap:1rem;font-size:.9rem; }
-.contact-icon { width:36px;height:36px;border-radius:8px;background:rgba(0,212,255,.1);display:flex;align-items:center;justify-content:center;flex-shrink:0; }
-.contact-label { font-size:.72rem;text-transform:uppercase;letter-spacing:.1em;color:var(--muted); }
-.contact-val { color:var(--text);font-weight:500; }
-.contact-val a { color:var(--accent);text-decoration:none; }
-.contact-val a:hover { text-decoration:underline; }
+<button class="totop" id="toTop" type="button" aria-label="Back to top" title="Back to top"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5M5 12l7-7 7 7"/></svg><span>top</span></button>
+<button class="fab" id="fab" aria-label="Open interactive console"><b>&gt;_</b><span>console</span></button>
+<div class="con-back" id="conBack" role="dialog" aria-modal="true" aria-label="Interactive console">
+  <div class="con">
+    <div class="term-head"><div class="dots"><i></i><i></i><i></i></div><span>tarek@medjoub · interactive console</span><span style="margin-left:auto">esc to close</span></div>
+    <div class="con-out" id="conOut"></div>
+    <div class="con-sug" id="conSug"></div>
+    <div class="con-in"><span class="p">guest@portfolio:~$</span><input id="conIn" autocomplete="off" spellcheck="false" aria-label="Command"></div>
+  </div>
+</div>
+<div class="toast" id="toast" role="status"></div>
+<script src="../assets/js/main.js" defer></script>
 
-/* FOOTER */
-footer { border-top:1px solid var(--border);padding:2.5rem 0;text-align:center;color:var(--muted);font-size:.82rem; }
-
-.reveal { opacity:1;transform:none; }
-.reveal.visible { opacity:1;transform:none; }
-
-html { scroll-padding-top:100px; }
-a:focus-visible { outline:2px solid var(--accent);outline-offset:5px; }
-.hero-ctas { flex-wrap:wrap; }
-.contact-val { overflow-wrap:anywhere; }
-@media(max-width:600px) { .nav-inner {flex-wrap:wrap;gap:12px;} .nav-links {display:flex;flex-wrap:wrap;gap:12px;} .cert-table td,.cert-table th {font-size:.7rem;padding-right:.4rem;} .contact-card {padding:1.2rem;} }
-@media(prefers-reduced-motion:reduce) { * {animation:none!important;transition:none!important;scroll-behavior:auto!important;} }
-</style><style>.language-switch{display:inline-flex;align-items:center;gap:3px;flex-shrink:0;padding:3px;border:1px solid var(--border);border-radius:8px;background:var(--card)}.language-switch a{font:600 .65rem 'Sora',sans-serif;color:var(--muted);padding:5px 7px;text-decoration:none;border-radius:5px}.language-switch a[aria-current="page"]{color:var(--navy);background:var(--accent)}.language-strip{max-width:900px;margin:0 auto;padding:1rem 2rem;display:flex;justify-content:flex-end;position:relative;z-index:2}.nav-inner{gap:.8rem}.nav-links{gap:.7rem}.nav-links a{font-size:.61rem}@media(max-width:700px){.nav-inner>.language-switch{margin-left:0}.menu-toggle{margin-left:auto}.nav-links{order:4}.language-strip{padding-inline:1.25rem}.hero h1{font-size:clamp(2rem,7vw,3rem)}}html[lang=fr] .hero h1{font-size:clamp(2rem,5.5vw,3rem)}html[lang=fr] .hero-inner{gap:2rem}</style></head><body><div class="language-strip"><div class="language-switch" role="group" aria-label="Site language"><a href="hybrid-cloud.html" data-language="en" lang="en" hreflang="en" aria-current="page">EN</a><a href="../fr/projects/hybrid-cloud.html" data-language="fr" lang="fr" hreflang="fr">FR</a></div></div><main class="wrap"><section><a href="../index.html#projects" class="btn-outline">← Back to projects</a><h1>Hybrid Cloud Connectivity Lab</h1><p class="about-text">A laboratory project connecting an on-premises FortiGate to Azure and AWS.</p><div class="exp-list"><article class="exp-card"><h2>Environment</h2><p class="about-text">Laboratory — Azure VPN Gateway, AWS Transit Gateway and FortiGate.</p></article><article class="exp-card"><h2>Connectivity</h2><p class="about-text">IPsec tunnels with BGP route exchange between the on-premises environment and cloud networks.</p></article><article class="exp-card"><h2>Monitoring</h2><p class="about-text">Centralized PRTG supervision across the laboratory environment.</p></article></div></section></main><script src="../language.js" defer></script></body></html>
+</body>
+</html>

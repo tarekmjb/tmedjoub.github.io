@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://tarekmjb.github.io/tmedjoub.github.io/sitemap.xml

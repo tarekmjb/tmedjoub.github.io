@@ -1,771 +1,440 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>  
+<html lang="en" data-theme="light" data-root="">
+<head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Tarek MEDJOUB — Network, Security &amp; Cloud Engineer</title>
-<meta name="description" content="Tarek Medjoub: network, security and cloud engineer in Paris. Cisco, Fortinet, multisite infrastructure, Azure/AWS hybrid connectivity and EVE-NG labs.">
-<link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
-<style>
-:root {
-  --navy: #0a0e1a;
-  --navy2: #0f1629;
-  --card: #131b2e;
-  --card2: #1a2540;
-  --accent: #00d4ff;
-  --accent2: #00ff9d;
-  --text: #e8eaf6;
-  --muted: #8892a4;
-  --border: rgba(0,212,255,0.15);
-}
-* { margin:0; padding:0; box-sizing:border-box; }
-body {
-  font-family:'Sora',sans-serif;
-  background:var(--navy);
-  color:var(--text);
-  line-height:1.7;
-  overflow-x:hidden;
-}
-.noise {
-  position:fixed;inset:0;
-  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
-  pointer-events:none;z-index:0;opacity:.4;
-}
-.grid-bg {
-  position:fixed;inset:0;
-  background-image:linear-gradient(rgba(0,212,255,0.03) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(0,212,255,0.03) 1px, transparent 1px);
-  background-size:60px 60px;
-  pointer-events:none;z-index:0;
-}
-.wrap { max-width:900px;margin:0 auto;padding:0 2rem;position:relative;z-index:1; }
+<title>Tarek MEDJOUB · Network, Security &amp; Cloud Engineer</title>
+<meta name="description" content="Network, Security &amp; Cloud Engineer in Paris. Fortinet SD-WAN, multisite networks, IPsec/BGP and hybrid connectivity to Azure and AWS.">
+<meta name="author" content="Tarek Medjoub">
 
-/* NAV */
-nav {
-  position:sticky;top:0;
-  background:rgba(10,14,26,.92);
-  backdrop-filter:blur(16px);
-  border-bottom:1px solid var(--border);
-  padding:.9rem 0;
-  z-index:100;
-}
-.nav-inner { display:flex;align-items:center;justify-content:space-between; }
-.logo { font-size:1.1rem;font-weight:700;letter-spacing:-.01em; }
-.logo span { color:var(--accent); }
-.nav-links { display:flex;gap:2rem; }
-.nav-links a { color:var(--muted);font-size:.85rem;text-decoration:none;letter-spacing:.05em;text-transform:uppercase;transition:color .2s; }
-.nav-links a:hover { color:var(--accent); }
+<meta name="theme-color" content="#f3efe6">
+<link rel="canonical" href="https://tarekmjb.github.io/tmedjoub.github.io/index.html">
+<link rel="alternate" hreflang="en" href="https://tarekmjb.github.io/tmedjoub.github.io/index.html">
+<link rel="alternate" hreflang="fr" href="https://tarekmjb.github.io/tmedjoub.github.io/fr/index.html">
+<link rel="alternate" hreflang="x-default" href="https://tarekmjb.github.io/tmedjoub.github.io/index.html">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="en_GB">
+<meta property="og:title" content="Tarek MEDJOUB · Network, Security &amp; Cloud Engineer">
+<meta property="og:description" content="Network, Security &amp; Cloud Engineer in Paris. Fortinet SD-WAN, multisite networks, IPsec/BGP and hybrid connectivity to Azure and AWS.">
+<meta property="og:url" content="https://tarekmjb.github.io/tmedjoub.github.io/index.html">
+<meta property="og:image" content="https://tarekmjb.github.io/tmedjoub.github.io/assets/img/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://tarekmjb.github.io/tmedjoub.github.io/assets/img/og-image.png">
+<link rel="icon" type="image/svg+xml" href="assets/img/favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/main.css">
+<script>(function(){try{var t=localStorage.getItem('tm-theme');if(t!=='dark')t='light';document.documentElement.dataset.theme=t;}catch(e){}})();</script>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"Person","name":"Tarek Medjoub","jobTitle":"Network, Security & Cloud Engineer",
+"email":"mailto:tarek.medjoub@outlook.fr","url":"https://tarekmjb.github.io/tmedjoub.github.io/","address":{"@type":"PostalAddress","addressLocality":"Paris","addressCountry":"FR"},
+"sameAs":["https://linkedin.com/in/tarek-medjoub"],"knowsLanguage":["fr","en"],
+"knowsAbout":["Fortinet SD-WAN","FortiGate","BGP","OSPF","IPsec VPN","Azure VPN Gateway","AWS Transit Gateway","Zabbix","PRTG","Network security"],
+"alumniOf":[{"@type":"EducationalOrganization","name":"Master's in Networks & Telecommunications"}]}
+</script>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
 
-/* HERO */
-.hero {
-  min-height:90vh;display:flex;align-items:center;
-  padding:6rem 0 4rem;
-  position:relative;
-}
-.hero-inner {
-  display:grid;
-  grid-template-columns:1fr 300px;
-  gap:3rem;
-  align-items:center;
-  width:100%;
-}
-@media(max-width:700px){ .hero-inner{grid-template-columns:1fr;} }
-.snapshot-card {
-  background:var(--card);
-  border:1px solid var(--border);
-  border-radius:16px;
-  padding:1.5rem;
-  display:flex;
-  flex-direction:column;
-  gap:0;
-  min-height:340px;
-}
-.snapshot-title {
-  font-size:.72rem;font-weight:700;letter-spacing:.12em;
-  text-transform:uppercase;color:var(--text);
-  padding-bottom:.75rem;
-  margin-bottom:.5rem;
-  border-bottom:1px solid var(--border);
-  flex-shrink:0;
-}
-.snap-item {
-  flex:1;
-  display:flex;
-  flex-direction:column;
-  justify-content:center;
-  padding:.5rem 0;
-  border-bottom:1px solid rgba(255,255,255,.06);
-}
-.snap-item:last-child { border-bottom:none; }
-.snap-val { font-size:1rem;font-weight:700;margin-bottom:.2rem; }
-.snap-val.c1{color:var(--accent);}
-.snap-val.c2{color:var(--accent2);}
-.snap-val.c3{color:var(--accent2);}
-.snap-val.c4{color:var(--accent2);}
-.snap-desc { font-size:.8rem;color:var(--muted);line-height:1.4; }
-.hero-glow {
-  position:absolute;top:-200px;right:-200px;
-  width:700px;height:700px;
-  background:radial-gradient(circle, rgba(0,212,255,.06) 0%, transparent 70%);
-  pointer-events:none;
-}
-.hero-glow2 {
-  position:absolute;bottom:-100px;left:-100px;
-  width:500px;height:500px;
-  background:radial-gradient(circle, rgba(0,255,157,.04) 0%, transparent 70%);
-  pointer-events:none;
-}
-.badge-pill {
-  display:inline-flex;align-items:center;gap:.5rem;
-  border:1px solid rgba(0,255,157,.3);
-  background:rgba(0,255,157,.06);
-  color:var(--accent2);
-  font-size:.75rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;
-  padding:.4rem 1rem;border-radius:99px;margin-bottom:1.5rem;
-}
-.badge-pill::before { content:'';width:6px;height:6px;border-radius:50%;background:var(--accent2);animation:pulse 2s infinite; }
-@keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:.5;transform:scale(1.4)} }
-h1 {
-  font-size:clamp(2.8rem,6vw,4.5rem);
-  font-weight:700;
-  line-height:1.05;
-  letter-spacing:-.03em;
-  margin-bottom:.5rem;
-}
-h1 .accent { color:var(--accent);display:block; }
-.hero-sub {
-  font-size:1.05rem;color:var(--muted);
-  max-width:540px;margin:1.2rem 0 2rem;
-  line-height:1.8;
-}
-.hero-ctas { display:flex;gap:1rem;flex-wrap:wrap;margin-bottom:3rem; }
-.btn-primary {
-  padding:.75rem 1.75rem;
-  background:var(--accent);color:#000;
-  font-weight:700;font-size:.9rem;
-  border-radius:8px;text-decoration:none;
-  transition:transform .15s,box-shadow .15s;
-}
-.btn-primary:hover { transform:translateY(-2px);box-shadow:0 8px 30px rgba(0,212,255,.3); }
-.btn-outline {
-  padding:.75rem 1.75rem;
-  border:1px solid var(--border);color:var(--text);
-  font-weight:600;font-size:.9rem;
-  border-radius:8px;text-decoration:none;
-  transition:border-color .2s,background .2s;
-}
-.btn-outline:hover { border-color:var(--accent);background:rgba(0,212,255,.05); }
-
-/* SECTION */
-section { padding:5rem 0; }
-.section-tag {
-  font-size:.72rem;font-weight:600;letter-spacing:.15em;text-transform:uppercase;
-  color:var(--accent);margin-bottom:.75rem;
-  display:flex;align-items:center;gap:.6rem;
-}
-.section-tag::before { content:'';width:24px;height:1px;background:var(--accent); }
-h2 { font-size:2rem;font-weight:700;letter-spacing:-.02em;margin-bottom:.5rem; }
-.section-divider { border:none;border-top:1px solid var(--border);margin:5rem 0 0; }
-
-/* ABOUT */
-.about-text { font-size:1rem;color:var(--muted);line-height:1.9;max-width:720px; }
-.about-text + .about-text { margin-top:1rem; }
-
-/* TECH STACK */
-.stack-grid { display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:1rem;margin-top:2rem; }
-.stack-card {
-  background:var(--card);border:1px solid var(--border);border-radius:12px;
-  padding:1.5rem;transition:border-color .2s,transform .2s;
-}
-.stack-card:hover { border-color:rgba(0,212,255,.4);transform:translateY(-3px); }
-.stack-title { font-size:.8rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);margin-bottom:.75rem; }
-.stack-desc { font-size:.82rem;color:var(--muted);margin-bottom:1rem;line-height:1.6; }
-.tags { display:flex;flex-wrap:wrap;gap:.4rem; }
-.tag {
-  font-size:.72rem;font-weight:600;
-  padding:.3rem .7rem;border-radius:6px;
-  background:rgba(0,212,255,.08);
-  border:1px solid rgba(0,212,255,.2);
-  color:var(--accent);
-  font-family:'JetBrains Mono',monospace;
-}
-
-/* NETWORKING EXPANDED */
-.net-grid { display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1rem;margin-top:1.5rem; }
-.net-card {
-  background:var(--card);border:1px solid var(--border);border-radius:12px;
-  padding:1.5rem;transition:border-color .2s,transform .2s;position:relative;overflow:hidden;
-}
-.net-card::before {
-  content:'';position:absolute;top:0;left:0;right:0;height:2px;
-  background:linear-gradient(90deg,var(--accent),var(--accent2));
-  opacity:0;transition:opacity .2s;
-}
-.net-card:hover { border-color:rgba(0,212,255,.45);transform:translateY(-3px); }
-.net-card:hover::before { opacity:1; }
-.net-card-header { display:flex;align-items:center;gap:.75rem;margin-bottom:.85rem; }
-.net-icon {
-  width:34px;height:34px;border-radius:8px;
-  background:rgba(0,212,255,.1);border:1px solid rgba(0,212,255,.2);
-  display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:.9rem;
-}
-.net-title { font-size:.8rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--accent); }
-.net-bullets { list-style:none;display:flex;flex-direction:column;gap:.35rem;margin-bottom:1rem; }
-.net-bullets li { font-size:.78rem;color:var(--muted);line-height:1.6;display:flex;gap:.5rem; }
-.net-bullets li::before { content:'▸';color:var(--accent2);flex-shrink:0;font-size:.65rem;margin-top:.25rem; }
-.net-bullets li strong { color:var(--text);font-weight:600; }
-.net-tags { display:flex;flex-wrap:wrap;gap:.35rem;margin-top:.85rem; }
-.net-tag {
-  font-size:.68rem;font-weight:600;padding:.25rem .6rem;border-radius:5px;
-  background:rgba(0,212,255,.07);border:1px solid rgba(0,212,255,.18);
-  color:var(--accent);font-family:'JetBrains Mono',monospace;
-}
-.net-tag.g { background:rgba(0,255,157,.06);border-color:rgba(0,255,157,.18);color:var(--accent2); }
-.skills-subnav { display:flex;flex-wrap:wrap;gap:.5rem;margin-top:1.5rem;margin-bottom:.25rem; }
-.skills-subnav span {
-  font-size:.72rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;
-  padding:.35rem .9rem;border-radius:99px;
-  border:1px solid var(--border);color:var(--muted);cursor:default;
-}
-.skills-subnav span.active { border-color:var(--accent);color:var(--accent);background:rgba(0,212,255,.07); }
-
-/* EXPERIENCE */
-.exp-list { display:flex;flex-direction:column;gap:1.5rem;margin-top:2rem; }
-.exp-card {
-  background:var(--card);border:1px solid var(--border);border-radius:12px;
-  padding:1.75rem;position:relative;overflow:hidden;
-  transition:border-color .2s;
-}
-.exp-card::before {
-  content:'';position:absolute;left:0;top:0;bottom:0;
-  width:3px;background:linear-gradient(to bottom,var(--accent),var(--accent2));
-  border-radius:3px 0 0 3px;
-}
-.exp-card:hover { border-color:rgba(0,212,255,.35); }
-.exp-role { font-size:1rem;font-weight:700;color:var(--accent);margin-bottom:.3rem; }
-.exp-meta { font-size:.8rem;color:var(--muted);margin-bottom:1rem;font-family:'JetBrains Mono',monospace; }
-.exp-bullets { list-style:none;display:flex;flex-direction:column;gap:.5rem; }
-.exp-bullets li { font-size:.88rem;color:var(--muted);line-height:1.7;display:flex;gap:.6rem; }
-.exp-bullets li::before { content:'▸';color:var(--accent);flex-shrink:0;margin-top:.05rem; }
-.exp-tech { display:flex;flex-wrap:wrap;gap:.4rem;margin-top:1rem; }
-.exp-tech .tag { background:rgba(0,255,157,.06);border-color:rgba(0,255,157,.2);color:var(--accent2); }
-
-/* PROJECTS */
-.proj-grid { display:grid;grid-template-columns:repeat(auto-fit,minmax(380px,1fr));gap:1rem;margin-top:2rem; }
-@media(max-width:600px){ .proj-grid{grid-template-columns:1fr;} }
-.proj-card {
-  background:var(--card);border:1px solid var(--border);border-radius:12px;
-  padding:1.5rem;transition:border-color .2s,transform .2s;
-  display:flex;flex-direction:column;
-}
-.proj-card:hover { border-color:rgba(0,212,255,.4);transform:translateY(-3px); }
-.proj-title { font-size:1rem;font-weight:700;color:var(--accent);margin-bottom:.5rem; }
-.proj-desc { font-size:.85rem;color:var(--muted);line-height:1.75;margin-bottom:1rem;flex:1; }
-.proj-footer { display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:.75rem;margin-top:.5rem; }
-.btn-details {
-  display:inline-flex;align-items:center;gap:.4rem;
-  font-size:.78rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;
-  color:var(--navy);background:var(--accent);
-  padding:.45rem 1.1rem;border-radius:6px;
-  text-decoration:none;
-  transition:transform .15s,box-shadow .15s,background .15s;
-  white-space:nowrap;
-}
-.btn-details:hover { transform:translateY(-2px);box-shadow:0 6px 20px rgba(0,212,255,.3); }
-.btn-details svg { transition:transform .2s; }
-.btn-details:hover svg { transform:translateX(3px); }
-
-/* CERTS */
-.cert-table { width:100%;border-collapse:collapse;margin-top:2rem; }
-.cert-table th { text-align:left;font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);border-bottom:1px solid var(--border);padding:.6rem 1rem .6rem 0; }
-.cert-table td { padding:.85rem 1rem .85rem 0;font-size:.88rem;border-bottom:1px solid rgba(255,255,255,.04);color:var(--muted); }
-.cert-table td:first-child { color:var(--text);font-weight:500; }
-.cert-table td:last-child { font-family:'JetBrains Mono',monospace;color:var(--accent); }
-
-/* EDU */
-.edu-grid { display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:1rem;margin-top:2rem; }
-.edu-card { background:var(--card);border:1px solid var(--border);border-radius:12px;padding:1.5rem; }
-.edu-title { font-size:.9rem;font-weight:700;color:var(--accent);margin-bottom:.4rem;line-height:1.4; }
-.edu-year { font-size:.78rem;font-family:'JetBrains Mono',monospace;color:var(--accent2);margin-bottom:.5rem; }
-.edu-badge {
-  display:inline-flex;align-items:center;gap:.4rem;
-  margin-top:.75rem;padding:.35rem .75rem;border-radius:6px;
-  background:rgba(0,255,157,.07);border:1px solid rgba(0,255,157,.25);
-  font-size:.72rem;font-weight:700;color:var(--accent2);letter-spacing:.04em;
-}
-.edu-badge svg { flex-shrink:0; }
-.edu-desc { font-size:.82rem;color:var(--muted);line-height:1.7; }
-
-/* CONTACT */
-.contact-card {
-  background:var(--card);border:1px solid var(--border);border-radius:16px;
-  padding:2.5rem;margin-top:2rem;
-  display:flex;flex-direction:column;gap:1rem;
-  max-width:560px;
-}
-.contact-row { display:flex;align-items:center;gap:1rem;font-size:.9rem; }
-.contact-icon { width:36px;height:36px;border-radius:8px;background:rgba(0,212,255,.1);display:flex;align-items:center;justify-content:center;flex-shrink:0; }
-.contact-label { font-size:.72rem;text-transform:uppercase;letter-spacing:.1em;color:var(--muted); }
-.contact-val { color:var(--text);font-weight:500; }
-.contact-val a { color:var(--accent);text-decoration:none; }
-.contact-val a:hover { text-decoration:underline; }
-
-/* FOOTER */
-footer { border-top:1px solid var(--border);padding:2.5rem 0;text-align:center;color:var(--muted);font-size:.82rem; }
-
-.reveal { opacity:1;transform:none; }
-.reveal.visible { opacity:1;transform:none; }
-
-html { scroll-padding-top:100px; }
-a:focus-visible { outline:2px solid var(--accent);outline-offset:5px; }
-.hero-ctas { flex-wrap:wrap; }
-.contact-val { overflow-wrap:anywhere; }
-@media(max-width:600px) { .nav-inner {flex-wrap:wrap;gap:12px;} .nav-links {display:flex;flex-wrap:wrap;gap:12px;} .cert-table td,.cert-table th {font-size:.7rem;padding-right:.4rem;} .contact-card {padding:1.2rem;} }
-@media(prefers-reduced-motion:reduce) { * {animation:none!important;transition:none!important;scroll-behavior:auto!important;} }
-
-.menu-toggle{display:none;background:none;color:var(--accent);border:1px solid var(--border);padding:.45rem .7rem;border-radius:6px;font:inherit;font-size:.8rem}
-.nav-links{gap:1.15rem}.nav-links a{font-size:.72rem}.nav-links a.active{color:var(--accent)}
-.resume-intro{font-size:.9rem;color:var(--muted);margin:1rem 0 1.5rem;max-width:600px}
-.resume-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.25rem}
-.resume-card{padding:1.5rem;background:var(--card);border:1px solid var(--border);border-radius:14px;transition:border-color .2s}
-.resume-card:hover{border-color:var(--accent)}.resume-lang{display:inline-grid;place-items:center;width:43px;height:43px;background:rgba(0,212,255,.1);color:var(--accent);border-radius:9px;font-family:'JetBrains Mono',monospace;font-size:.95rem;margin-bottom:1.25rem}
-.resume-card h3{font-size:1.05rem}.resume-card p{font-size:.8rem;color:var(--muted);margin:.5rem 0}.resume-format{font-size:.68rem;color:var(--muted)}
-.resume-actions{display:flex;align-items:center;gap:1rem;margin-top:1.5rem;flex-wrap:wrap}.resume-actions .btn-primary{font-size:.78rem;padding:.6rem 1rem}.resume-actions>a:last-child{font-size:.75rem;color:var(--accent);text-decoration:none}
-.project-filters{display:flex;gap:.5rem;flex-wrap:wrap;margin:1.5rem 0}.project-filters button{border:1px solid var(--border);color:var(--muted);background:var(--card);border-radius:7px;padding:.55rem .85rem;font:inherit;font-size:.7rem;cursor:pointer}.project-filters button.selected{color:var(--navy);background:var(--accent)}.proj-card[hidden]{display:none}
-.back-top{position:fixed;bottom:20px;right:20px;z-index:90;background:var(--card2);color:var(--accent);border:1px solid var(--border);width:40px;height:40px;display:grid;place-items:center;text-decoration:none;border-radius:10px}.back-top[hidden]{display:none}
-@media(max-width:700px){.resume-grid{grid-template-columns:1fr}.nav-inner{flex-wrap:wrap}.menu-toggle{display:block;cursor:pointer}.nav-links{display:flex;flex-wrap:wrap;width:100%;gap:1rem}.js-ready .nav-links{display:none}.js-ready .nav-links.open{display:flex}h1{overflow-wrap:normal}.wrap{padding-inline:1.25rem}}
-
-.ui-icon{display:inline-block;vertical-align:middle;flex-shrink:0;color:inherit}.net-icon{color:var(--accent)}.btn-primary,.btn-outline,.btn-details,.menu-toggle{display:inline-flex;align-items:center;justify-content:center;gap:.55rem}.resume-actions>a:last-child{display:inline-flex;align-items:center;gap:.4rem}.section-tag .ui-icon{width:15px;height:15px;margin-right:.4rem}.labs-intro{font-size:.9rem;line-height:1.9;color:var(--muted);margin:1rem 0;max-width:700px}.labs-note{display:flex;gap:.8rem;align-items:flex-start;padding:1rem 1.2rem;background:rgba(0,212,255,.04);border:1px solid var(--border);border-radius:10px;color:var(--muted);font-size:.78rem;margin:1.5rem 0}.labs-note .ui-icon{color:var(--accent)}.labs-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1.25rem}.lab-card{display:flex;flex-direction:column;padding:1.5rem;background:var(--card);border:1px solid var(--border);border-radius:14px;transition:border-color .2s}.lab-card:hover{border-color:var(--accent)}.lab-top{display:flex;justify-content:space-between;align-items:center;color:var(--accent);margin-bottom:1.3rem}.lab-top>.ui-icon{width:25px;height:25px}.lab-status{font-size:.6rem;letter-spacing:.07em;text-transform:uppercase;padding:.25rem .55rem;border:1px solid var(--border);border-radius:20px;color:var(--muted)}.lab-category{font-family:'JetBrains Mono',monospace;font-size:.65rem;color:var(--accent);margin-bottom:.5rem}.lab-card h3{font-size:1.05rem;line-height:1.5}.lab-card p{font-size:.8rem;line-height:1.8;color:var(--muted);margin:.8rem 0 1rem}.lab-card .tags{margin-top:auto;margin-bottom:1.3rem}.lab-card .btn-details{justify-content:flex-start}.lab-outline{padding-left:1.2rem;color:var(--muted);font-size:.9rem;line-height:2.2;margin-top:1rem}.lab-checklist{margin-top:1rem;border:1px solid var(--border);border-radius:12px;overflow:hidden}.lab-checklist>div{padding:1rem;display:flex;gap:1rem;align-items:center;background:var(--card)}.lab-checklist>div+div{border-top:1px solid var(--border)}.lab-checklist span{font-size:.65rem;color:var(--accent);min-width:80px}.lab-checklist strong{font-size:.8rem;font-weight:500}.nav-links{gap:.9rem}.nav-links a{font-size:.66rem}
-@media(max-width:600px){.labs-grid{grid-template-columns:1fr}.lab-card{padding:1.2rem}.lab-checklist>div{align-items:flex-start}.lab-checklist strong{font-size:.75rem}}
-</style>
-<style>.language-switch{display:inline-flex;align-items:center;gap:3px;flex-shrink:0;padding:3px;border:1px solid var(--border);border-radius:8px;background:var(--card)}.language-switch a{font:600 .65rem 'Sora',sans-serif;color:var(--muted);padding:5px 7px;text-decoration:none;border-radius:5px}.language-switch a[aria-current="page"]{color:var(--navy);background:var(--accent)}.language-strip{max-width:900px;margin:0 auto;padding:1rem 2rem;display:flex;justify-content:flex-end;position:relative;z-index:2}.nav-inner{gap:.8rem}.nav-links{gap:.7rem}.nav-links a{font-size:.61rem}@media(max-width:700px){.nav-inner>.language-switch{margin-left:0}.menu-toggle{margin-left:auto}.nav-links{order:4}.language-strip{padding-inline:1.25rem}.hero h1{font-size:clamp(2rem,7vw,3rem)}}html[lang=fr] .hero h1{font-size:clamp(2rem,5.5vw,3rem)}html[lang=fr] .hero-inner{gap:2rem}</style><style>
-/* Refined desktop header and hero; keep the original blue/cyan identity. */
-nav .wrap{max-width:1180px}nav .nav-inner{display:flex;align-items:center;gap:1.5rem;flex-wrap:nowrap}.logo{white-space:nowrap;font-size:1rem}nav .language-switch{margin-left:auto;order:2}nav .nav-links{order:1;display:flex;gap:1.2rem;width:auto;margin-left:auto;flex-wrap:nowrap}nav .nav-links a{font-size:.65rem;letter-spacing:.02em;white-space:nowrap}nav .menu-toggle{display:none}
-.hero{min-height:700px;padding:5rem 0 4rem}.hero-inner{grid-template-columns:minmax(0,1fr) 285px;gap:3rem;align-items:center}.hero .badge-pill{font-size:.62rem;letter-spacing:.035em;padding:.4rem .75rem;margin-bottom:1.8rem;text-transform:none;line-height:1.6}.hero-name{font-family:'JetBrains Mono',monospace;font-size:.75rem;letter-spacing:.14em;color:var(--muted);margin-bottom:1rem}.hero h1,html[lang=fr] .hero h1{font-size:clamp(2.35rem,4.2vw,3.45rem);line-height:1.16;letter-spacing:-.04em;margin-bottom:1.1rem;overflow-wrap:normal}.hero h1 .accent{display:block}.hero-specialties{color:var(--text);font-size:.7rem;line-height:2}.hero-specialties span{color:var(--accent);margin:0 .2rem}.hero .hero-sub{font-size:.88rem;line-height:1.9;margin:1.1rem 0 1.6rem}.hero-ctas{gap:.7rem;margin-bottom:0}.hero-ctas a{font-size:.73rem;padding:.7rem 1rem;min-height:44px}.hero-ctas a[href*=linkedin]{order:4}.hero-ctas a[href*=resume]{order:3}.snapshot-card{padding:1.5rem;background:linear-gradient(145deg,rgba(0,212,255,.055),transparent),var(--card);box-shadow:0 16px 60px rgba(0,0,0,.15);min-height:0}.snapshot-title{font-size:.65rem;letter-spacing:.09em}.snapshot-card .snap-val{font-size:1.05rem}.snapshot-card .snap-desc{font-size:.73rem;line-height:1.7}.grid-bg{opacity:.55}.hero-glow{opacity:.55}
-@media(min-width:1100px){body>.wrap{max-width:1040px}.hero-inner{grid-template-columns:minmax(0,1fr) 300px;gap:4rem}}
-@media(max-width:900px){nav .nav-inner{gap:1rem}nav .nav-links{gap:.8rem}nav .nav-links a{font-size:.6rem}.hero-inner{gap:2rem;grid-template-columns:minmax(0,1fr) 260px}.hero-specialties{font-size:.64rem}}
-@media(max-width:760px){nav .nav-inner{flex-wrap:wrap;gap:.75rem}nav .language-switch{order:1;margin-left:auto}nav .menu-toggle{order:2;display:inline-flex;gap:.4rem;align-items:center;margin-left:0;font-size:.7rem;padding:.45rem .6rem}nav .menu-toggle .ui-icon{width:17px;height:17px}nav .nav-links{order:3;width:100%;margin:0;flex-wrap:wrap;padding:.6rem 0;gap:1rem}nav .nav-links a{font-size:.7rem}.js-ready nav .nav-links{display:none}.js-ready nav .nav-links.open{display:flex}.hero{padding:3rem 0;min-height:0}.hero-inner{grid-template-columns:1fr;gap:2.5rem}.hero .badge-pill{margin-bottom:1.5rem}.hero h1,html[lang=fr] .hero h1{font-size:clamp(2rem,7.8vw,3rem);line-height:1.18}.hero-specialties{font-size:.7rem}.hero .hero-sub{max-width:510px}.snapshot-card{max-width:100%;width:100%}.snapshot-card .snap-item{padding:.8rem 0}.hero-ctas{gap:.6rem}.hero-ctas a{font-size:.7rem;padding:.7rem .9rem}}
-</style><style>
-/* Technical cards: full content, clearer hierarchy. */
-#stack .net-grid{grid-template-columns:repeat(3,minmax(0,1fr));gap:1.15rem;align-items:stretch;margin-top:2rem}
-#stack .net-card{display:flex;flex-direction:column;min-width:0;padding:1.4rem 1.25rem;border:1px solid rgba(0,212,255,.17);border-radius:14px;background:linear-gradient(155deg,rgba(0,212,255,.035),transparent 45%),var(--card);box-shadow:0 8px 28px rgba(0,0,0,.1);transition:border-color .2s,box-shadow .2s}
-#stack .net-card:hover{transform:none;border-color:rgba(0,212,255,.45);box-shadow:0 10px 32px rgba(0,0,0,.2)}
-#stack .net-card::before{opacity:.65;height:2px;background:linear-gradient(90deg,var(--accent),rgba(0,212,255,0));left:1.25rem;right:1.25rem}
-#stack .net-card-header{align-items:center;gap:.7rem;margin-bottom:1.15rem;padding-bottom:1rem;border-bottom:1px solid var(--border);min-height:64px}
-#stack .net-icon{height:36px;width:36px;border-radius:10px;background:rgba(0,212,255,.07);border-color:rgba(0,212,255,.2)}
-#stack .net-icon .ui-icon{width:20px;height:20px}
-#stack .net-title{font-size:.7rem;line-height:1.65;letter-spacing:.055em;color:var(--accent);overflow-wrap:normal}
-#stack .net-bullets{display:block;list-style:none;margin:0 0 1.3rem;padding:0}
-#stack .net-bullets li{display:block;position:relative;padding:0 0 .9rem;margin:0 0 .85rem;font-size:.73rem;line-height:1.8;color:#9ca8bb;border-bottom:1px solid rgba(136,146,164,.09);overflow-wrap:break-word}
-#stack .net-bullets li:last-child{border:0;padding-bottom:0;margin-bottom:0}
-#stack .net-bullets li::before{display:none}
-#stack .net-bullets li strong{display:block;margin:0 0 .22rem;color:var(--text);font-weight:600;font-size:.75rem;line-height:1.65}
-#stack .net-bullets .skill-explanation{display:block;font-weight:400}
-#stack .net-tags{margin-top:auto;padding-top:1rem;border-top:1px solid var(--border);gap:.4rem}
-#stack .net-tag{font-size:.58rem;line-height:1.6;padding:.24rem .45rem;border-radius:4px;font-weight:500;background:rgba(0,212,255,.045);border-color:rgba(0,212,255,.15)}
-#stack .net-tag.g{color:var(--accent2);background:rgba(0,255,157,.035);border-color:rgba(0,255,157,.16)}
-@media(max-width:1050px){#stack .net-grid{grid-template-columns:repeat(2,minmax(0,1fr))}#stack .net-card{padding:1.5rem}#stack .net-bullets li{font-size:.78rem}#stack .net-bullets li strong{font-size:.8rem}#stack .net-tag{font-size:.62rem}}
-@media(max-width:620px){#stack .net-grid{grid-template-columns:1fr;gap:1rem}#stack .net-card{padding:1.3rem}#stack .net-card-header{min-height:0}#stack .net-title{font-size:.76rem}#stack .net-bullets li{font-size:.8rem;line-height:1.85}#stack .net-bullets li strong{font-size:.82rem}}
-</style><style>.labs-growth{font-family:"JetBrains Mono",monospace;color:var(--accent);font-size:.7rem;line-height:1.9;margin:1rem 0 1.5rem;padding-left:1rem;border-left:2px solid var(--accent)}.lab-card h3{line-height:1.6}</style><style>
-#education .education-intro{font-size:.85rem;line-height:1.8;color:var(--muted);max-width:620px;margin-top:1rem}.education-timeline{margin-top:2rem;border:1px solid var(--border);border-radius:14px;background:linear-gradient(120deg,rgba(0,212,255,.025),transparent),var(--card);overflow:hidden}.education-entry{display:grid;grid-template-columns:165px minmax(0,1fr);gap:2rem;padding:2rem}.education-entry+.education-entry{border-top:1px solid var(--border)}.education-date{font-family:'JetBrains Mono',monospace;font-size:.85rem;font-weight:600;color:var(--accent);padding-top:.35rem;line-height:1.8}.education-date>span{display:block;font-size:.59rem;letter-spacing:.1em;color:var(--muted);margin-top:.5rem;font-weight:400}.education-heading{display:flex;align-items:center;gap:.8rem}.education-icon{height:38px;width:38px;display:grid;place-items:center;flex-shrink:0;border-radius:9px;color:var(--accent);background:rgba(0,212,255,.06);border:1px solid var(--border)}.education-heading h3{font-size:1.05rem;line-height:1.55;font-weight:600;color:var(--text)}.education-school{font-size:.8rem;color:var(--muted);margin:.8rem 0}.education-description{font-size:.76rem;line-height:1.9;color:var(--muted)}.education-recognition{display:flex;align-items:flex-start;gap:.5rem;color:var(--accent2);font-size:.66rem;line-height:1.8;margin-top:.9rem}.education-recognition svg{flex-shrink:0;margin-top:2px}.education-tags{display:flex;flex-wrap:wrap;gap:.4rem;margin-top:1rem}.education-tags span{font-size:.6rem;line-height:1.7;color:var(--muted);border:1px solid var(--border);border-radius:5px;padding:.2rem .5rem}
-@media(max-width:650px){.education-entry{grid-template-columns:1fr;gap:1rem;padding:1.3rem}.education-date{display:flex;align-items:center;flex-wrap:wrap;gap:1rem;font-size:.75rem}.education-date>span{margin:0}.education-heading h3{font-size:.95rem}.education-heading{align-items:flex-start}.education-recognition{font-size:.64rem}}
-</style><style>
-.network-visual{align-self:center;width:100%;min-width:0;background:linear-gradient(155deg,rgba(0,212,255,.035),transparent 60%),rgba(15,22,41,.8);border:1px solid var(--border);border-radius:17px;position:relative;box-shadow:0 20px 65px rgba(0,0,0,.15)}.network-visual-top{display:flex;align-items:center;gap:.6rem;border-bottom:1px solid var(--border);padding:1rem;font-size:.56rem;font-weight:600;color:var(--text);letter-spacing:.02em}.architecture-mark{height:6px;width:6px;border-radius:50%;background:var(--accent);flex-shrink:0}.architecture-svg{display:block;width:100%;height:auto;padding:.4rem}.arch-lines{stroke:rgba(0,212,255,.3);stroke-width:1.3;stroke-linejoin:round}.arch-lines .arch-flow{stroke:var(--accent);stroke-width:1.6;stroke-dasharray:4 19;animation:arch-flow 10s linear infinite}.arch-device rect{fill:#131d30;stroke:rgba(0,212,255,.28);stroke-width:1}.arch-device path{fill:none;stroke:#00d4ff;stroke-width:1.4;stroke-linecap:round;stroke-linejoin:round}.arch-device text{font:7px 'JetBrains Mono',monospace;letter-spacing:.3px;text-anchor:middle;fill:#bcc9db}.arch-core>rect{fill:#062c40;stroke:#00d4ff;stroke-width:1.2}.arch-core .arch-core-inner{fill:none;stroke:rgba(0,212,255,.17);stroke-width:1}.arch-core path{fill:none;stroke:#00d4ff;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}.arch-core text{font:600 10px 'JetBrains Mono',monospace;letter-spacing:.6px;text-anchor:middle;fill:#e8eaf6}.arch-core .arch-core-sub{font-size:7px;fill:#00d4ff;letter-spacing:.3px}.arch-protocols text{font:6px 'JetBrains Mono',monospace;fill:#889bb3}.network-visual-footer{border-top:1px solid var(--border);padding:.85rem;font-size:.56rem;color:var(--muted);text-align:center;letter-spacing:.03em}.network-visual-note{position:absolute;bottom:-1.65rem;right:.2rem;font-size:.53rem;letter-spacing:.04em;color:var(--muted)}@keyframes arch-flow{to{stroke-dashoffset:-230}}@media(max-width:760px){.network-visual{max-width:380px;margin:.5rem auto 1rem}.network-visual-top{font-size:.65rem;padding:1.1rem}.network-visual-footer{font-size:.65rem}.network-visual-note{font-size:.59rem}}@media(prefers-reduced-motion:reduce){.arch-lines .arch-flow{animation:none}}
-</style><style>.hero .badge-pill{background:rgba(0,255,157,.035);border-color:rgba(0,255,157,.2);font-size:.6rem;letter-spacing:0;animation:none;box-shadow:none;max-width:100%;line-height:1.8}.hero .badge-pill::before{animation:none;box-shadow:none}#about .about-text{font-size:.9rem;line-height:2;max-width:780px}#about .about-text strong{font-weight:500;color:var(--text)}#about .about-text+.about-text{margin-top:1.2rem}</style><style>#about .cloud-profile{padding:1rem 1.2rem;border-left:2px solid var(--accent);background:rgba(0,212,255,.035);border-radius:0 8px 8px 0}.hero .badge-pill{font-size:.57rem}.hero h1,html[lang=fr] .hero h1{font-size:clamp(2rem,3.8vw,3.1rem)}@media(max-width:760px){.hero h1,html[lang=fr] .hero h1{font-size:clamp(2rem,7vw,3rem)}}</style></head>
-<body class="">
-<div class="noise"></div>
-<div class="grid-bg"></div>
-
-<nav>
-  <div class="wrap nav-inner">
-    <div class="logo">Tarek <span>MEDJOUB</span></div>
-    <div class="language-switch" role="group" aria-label="Site language"><a href="index.html" data-language="en" lang="en" hreflang="en" aria-current="page">EN</a><a href="fr/index.html" data-language="fr" lang="fr" hreflang="fr">FR</a></div><button class="menu-toggle" aria-controls="navigation" aria-expanded="false">Menu <svg class="ui-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16" stroke="currentColor" fill="none" stroke-width="1.6"/></svg></button><div class="nav-links" id="navigation">
+<header class="bar">
+  <div class="wrap">
+    <a href="#top" class="host" aria-label="Tarek Medjoub"><b>tarek</b>@medjoub:~#<span class="cur" aria-hidden="true"></span></a>
+    <nav class="links" id="nav" aria-label="Main">
       <a href="#about">About</a>
+      <a href="#services">Services</a>
       <a href="#stack">Skills</a>
       <a href="#experience">Experience</a>
-      <a href="#projects">Projects</a><a href="#labs">Labs</a>
-      <a href="#resume">CV</a><a href="#contact">Contact</a>
+      <a href="#projects">Projects</a>
+      <a href="#labs">Labs</a>
+      <a href="#certs">Certs</a>
+      <a href="#resume">CV</a>
+      <a href="#contact">Contact</a>
+    </nav>
+    <div class="tools">
+      <button class="btn-ico menu-btn" id="menuBtn" aria-label="Menu" aria-expanded="false">☰</button>
+      <button class="btn-ico" id="conBtn" title="Open console (/ · Ctrl+K)" aria-label="Open console">&gt;_</button>
+      <button class="btn-ico" id="themeBtn" title="Toggle theme" aria-label="Toggle light/dark theme">◐</button>
+      <div class="lang" role="group" aria-label="Language">
+        <a href="index.html" data-lang="en" hreflang="en" class="on" aria-current="true">EN</a>
+        <a href="fr/index.html" data-lang="fr" hreflang="fr">FR</a>
+      </div>
     </div>
   </div>
-</nav>
+</header>
 
-<div class="wrap">
+<main id="main">
 
-  <!-- HERO -->
-  <section class="hero" id="hero">
-    <div class="hero-glow"></div>
-    <div class="hero-glow2"></div>
-    <div class="hero-inner">
-      <div>
-        <div class="badge-pill">Open to Network, Security &amp; Cloud Roles · Paris</div><p class="hero-name">Tarek MEDJOUB</p><h1>Network, Security<br><span class="accent">&amp; Cloud Engineer.</span></h1><p class="hero-specialties">Multisite networks <span>·</span> Fortinet security <span>·</span> Hybrid cloud</p><p class="hero-sub">I work across enterprise networking, Fortinet security and hybrid cloud connectivity, combining production network experience with Azure and AWS laboratory projects.</p><div class="hero-ctas">
-          <a href="mailto:tarek.medjoub@outlook.fr" class="btn-primary">Contact Me</a>
-          <a href="https://linkedin.com/in/tarek-medjoub" class="btn-outline">LinkedIn</a>
-          <a href="#projects" class="btn-outline">View Projects</a>
-          <a href="#resume" class="btn-outline">Download CV <svg class="ui-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12m-5-5 5 5 5-5M4 16v4h16v-4"/></svg></a>
-        </div>
+<section class="hero" id="top">
+  <div class="wrap">
+    <div>
+      <span class="status"><span class="led"></span>Open to Network, Security &amp; Cloud roles · Paris</span>
+      <h1><span class="name">TAREK MEDJOUB</span>Network, Security &amp; <em>Cloud</em> Engineer.</h1>
+      <p class="lede">I design, secure and monitor <strong>multisite enterprise networks</strong>: Fortinet SD-WAN, IPsec/BGP and <strong>hybrid connectivity to Azure and AWS</strong>. I’ve run production networks, led a team and managed projects.</p>
+      <div class="motto">
+        <span style="--c:var(--green)">Connected.</span>
+        <span style="--c:var(--red)">Secured.</span>
+        <span style="--c:var(--violet)">Monitored.</span>
       </div>
-      <aside class="network-visual"><div class="network-visual-top"><span class="architecture-mark" aria-hidden="true"></span><span>Connected. Secured. Monitored.</span></div><svg class="architecture-svg" viewBox="0 0 340 390" role="img" aria-label="Illustration of a FortiGate connecting WAN, branch, cloud, LAN and monitoring services." xmlns="http://www.w3.org/2000/svg"><defs><pattern id="arch-dots" width="18" height="18" patternUnits="userSpaceOnUse"><circle cx="1" cy="1" r=".7" fill="#00d4ff" opacity=".16"/></pattern></defs><rect width="340" height="390" fill="url(#arch-dots)"/><g class="arch-lines" fill="none"><path d="M170 90V158M120 194H65V151M220 194H275V151M145 230V298H87V320M195 230V298H253V320"/><path class="arch-flow" d="M170 90V158M120 194H65V151M220 194H275V151M145 230V298H87V320M195 230V298H253V320"/></g><g class="arch-device"><rect x="118" y="42" width="104" height="48" rx="9"/><path d="M137 63h16m-12-5-5 5 5 5m55-5h-16m12-5 5 5-5 5"/><text x="170" y="80">WAN / ISP</text><rect x="18" y="105" width="94" height="46" rx="9"/><path d="M57 121h16m-12-5-5 5 5 5m9-10 5 5-5 5"/><text x="65" y="141">BRANCH</text><rect x="228" y="105" width="94" height="46" rx="9"/><path d="M265 125h18a5 5 0 0 0-1-10 7 7 0 0 0-13-1 6 6 0 0 0-4 11Z"/><text x="275" y="141">CLOUD</text><rect x="30" y="320" width="114" height="46" rx="9"/><path d="M77 335h20m-16-3v6m6-6v6m6-6v6"/><text x="87" y="356">LAN / VLAN</text><rect x="196" y="320" width="114" height="46" rx="9"/><path d="M237 336h7l3-6 5 13 4-9h11"/><text x="253" y="356">MONITORING</text></g><g class="arch-core"><rect x="112" y="142" width="116" height="104" rx="19"/><rect class="arch-core-inner" x="121" y="151" width="98" height="86" rx="13"/><path d="m170 163 13 5v10c0 9-13 16-13 16s-13-7-13-16v-10l13-5Z"/><path d="m163 177 5 5 9-10"/><text x="170" y="213">FORTIGATE</text><text class="arch-core-sub" x="170" y="229">HA / SD-WAN</text></g><g class="arch-protocols"><text x="180" y="127">SD-WAN</text><text x="66" y="182">IPsec</text><text x="242" y="182">BGP</text><text x="155" y="278">OSPF</text><text x="210" y="290">SNMP</text></g></svg><div class="network-visual-footer"><span>Routing · Security · Visibility</span></div><p class="network-visual-note">Illustrative architecture</p></aside>
-    </div>
-  </section>
-
-  <hr class="section-divider">
-
-  <!-- ABOUT -->
-  <section id="about" class="reveal">
-    <div class="section-tag">About</div>
-    <h2>From Network Operations to Project Delivery</h2>
-    <p class="about-text">My core skills cover <strong>Cisco routing and switching, Fortinet security and multisite connectivity</strong>. I work with VLAN segmentation, OSPF/BGP routing, firewall policies, NAT and IPsec VPNs. My experience also includes Fortinet SD-WAN, redundant links and high-availability architectures.</p>
-    <p class="about-text cloud-profile">My <strong>hybrid cloud work</strong> focuses on connecting on-premises networks to <strong>Azure VPN Gateway and AWS Transit Gateway</strong> through IPsec tunnels and BGP route exchange, with centralized PRTG monitoring. These laboratory projects complement my production experience in networking and security.</p><p class="about-text">I use <strong>Zabbix, PRTG and GLPI</strong> to monitor infrastructure, investigate connectivity issues and track incidents. Alongside configuration and troubleshooting, I contribute to technical audits, architecture documentation and project coordination. I continue developing my skills through <strong>EVE-NG labs in routing, security, hybrid cloud connectivity and Ansible automation</strong>.</p>
-  </section>
-
-  <hr class="section-divider">
-
-  <!-- TECH STACK -->
-  <section id="stack" class="reveal">
-    <div class="section-tag">Technical Stack</div>
-    <h2>Skills &amp; Expertise</h2>
-
-    <p style="font-size:.88rem;color:var(--muted);line-height:1.8;max-width:680px;margin-top:.5rem;margin-bottom:1.5rem;">My technical scope covers switching, routing, Fortinet security, hybrid cloud connectivity and network operations. Dedicated EVE-NG labs will explain protocols and troubleshooting through focused, reproducible exercises.</p>
-
-    <div class="net-grid">
-
-      <!-- Layer 2 -->
-      <div class="net-card">
-        <div class="net-card-header">
-          <div class="net-icon"><svg class="ui-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="6" height="6" rx="1"/><rect x="15" y="15" width="6" height="6" rx="1"/><rect x="3" y="15" width="6" height="6" rx="1"/><path d="M6 9v6m0-3h12v3"/></svg>
-          </div>
-          <div class="net-title">Layer 2 — Switching</div>
-        </div>
-        <ul class="net-bullets">
-          <li><strong>VLANs (802.1Q)</strong><span class="skill-explanation">trunking, access ports, native VLAN hardening, pruning</span></li>
-          <li><strong>STP / RSTP / MSTP</strong><span class="skill-explanation">root election, PortFast, BPDU Guard, Root Guard, loop prevention</span></li>
-          <li><strong>EtherChannel / LACP (802.3ad)</strong><span class="skill-explanation">port aggregation, load-balancing modes</span></li>
-          <li><strong>Port Security</strong><span class="skill-explanation">MAC limiting, sticky MAC, violation actions</span></li>
-          <li><strong>DHCP Snooping, DAI, IP Source Guard</strong><span class="skill-explanation">Layer 2 attack mitigation</span></li>
-          <li><strong>CDP / LLDP</strong><span class="skill-explanation">topology discovery and neighbor mapping</span></li>
-        </ul>
-        <div class="net-tags">
-          <span class="net-tag">802.1Q</span><span class="net-tag">STP/RSTP</span><span class="net-tag">MSTP</span><span class="net-tag">LACP</span><span class="net-tag">Port Security</span><span class="net-tag">DAI</span><span class="net-tag g">Cisco Catalyst</span>
-        </div>
-      </div>
-
-      <!-- Layer 3 Routing -->
-      <div class="net-card">
-        <div class="net-card-header">
-          <div class="net-icon"><svg class="ui-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="6" cy="5" r="2"/><circle cx="18" cy="19" r="2"/><path d="M6 7v8a4 4 0 0 0 4 4h6M14 5h6m-3-3 3 3-3 3M9 5h5"/></svg>
-          </div>
-          <div class="net-title">Layer 3 — Routing</div>
-        </div>
-        <ul class="net-bullets">
-          <li><strong>OSPF</strong><span class="skill-explanation">multi-area, LSA types, DR/BDR, route summarization, auth, stub areas</span></li>
-          <li><strong>BGP (eBGP/iBGP)</strong><span class="skill-explanation">AS-PATH, local-pref, MED, weight, route-maps, prefix filtering</span></li>
-          <li><strong>EIGRP</strong><span class="skill-explanation">metric components, feasible successor, DUAL algorithm, passive interfaces</span></li>
-          <li><strong>Route Redistribution</strong><span class="skill-explanation">multi-protocol, metric seeding, tag-based loop prevention</span></li>
-          <li><strong>Policy-Based Routing (PBR)</strong><span class="skill-explanation">traffic steering per source IP or application</span></li>
-          <li><strong>IPv6</strong><span class="skill-explanation">dual-stack, OSPFv3, SLAAC, DHCPv6, static routing</span></li>
-        </ul>
-        <div class="net-tags">
-          <span class="net-tag">OSPF</span><span class="net-tag">BGP</span><span class="net-tag">EIGRP</span><span class="net-tag">PBR</span><span class="net-tag">Redistribution</span><span class="net-tag">IPv6</span><span class="net-tag g">OSPFv3</span>
-        </div>
-      </div>
-
-      <!-- WAN & SD-WAN -->
-      <div class="net-card">
-        <div class="net-card-header">
-          <div class="net-icon"><svg class="ui-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m12 3 9 5-9 5-9-5 9-5Zm-9 9 9 5 9-5M3 16l9 5 9-5"/></svg>
-          </div>
-          <div class="net-title">WAN &amp; SD-WAN</div>
-        </div>
-        <ul class="net-bullets">
-          <li><strong>Fortinet SD-WAN</strong><span class="skill-explanation">SLA probes, performance-based path selection, zone policies</span></li>
-          <li><strong>Dual-ISP design</strong><span class="skill-explanation">active/active, active/passive, automatic failover based on link health</span></li>
-          <li><strong>Traffic Steering</strong><span class="skill-explanation">per-application routing rules, QoS marking, bandwidth shaping</span></li>
-          <li><strong>MPLS concepts</strong><span class="skill-explanation">label switching, VRF, PE/CE routing models</span></li>
-          <li><strong>FortiManager</strong><span class="skill-explanation">centralized SD-WAN policy management, ADOM, policy push</span></li>
-          <li><strong>FortiAnalyzer</strong><span class="skill-explanation">log aggregation, SD-WAN analytics, compliance reporting</span></li>
-        </ul>
-        <div class="net-tags">
-          <span class="net-tag">SD-WAN</span><span class="net-tag">Dual-ISP</span><span class="net-tag">QoS</span><span class="net-tag">MPLS</span><span class="net-tag g">FortiManager</span><span class="net-tag g">FortiAnalyzer</span>
-        </div>
-      </div>
-
-      <!-- VPN & Tunneling -->
-      <div class="net-card">
-        <div class="net-card-header">
-          <div class="net-icon"><svg class="ui-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="10" width="16" height="11" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3m-4 5v2"/></svg>
-          </div>
-          <div class="net-title">VPN &amp; Tunneling</div>
-        </div>
-        <ul class="net-bullets">
-          <li><strong>IPsec IKEv1/v2</strong><span class="skill-explanation">Phase 1/2, AES-256/SHA-256, PFS, DPD, aggressive/main mode</span></li>
-          <li><strong>Hub-and-Spoke VPN</strong><span class="skill-explanation">centralized IPsec topology, spoke-to-spoke via hub</span></li>
-          <li><strong>SSL/TLS VPN</strong><span class="skill-explanation">FortiGate SSL VPN, split tunneling, full-tunnel, MFA integration</span></li>
-          <li><strong>GRE over IPsec</strong><span class="skill-explanation">tunnel encapsulation, keepalives, MTU/MSS clamping</span></li>
-          <li><strong>BGP over IPsec</strong><span class="skill-explanation">dynamic route propagation across encrypted tunnels</span></li>
-          <li><strong>Site-to-Cloud VPN</strong><span class="skill-explanation">FortiGate to Azure VPN GW, AWS TGW, IKEv2 with BGP</span></li>
-        </ul>
-        <div class="net-tags">
-          <span class="net-tag">IPsec IKEv2</span><span class="net-tag">SSL VPN</span><span class="net-tag">GRE</span><span class="net-tag">Hub-Spoke</span><span class="net-tag g">BGP over IPsec</span><span class="net-tag g">Site-to-Cloud</span>
-        </div>
-      </div>
-
-      <!-- High Availability -->
-      <div class="net-card">
-        <div class="net-card-header">
-          <div class="net-icon"><svg class="ui-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m12 3 8 3v6c0 5-8 9-8 9s-8-4-8-9V6l8-3Z"/><path d="m8 12 3 3 5-6"/></svg>
-          </div>
-          <div class="net-title">High Availability</div>
-        </div>
-        <ul class="net-bullets">
-          <li><strong>HSRP / VRRP</strong><span class="skill-explanation">virtual gateway redundancy, priority, preemption, interface tracking</span></li>
-          <li><strong>FortiGate HA</strong><span class="skill-explanation">Active/Passive and Active/Active clustering, session synchronization</span></li>
-          <li><strong>Dual-ISP Failover</strong><span class="skill-explanation">SLA probe-triggered path switching, link-health-based failover</span></li>
-          <li><strong>Link Aggregation Failover</strong><span class="skill-explanation">LACP with uplink redundancy and load distribution</span></li>
-          <li><strong>Redundant topology design</strong><span class="skill-explanation">no single point of failure at core and distribution layers</span></li>
-          <li><strong>BFD</strong><span class="skill-explanation">Bidirectional Forwarding Detection for fast failure detection with BGP/OSPF</span></li>
-        </ul>
-        <div class="net-tags">
-          <span class="net-tag">HSRP</span><span class="net-tag">VRRP</span><span class="net-tag">FortiGate HA</span><span class="net-tag">BFD</span><span class="net-tag g">Active/Active</span><span class="net-tag g">Session Sync</span>
-        </div>
-      </div>
-
-      <!-- Network Services & Design -->
-      <div class="net-card">
-        <div class="net-card-header">
-          <div class="net-icon"><svg class="ui-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="7" rx="2"/><rect x="3" y="14" width="18" height="7" rx="2"/><path d="M7 6h.01M7 17h.01M11 6h6m-6 11h6"/></svg>
-          </div>
-          <div class="net-title">Network Services &amp; Design</div>
-        </div>
-        <ul class="net-bullets">
-          <li><strong>DHCP</strong><span class="skill-explanation">server/relay, option 82, reservations, scope management, failover</span></li>
-          <li><strong>DNS</strong><span class="skill-explanation">forward/reverse zones, split-DNS, conditional forwarders</span></li>
-          <li><strong>NTP</strong><span class="skill-explanation">stratum hierarchy, peer authentication, drift management</span></li>
-          <li><strong>SNMPv3</strong><span class="skill-explanation">authPriv (SHA/AES), OID polling, trap configuration</span></li>
-          <li><strong>3-Tier Architecture</strong><span class="skill-explanation">core / distribution / access, campus LAN design</span></li>
-          <li><strong>Network Documentation</strong><span class="skill-explanation">topology diagrams, IP address plans, runbooks, change management</span></li>
-        </ul>
-        <div class="net-tags">
-          <span class="net-tag">DHCP</span><span class="net-tag">DNS</span><span class="net-tag">NTP</span><span class="net-tag">SNMPv3</span><span class="net-tag g">3-Tier Design</span><span class="net-tag g">IP Planning</span>
-        </div>
-      </div>
-
-      <!-- Network Security -->
-      <div class="net-card">
-        <div class="net-card-header">
-          <div class="net-icon"><svg class="ui-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m12 3 8 3v6c0 5-8 9-8 9s-8-4-8-9V6l8-3Z"/><path d="m8 12 3 3 5-6"/></svg>
-          </div>
-          <div class="net-title">Network Security</div>
-        </div>
-        <ul class="net-bullets">
-          <li><strong>FortiGate Firewall</strong><span class="skill-explanation">policy design, NAT, security profiles, IPS, application control, UTM</span></li>
-          <li><strong>Firewall Architecture</strong><span class="skill-explanation">DMZ design, zone-based policies, implicit deny, least privilege</span></li>
-          <li><strong>ACL</strong><span class="skill-explanation">standard/extended, named ACLs, time-based, interface inbound/outbound enforcement</span></li>
-          <li><strong>IDS/IPS</strong><span class="skill-explanation">signature tuning, inline vs passive, FortiGate IPS engine, custom signatures</span></li>
-          <li><strong>Network Segmentation</strong><span class="skill-explanation">VLAN-based isolation, inter-zone ACL, micro-segmentation concepts</span></li>
-          <li><strong>Infrastructure Hardening</strong><span class="skill-explanation">disable unused services, SSH key auth, SNMPv3, management VLAN isolation</span></li>
-        </ul>
-        <div class="net-tags">
-          <span class="net-tag">FortiGate</span><span class="net-tag">ACL</span><span class="net-tag">IDS/IPS</span><span class="net-tag">UTM</span><span class="net-tag">DMZ</span><span class="net-tag g">Zone Policies</span><span class="net-tag g">Hardening</span>
-        </div>
-      </div>
-
-      <!-- Cloud & Hybrid Connectivity -->
-      <div class="net-card">
-        <div class="net-card-header">
-          <div class="net-icon"><svg class="ui-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 18h11a4 4 0 0 0 0-8h-1a6 6 0 1 0-10 8Z"/></svg>
-          </div>
-          <div class="net-title">Cloud &amp; Hybrid Infrastructure</div>
-        </div>
-        <ul class="net-bullets">
-          <li><strong>Azure VPN Gateway</strong><span class="skill-explanation">IKEv2 site-to-site, active/active, BGP peering, APIPA addressing</span></li>
-          <li><strong>AWS Transit Gateway</strong><span class="skill-explanation">VPN attachment, route table propagation, multi-VPC connectivity</span></li>
-          <li><strong>FortiGate to Cloud</strong><span class="skill-explanation">on-prem to Azure/AWS over IPsec with full BGP route exchange</span></li>
-          <li><strong>Aviatrix</strong><span class="skill-explanation">multicloud network associate, centralized cloud routing and security</span></li>
-          <li><strong>Hybrid Architecture</strong><span class="skill-explanation">on-prem LAN extension to cloud, consistent routing policy across environments</span></li>
-          <li><strong>Cloud Monitoring</strong><span class="skill-explanation">PRTG cloud probes, unified NOC dashboard across on-prem and cloud</span></li>
-        </ul>
-        <div class="net-tags">
-          <span class="net-tag">Azure VPN GW</span><span class="net-tag">AWS TGW</span><span class="net-tag">Aviatrix</span><span class="net-tag">BGP</span><span class="net-tag g">Hybrid Design</span><span class="net-tag g">Multicloud</span>
-        </div>
-      </div>
-
-      <!-- Monitoring & Supervision -->
-      <div class="net-card">
-        <div class="net-card-header">
-          <div class="net-icon"><svg class="ui-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12h4l3-8 4 16 3-8h4"/></svg>
-          </div>
-          <div class="net-title">Monitoring &amp; Supervision</div>
-        </div>
-        <ul class="net-bullets">
-          <li><strong>Zabbix</strong><span class="skill-explanation">SNMPv3 polling, custom templates per vendor, trigger-based alerting, auto-discovery</span></li>
-          <li><strong>PRTG</strong><span class="skill-explanation">bandwidth sensors, WAN link utilization, VPN tunnel state, cloud endpoint probes</span></li>
-          <li><strong>ManageEngine OpManager</strong><span class="skill-explanation">live topology maps, NOC dashboards, availability heatmaps</span></li>
-          <li><strong>GLPI ITSM</strong><span class="skill-explanation">automated ticket creation via Zabbix webhook, SLA tracking, incident lifecycle</span></li>
-          <li><strong>FortiAnalyzer</strong><span class="skill-explanation">centralized log aggregation, SD-WAN analytics, compliance reporting</span></li>
-          <li><strong>Alerting Design</strong><span class="skill-explanation">severity thresholds (CPU, interfaces, VPN, BGP), escalation matrix, on-call routing</span></li>
-        </ul>
-        <div class="net-tags">
-          <span class="net-tag">Zabbix</span><span class="net-tag">PRTG</span><span class="net-tag">OpManager</span><span class="net-tag">GLPI</span><span class="net-tag g">FortiAnalyzer</span><span class="net-tag g">NOC Design</span>
-        </div>
-      </div>
-
-      <!-- Systems & IT Management -->
-      <div class="net-card">
-        <div class="net-card-header">
-          <div class="net-icon"><svg class="ui-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="13" rx="2"/><path d="M8 21h8m-4-5v5m-5-9 3-4 3 3 3-4"/></svg>
-          </div>
-          <div class="net-title">Systems &amp; IT Management</div>
-        </div>
-        <ul class="net-bullets">
-          <li><strong>Windows Server</strong><span class="skill-explanation">Active Directory, DNS, DHCP, GPO, user/group management</span></li>
-          <li><strong>Linux</strong><span class="skill-explanation">CLI administration, service management, bash scripting for network automation</span></li>
-          <li><strong>IT Project Management</strong><span class="skill-explanation">change management, project planning, stakeholder reporting, risk assessment</span></li>
-          <li><strong>Technical Documentation</strong><span class="skill-explanation">network topology diagrams, runbooks, IP address plans, change records</span></li>
-          <li><strong>Incident Management</strong><span class="skill-explanation">N3 troubleshooting, root cause analysis, post-mortem documentation</span></li>
-          <li><strong>EVE-NG</strong><span class="skill-explanation">virtual lab design and validation, FortiGate/Cisco KVM images, topology simulation</span></li>
-        </ul>
-        <div class="net-tags">
-          <span class="net-tag">Windows Server</span><span class="net-tag">Linux</span><span class="net-tag">Active Directory</span><span class="net-tag">EVE-NG</span><span class="net-tag g">IT Project Mgmt</span><span class="net-tag g">N3 Support</span>
-        </div>
-      </div>
-
-    </div>
-  </section>
-
-  <hr class="section-divider">
-
-  <!-- EXPERIENCE -->
-  <section id="experience" class="reveal">
-    <div class="section-tag">Experience</div>
-    <h2>Experience &amp; Responsibilities</h2>
-    <div class="exp-list"><div class="exp-card"><div class="exp-role">Network &amp; Security Engineer — Independent</div><div class="exp-meta">Aug 2026 — Present · France</div><ul class="exp-bullets"><li>Audit network and security configurations, identify vulnerabilities and prioritize remediation by severity.</li><li>Review firewall policies, VPN architectures and segmentation to align access with client requirements.</li><li>Assess SD-WAN, cloud connectivity and monitoring solutions; document architecture and operating procedures.</li></ul><div class="exp-tech"><span class="tag">Audit</span><span class="tag">FortiGate</span><span class="tag">VPN</span><span class="tag">Segmentation</span></div></div><div class="exp-card"><div class="exp-role">Assistant Network &amp; Security Project Manager — SGHP · Internship</div><div class="exp-meta">Mar 2026 — Sep 2026 · France</div><ul class="exp-bullets"><li>Supported the project manager on migration from on-premises infrastructure to the cloud as part of the company’s infrastructure evolution.</li></ul><div class="exp-tech"><span class="tag">Project Coordination</span><span class="tag">Cloud Migration</span></div></div><div class="exp-card"><div class="exp-role">Team Leader &amp; Network Security Project Lead — Condor Electronics</div><div class="exp-meta">Oct 2023 — Sep 2025 · Algeria</div><ul class="exp-bullets"><li>Led four technicians and two engineers, prioritizing incidents and projects across a multisite industrial network.</li><li>Migrated intersite connectivity to Fortinet SD-WAN, deploying VPN tunnels, adapting routing and centralizing link management.</li><li>Deployed Ubiquiti backup links and redundant equipment to reduce the risk of intersite service interruption.</li><li>Audited VLAN, ACL and OSPF configurations on Cisco and FortiGate equipment.</li><li>Handled Zabbix/PRTG alerts, diagnosed connectivity and routing incidents, and tracked tickets in GLPI.</li></ul><div class="exp-tech"><span class="tag">Cisco</span><span class="tag">FortiGate</span><span class="tag">SD-WAN</span><span class="tag">Ubiquiti</span><span class="tag">Zabbix</span><span class="tag">GLPI</span></div></div><div class="exp-card"><div class="exp-role">Network Engineer Intern — 3K Solutions</div><div class="exp-meta">Feb 2023 — Jun 2023 · Algeria</div><ul class="exp-bullets"><li>Configured Cisco equipment (IP addressing, VLANs and static routing) and tested connectivity before commissioning.</li></ul><div class="exp-tech"><span class="tag">Cisco IOS</span><span class="tag">VLAN</span><span class="tag">Routing</span></div></div></div>
-  </section>
-
-  <hr class="section-divider">
-
-  <!-- PROJECTS -->
-  <section id="projects" class="reveal">
-    <div class="section-tag">Projects</div>
-    <h2>Featured Work</h2><div class="project-filters" role="group" aria-label="Filter projects"><button data-filter="all" class="selected" aria-pressed="true">All projects</button><button data-filter="network" aria-pressed="false">Network &amp; security</button><button data-filter="cloud" aria-pressed="false">Hybrid cloud</button><button data-filter="monitoring" aria-pressed="false">Monitoring</button></div>
-    <div class="proj-grid">
-
-      <div class="proj-card" data-category="network">
-        <div class="proj-title">SD-WAN Enterprise Migration</div>
-        <div class="proj-desc">Four-site hub-and-spoke Fortinet SD-WAN project, with two ISP links per site, IPsec IKEv2/AES-256 and BGP/OSPF routing. Validated in EVE-NG before migration; failover below one second measured in the laboratory.</div>
-        <div class="proj-footer">
-          <div class="tags"><span class="tag">SD-WAN</span><span class="tag">VPN</span><span class="tag">Fortinet</span><span class="tag">BGP</span></div>
-          <a href="projects/sdwan.html" class="btn-details">View Details <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
-        </div>
-      </div>
-
-      <div class="proj-card" data-category="network">
-        <div class="proj-title">LAN Architecture Optimization</div>
-        <div class="proj-desc">Redesigned distribution and access layers using VLAN segmentation, OSPF routing, ACL filtering and SNMP monitoring.</div>
-        <div class="proj-footer">
-          <div class="tags"><span class="tag">VLAN</span><span class="tag">OSPF</span><span class="tag">ACL</span><span class="tag">SNMP</span></div>
-          <a href="projects/lan-optimization.html" class="btn-details">View Details <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
-        </div>
-      </div>
-
-      <div class="proj-card" data-category="cloud">
-        <div class="proj-title">Hybrid Cloud Architecture — Azure &amp; AWS</div>
-        <div class="proj-desc">Designed a hybrid multicloud architecture connecting on-premises FortiGate to both Azure VPN Gateway and AWS Transit Gateway, with BGP route propagation and centralized PRTG monitoring across all environments.</div>
-        <div class="proj-footer">
-          <div class="tags"><span class="tag">FortiGate</span><span class="tag">Azure</span><span class="tag">AWS</span><span class="tag">BGP</span><span class="tag">IPsec</span></div>
-          <a href="projects/hybrid-cloud.html" class="btn-details">View Details <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
-        </div>
-      </div>
-
-      <div class="proj-card" data-category="monitoring">
-        <div class="proj-title">Infrastructure Monitoring &amp; Alerting Stack</div>
-        <div class="proj-desc">Built a centralized supervision environment with Zabbix SNMP polling, threshold-based alerting and GLPI ITSM integration — delivering NOC-style dashboards and structured incident response workflows across a multi-device topology.</div>
-        <div class="proj-footer">
-          <div class="tags"><span class="tag">Zabbix</span><span class="tag">PRTG</span><span class="tag">SNMP</span><span class="tag">GLPI</span></div>
-          <a href="projects/monitoring-stack.html" class="btn-details">View Details <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
-        </div>
-      </div>
-
-    </div>
-  </section>
-
-  <hr class="section-divider">
-
-<hr class="section-divider"><section id="labs" class="reveal"><div class="section-tag"><svg class="ui-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 3h6m-5 0v6l-6 10a1.4 1.4 0 0 0 1.2 2h13.6a1.4 1.4 0 0 0 1.2-2L14 9V3M8 14h8"/></svg> EVE-NG Learning Labs</div><h2>Protocols, Explained in the Lab</h2><p class="labs-intro">I use network labs to deepen my understanding, test technical choices and improve my troubleshooting approach. This space will document that ongoing learning through reproducible EVE-NG exercises, from protocol fundamentals to resilient architectures and automation.</p><p class="labs-growth">Learn the mechanism. Build the topology. Test the failure. Document the result.</p><div class="labs-note"><svg class="ui-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9l-6-6Zm0 0v6h6M8 13h8m-8 4h5"/></svg> <span>A growing lab library. The topics below form my publication roadmap; each walkthrough will be added after the lab has been built, tested and documented.</span></div><div class="labs-grid"><article class="lab-card"><div class="lab-top"><svg class="ui-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="6" cy="5" r="2"/><circle cx="18" cy="19" r="2"/><path d="M6 7v8a4 4 0 0 0 4 4h6M14 5h6m-3-3 3 3-3 3M9 5h5"/></svg><span class="lab-status">Planned</span></div><span class="lab-category">Routing · EVE-NG</span><h3>BGP Fundamentals</h3><p>Build a focused lab around eBGP peering, route advertisements and route selection.</p><div class="tags"><span class="tag">eBGP peering</span><span class="tag">Route advertisements</span></div><a class="btn-details" href="labs/bgp.html">View lab outline <svg class="ui-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></a></article><article class="lab-card"><div class="lab-top"><svg class="ui-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="6" cy="5" r="2"/><circle cx="18" cy="19" r="2"/><path d="M6 7v8a4 4 0 0 0 4 4h6M14 5h6m-3-3 3 3-3 3M9 5h5"/></svg><span class="lab-status">Planned</span></div><span class="lab-category">Routing · EVE-NG</span><h3>OSPF Adjacencies &amp; Routing</h3><p>Explore neighbor formation, area design and the checks used to troubleshoot OSPF.</p><div class="tags"><span class="tag">Neighbor formation</span><span class="tag">Area design</span></div><a class="btn-details" href="labs/ospf.html">View lab outline <svg class="ui-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></a></article><article class="lab-card"><div class="lab-top"><svg class="ui-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="6" height="6" rx="1"/><rect x="15" y="15" width="6" height="6" rx="1"/><rect x="3" y="15" width="6" height="6" rx="1"/><path d="M6 9v6m0-3h12v3"/></svg><span class="lab-status">Planned</span></div><span class="lab-category">Switching · EVE-NG</span><h3>VLANs &amp; Inter-VLAN Routing</h3><p>Follow traffic across VLANs, trunks and routed interfaces in an isolated topology.</p><div class="tags"><span class="tag">Access and trunk ports</span><span class="tag">Inter-VLAN routing</span></div><a class="btn-details" href="labs/vlan.html">View lab outline <svg class="ui-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></a></article><article class="lab-card"><div class="lab-top"><svg class="ui-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m12 3 8 3v6c0 5-8 9-8 9s-8-4-8-9V6l8-3Z"/><path d="m8 12 3 3 5-6"/></svg><span class="lab-status">Planned</span></div><span class="lab-category">Security · EVE-NG</span><h3>IPsec Site-to-Site VPN</h3><p>Study a site-to-site tunnel, its routing requirements and validation workflow.</p><div class="tags"><span class="tag">Tunnel design</span><span class="tag">Routing and policies</span></div><a class="btn-details" href="labs/ipsec.html">View lab outline <svg class="ui-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></a></article><article class="lab-card"><div class="lab-top"><svg class="ui-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="6" rx="2"/><rect x="3" y="14" width="18" height="6" rx="2"/><path d="M7 7h.01M7 17h.01M12 7h5m-5 10h5"/></svg><span class="lab-status">Planned</span></div><span class="lab-category">Routing · EVE-NG</span><h3>MPLS &amp; VRF Segmentation</h3><p>Explore label switching and traffic separation between virtual routing instances.</p><div class="tags"><span class="tag">MPLS / LDP</span><span class="tag">VRF isolation</span></div><a class="btn-details" href="labs/mpls-vrf.html">View lab outline <svg class="ui-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></a></article><article class="lab-card"><div class="lab-top"><svg class="ui-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="6" rx="2"/><rect x="3" y="14" width="18" height="6" rx="2"/><path d="M7 7h.01M7 17h.01M12 7h5m-5 10h5"/></svg><span class="lab-status">Planned</span></div><span class="lab-category">Switching · EVE-NG</span><h3>STP &amp; LACP Resilience</h3><p>Study loop prevention, link aggregation and the behavior of a redundant switching topology.</p><div class="tags"><span class="tag">STP / RSTP</span><span class="tag">Root bridge selection</span></div><a class="btn-details" href="labs/switching-resilience.html">View lab outline <svg class="ui-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></a></article><article class="lab-card"><div class="lab-top"><svg class="ui-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="6" rx="2"/><rect x="3" y="14" width="18" height="6" rx="2"/><path d="M7 7h.01M7 17h.01M12 7h5m-5 10h5"/></svg><span class="lab-status">Planned</span></div><span class="lab-category">WAN · EVE-NG</span><h3>SD-WAN Path Selection</h3><p>Compare path-selection policies and observe failover when a WAN link becomes unavailable.</p><div class="tags"><span class="tag">SLA probes</span><span class="tag">Application steering</span></div><a class="btn-details" href="labs/sdwan-failover.html">View lab outline <svg class="ui-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></a></article><article class="lab-card"><div class="lab-top"><svg class="ui-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="6" rx="2"/><rect x="3" y="14" width="18" height="6" rx="2"/><path d="M7 7h.01M7 17h.01M12 7h5m-5 10h5"/></svg><span class="lab-status">Planned</span></div><span class="lab-category">Security · EVE-NG</span><h3>FortiGate High Availability</h3><p>Build a dedicated HA lab to study firewall redundancy and test service continuity.</p><div class="tags"><span class="tag">Active/passive clustering</span><span class="tag">Heartbeat links</span></div><a class="btn-details" href="labs/fortigate-ha.html">View lab outline <svg class="ui-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></a></article><article class="lab-card"><div class="lab-top"><svg class="ui-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="6" rx="2"/><rect x="3" y="14" width="18" height="6" rx="2"/><path d="M7 7h.01M7 17h.01M12 7h5m-5 10h5"/></svg><span class="lab-status">Planned</span></div><span class="lab-category">Automation · EVE-NG</span><h3>Network Automation with Ansible</h3><p>Develop repeatable exercises for configuration backup, deployment and verification.</p><div class="tags"><span class="tag">Inventory &amp; playbooks</span><span class="tag">Configuration backups</span></div><a class="btn-details" href="labs/ansible-network.html">View lab outline <svg class="ui-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></a></article><article class="lab-card"><div class="lab-top"><svg class="ui-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="6" rx="2"/><rect x="3" y="14" width="18" height="6" rx="2"/><path d="M7 7h.01M7 17h.01M12 7h5m-5 10h5"/></svg><span class="lab-status">Planned</span></div><span class="lab-category">Operations · EVE-NG</span><h3>SNMP Monitoring &amp; Alerting</h3><p>Follow a network event from SNMP collection to an alert and a troubleshooting workflow.</p><div class="tags"><span class="tag">SNMP collection</span><span class="tag">Zabbix triggers</span></div><a class="btn-details" href="labs/snmp-zabbix.html">View lab outline <svg class="ui-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></a></article></div></section>  <!-- CERTIFICATIONS -->
-  <section id="certs" class="reveal">
-    <div class="section-tag">Certifications</div>
-    <h2>Certifications &amp; Training</h2>
-    <table class="cert-table">
-      <thead>
-        <tr><th>Credential / Training</th><th>Organization</th><th>Type</th></tr>
-      </thead>
-      <tbody>
-        <tr><td>Multicloud Network Associate</td><td>Aviatrix</td><td>Certification</td></tr>
-        <tr><td>CCNP: Core Networking</td><td>Cisco Networking Academy</td><td>Academy training</td></tr>
-        <tr><td>Network Defense</td><td>Cisco Networking Academy</td><td>Academy training</td></tr>
-        <tr><td>CCNA: Switching, Routing &amp; Wireless Essentials</td><td>Cisco Networking Academy</td><td>Academy training</td></tr>
-        <tr><td>Network Security</td><td>Cisco Networking Academy</td><td>Academy training</td></tr>
-        <tr><td>HCIA Cloud Computing</td><td>Huawei</td><td>Certification</td></tr>
-        <tr><td>HCIA Routing &amp; Switching</td><td>Huawei</td><td>Certification</td></tr>
-      </tbody>
-    </table>
-  </section>
-
-  <hr class="section-divider">
-
-  <!-- EDUCATION -->
-  <section id="education" class="reveal"><div class="section-tag">Education</div><h2>A Technical Foundation.<br>A Project Mindset.</h2><p class="education-intro">Network engineering knowledge, complemented by management and project delivery studies.</p><div class="education-timeline"><article class="education-entry"><div class="education-date">2024 — 2026<span>MBA2</span></div><div class="education-content"><div class="education-heading"><span class="education-icon"><svg width="23" height="23" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m2 9 10-5 10 5-10 5L2 9Zm4 2v6c4 3 8 3 12 0v-6m4-2v7"/></svg></span><h3>Management &amp; Project Management</h3></div><p class="education-school">Project management, coordination and organizational leadership.</p><div class="education-tags"><span>Project delivery</span><span>Management</span></div></div></article><article class="education-entry"><div class="education-date">2021 — 2023<span>MASTER’S DEGREE</span></div><div class="education-content"><div class="education-heading"><span class="education-icon"><svg width="23" height="23" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m2 9 10-5 10 5-10 5L2 9Zm4 2v6c4 3 8 3 12 0v-6m4-2v7"/></svg></span><h3>Networks &amp; Telecommunications</h3></div><p class="education-description">Completed in 2023. Enterprise networking, telecommunications architecture and network security.</p><p class="education-recognition"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="m12 3 8 3v6c0 5-8 9-8 9s-8-4-8-9V6l8-3Z"/><path d="m8 12 3 3 5-6"/></svg>ENIC-NARIC France · Comparability assessment: level 7</p><div class="education-tags"><span>Networking</span><span>Telecommunications</span><span>Security</span></div></div></article></div></section>
-
-  <hr class="section-divider">
-
-<hr class="section-divider">
-<section id="resume" class="reveal">
-<div class="section-tag">Resume / CV</div><h2>Choose your CV language</h2>
-<p class="resume-intro">My experience, projects and credentials in a downloadable PDF. Select the language that suits you.</p>
-<div class="resume-grid">
-<article class="resume-card"><span class="resume-lang">FR</span><div><h3>Version française</h3><p>Ingénieur Réseaux &amp; Sécurité</p><span class="resume-format">PDF · 1 page</span></div><div class="resume-actions"><a href="assets/CV_Tarek_MEDJOUB.pdf" class="btn-primary" download="Tarek_MEDJOUB_CV_FR.pdf" lang="fr">Télécharger <svg class="ui-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12m-5-5 5 5 5-5M4 16v4h16v-4"/></svg></a><a href="assets/CV_Tarek_MEDJOUB.pdf" target="_blank" rel="noopener">Aperçu <svg class="ui-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 3h7v7m0-7L10 14M10 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-5"/></svg></a></div></article>
-<article class="resume-card"><span class="resume-lang">EN</span><div><h3>English version</h3><p>Network &amp; Security Engineer</p><span class="resume-format">PDF · 1 page</span></div><div class="resume-actions"><a href="assets/CV_Tarek_MEDJOUB_EN.pdf" class="btn-primary" download="Tarek_MEDJOUB_CV_EN.pdf">Download <svg class="ui-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12m-5-5 5 5 5-5M4 16v4h16v-4"/></svg></a><a href="assets/CV_Tarek_MEDJOUB_EN.pdf" target="_blank" rel="noopener">Preview <svg class="ui-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 3h7v7m0-7L10 14M10 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-5"/></svg></a></div></article>
-</div></section>
-  <!-- CONTACT -->
-  <section id="contact" class="reveal">
-    <div class="section-tag">Contact</div>
-    <h2>Let’s Talk Infrastructure</h2>
-    <div class="contact-card">
-      <div class="contact-row">
-        <div class="contact-icon">
-          <svg width="18" height="18" fill="none" stroke="var(--accent)" stroke-width="1.8" viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M2 7l10 7 10-7"/></svg>
-        </div>
-        <div><div class="contact-label">Email</div><div class="contact-val"><a href="mailto:tarek.medjoub@outlook.fr">tarek.medjoub@outlook.fr</a></div></div>
-      </div>
-      <div class="contact-row">
-        <div class="contact-icon">
-          <svg width="18" height="18" fill="none" stroke="var(--accent)" stroke-width="1.8" viewBox="0 0 24 24"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
-        </div>
-        <div><div class="contact-label">LinkedIn</div><div class="contact-val"><a href="https://linkedin.com/in/tarek-medjoub">linkedin.com/in/tarek-medjoub</a></div></div>
-      </div>
-      <div class="contact-row">
-        <div class="contact-icon"><svg class="ui-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 10c0 6-8 11-8 11S4 16 4 10a8 8 0 1 1 16 0Z"/><circle cx="12" cy="10" r="2.5"/></svg>
-        </div>
-        <div><div class="contact-label">Location</div><div class="contact-val">Paris, France</div></div>
+      <div class="cta">
+        <a class="btn primary" href="#contact">Let’s talk →</a>
+        <a class="btn" href="assets/CV_Tarek_MEDJOUB_EN.pdf" download>↓ Download CV</a>
+        <a class="btn" href="#projects">See my work</a>
       </div>
     </div>
-  </section>
 
+    <figure class="topo" aria-label="Interactive SD-WAN and hybrid cloud topology simulation">
+      <div class="topo-head">
+        <div class="dots"><i></i><i></i><i></i></div>
+        <span class="t">sdwan-lab · hub-and-spoke + hybrid cloud</span>
+        <span class="live"><span class="led"></span><span id="liveTxt">…</span></span>
+      </div>
+      <svg id="topo" viewBox="0 0 530 400" role="img" aria-label="Three branch sites with two ISP links each to an HQ hub, which connects to Azure and AWS over IPsec with BGP">
+        <g id="links"></g><g id="pkts"></g><g id="nodes"></g>
+      </svg>
+      <div class="legend">
+        <span><i style="--c:var(--green)"></i>ISP-1 primary</span>
+        <span><i class="d" style="--c:var(--green)"></i>ISP-2 backup</span>
+        <span><i class="d" style="--c:var(--violet)"></i>IPsec + BGP to cloud</span>
+        <span><i style="--c:var(--red)"></i>down</span>
+      </div>
+      <div class="sla">
+        <div class="sla-head">
+          <span>SLA probe latency ·
+            <select id="slaSite" aria-label="Site"><option value="A">SITE-A</option><option value="B">SITE-B</option><option value="C">SITE-C</option></select></span>
+          <span class="vals"><span style="color:var(--green)">ISP-1 <b id="slaV1">—</b></span><span style="color:var(--violet)">ISP-2 <b id="slaV2">—</b></span><span style="color:var(--red)">threshold 100 ms</span></span>
+        </div>
+        <svg id="slaSvg" viewBox="0 0 400 58" preserveAspectRatio="none" aria-hidden="true"></svg>
+      </div>
+      <div class="topo-ctl">
+        <button class="warn" id="failIsp1">⚡ Fail ISP-1 on all sites</button>
+        <button id="restore">↺ Restore</button>
+        <span class="hint">tip: click any link to cut it</span>
+      </div>
+      <div class="log" id="log" aria-live="polite"></div>
+    </figure>
+  </div>
+</section>
+
+<div class="stats">
+  <div class="wrap">
+    <div class="stat"><b>4</b><span>sites on SD-WAN</span></div>
+    <div class="stat"><b>≈1.5<small>s</small></b><span>failover in lab (was 3–5 min)</span></div>
+    <div class="stat"><b>6</b><span>engineers &amp; techs led</span></div>
+    <div class="stat"><b>2</b><span>clouds: Azure + AWS</span></div>
+    <div class="stat"><b>10</b><span>EVE-NG lab guides</span></div>
+  </div>
 </div>
 
-<footer>
-  <p>&copy; 2026 Tarek MEDJOUB — Network, Security &amp; Cloud Engineer</p>
-</footer><a class="back-top" href="#hero" aria-label="Back to top" hidden><svg class="ui-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 20V4m-6 6 6-6 6 6"/></svg></a>
+<section class="sec" id="about">
+  <div class="wrap about-grid">
+    <div class="about-text reveal">
+      <div class="kicker">01 / about</div>
+      <h2>From network operations to project delivery.</h2>
+      <p>My core is <strong>Cisco routing &amp; switching and Fortinet security</strong>: VLANs, OSPF/BGP, firewall policies, NAT and IPsec VPNs across multisite networks.</p>
+      <p>At Condor Electronics I became a <strong>team leader</strong>, running a multisite industrial network with four technicians and two engineers. I also moved its intersite connectivity to Fortinet SD-WAN.</p>
+      <p>Today I extend on-prem networks into the cloud: <strong>FortiGate to Azure VPN Gateway and AWS Transit Gateway</strong> over IPsec with BGP, monitored centrally with PRTG. An MBA in project management completes the picture.</p>
+      <p class="quote">I don’t just make it work. I make it resilient, documented and observable.</p>
+    </div>
+    <div class="term reveal">
+      <div class="term-head"><div class="dots"><i></i><i></i><i></i></div><span>tarek-medjoub · ssh</span></div>
+<pre class="term-body"><span class="p">tarek#</span> show version
+<span class="k">Engineer </span>  Tarek MEDJOUB
+<span class="k">Role     </span>  Network, Security &amp; Cloud Engineer
+<span class="k">Location </span>  Paris, France
+<span class="k">Status   </span>  <span class="g">● open to opportunities</span>
+<span class="k">Since    </span>  2023 (production networks)
 
-<script>
-document.documentElement.classList.add('js-ready');
-const menu=document.querySelector('.menu-toggle'),navigation=document.querySelector('#navigation');
-function closeMenu(){navigation.classList.remove('open');menu.setAttribute('aria-expanded','false')}
-menu.addEventListener('click',()=>{const open=menu.getAttribute('aria-expanded')!=='true';navigation.classList.toggle('open',open);menu.setAttribute('aria-expanded',String(open))});
-navigation.querySelectorAll('a').forEach(a=>a.addEventListener('click',closeMenu));
-document.addEventListener('keydown',e=>{if(e.key==='Escape')closeMenu()});
-document.querySelectorAll('[data-filter]').forEach(b=>b.addEventListener('click',()=>{document.querySelectorAll('[data-filter]').forEach(x=>{x.classList.toggle('selected',x===b);x.setAttribute('aria-pressed',String(x===b))});document.querySelectorAll('[data-category]').forEach(c=>c.hidden=b.dataset.filter!=='all'&&c.dataset.category!==b.dataset.filter)}));
-const backTop=document.querySelector('.back-top');window.addEventListener('scroll',()=>{backTop.hidden=window.scrollY<600},{passive:true});
-if('IntersectionObserver' in window){const observer=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting)navigation.querySelectorAll('a').forEach(a=>a.classList.toggle('active',a.hash==='#'+e.target.id))})},{rootMargin:'-10% 0px -65% 0px'});document.querySelectorAll('section[id]').forEach(s=>observer.observe(s))}
-</script>
-<script src="language.js" defer></script></body>
+<span class="p">tarek#</span> show modules
+<span class="k">slot 1</span>   Routing &amp; Switching   <span class="g">ok</span>
+<span class="k">slot 2</span>   Fortinet Security       <span class="g">ok</span>
+<span class="k">slot 3</span>   SD-WAN / VPN            <span class="g">ok</span>
+<span class="k">slot 4</span>   Hybrid Cloud            <span class="g">ok</span>
+<span class="k">slot 5</span>   Monitoring &amp; ITSM       <span class="g">ok</span>
+<span class="k">slot 6</span>   Project Management      <span class="v">MBA</span>
+
+<span class="p">tarek#</span> show interfaces languages
+<span class="k">FR, EN</span>     <span class="g">up/up</span></pre>
+    </div>
+  </div>
+</section>
+
+<section class="sec" id="services">
+  <div class="wrap">
+    <div class="reveal">
+      <div class="kicker">02 / what i do</div>
+      <h2>How I can help your infrastructure.</h2>
+      <p class="intro">As an independent Network &amp; Security Engineer, I audit and strengthen existing infrastructure. Every engagement ends with clear, usable documentation.</p>
+    </div>
+    <div class="cards4">
+      <article class="card reveal"><div class="ico"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg></div>
+        <span class="num">svc-01</span><h3>Network &amp; security audit</h3>
+        <p>Review of switching, routing and firewall configurations (VLAN, ACL, OSPF/BGP), with prioritised findings.</p></article>
+      <article class="card reveal"><div class="ico"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"/></svg></div>
+        <span class="num">svc-02</span><h3>Firewall policy review</h3>
+        <p>FortiGate rule bases, zones &amp; DMZ, segmentation, IPS profiles and hardening. Tighter policy, less exposure.</p></article>
+      <article class="card reveal"><div class="ico"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="5" cy="12" r="2.5"/><circle cx="19" cy="6" r="2.5"/><circle cx="19" cy="18" r="2.5"/><path d="M7.3 11l9.4-4M7.3 13l9.4 4"/></svg></div>
+        <span class="num">svc-03</span><h3>VPN &amp; SD-WAN assessment</h3>
+        <p>IPsec / SSL VPN architecture, SD-WAN SLA rules, path steering and dual-ISP failover design.</p></article>
+      <article class="card reveal"><div class="ico"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M7 18h10a4 4 0 0 0 .5-8A6 6 0 0 0 6 9a4.5 4.5 0 0 0 1 9z"/></svg></div>
+        <span class="num">svc-04</span><h3>Cloud connectivity review</h3>
+        <p>Site-to-cloud VPN to Azure VPN Gateway and AWS Transit Gateway, BGP route propagation and monitoring.</p></article>
+    </div>
+    <div class="method reveal" aria-label="Working method">
+      <div><b>01</b><h4>Discover</h4><p>Inventory, diagrams, current flows.</p></div>
+      <div><b>02</b><h4>Audit</h4><p>Configs against best practice.</p></div>
+      <div><b>03</b><h4>Design</h4><p>Target architecture &amp; plan.</p></div>
+      <div><b>04</b><h4>Validate</h4><p>Test in EVE-NG before production.</p></div>
+      <div><b>05</b><h4>Document</h4><p>Runbooks, diagrams, handover.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="sec" id="stack">
+  <div class="wrap">
+    <div class="reveal">
+      <div class="kicker">03 / technical stack</div>
+      <h2>Skills &amp; expertise.</h2>
+      <p class="intro">My skills, laid out as a routing table. Highlighted entries are the ones I use most in production.</p>
+    </div>
+    <div class="rtable reveal">
+      <div class="rcodes"><span class="p">tarek#</span>show ip route skills<br>Codes: C - core, S - security, W - WAN, V - VPN, H - high availability, N - services, K - cloud, M - monitoring, O - systems</div>
+      <div class="rrow"><span class="code">C</span><span class="dom">Switching<small>L2 · campus</small></span><div class="chips"><span class="chip hl">VLAN 802.1Q</span><span class="chip">STP / RSTP / MSTP</span><span class="chip">EtherChannel / LACP</span><span class="chip">Port security</span><span class="chip">DHCP snooping</span><span class="chip">DAI</span><span class="chip">CDP / LLDP</span></div></div><div class="rrow"><span class="code">C</span><span class="dom">Routing<small>L3 · IGP / EGP</small></span><div class="chips"><span class="chip hl">OSPF</span><span class="chip hl">BGP</span><span class="chip">EIGRP</span><span class="chip">Redistribution</span><span class="chip">PBR</span><span class="chip">IPv6 / OSPFv3</span></div></div><div class="rrow"><span class="code">W</span><span class="dom">WAN / SD-WAN<small>multisite</small></span><div class="chips"><span class="chip hl">Fortinet SD-WAN</span><span class="chip hl">Dual-ISP design</span><span class="chip">SLA probes</span><span class="chip">QoS</span><span class="chip">MPLS concepts</span><span class="chip">FortiManager</span><span class="chip">FortiAnalyzer</span></div></div><div class="rrow"><span class="code">V</span><span class="dom">VPN<small>site-to-site · remote</small></span><div class="chips"><span class="chip hl">IPsec IKEv1/v2</span><span class="chip">Hub-and-spoke</span><span class="chip">SSL VPN</span><span class="chip">GRE over IPsec</span><span class="chip hl">BGP over IPsec</span><span class="chip">Site-to-cloud VPN</span></div></div><div class="rrow"><span class="code">S</span><span class="dom">Security<small>perimeter · segmentation</small></span><div class="chips"><span class="chip hl">FortiGate firewalls</span><span class="chip">DMZ & zone policies</span><span class="chip">ACL</span><span class="chip">IDS / IPS</span><span class="chip">App control</span><span class="chip">Segmentation</span><span class="chip">Hardening</span></div></div><div class="rrow"><span class="code">H</span><span class="dom">High availability<small>resilience</small></span><div class="chips"><span class="chip">HSRP / VRRP</span><span class="chip hl">FortiGate HA</span><span class="chip">Dual-ISP failover</span><span class="chip">BFD</span></div></div><div class="rrow"><span class="code">K</span><span class="dom">Cloud<small>hybrid</small></span><div class="chips"><span class="chip hl">Azure VPN Gateway</span><span class="chip hl">AWS Transit Gateway</span><span class="chip">Aviatrix</span><span class="chip">Hybrid architecture</span><span class="chip">PRTG cloud monitoring</span></div></div><div class="rrow"><span class="code">M</span><span class="dom">Monitoring & ITSM<small>visibility</small></span><div class="chips"><span class="chip hl">Zabbix</span><span class="chip hl">PRTG</span><span class="chip">ManageEngine OpManager</span><span class="chip">GLPI</span><span class="chip">SNMPv3</span><span class="chip">Alerting design</span></div></div><div class="rrow"><span class="code">N</span><span class="dom">Network services<small>design · docs</small></span><div class="chips"><span class="chip">DHCP</span><span class="chip">DNS</span><span class="chip">NTP</span><span class="chip">3-tier design</span><span class="chip">IP addressing plans</span><span class="chip">Documentation</span></div></div><div class="rrow"><span class="code">O</span><span class="dom">Systems<small>& delivery</small></span><div class="chips"><span class="chip">Windows Server (AD, DNS, DHCP, GPO)</span><span class="chip">Linux</span><span class="chip">Bash</span><span class="chip">Ansible</span><span class="chip">EVE-NG</span><span class="chip">IT project management</span></div></div>
+    </div>
+  </div>
+</section>
+
+<section class="sec" id="experience">
+  <div class="wrap">
+    <div class="reveal">
+      <div class="kicker">04 / experience</div>
+      <h2>Experience &amp; responsibilities.</h2>
+      <p class="intro">My career as a traceroute: one hop per role, from my first Cisco configs to independent consulting.</p>
+    </div>
+    <div class="trace">
+      <div class="trace-cmd reveal"><span class="p">tarek#</span> traceroute career --from 2023 --to now</div>
+      <div class="hop reveal"><div class="hopn">1</div><div class="hopbody">
+        <div class="hophead"><h3>Network Engineer Intern</h3><span class="when">Feb 2023 → Jun 2023</span></div>
+        <div class="hopmeta">3K Solutions · Algeria · internship</div>
+        <ul><li>Configured Cisco equipment: IP addressing, VLANs and static routing.</li>
+            <li>Ran connectivity tests and validated the configurations.</li></ul>
+        <div class="chips"><span class="chip">Cisco IOS</span><span class="chip">VLAN</span><span class="chip">Static routing</span></div>
+      </div></div>
+      <div class="hop reveal"><div class="hopn">2</div><div class="hopbody">
+        <div class="hophead"><h3>Team Leader &amp; Network Security Project Lead</h3><span class="when">Oct 2023 → Sep 2025</span></div>
+        <div class="hopmeta">Condor Electronics · Algeria · multisite industrial network</div>
+        <ul><li>Led a team of <strong>four technicians and two engineers</strong> running a multisite industrial network.</li>
+            <li>Migrated intersite connectivity to <strong>Fortinet SD-WAN</strong>, with Ubiquiti links as backup paths.</li>
+            <li>Audited VLAN, ACL and OSPF configurations across sites.</li>
+            <li>Handled Zabbix / PRTG alerts and GLPI incident tickets.</li></ul>
+        <div class="chips"><span class="chip hl">Fortinet SD-WAN</span><span class="chip">Ubiquiti</span><span class="chip">OSPF</span><span class="chip">ACL</span><span class="chip">Zabbix</span><span class="chip">PRTG</span><span class="chip">GLPI</span><span class="chip">Team leadership</span></div>
+      </div></div>
+      <div class="hop reveal"><div class="hopn">3</div><div class="hopbody">
+        <div class="hophead"><h3>Assistant Network &amp; Security Project Manager</h3><span class="when">Mar 2026 → Sep 2026</span></div>
+        <div class="hopmeta">SGHP · France · internship</div>
+        <ul><li>Supported a migration from on-premises infrastructure to the cloud.</li></ul>
+        <div class="chips"><span class="chip">Cloud migration</span><span class="chip">Project management</span></div>
+      </div></div>
+      <div class="hop now reveal"><div class="hopn">4</div><div class="hopbody">
+        <div class="hophead"><h3>Network &amp; Security Engineer <span class="pill-now">current</span></h3><span class="when">Aug 2026 → now</span></div>
+        <div class="hopmeta">Independent · France</div>
+        <ul><li>Audit network and security configurations.</li>
+            <li>Review firewall policies and VPN architectures.</li>
+            <li>Assess SD-WAN and cloud connectivity, and deliver documentation.</li></ul>
+        <div class="chips"><span class="chip hl">Audit</span><span class="chip">Firewall policy</span><span class="chip">VPN</span><span class="chip">SD-WAN</span><span class="chip">Cloud</span></div>
+      </div></div>
+      <div class="hop reveal"><div class="hopn" style="border-style:dashed;color:var(--amber)">5</div><div class="hopbody" style="border-style:dashed;background:transparent">
+        <div class="hophead"><h3 style="color:var(--amber)">Your team?</h3><span class="when">* * * request timed out</span></div>
+        <p style="color:var(--muted);margin-top:6px">The next hop isn’t reachable yet. <a href="#contact" class="more">Add a route →</a></p>
+      </div></div>
+    </div>
+  </div>
+</section>
+
+<section class="sec" id="projects">
+  <div class="wrap">
+    <div class="reveal">
+      <div class="kicker">05 / featured work</div>
+      <h2>Projects.</h2>
+      <p class="intro">Architectures I’ve designed and validated, from production migrations to multi-cloud lab builds. Each one has a full case study: architecture, configs, validation and lessons learned.</p>
+    </div>
+    <div class="proj-grid">
+      <article class="proj reveal">
+        <a class="art" href="projects/sdwan.html" aria-hidden="true" tabindex="-1"><svg viewBox="0 0 400 150" preserveAspectRatio="xMidYMid slice"><path class="a-ok flow" d="M80 35 L200 75"/><path class="a-line" d="M80 45 L200 82" stroke-dasharray="4 4"/><path class="a-ok flow" d="M80 115 L200 75"/><path class="a-line" d="M80 105 L200 68" stroke-dasharray="4 4"/><path class="a-ok flow" d="M320 35 L200 75"/><path class="a-line" d="M320 45 L200 82" stroke-dasharray="4 4"/><rect class="a-box" x="40" y="25" width="56" height="24" rx="5"/><text class="a-txt" x="52" y="40">SITE-A</text><rect class="a-box" x="40" y="101" width="56" height="24" rx="5"/><text class="a-txt" x="52" y="116">SITE-B</text><rect class="a-box" x="304" y="25" width="56" height="24" rx="5"/><text class="a-txt" x="316" y="40">SITE-C</text><rect class="a-box" x="168" y="62" width="64" height="26" rx="5" style="stroke:var(--amber)"/><text class="a-txt" x="183" y="79" style="fill:var(--amber)">HUB</text><text class="a-txt" x="290" y="125">IKEv2 · AES-256</text></svg></a>
+        <div class="body">
+          <span class="tagline">Fortinet · SD-WAN · BGP · production + lab</span>
+          <h3>SD-WAN Enterprise Migration</h3>
+          <p>Moved a four-site enterprise from MPLS and static routes to a hub-and-spoke Fortinet SD-WAN: two ISPs per site, IPsec IKEv2 / AES-256 and BGP/OSPF. Validated in EVE-NG before cutover.</p>
+          <div class="facts"><div><b>4</b><span>sites</span></div><div><b>2×</b><span>ISP / site</span></div><div><b>≈1.5s</b><span>lab failover</span></div></div>
+          <div class="foot"><div class="chips"><span class="chip">FortiGate</span><span class="chip">IPsec</span><span class="chip">BGP</span><span class="chip">OSPF</span></div><a class="more" href="projects/sdwan.html">Case study →</a></div>
+        </div>
+      </article>
+      <article class="proj reveal">
+        <a class="art" href="projects/hybrid-cloud.html" aria-hidden="true" tabindex="-1"><svg viewBox="0 0 400 150" preserveAspectRatio="xMidYMid slice"><path class="a-vi" d="M110 75 L270 40"/><path class="a-vi" d="M110 75 L270 110"/><rect class="a-box" x="50" y="60" width="74" height="30" rx="5" style="stroke:var(--amber)"/><text class="a-txt" x="58" y="79" style="fill:var(--amber)">FORTIGATE</text><rect class="a-box" x="262" y="25" width="90" height="30" rx="15" style="stroke:var(--violet)"/><text class="a-txt" x="276" y="44">AZURE VPN GW</text><rect class="a-box" x="262" y="95" width="90" height="30" rx="15" style="stroke:var(--violet)"/><text class="a-txt" x="280" y="114">AWS TGW</text><text class="a-txt" x="160" y="70">BGP / IPsec</text></svg></a>
+        <div class="body">
+          <span class="tagline">FortiGate · Azure · AWS · lab</span>
+          <h3>Hybrid Cloud Architecture</h3>
+          <p>An on-premises FortiGate connected to Azure VPN Gateway and AWS Transit Gateway with route-based IPsec, BGP route exchange, strict prefix filtering and centralised PRTG monitoring.</p>
+          <div class="facts"><div><b>2</b><span>clouds</span></div><div><b>3</b><span>BGP peers</span></div><div><b>0</b><span>static routes to cloud</span></div></div>
+          <div class="foot"><div class="chips"><span class="chip">Azure</span><span class="chip">AWS</span><span class="chip">IPsec</span><span class="chip">BGP</span><span class="chip">PRTG</span></div><a class="more" href="projects/hybrid-cloud.html">Case study →</a></div>
+        </div>
+      </article>
+      <article class="proj reveal">
+        <a class="art" href="projects/lan-optimization.html" aria-hidden="true" tabindex="-1"><svg viewBox="0 0 400 150" preserveAspectRatio="xMidYMid slice"><path class="a-hot" d="M200 30 L120 75 M200 30 L280 75"/><path class="a-line" d="M120 75 L70 120 M120 75 L170 120 M280 75 L230 120 M280 75 L330 120"/><rect class="a-box" x="172" y="18" width="56" height="22" rx="5" style="stroke:var(--amber)"/><text class="a-txt" x="187" y="32">CORE</text><rect class="a-box" x="96" y="64" width="48" height="22" rx="5"/><text class="a-txt" x="106" y="78">DIST</text><rect class="a-box" x="256" y="64" width="48" height="22" rx="5"/><text class="a-txt" x="266" y="78">DIST</text><rect class="a-box" x="52" y="112" width="36" height="18" rx="4"/><rect class="a-box" x="152" y="112" width="36" height="18" rx="4"/><rect class="a-box" x="212" y="112" width="36" height="18" rx="4"/><rect class="a-box" x="312" y="112" width="36" height="18" rx="4"/><text class="a-txt" x="56" y="124">V10</text><text class="a-txt" x="156" y="124">V20</text><text class="a-txt" x="216" y="124">V30</text><text class="a-txt" x="316" y="124">V40</text></svg></a>
+        <div class="body">
+          <span class="tagline">VLAN · OSPF · HSRP · ACL · design + lab</span>
+          <h3>LAN Architecture Optimisation</h3>
+          <p>Replaced a flat /16 network (800+ hosts in one broadcast domain) with a 3-tier core/distribution/access design: VLAN segmentation, OSPF, HSRP gateways, ACLs and SNMPv3.</p>
+          <div class="facts"><div><b>3</b><span>tiers</span></div><div><b>/16 → /24</b><span>broadcast domains</span></div><div><b>HSRP</b><span>gateway HA</span></div></div>
+          <div class="foot"><div class="chips"><span class="chip">VLAN</span><span class="chip">OSPF</span><span class="chip">HSRP</span><span class="chip">ACL</span><span class="chip">SNMPv3</span></div><a class="more" href="projects/lan-optimization.html">Case study →</a></div>
+        </div>
+      </article>
+      <article class="proj reveal">
+        <a class="art" href="projects/monitoring-stack.html" aria-hidden="true" tabindex="-1"><svg viewBox="0 0 400 150" preserveAspectRatio="xMidYMid slice"><polyline class="a-ok" points="30,110 70,100 100,104 130,80 160,90 190,60 220,72 250,40 280,96 300,104 330,88 370,92"/><path class="a-line" d="M30 50 L370 50" stroke-dasharray="3 5"/><circle cx="250" cy="40" r="5" style="fill:var(--red)"/><text class="a-txt" x="260" y="34" style="fill:var(--red)">trigger → GLPI</text><text class="a-txt" x="30" y="44">threshold</text></svg></a>
+        <div class="body">
+          <span class="tagline">Zabbix · PRTG · GLPI · operations</span>
+          <h3>Monitoring & Alerting Stack</h3>
+          <p>Zabbix SNMPv3 polling, severity-based triggers and automatic GLPI tickets, with NOC dashboards. Every alert becomes a tracked incident instead of an email nobody reads.</p>
+          
+          <div class="foot"><div class="chips"><span class="chip">Zabbix</span><span class="chip">PRTG</span><span class="chip">SNMPv3</span><span class="chip">GLPI</span></div><a class="more" href="projects/monitoring-stack.html">Case study →</a></div>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section class="sec" id="labs">
+  <div class="wrap">
+    <div class="reveal">
+      <div class="kicker">06 / eve-ng learning labs</div>
+      <h2>Protocols, explained in the lab.</h2>
+      <p class="intro">Ten hands-on EVE-NG lab guides. Each covers topology, addressing, configs, verification commands and break/fix exercises.</p>
+    </div>
+    <div class="labs-wrap reveal">
+      <div class="labs-top">
+        <span class="cmd"><span class="p">tarek#</span> show interfaces status labs</span>
+        <div class="prog"><span>10 / 10 guides · captures &amp; .unl files coming</span><div class="bar-p"><i style="width:100%"></i></div></div>
+      </div>
+      <table class="ifs">
+        <thead><tr><th>Port</th><th>Lab</th><th>Focus</th><th>Status</th></tr></thead>
+        <tbody><tr><td>Gi0/1</td><td><a href="labs/bgp.html">BGP fundamentals</a></td><td class="desc">eBGP peering, advertisements, path selection</td>
+<td><span class="state" style="--c:var(--green)">guide ready</span></td></tr><tr><td>Gi0/2</td><td><a href="labs/ospf.html">OSPF multi-area</a></td><td class="desc">Areas, LSA types, summarisation, stub areas</td>
+<td><span class="state" style="--c:var(--green)">guide ready</span></td></tr><tr><td>Gi0/3</td><td><a href="labs/vlan.html">VLANs & inter-VLAN routing</a></td><td class="desc">Trunks, SVIs, router-on-a-stick</td>
+<td><span class="state" style="--c:var(--green)">guide ready</span></td></tr><tr><td>Gi0/4</td><td><a href="labs/ipsec.html">IPsec site-to-site VPN</a></td><td class="desc">IKEv2, route-based VTI, troubleshooting</td>
+<td><span class="state" style="--c:var(--green)">guide ready</span></td></tr><tr><td>Gi0/5</td><td><a href="labs/mpls-vrf.html">MPLS L3VPN & VRF</a></td><td class="desc">LDP, VRF, MP-BGP VPNv4, route targets</td>
+<td><span class="state" style="--c:var(--green)">guide ready</span></td></tr><tr><td>Gi0/6</td><td><a href="labs/switching-resilience.html">STP & LACP resilience</a></td><td class="desc">Root placement, guards, EtherChannel</td>
+<td><span class="state" style="--c:var(--green)">guide ready</span></td></tr><tr><td>Gi0/7</td><td><a href="labs/sdwan-failover.html">SD-WAN path selection & failover</a></td><td class="desc">SLA probes, steering rules, failover timing</td>
+<td><span class="state" style="--c:var(--green)">guide ready</span></td></tr><tr><td>Gi0/8</td><td><a href="labs/fortigate-ha.html">FortiGate HA cluster</a></td><td class="desc">Active-passive FGCP, session pickup, failover tests</td>
+<td><span class="state" style="--c:var(--green)">guide ready</span></td></tr><tr><td>Gi0/9</td><td><a href="labs/ansible-network.html">Ansible network automation</a></td><td class="desc">Inventory, config backups, idempotent changes</td>
+<td><span class="state" style="--c:var(--green)">guide ready</span></td></tr><tr><td>Gi0/10</td><td><a href="labs/snmp-zabbix.html">SNMPv3 monitoring with Zabbix</a></td><td class="desc">SNMPv3 authPriv, templates, triggers</td>
+<td><span class="state" style="--c:var(--green)">guide ready</span></td></tr></tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<section class="sec" id="certs">
+  <div class="wrap">
+    <div class="reveal">
+      <div class="kicker">07 / credentials</div>
+      <h2>A technical foundation. A project mindset.</h2>
+      <p class="intro">Certifications and academy training on the technical side, plus a Master’s and an MBA.</p>
+    </div>
+    <div class="two">
+      <div class="list reveal">
+        <h3>// CERTIFICATIONS &amp; TRAINING</h3>
+        <div class="li"><span class="badge" style="--c:var(--violet)">AVIATRIX</span><div><b>Multicloud Network Associate</b><span>Multicloud networking certification</span></div></div>
+        <div class="li"><span class="badge" style="--c:var(--red)">HUAWEI</span><div><b>HCIA Cloud Computing</b><span>Huawei certification</span></div></div>
+        <div class="li"><span class="badge" style="--c:var(--red)">HUAWEI</span><div><b>HCIA Routing &amp; Switching</b><span>Huawei certification</span></div></div>
+        <div class="li"><span class="badge" style="--c:var(--green)">CISCO NA</span><div><b>CCNP: Core Networking</b><span>Cisco Networking Academy training</span></div></div>
+        <div class="li"><span class="badge" style="--c:var(--green)">CISCO NA</span><div><b>CCNA: Switching, Routing &amp; Wireless Essentials</b><span>Cisco Networking Academy training</span></div></div>
+        <div class="li"><span class="badge" style="--c:var(--green)">CISCO NA</span><div><b>Network Defense · Network Security</b><span>Cisco Networking Academy training</span></div></div>
+      </div>
+      <div>
+        <div class="list reveal">
+          <h3>// EDUCATION</h3>
+          <div class="li"><span class="badge" style="--c:var(--amber)">2024–26</span><div><b>MBA, Management &amp; Project Management</b><span>Leadership, planning and delivery of IT projects</span></div></div>
+          <div class="li"><span class="badge" style="--c:var(--amber)">2021–23</span><div><b>Master’s in Networks &amp; Telecommunications</b><span>Assessed by ENIC-NARIC France as comparable to level 7 (Master’s)</span></div></div>
+        </div>
+        <div class="next reveal"><b>$ next-hop</b> → official vendor exams (Fortinet FCP, Cisco CCNA) to formalise my hands-on experience.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="sec" id="resume">
+  <div class="wrap">
+    <div class="reveal">
+      <div class="kicker">08 / resume</div>
+      <h2>Choose your CV.</h2>
+      <p class="intro">One-page PDFs in English and French, plus a web version you can read here and print.</p>
+    </div>
+    <div class="cv cv3">
+      <div class="cvcard reveal"><div class="paper"><i></i><i></i><i style="width:80%"></i><i></i><i style="width:60%"></i><i></i><span>EN</span></div>
+        <div><h3>English CV</h3><p>1 page · PDF</p><div class="row"><a class="btn primary" href="assets/CV_Tarek_MEDJOUB_EN.pdf" download>↓ Download</a><a class="btn" href="assets/CV_Tarek_MEDJOUB_EN.pdf" target="_blank" rel="noopener">Preview</a></div></div></div>
+      <div class="cvcard reveal"><div class="paper"><i></i><i></i><i style="width:75%"></i><i></i><i style="width:55%"></i><i></i><span>FR</span></div>
+        <div><h3>CV en français</h3><p>1 page · PDF</p><div class="row"><a class="btn primary" href="assets/CV_Tarek_MEDJOUB.pdf" download>↓ Download</a><a class="btn" href="assets/CV_Tarek_MEDJOUB.pdf" target="_blank" rel="noopener">Preview</a></div></div></div>
+      <div class="cvcard reveal"><div class="paper"><i></i><i></i><i style="width:70%"></i><i></i><i style="width:65%"></i><i></i><span>WEB</span></div>
+        <div><h3>Web CV</h3><p>Readable · printable</p><div class="row"><a class="btn primary" href="cv.html">Open →</a></div></div></div>
+    </div>
+  </div>
+</section>
+
+<section class="sec" id="contact">
+  <div class="wrap contact">
+    <div class="reveal">
+      <div class="kicker">09 / contact</div>
+      <h2>Let’s talk infrastructure.</h2>
+      <p class="big">A role, an audit or a network that needs fixing? <span style="color:var(--amber)">Send me a packet.</span></p>
+      <div class="clinks">
+        <a class="clink" href="mailto:tarek.medjoub@outlook.fr"><span class="ico"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg></span>
+          <div><small>EMAIL</small><span>tarek.medjoub@outlook.fr</span></div><button class="copy" type="button" data-copy="tarek.medjoub@outlook.fr">copy</button></a>
+        <a class="clink" href="https://linkedin.com/in/tarek-medjoub" target="_blank" rel="noopener"><span class="ico"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M4.98 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5zM3 9.5h4V21H3zM9.5 9.5h3.8v1.6h.06c.53-1 1.83-2.06 3.77-2.06 4.03 0 4.77 2.65 4.77 6.1V21h-4v-5.1c0-1.22-.02-2.78-1.7-2.78-1.7 0-1.96 1.33-1.96 2.7V21h-4z"/></svg></span>
+          <div><small>LINKEDIN</small><span>in/tarek-medjoub</span></div></a>
+        <div class="clink" style="cursor:default"><span class="ico"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 21s-7-6.2-7-11.5A7 7 0 0 1 19 9.5C19 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg></span>
+          <div><small>LOCATION</small><span>Paris, France</span></div></div>
+      </div>
+    </div>
+    <div class="term reveal">
+      <div class="term-head"><div class="dots"><i></i><i></i><i></i></div><span>compose-message.sh</span></div>
+      <form class="cf term-body" id="cf">
+        <div class="grid2">
+          <div><label for="cfName"><span class="p">$</span>name</label><input id="cfName" required autocomplete="name"></div>
+          <div><label for="cfOrg"><span class="p">$</span>company</label><input id="cfOrg" autocomplete="organization"></div>
+        </div>
+        <div><label for="cfTopic"><span class="p">$</span>topic</label>
+          <select id="cfTopic"><option>Job opportunity</option><option>Network / security audit</option><option>SD-WAN or VPN project</option><option>Cloud connectivity</option><option>Something else</option></select></div>
+        <div><label for="cfMsg"><span class="p">$</span>message</label><textarea id="cfMsg" required></textarea></div>
+        <button class="btn primary" type="submit" style="justify-self:start">./send --via mail →</button>
+        <span class="note" style="all:unset;font-family:var(--mono);font-size:11px;color:var(--dim)">Opens your email client with the message pre-filled.</span>
+      </form>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>© <span class="yr">2026</span> Tarek Medjoub · Paris · <a href="mailto:tarek.medjoub@outlook.fr">tarek.medjoub@outlook.fr</a></span>
+    <span>Press <kbd>/</kbd> or <kbd>Ctrl</kbd>+<kbd>K</kbd> to open the console</span>
+  </div>
+</footer>
+
+<button class="totop" id="toTop" type="button" aria-label="Back to top" title="Back to top"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5M5 12l7-7 7 7"/></svg><span>top</span></button>
+<button class="fab" id="fab" aria-label="Open interactive console"><b>&gt;_</b><span>console</span></button>
+<div class="con-back" id="conBack" role="dialog" aria-modal="true" aria-label="Interactive console">
+  <div class="con">
+    <div class="term-head"><div class="dots"><i></i><i></i><i></i></div><span>tarek@medjoub · interactive console</span><span style="margin-left:auto">esc to close</span></div>
+    <div class="con-out" id="conOut"></div>
+    <div class="con-sug" id="conSug"></div>
+    <div class="con-in"><span class="p">guest@portfolio:~$</span><input id="conIn" autocomplete="off" spellcheck="false" aria-label="Command"></div>
+  </div>
+</div>
+<div class="toast" id="toast" role="status"></div>
+<script src="assets/js/main.js" defer></script>
+<script src="assets/js/topology.js" defer></script>
+</body>
 </html>

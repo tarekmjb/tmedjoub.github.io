@@ -1,332 +1,140 @@
-<!doctype html><html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Supervision &amp; gestion des alertes — Tarek MEDJOUB</title><style>
-:root {
-  --navy: #0a0e1a;
-  --navy2: #0f1629;
-  --card: #131b2e;
-  --card2: #1a2540;
-  --accent: #00d4ff;
-  --accent2: #00ff9d;
-  --text: #e8eaf6;
-  --muted: #8892a4;
-  --border: rgba(0,212,255,0.15);
-}
-* { margin:0; padding:0; box-sizing:border-box; }
-body {
-  font-family:'Sora',sans-serif;
-  background:var(--navy);
-  color:var(--text);
-  line-height:1.7;
-  overflow-x:hidden;
-}
-.noise {
-  position:fixed;inset:0;
-  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
-  pointer-events:none;z-index:0;opacity:.4;
-}
-.grid-bg {
-  position:fixed;inset:0;
-  background-image:linear-gradient(rgba(0,212,255,0.03) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(0,212,255,0.03) 1px, transparent 1px);
-  background-size:60px 60px;
-  pointer-events:none;z-index:0;
-}
-.wrap { max-width:900px;margin:0 auto;padding:0 2rem;position:relative;z-index:1; }
+<!DOCTYPE html>
+<html lang="fr" data-theme="light" data-root="../../">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Supervision &amp; alerting · Tarek MEDJOUB</title>
+<meta name="description" content="Collecte SNMPv3 Zabbix, déclencheurs par niveau de sévérité et tickets GLPI automatiques, avec tableaux de bord NOC. Chaque alerte devient un incident suivi, ">
+<meta name="author" content="Tarek Medjoub">
 
-/* NAV */
-nav {
-  position:sticky;top:0;
-  background:rgba(10,14,26,.92);
-  backdrop-filter:blur(16px);
-  border-bottom:1px solid var(--border);
-  padding:.9rem 0;
-  z-index:100;
-}
-.nav-inner { display:flex;align-items:center;justify-content:space-between; }
-.logo { font-size:1.1rem;font-weight:700;letter-spacing:-.01em; }
-.logo span { color:var(--accent); }
-.nav-links { display:flex;gap:2rem; }
-.nav-links a { color:var(--muted);font-size:.85rem;text-decoration:none;letter-spacing:.05em;text-transform:uppercase;transition:color .2s; }
-.nav-links a:hover { color:var(--accent); }
+<meta name="theme-color" content="#f3efe6">
+<link rel="canonical" href="https://tarekmjb.github.io/tmedjoub.github.io/fr/projects/monitoring-stack.html">
+<link rel="alternate" hreflang="en" href="https://tarekmjb.github.io/tmedjoub.github.io/projects/monitoring-stack.html">
+<link rel="alternate" hreflang="fr" href="https://tarekmjb.github.io/tmedjoub.github.io/fr/projects/monitoring-stack.html">
+<link rel="alternate" hreflang="x-default" href="https://tarekmjb.github.io/tmedjoub.github.io/projects/monitoring-stack.html">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="fr_FR">
+<meta property="og:title" content="Supervision &amp; alerting · Tarek MEDJOUB">
+<meta property="og:description" content="Collecte SNMPv3 Zabbix, déclencheurs par niveau de sévérité et tickets GLPI automatiques, avec tableaux de bord NOC. Chaque alerte devient un incident suivi, ">
+<meta property="og:url" content="https://tarekmjb.github.io/tmedjoub.github.io/fr/projects/monitoring-stack.html">
+<meta property="og:image" content="https://tarekmjb.github.io/tmedjoub.github.io/assets/img/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://tarekmjb.github.io/tmedjoub.github.io/assets/img/og-image.png">
+<link rel="icon" type="image/svg+xml" href="../../assets/img/favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../assets/css/main.css">
+<script>(function(){try{var t=localStorage.getItem('tm-theme');if(t!=='dark')t='light';document.documentElement.dataset.theme=t;}catch(e){}})();</script>
 
-/* HERO */
-.hero {
-  min-height:90vh;display:flex;align-items:center;
-  padding:6rem 0 4rem;
-  position:relative;
-}
-.hero-inner {
-  display:grid;
-  grid-template-columns:1fr 300px;
-  gap:3rem;
-  align-items:center;
-  width:100%;
-}
-@media(max-width:700px){ .hero-inner{grid-template-columns:1fr;} }
-.snapshot-card {
-  background:var(--card);
-  border:1px solid var(--border);
-  border-radius:16px;
-  padding:1.5rem;
-  display:flex;
-  flex-direction:column;
-  gap:0;
-  min-height:340px;
-}
-.snapshot-title {
-  font-size:.72rem;font-weight:700;letter-spacing:.12em;
-  text-transform:uppercase;color:var(--text);
-  padding-bottom:.75rem;
-  margin-bottom:.5rem;
-  border-bottom:1px solid var(--border);
-  flex-shrink:0;
-}
-.snap-item {
-  flex:1;
-  display:flex;
-  flex-direction:column;
-  justify-content:center;
-  padding:.5rem 0;
-  border-bottom:1px solid rgba(255,255,255,.06);
-}
-.snap-item:last-child { border-bottom:none; }
-.snap-val { font-size:1rem;font-weight:700;margin-bottom:.2rem; }
-.snap-val.c1{color:var(--accent);}
-.snap-val.c2{color:var(--accent2);}
-.snap-val.c3{color:var(--accent2);}
-.snap-val.c4{color:var(--accent2);}
-.snap-desc { font-size:.8rem;color:var(--muted);line-height:1.4; }
-.hero-glow {
-  position:absolute;top:-200px;right:-200px;
-  width:700px;height:700px;
-  background:radial-gradient(circle, rgba(0,212,255,.06) 0%, transparent 70%);
-  pointer-events:none;
-}
-.hero-glow2 {
-  position:absolute;bottom:-100px;left:-100px;
-  width:500px;height:500px;
-  background:radial-gradient(circle, rgba(0,255,157,.04) 0%, transparent 70%);
-  pointer-events:none;
-}
-.badge-pill {
-  display:inline-flex;align-items:center;gap:.5rem;
-  border:1px solid rgba(0,255,157,.3);
-  background:rgba(0,255,157,.06);
-  color:var(--accent2);
-  font-size:.75rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;
-  padding:.4rem 1rem;border-radius:99px;margin-bottom:1.5rem;
-}
-.badge-pill::before { content:'';width:6px;height:6px;border-radius:50%;background:var(--accent2);animation:pulse 2s infinite; }
-@keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:.5;transform:scale(1.4)} }
-h1 {
-  font-size:clamp(2.8rem,6vw,4.5rem);
-  font-weight:700;
-  line-height:1.05;
-  letter-spacing:-.03em;
-  margin-bottom:.5rem;
-}
-h1 .accent { color:var(--accent);display:block; }
-.hero-sub {
-  font-size:1.05rem;color:var(--muted);
-  max-width:540px;margin:1.2rem 0 2rem;
-  line-height:1.8;
-}
-.hero-ctas { display:flex;gap:1rem;flex-wrap:wrap;margin-bottom:3rem; }
-.btn-primary {
-  padding:.75rem 1.75rem;
-  background:var(--accent);color:#000;
-  font-weight:700;font-size:.9rem;
-  border-radius:8px;text-decoration:none;
-  transition:transform .15s,box-shadow .15s;
-}
-.btn-primary:hover { transform:translateY(-2px);box-shadow:0 8px 30px rgba(0,212,255,.3); }
-.btn-outline {
-  padding:.75rem 1.75rem;
-  border:1px solid var(--border);color:var(--text);
-  font-weight:600;font-size:.9rem;
-  border-radius:8px;text-decoration:none;
-  transition:border-color .2s,background .2s;
-}
-.btn-outline:hover { border-color:var(--accent);background:rgba(0,212,255,.05); }
+</head>
+<body>
+<a class="skip" href="#main">Aller au contenu</a>
+<div class="progress" aria-hidden="true"></div>
+<header class="bar">
+  <div class="wrap">
+    <a href="../../fr/index.html" class="host" aria-label="Tarek Medjoub"><b>tarek</b>@medjoub:~#<span class="cur" aria-hidden="true"></span></a>
+    <nav class="links" id="nav" aria-label="Principale">
+      <a href="../../fr/index.html#about">À propos</a>
+      <a href="../../fr/index.html#services">Services</a>
+      <a href="../../fr/index.html#stack">Compétences</a>
+      <a href="../../fr/index.html#experience">Expérience</a>
+      <a href="../../fr/index.html#projects">Projets</a>
+      <a href="../../fr/index.html#labs">Labs</a>
+      <a href="../../fr/index.html#certs">Certifs</a>
+      <a href="../../fr/index.html#resume">CV</a>
+      <a href="../../fr/index.html#contact">Contact</a>
+    </nav>
+    <div class="tools">
+      <button class="btn-ico menu-btn" id="menuBtn" aria-label="Menu" aria-expanded="false">☰</button>
+      <button class="btn-ico" id="conBtn" title="Ouvrir la console (/ · Ctrl+K)" aria-label="Ouvrir la console">&gt;_</button>
+      <button class="btn-ico" id="themeBtn" title="Changer de thème" aria-label="Basculer thème clair/sombre">◐</button>
+      <div class="lang" role="group" aria-label="Langue">
+        <a href="../../projects/monitoring-stack.html" data-lang="en" hreflang="en">EN</a>
+        <a href="../../fr/projects/monitoring-stack.html" data-lang="fr" hreflang="fr" class="on" aria-current="true">FR</a>
+      </div>
+    </div>
+  </div>
+</header>
 
-/* SECTION */
-section { padding:5rem 0; }
-.section-tag {
-  font-size:.72rem;font-weight:600;letter-spacing:.15em;text-transform:uppercase;
-  color:var(--accent);margin-bottom:.75rem;
-  display:flex;align-items:center;gap:.6rem;
-}
-.section-tag::before { content:'';width:24px;height:1px;background:var(--accent); }
-h2 { font-size:2rem;font-weight:700;letter-spacing:-.02em;margin-bottom:.5rem; }
-.section-divider { border:none;border-top:1px solid var(--border);margin:5rem 0 0; }
+<main id="main">
 
-/* ABOUT */
-.about-text { font-size:1rem;color:var(--muted);line-height:1.9;max-width:720px; }
-.about-text + .about-text { margin-top:1rem; }
+<div class="wrap" id="top">
+  <div class="crumbs"><a class="back-btn" href="../index.html#projects">← Retour aux projets</a><a href="../index.html">tarek@medjoub</a><span class="sep">/</span><a href="../index.html#projects">projets</a><span class="sep">/</span>monitoring-stack</div>
+  <div class="doc-hero">
+    <div class="kicker">étude de cas · Zabbix · PRTG · GLPI</div>
+    <h1>Supervision & alerting</h1>
+    <p class="sum">Collecte SNMPv3 Zabbix, déclencheurs par niveau de sévérité et tickets GLPI automatiques, avec tableaux de bord NOC. Chaque alerte devient un incident suivi, pas un e-mail ignoré.</p>
+    
+    <div class="meta-row"><span class="meta">Type:<b>Exploitation</b></span><span class="meta">Stack:<b>Zabbix · PRTG · GLPI</b></span></div>
+    <div class="kpis"><div class="kpi"><b>SNMPv3</b><span>authPriv partout</span></div><div class="kpi"><b>5</b><span>niveaux de sévérité</span></div><div class="kpi"><b>auto</b><span>ouverture &amp; clôture des tickets</span></div><div class="kpi"><b>1</b><span>vue NOC</span></div></div>
+  </div>
+  <div class="doc">
+    <nav class="toc" aria-label="Sur cette page"><b>SUR CETTE PAGE</b><a href="#overview">Contexte</a><a href="#architecture">Architecture</a><a href="#thresholds">Conception des alertes</a><a href="#workflow">Processus d’incident</a><a href="#config">Configuration</a></nav>
+    <div class="doc-body"><section id="overview">
+<h2>Contexte &amp; objectifs</h2>
+<div class="note"><div>Les seuils et la configuration ci-dessous sont des valeurs représentatives de cette conception, données à titre d’illustration.</div></div>
+<p>Dans un réseau multisite, le problème n’est pas le manque d’alertes, mais trop d’e-mails, sans responsable ni historique. L’objectif : transformer la supervision en <strong>processus d’incident</strong>. Détecter, ouvrir un ticket, affecter, résoudre, et clôturer automatiquement quand le problème disparaît.</p></section><section id="architecture">
+<h2>Architecture</h2>
+<figure class="figure topo-fig"><svg viewBox="0 0 680 300" role="img" aria-label="Collecte → détection → ticket : chaque problème de sévérité haute ouvre (puis referme) un incident GLPI."><line class="lk " x1="90" y1="60" x2="330" y2="150"/><line class="lk " x1="90" y1="150" x2="330" y2="150"/><line class="lk " x1="90" y1="240" x2="330" y2="150"/><line class="lk " x1="90" y1="150" x2="330" y2="260"/><line class="lk h" x1="330" y1="150" x2="560" y2="90"/><text class="lt" x="451" y="115">webhook → API</text><line class="lk t" x1="330" y1="150" x2="560" y2="210"/><line class="lk t" x1="330" y1="260" x2="560" y2="210"/><g class="nd sw" transform="translate(-11,43)"><rect width="202" height="34" rx="6"/><text x="9" y="15">Commutateurs / routeurs</text><text class="s" x="9" y="27">SNMPv3</text></g><g class="nd fw" transform="translate(41,133)"><rect width="98" height="34" rx="6"/><text x="9" y="15">FortiGate</text><text class="s" x="9" y="27">SNMPv3 + traps</text></g><g class="nd sv" transform="translate(45,223)"><rect width="90" height="34" rx="6"/><text x="9" y="15">Serveurs</text><text class="s" x="9" y="27">Zabbix agent</text></g><g class="nd rt" transform="translate(257,133)"><rect width="146" height="34" rx="6"/><text x="9" y="15">Zabbix server</text><text class="s" x="9" y="27">déclencheurs · actions</text></g><g class="nd rt" transform="translate(261,243)"><rect width="138" height="34" rx="6"/><text x="9" y="15">PRTG</text><text class="s" x="9" y="27">capteurs WAN / cloud</text></g><g class="nd cl" transform="translate(515,73)"><rect width="90" height="34" rx="6"/><text x="9" y="15">GLPI</text><text class="s" x="9" y="27">tickets · SLA</text></g><g class="nd cl" transform="translate(503,193)"><rect width="114" height="34" rx="6"/><text x="9" y="15">Tableaux NOC</text><text class="s" x="9" y="27">Grafana / Zabbix</text></g></svg><figcaption>Collecte → détection → ticket : chaque problème de sévérité haute ouvre (puis referme) un incident GLPI.</figcaption></figure>
+<div class="dgrid"><div class="dcard"><span class=why>collecte</span><b>Zabbix + SNMPv3</b><span>authPriv (SHA / AES) sur chaque équipement réseau ; agents sur les serveurs. Modèles par famille d’équipements.</span></div><div class="dcard"><span class=why>WAN &amp; cloud</span><b>PRTG</b><span>Capteurs ping, SNMP et HTTP sur les liens FAI, tunnels IPsec et points d’accès cloud.</span></div><div class="dcard"><span class=why>incident</span><b>GLPI</b><span>Un webhook crée le ticket via l’API REST de GLPI, avec hôte, sévérité et lien vers le graphe. Le retour à la normale ajoute un suivi et le clôture.</span></div><div class="dcard"><span class=why>anti-bruit</span><b>Dépendances &amp; hystérésis</b><span>Si le routeur d’un site tombe, les alertes des équipements derrière lui sont supprimées. Les seuils de retour sont plus bas que les seuils de déclenchement pour éviter les oscillations.</span></div></div></section><section id="thresholds">
+<h2>Conception des alertes</h2>
+<div class="tbl-wrap"><table class="t"><thead><tr><th>Signal</th><th>Déclenchement</th><th>Retour</th><th>Sévérité</th><th>GLPI</th></tr></thead><tbody><tr><td>Équipement injoignable (ICMP)</td><td>3 échecs consécutifs</td><td>1 succès</td><td>Disaster</td><td>Ticket P1</td></tr><tr><td>Pair BGP / IPsec tombé</td><td>état ≠ Established</td><td>Established</td><td>High</td><td>Ticket P1</td></tr><tr><td>SLA SD-WAN en échec</td><td>membre hors SLA</td><td>retour dans le SLA</td><td>Average</td><td>Ticket P2</td></tr><tr><td>Utilisation d’interface</td><td>&gt; 90 % / 10 min</td><td>&lt; 75 %</td><td>Average</td><td>Ticket P3</td></tr><tr><td>CPU</td><td>&gt; 85 % / 5 min</td><td>&lt; 70 %</td><td>Warning</td><td>tableau de bord</td></tr><tr><td>Changement de topologie STP</td><td>trap reçu</td><td>—</td><td>Warning</td><td>tableau de bord</td></tr></tbody></table></div>
+<div class="code"><div class="ch"><span>Expressions de déclencheurs Zabbix (syntaxe 6.x)</span><button type="button">copy</button></div><pre># Interface saturation, with hysteresis via recovery expression
+avg(/FG-SITE-A/net.if.in[ifHCInOctets.5],10m) &gt; 0.9 * last(/FG-SITE-A/net.if.speed[ifHighSpeed.5])
+# recovery:
+avg(/FG-SITE-A/net.if.in[ifHCInOctets.5],10m) &lt; 0.75 * last(/FG-SITE-A/net.if.speed[ifHighSpeed.5])
 
-/* TECH STACK */
-.stack-grid { display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:1rem;margin-top:2rem; }
-.stack-card {
-  background:var(--card);border:1px solid var(--border);border-radius:12px;
-  padding:1.5rem;transition:border-color .2s,transform .2s;
-}
-.stack-card:hover { border-color:rgba(0,212,255,.4);transform:translateY(-3px); }
-.stack-title { font-size:.8rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);margin-bottom:.75rem; }
-.stack-desc { font-size:.82rem;color:var(--muted);margin-bottom:1rem;line-height:1.6; }
-.tags { display:flex;flex-wrap:wrap;gap:.4rem; }
-.tag {
-  font-size:.72rem;font-weight:600;
-  padding:.3rem .7rem;border-radius:6px;
-  background:rgba(0,212,255,.08);
-  border:1px solid rgba(0,212,255,.2);
-  color:var(--accent);
-  font-family:'JetBrains Mono',monospace;
-}
+# Device unreachable: 3 consecutive ICMP failures
+max(/FG-SITE-A/icmpping,#3) = 0</pre></div>
+<p>Les clés d’items sont simplifiées pour la lecture ; en pratique elles proviennent des modèles constructeur.</p></section><section id="workflow">
+<h2>Processus d’incident</h2>
+<div class="steps"><div class="step"><div><h4>Détecter</h4><p>Un déclencheur s’active dans Zabbix (ou un capteur passe en erreur dans PRTG).</p></div></div><div class="step"><div><h4>Ouvrir</h4><p>Le webhook crée un ticket GLPI : catégorie, priorité selon la sévérité, hôte, dernières valeurs et lien vers le graphe.</p></div></div><div class="step"><div><h4>Affecter &amp; acquitter</h4><p>Le ticket part au groupe réseau ; l’acquittement dans Zabbix stoppe l’escalade.</p></div></div><div class="step"><div><h4>Résoudre</h4><p>Quand le déclencheur revient à la normale, un suivi est ajouté et le ticket est résolu automatiquement.</p></div></div><div class="step"><div><h4>Analyser</h4><p>Revue hebdomadaire des tickets récurrents pour traiter les causes, pas les symptômes.</p></div></div></div></section><section id="config">
+<h2>Configuration côté équipements</h2>
+<div class="code"><div class="ch"><span>Cisco IOS · SNMPv3 authPriv</span><button type="button">copy</button></div><pre>snmp-server group NMS v3 priv read NMS-VIEW access ACL-NMS
+snmp-server view NMS-VIEW iso included
+snmp-server user zabbix NMS v3 auth sha &lt;redacted&gt; priv aes 128 &lt;redacted&gt;
+snmp-server host 10.10.50.20 version 3 priv zabbix
+snmp-server enable traps snmp linkdown linkup
+!
+ip access-list standard ACL-NMS
+ permit 10.10.50.20</pre></div>
+<div class="code"><div class="ch"><span>FortiOS · SNMPv3</span><button type="button">copy</button></div><pre>config system snmp user
+    edit &quot;zabbix&quot;
+        set notify-hosts 10.10.50.20
+        set security-level auth-priv
+        set auth-proto sha256
+        set auth-pwd ENC ********
+        set priv-proto aes256
+        set priv-pwd ENC ********
+    next
+end</pre></div></section><div class="pn"><a href="lan-optimization.html"><small>← précédent</small><span>Optimisation de l’architecture LAN</span></a><a class="r" href="sdwan.html"><small>suivant →</small><span>Migration SD-WAN d’entreprise</span></a></div><div class="end-nav"><a class="back-btn" href="../index.html#projects">← Retour aux projets</a><a class="back-btn" href="#top" data-top>↑ Retour en haut</a></div></div>
+  </div>
+</div>
 
-/* NETWORKING EXPANDED */
-.net-grid { display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1rem;margin-top:1.5rem; }
-.net-card {
-  background:var(--card);border:1px solid var(--border);border-radius:12px;
-  padding:1.5rem;transition:border-color .2s,transform .2s;position:relative;overflow:hidden;
-}
-.net-card::before {
-  content:'';position:absolute;top:0;left:0;right:0;height:2px;
-  background:linear-gradient(90deg,var(--accent),var(--accent2));
-  opacity:0;transition:opacity .2s;
-}
-.net-card:hover { border-color:rgba(0,212,255,.45);transform:translateY(-3px); }
-.net-card:hover::before { opacity:1; }
-.net-card-header { display:flex;align-items:center;gap:.75rem;margin-bottom:.85rem; }
-.net-icon {
-  width:34px;height:34px;border-radius:8px;
-  background:rgba(0,212,255,.1);border:1px solid rgba(0,212,255,.2);
-  display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:.9rem;
-}
-.net-title { font-size:.8rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--accent); }
-.net-bullets { list-style:none;display:flex;flex-direction:column;gap:.35rem;margin-bottom:1rem; }
-.net-bullets li { font-size:.78rem;color:var(--muted);line-height:1.6;display:flex;gap:.5rem; }
-.net-bullets li::before { content:'▸';color:var(--accent2);flex-shrink:0;font-size:.65rem;margin-top:.25rem; }
-.net-bullets li strong { color:var(--text);font-weight:600; }
-.net-tags { display:flex;flex-wrap:wrap;gap:.35rem;margin-top:.85rem; }
-.net-tag {
-  font-size:.68rem;font-weight:600;padding:.25rem .6rem;border-radius:5px;
-  background:rgba(0,212,255,.07);border:1px solid rgba(0,212,255,.18);
-  color:var(--accent);font-family:'JetBrains Mono',monospace;
-}
-.net-tag.g { background:rgba(0,255,157,.06);border-color:rgba(0,255,157,.18);color:var(--accent2); }
-.skills-subnav { display:flex;flex-wrap:wrap;gap:.5rem;margin-top:1.5rem;margin-bottom:.25rem; }
-.skills-subnav span {
-  font-size:.72rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;
-  padding:.35rem .9rem;border-radius:99px;
-  border:1px solid var(--border);color:var(--muted);cursor:default;
-}
-.skills-subnav span.active { border-color:var(--accent);color:var(--accent);background:rgba(0,212,255,.07); }
+</main>
 
-/* EXPERIENCE */
-.exp-list { display:flex;flex-direction:column;gap:1.5rem;margin-top:2rem; }
-.exp-card {
-  background:var(--card);border:1px solid var(--border);border-radius:12px;
-  padding:1.75rem;position:relative;overflow:hidden;
-  transition:border-color .2s;
-}
-.exp-card::before {
-  content:'';position:absolute;left:0;top:0;bottom:0;
-  width:3px;background:linear-gradient(to bottom,var(--accent),var(--accent2));
-  border-radius:3px 0 0 3px;
-}
-.exp-card:hover { border-color:rgba(0,212,255,.35); }
-.exp-role { font-size:1rem;font-weight:700;color:var(--accent);margin-bottom:.3rem; }
-.exp-meta { font-size:.8rem;color:var(--muted);margin-bottom:1rem;font-family:'JetBrains Mono',monospace; }
-.exp-bullets { list-style:none;display:flex;flex-direction:column;gap:.5rem; }
-.exp-bullets li { font-size:.88rem;color:var(--muted);line-height:1.7;display:flex;gap:.6rem; }
-.exp-bullets li::before { content:'▸';color:var(--accent);flex-shrink:0;margin-top:.05rem; }
-.exp-tech { display:flex;flex-wrap:wrap;gap:.4rem;margin-top:1rem; }
-.exp-tech .tag { background:rgba(0,255,157,.06);border-color:rgba(0,255,157,.2);color:var(--accent2); }
+<footer>
+  <div class="wrap">
+    <span>© <span class="yr">2026</span> Tarek Medjoub · Paris · <a href="mailto:tarek.medjoub@outlook.fr">tarek.medjoub@outlook.fr</a></span>
+    <span>Appuyez sur <kbd>/</kbd> ou <kbd>Ctrl</kbd>+<kbd>K</kbd> pour ouvrir la console</span>
+  </div>
+</footer>
 
-/* PROJECTS */
-.proj-grid { display:grid;grid-template-columns:repeat(auto-fit,minmax(380px,1fr));gap:1rem;margin-top:2rem; }
-@media(max-width:600px){ .proj-grid{grid-template-columns:1fr;} }
-.proj-card {
-  background:var(--card);border:1px solid var(--border);border-radius:12px;
-  padding:1.5rem;transition:border-color .2s,transform .2s;
-  display:flex;flex-direction:column;
-}
-.proj-card:hover { border-color:rgba(0,212,255,.4);transform:translateY(-3px); }
-.proj-title { font-size:1rem;font-weight:700;color:var(--accent);margin-bottom:.5rem; }
-.proj-desc { font-size:.85rem;color:var(--muted);line-height:1.75;margin-bottom:1rem;flex:1; }
-.proj-footer { display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:.75rem;margin-top:.5rem; }
-.btn-details {
-  display:inline-flex;align-items:center;gap:.4rem;
-  font-size:.78rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;
-  color:var(--navy);background:var(--accent);
-  padding:.45rem 1.1rem;border-radius:6px;
-  text-decoration:none;
-  transition:transform .15s,box-shadow .15s,background .15s;
-  white-space:nowrap;
-}
-.btn-details:hover { transform:translateY(-2px);box-shadow:0 6px 20px rgba(0,212,255,.3); }
-.btn-details svg { transition:transform .2s; }
-.btn-details:hover svg { transform:translateX(3px); }
+<button class="totop" id="toTop" type="button" aria-label="Retour en haut" title="Retour en haut"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5M5 12l7-7 7 7"/></svg><span>haut</span></button>
+<button class="fab" id="fab" aria-label="Ouvrir la console interactive"><b>&gt;_</b><span>console</span></button>
+<div class="con-back" id="conBack" role="dialog" aria-modal="true" aria-label="Console interactive">
+  <div class="con">
+    <div class="term-head"><div class="dots"><i></i><i></i><i></i></div><span>tarek@medjoub · console interactive</span><span style="margin-left:auto">échap pour fermer</span></div>
+    <div class="con-out" id="conOut"></div>
+    <div class="con-sug" id="conSug"></div>
+    <div class="con-in"><span class="p">guest@portfolio:~$</span><input id="conIn" autocomplete="off" spellcheck="false" aria-label="Commande"></div>
+  </div>
+</div>
+<div class="toast" id="toast" role="status"></div>
+<script src="../../assets/js/main.js" defer></script>
 
-/* CERTS */
-.cert-table { width:100%;border-collapse:collapse;margin-top:2rem; }
-.cert-table th { text-align:left;font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);border-bottom:1px solid var(--border);padding:.6rem 1rem .6rem 0; }
-.cert-table td { padding:.85rem 1rem .85rem 0;font-size:.88rem;border-bottom:1px solid rgba(255,255,255,.04);color:var(--muted); }
-.cert-table td:first-child { color:var(--text);font-weight:500; }
-.cert-table td:last-child { font-family:'JetBrains Mono',monospace;color:var(--accent); }
-
-/* EDU */
-.edu-grid { display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:1rem;margin-top:2rem; }
-.edu-card { background:var(--card);border:1px solid var(--border);border-radius:12px;padding:1.5rem; }
-.edu-title { font-size:.9rem;font-weight:700;color:var(--accent);margin-bottom:.4rem;line-height:1.4; }
-.edu-year { font-size:.78rem;font-family:'JetBrains Mono',monospace;color:var(--accent2);margin-bottom:.5rem; }
-.edu-badge {
-  display:inline-flex;align-items:center;gap:.4rem;
-  margin-top:.75rem;padding:.35rem .75rem;border-radius:6px;
-  background:rgba(0,255,157,.07);border:1px solid rgba(0,255,157,.25);
-  font-size:.72rem;font-weight:700;color:var(--accent2);letter-spacing:.04em;
-}
-.edu-badge svg { flex-shrink:0; }
-.edu-desc { font-size:.82rem;color:var(--muted);line-height:1.7; }
-
-/* CONTACT */
-.contact-card {
-  background:var(--card);border:1px solid var(--border);border-radius:16px;
-  padding:2.5rem;margin-top:2rem;
-  display:flex;flex-direction:column;gap:1rem;
-  max-width:560px;
-}
-.contact-row { display:flex;align-items:center;gap:1rem;font-size:.9rem; }
-.contact-icon { width:36px;height:36px;border-radius:8px;background:rgba(0,212,255,.1);display:flex;align-items:center;justify-content:center;flex-shrink:0; }
-.contact-label { font-size:.72rem;text-transform:uppercase;letter-spacing:.1em;color:var(--muted); }
-.contact-val { color:var(--text);font-weight:500; }
-.contact-val a { color:var(--accent);text-decoration:none; }
-.contact-val a:hover { text-decoration:underline; }
-
-/* FOOTER */
-footer { border-top:1px solid var(--border);padding:2.5rem 0;text-align:center;color:var(--muted);font-size:.82rem; }
-
-.reveal { opacity:1;transform:none; }
-.reveal.visible { opacity:1;transform:none; }
-
-html { scroll-padding-top:100px; }
-a:focus-visible { outline:2px solid var(--accent);outline-offset:5px; }
-.hero-ctas { flex-wrap:wrap; }
-.contact-val { overflow-wrap:anywhere; }
-@media(max-width:600px) { .nav-inner {flex-wrap:wrap;gap:12px;} .nav-links {display:flex;flex-wrap:wrap;gap:12px;} .cert-table td,.cert-table th {font-size:.7rem;padding-right:.4rem;} .contact-card {padding:1.2rem;} }
-@media(prefers-reduced-motion:reduce) { * {animation:none!important;transition:none!important;scroll-behavior:auto!important;} }
-
-.menu-toggle{display:none;background:none;color:var(--accent);border:1px solid var(--border);padding:.45rem .7rem;border-radius:6px;font:inherit;font-size:.8rem}
-.nav-links{gap:1.15rem}.nav-links a{font-size:.72rem}.nav-links a.active{color:var(--accent)}
-.resume-intro{font-size:.9rem;color:var(--muted);margin:1rem 0 1.5rem;max-width:600px}
-.resume-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.25rem}
-.resume-card{padding:1.5rem;background:var(--card);border:1px solid var(--border);border-radius:14px;transition:border-color .2s}
-.resume-card:hover{border-color:var(--accent)}.resume-lang{display:inline-grid;place-items:center;width:43px;height:43px;background:rgba(0,212,255,.1);color:var(--accent);border-radius:9px;font-family:'JetBrains Mono',monospace;font-size:.95rem;margin-bottom:1.25rem}
-.resume-card h3{font-size:1.05rem}.resume-card p{font-size:.8rem;color:var(--muted);margin:.5rem 0}.resume-format{font-size:.68rem;color:var(--muted)}
-.resume-actions{display:flex;align-items:center;gap:1rem;margin-top:1.5rem;flex-wrap:wrap}.resume-actions .btn-primary{font-size:.78rem;padding:.6rem 1rem}.resume-actions>a:last-child{font-size:.75rem;color:var(--accent);text-decoration:none}
-.project-filters{display:flex;gap:.5rem;flex-wrap:wrap;margin:1.5rem 0}.project-filters button{border:1px solid var(--border);color:var(--muted);background:var(--card);border-radius:7px;padding:.55rem .85rem;font:inherit;font-size:.7rem;cursor:pointer}.project-filters button.selected{color:var(--navy);background:var(--accent)}.proj-card[hidden]{display:none}
-.back-top{position:fixed;bottom:20px;right:20px;z-index:90;background:var(--card2);color:var(--accent);border:1px solid var(--border);width:40px;height:40px;display:grid;place-items:center;text-decoration:none;border-radius:10px}.back-top[hidden]{display:none}
-@media(max-width:700px){.resume-grid{grid-template-columns:1fr}.nav-inner{flex-wrap:wrap}.menu-toggle{display:block;cursor:pointer}.nav-links{display:flex;flex-wrap:wrap;width:100%;gap:1rem}.js-ready .nav-links{display:none}.js-ready .nav-links.open{display:flex}h1{overflow-wrap:normal}.wrap{padding-inline:1.25rem}}
-
-.ui-icon{display:inline-block;vertical-align:middle;flex-shrink:0;color:inherit}.net-icon{color:var(--accent)}.btn-primary,.btn-outline,.btn-details,.menu-toggle{display:inline-flex;align-items:center;justify-content:center;gap:.55rem}.resume-actions>a:last-child{display:inline-flex;align-items:center;gap:.4rem}.section-tag .ui-icon{width:15px;height:15px;margin-right:.4rem}.labs-intro{font-size:.9rem;line-height:1.9;color:var(--muted);margin:1rem 0;max-width:700px}.labs-note{display:flex;gap:.8rem;align-items:flex-start;padding:1rem 1.2rem;background:rgba(0,212,255,.04);border:1px solid var(--border);border-radius:10px;color:var(--muted);font-size:.78rem;margin:1.5rem 0}.labs-note .ui-icon{color:var(--accent)}.labs-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1.25rem}.lab-card{display:flex;flex-direction:column;padding:1.5rem;background:var(--card);border:1px solid var(--border);border-radius:14px;transition:border-color .2s}.lab-card:hover{border-color:var(--accent)}.lab-top{display:flex;justify-content:space-between;align-items:center;color:var(--accent);margin-bottom:1.3rem}.lab-top>.ui-icon{width:25px;height:25px}.lab-status{font-size:.6rem;letter-spacing:.07em;text-transform:uppercase;padding:.25rem .55rem;border:1px solid var(--border);border-radius:20px;color:var(--muted)}.lab-category{font-family:'JetBrains Mono',monospace;font-size:.65rem;color:var(--accent);margin-bottom:.5rem}.lab-card h3{font-size:1.05rem;line-height:1.5}.lab-card p{font-size:.8rem;line-height:1.8;color:var(--muted);margin:.8rem 0 1rem}.lab-card .tags{margin-top:auto;margin-bottom:1.3rem}.lab-card .btn-details{justify-content:flex-start}.lab-outline{padding-left:1.2rem;color:var(--muted);font-size:.9rem;line-height:2.2;margin-top:1rem}.lab-checklist{margin-top:1rem;border:1px solid var(--border);border-radius:12px;overflow:hidden}.lab-checklist>div{padding:1rem;display:flex;gap:1rem;align-items:center;background:var(--card)}.lab-checklist>div+div{border-top:1px solid var(--border)}.lab-checklist span{font-size:.65rem;color:var(--accent);min-width:80px}.lab-checklist strong{font-size:.8rem;font-weight:500}.nav-links{gap:.9rem}.nav-links a{font-size:.66rem}
-@media(max-width:600px){.labs-grid{grid-template-columns:1fr}.lab-card{padding:1.2rem}.lab-checklist>div{align-items:flex-start}.lab-checklist strong{font-size:.75rem}}
-</style><style>.language-switch{display:inline-flex;align-items:center;gap:3px;flex-shrink:0;padding:3px;border:1px solid var(--border);border-radius:8px;background:var(--card)}.language-switch a{font:600 .65rem 'Sora',sans-serif;color:var(--muted);padding:5px 7px;text-decoration:none;border-radius:5px}.language-switch a[aria-current="page"]{color:var(--navy);background:var(--accent)}.language-strip{max-width:900px;margin:0 auto;padding:1rem 2rem;display:flex;justify-content:flex-end;position:relative;z-index:2}.nav-inner{gap:.8rem}.nav-links{gap:.7rem}.nav-links a{font-size:.61rem}@media(max-width:700px){.nav-inner>.language-switch{margin-left:0}.menu-toggle{margin-left:auto}.nav-links{order:4}.language-strip{padding-inline:1.25rem}.hero h1{font-size:clamp(2rem,7vw,3rem)}}html[lang=fr] .hero h1{font-size:clamp(2rem,5.5vw,3rem)}html[lang=fr] .hero-inner{gap:2rem}</style></head><body><div class="language-strip"><div class="language-switch" role="group" aria-label="Langue du site"><a href="../../projects/monitoring-stack.html" data-language="en" lang="en" hreflang="en">EN</a><a href="monitoring-stack.html" data-language="fr" lang="fr" hreflang="fr" aria-current="page">FR</a></div></div><main class="wrap"><section style="padding:3rem 0"><a class="btn-outline" href="../index.html#projects">Retour aux projets</a><h1 style="font-size:clamp(2rem,6vw,3rem);margin-top:2rem">Supervision &amp; gestion des alertes</h1><p class="about-text">Une chaîne de supervision associant Zabbix, SNMP et GLPI.</p><article style="margin-top:2rem"><h2 style="font-size:1.4rem">Collecte</h2><p class="about-text">Interrogation SNMP avec Zabbix et définition des seuils d’alerte.</p></article><article style="margin-top:2rem"><h2 style="font-size:1.4rem">Suivi des incidents</h2><p class="about-text">Intégration GLPI pour la création de tickets et le suivi des interventions.</p></article><article style="margin-top:2rem"><h2 style="font-size:1.4rem">Visibilité</h2><p class="about-text">Tableaux de bord de type NOC pour suivre les alertes de l’infrastructure.</p></article></section></main><script src="../../language.js" defer></script></body></html>
+</body>
+</html>
