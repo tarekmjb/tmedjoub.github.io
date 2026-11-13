@@ -1,12 +1,13 @@
 """Homepage, enterprise-vendor style: hero band, services tiles, expertise explorer,
 featured work, live demo band, journey, resource center, credentials, CTA, contact."""
+import re
 from common import VER, L, layout, EMAIL, LINKEDIN, SITE
 from labs_data import LABS
 from projects_data import PROJECTS
 from chrome import ico, EXPERTISE
 
 
-def home(lang):
+def home(lang, page="index"):
     x = L(lang); t = x.t
     root = "../" if lang == "fr" else ""
     cv_en = root + "assets/CV_Tarek_MEDJOUB_EN.pdf"
@@ -30,7 +31,7 @@ def home(lang):
     hero = f"""
 <section class="hero-band" id="top">
   <canvas class="mesh" id="mesh" aria-hidden="true"></canvas>
-  <div class="wrap hero-grid">
+  <div class="wrap hero-grid hero-solo">
     <div class="hero-copy">
       <span class="eyebrow">Tarek Medjoub · {t('Network, Security &amp; Cloud Engineer', 'Ingénieur Réseaux, Sécurité &amp; Cloud')}</span>
       <h1>{t('Resilient networks, <br><em>from the branch to the cloud</em>.', 'Des réseaux résilients, <br><em>de l’agence jusqu’au cloud</em>.')}</h1>
@@ -38,14 +39,8 @@ def home(lang):
                               'Je conçois, sécurise et exploite des réseaux d’entreprise multisites : SD-WAN Fortinet, IPsec/BGP et connectivité hybride vers Azure et AWS.')}</p>
       <div class="cta">
         <a class="btn primary lg" href="#work">{t('Explore my work', 'Découvrir mes réalisations')} {ico('arrow', 16)}</a>
-        <a class="btn ghost lg" href="#contact">{t('Contact me', 'Me contacter')}</a>
+        <a class="btn ghost lg" href="contact.html">{t('Contact me', 'Me contacter')}</a>
       </div>
-    </div>
-    <div class="hero-feature">
-      <span class="hf-label">{t('Highlights', 'À la une')}</span>
-      <a class="hf-card" href="projects/sdwan.html"><span class="hf-type">{t('Case study', 'Étude de cas')}</span><b>{t('SD-WAN migration: failover from 3–5 min to ≈1.5 s', 'Migration SD-WAN : bascule de 3–5 min à ≈1,5 s')}</b><span class="hf-go">{ico('arrow', 16)}</span></a>
-      <a class="hf-card" href="projects/hybrid-cloud.html"><span class="hf-type">{t('Case study', 'Étude de cas')}</span><b>{t('One FortiGate, two clouds: Azure + AWS over BGP', 'Un FortiGate, deux clouds : Azure + AWS en BGP')}</b><span class="hf-go">{ico('arrow', 16)}</span></a>
-      <a class="hf-card" href="tools.html"><span class="hf-type">{t('Free tool', 'Outil gratuit')}</span><b>{t('Network toolkit: subnet, IPv6, VLSM, IPsec MSS', 'Outils réseau : sous-réseau, IPv6, VLSM, MSS IPsec')}</b><span class="hf-go">{ico('arrow', 16)}</span></a>
     </div>
   </div>
   <div class="wrap">
@@ -91,7 +86,7 @@ def home(lang):
            ("cloud", "cloud", t('Cloud connectivity review', 'Revue de la connectivité cloud'),
             t('Site-to-cloud VPN to Azure and AWS, BGP route propagation, filtering and monitoring.', 'VPN site-à-cloud vers Azure et AWS, propagation BGP, filtrage et supervision.'))]
     tiles = "".join(f"""
-      <a class="tile reveal" href="#expertise-{exp}">
+      <a class="tile reveal" href="about.html#expertise-{exp}">
         <div class="tile-art">{ILL[il]}</div>
         <div class="tile-body"><h3>{ti}</h3><p>{de}</p><span class="link-arrow">{t('Learn more', 'En savoir plus')} {ico('arrow', 15)}</span></div>
       </a>""" for il, exp, ti, de in svc)
@@ -104,11 +99,12 @@ def home(lang):
     </div>
     <div class="tiles">{tiles}
     </div>
-    <details class="more"><summary><span>{t('How I work: 5 steps', 'Ma méthode en 5 étapes')}</span><svg class="more-chev" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M6 9l6 6 6-6"/></svg></summary><div class="more-body"><ol class="process" aria-label="{t('Working method', 'Méthode de travail')}">
-      <li><b>01</b><span>{t('Discover', 'Découvrir')}</span></li><li><b>02</b><span>{t('Audit', 'Auditer')}</span></li><li><b>03</b><span>{t('Design', 'Concevoir')}</span></li><li><b>04</b><span>{t('Validate in EVE-NG', 'Valider sous EVE-NG')}</span></li><li><b>05</b><span>{t('Document &amp; hand over', 'Documenter &amp; transmettre')}</span></li>
-    </ol></div></details>
   </div>
 </section>"""
+
+    PROCESS = f'''<div class="proc-wrap reveal"><span class="kicker">{t("How I work", "Ma méthode")}</span><ol class="process" aria-label="{t('Working method', 'Méthode de travail')}">
+      <li><b>01</b><span>{t('Discover', 'Découvrir')}</span></li><li><b>02</b><span>{t('Audit', 'Auditer')}</span></li><li><b>03</b><span>{t('Design', 'Concevoir')}</span></li><li><b>04</b><span>{t('Validate in EVE-NG', 'Valider sous EVE-NG')}</span></li><li><b>05</b><span>{t('Document &amp; hand over', 'Documenter &amp; transmettre')}</span></li>
+    </ol></div>'''
 
     # ───────── 3. expertise explorer ─────────
     EXP = {
@@ -246,7 +242,7 @@ def home(lang):
          t('Audits of network and security configurations, firewall and VPN reviews, SD-WAN and cloud connectivity assessments, with documentation.', 'Audits de configurations réseau et sécurité, revues pare-feu et VPN, évaluations SD-WAN et cloud, avec documentation.'), True),
     ]
     journey = "".join(f"""
-      <li class="jr{' now' if now else ''} reveal"><span class="jr-year">{y}</span><details class="jr-card"{' open' if now else ''}><summary><span class="jr-sum"><h3>{ti}</h3><span class="jr-org">{org}</span></span>{'<span class="pill-now">' + t('current', 'actuel') + '</span>' if now else ''}<svg class="more-chev" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M6 9l6 6 6-6"/></svg></summary><p>{de}</p></details></li>""" for y, ti, org, de, now in jobs)
+      <li class="jr{' now' if now else ''} reveal"><span class="jr-year">{y}</span><details class="jr-card" open><summary><span class="jr-sum"><h3>{ti}</h3><span class="jr-org">{org}</span></span>{'<span class="pill-now">' + t('current', 'actuel') + '</span>' if now else ''}<svg class="more-chev" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M6 9l6 6 6-6"/></svg></summary><p>{de}</p></details></li>""" for y, ti, org, de, now in jobs)
     about = f"""
 <section class="band" id="about">
   <div class="wrap about-v">
@@ -312,12 +308,12 @@ def home(lang):
       <div class="cred"><span class="cred-v" style="--c:#c7000b">Huawei</span><b>HCIA Cloud Computing</b><small>{t('Certification', 'Certification')}</small></div>
       <div class="cred"><span class="cred-v" style="--c:#c7000b">Huawei</span><b>HCIA Routing &amp; Switching</b><small>{t('Certification', 'Certification')}</small></div>
     </div>
-    <details class="more"><summary><span>{t('Show training &amp; education', 'Voir formations &amp; diplômes')}</span><svg class="more-chev" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M6 9l6 6 6-6"/></svg></summary><div class="more-body"><div class="cred-grid"><div class="cred"><span class="cred-v" style="--c:#0a7ea4">Cisco NetAcad</span><b>CCNP: Core Networking</b><small>{t('Academy training', 'Formation académique')}</small></div>
+    <div class="cred-grid reveal" style="margin-top:16px"><div class="cred"><span class="cred-v" style="--c:#0a7ea4">Cisco NetAcad</span><b>CCNP: Core Networking</b><small>{t('Academy training', 'Formation académique')}</small></div>
       <div class="cred"><span class="cred-v" style="--c:#0a7ea4">Cisco NetAcad</span><b>CCNA: SRWE</b><small>{t('Academy training', 'Formation académique')}</small></div>
       <div class="cred"><span class="cred-v" style="--c:#0a7ea4">Cisco NetAcad</span><b>Network Defense · Network Security</b><small>{t('Academy training', 'Formation académique')}</small></div></div><div class="edu-row">
       <div class="edu"><span>2024 – 2026</span><b>{t('MBA, Management &amp; Project Management', 'MBA Management &amp; Gestion de projet')}</b></div>
       <div class="edu"><span>2021 – 2023</span><b>{t('Master’s in Networks &amp; Telecommunications', 'Master Réseaux &amp; Télécommunications')}</b><small>{t('ENIC-NARIC France: comparable to level 7', 'ENIC-NARIC France : comparable au niveau 7')}</small></div>
-      <div class="edu next"><span>{t('Next step', 'Prochaine étape')}</span><b>{t('Fortinet FCP · Cisco CCNA exams', 'Examens Fortinet FCP · Cisco CCNA')}</b></div></div></div></details>
+      <div class="edu next"><span>{t('Next step', 'Prochaine étape')}</span><b>{t('Fortinet FCP · Cisco CCNA exams', 'Examens Fortinet FCP · Cisco CCNA')}</b></div></div>
     </div>
 </section>"""
 
@@ -326,7 +322,7 @@ def home(lang):
 <section class="cta-band">
   <div class="wrap cta-inner reveal">
     <div><h2>{t('Let’s build a network that stays up.', 'Construisons un réseau qui tient.')}</h2><p>{t('Hiring, planning an audit or migrating to SD-WAN or the cloud? Let’s talk.', 'Un recrutement, un audit ou une migration SD-WAN ou cloud ? Parlons-en.')}</p></div>
-    <div class="cta"><a class="btn white lg" href="#contact">{t('Contact me', 'Me contacter')}</a><a class="btn ghost lg" href="{cv_main}" download>{t('Download CV', 'Télécharger le CV')}</a><a class="btn ghost lg" href="cv.html">{t('Web CV', 'CV web')}</a></div>
+    <div class="cta"><a class="btn white lg" href="contact.html">{t('Contact me', 'Me contacter')}</a><a class="btn ghost lg" href="{cv_main}" download>{t('Download CV', 'Télécharger le CV')}</a><a class="btn ghost lg" href="cv.html">{t('Web CV', 'CV web')}</a></div>
   </div>
 </section>"""
     contact = f"""
@@ -342,8 +338,8 @@ def home(lang):
         <div class="clink" style="cursor:default"><span class="ico"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 21s-7-6.2-7-11.5A7 7 0 0 1 19 9.5C19 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg></span><div><small>{t('LOCATION', 'LOCALISATION')}</small><span>Paris, France</span></div></div>
       </div>
     </div>
-    <details class="form-card form-toggle reveal">
-      <summary><span class="ft-ico">{ico('mail', 20)}</span><span><b>{t('Send a message', 'Envoyer un message')}</b><small>{t('Open the contact form', 'Ouvrir le formulaire de contact')}</small></span><svg class="more-chev" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M6 9l6 6 6-6"/></svg></summary>
+    <div class="form-card reveal">
+      <h3>{t('Send a message', 'Envoyer un message')}</h3>
       <form class="cf" id="cf">
         <div class="grid2">
           <div><label for="cfName">{t('Name', 'Nom')} <span class="req" aria-hidden="true">*</span></label><input id="cfName" required autocomplete="name"></div>
@@ -357,11 +353,68 @@ def home(lang):
         <button class="btn primary" type="submit" style="justify-self:start">{t('Send message', 'Envoyer le message')} {ico('arrow', 15)}</button>
         <span class="cf-hint">{t('* required. Opens your email client with the message pre-filled, including your address so I can reply.', '* obligatoire. Ouvre votre messagerie avec le message pré-rempli, votre adresse comprise pour que je puisse répondre.')}</span>
       </form>
-    </details>
+    </div>
   </div>
 </section>"""
 
-    body = hero + subnav + marquee + services + expertise + work + demo + about + resources + creds + cta + contact
+    # ───────── "explore more" band (homepage) ─────────
+    EXPL = [("about.html", "user", t('About &amp; experience', 'Parcours &amp; expérience'), t('Career, expertise, certifications and education.', 'Parcours, expertise, certifications et diplômes.')),
+            ("resources.html", "lab", t('Guides &amp; case studies', 'Guides &amp; études de cas'), t(f'{len(PROJECTS)} case studies and {len(LABS)} EVE-NG lab guides.', f'{len(PROJECTS)} études de cas et {len(LABS)} guides de lab EVE-NG.')),
+            ("demo.html", "sdwan", t('Live SD-WAN demo', 'Démo SD-WAN'), t('Cut a link and watch the failover happen.', 'Coupez un lien et regardez la bascule.')),
+            ("tools.html", "tool", t('Network toolkit', 'Outils réseau'), t('Subnet, IPv6, VLSM and IPsec MSS calculators.', 'Calculateurs sous-réseau, IPv6, VLSM et MSS IPsec.'))]
+    explore = f"""
+<section class="band alt" id="explore">
+  <div class="wrap">
+    <div class="band-head reveal"><div><span class="kicker">{t('More details', 'En détail')}</span><h2>{t('Want the full picture?', 'Envie d’en savoir plus ?')}</h2></div></div>
+    <div class="ex-grid">{''.join(f'<a class="ex reveal" href="{h}"><span class="ex-ico">{ico(i, 22)}</span><b>{ti}</b><span>{de}</span><span class="link-arrow">{t("See details", "Voir le détail")} {ico("arrow", 15)}</span></a>' for h, i, ti, de in EXPL)}</div>
+  </div>
+</section>"""
+
+    def head(kicker, title, summary):
+        return f"""
+<section class="doc-band page-band" id="top">
+  <div class="wrap">
+    <div class="crumbs"><a class="back-btn" href="index.html">← {t('Back to home', 'Retour à l’accueil')}</a><a href="index.html">{t('Home', 'Accueil')}</a><span class="sep">/</span>{title}</div>
+    <div class="doc-hero"><div class="kicker">{kicker}</div><h1>{title}</h1><p class="sum">{summary}</p></div>
+  </div>
+</section>"""
+
+    def strip_head(sec):   # drop a section's own heading block when the page header already says it
+        return re.sub(r'<div class="band-head reveal">.*?</div>\n    </div>', '', sec, count=1, flags=re.S)
+
+    js_home = f'<script src="{root}assets/js/home.js?v={VER}" defer></script>'
+    js_topo = f'<script src="{root}assets/js/topology.js?v={VER}" defer></script>'
+    if page == "about":
+        about_p = about.replace('<section class="band" id="about">', '<section class="band" id="about" style="padding-top:56px">')
+        creds_p = creds.replace('class="band" id="certs"', 'class="band alt" id="certs"')
+        exp_p = expertise.replace('class="band alt" id="expertise"', 'class="band" id="expertise"').replace('    </div>\n  </div>\n</section>', '    </div>\n    ' + PROCESS + '\n  </div>\n</section>', 1)
+        body = head(t('About', 'À propos'), t('About &amp; experience', 'Parcours &amp; expérience'),
+                    t('Career path, expertise by domain, certifications and education.', 'Parcours, expertise par domaine, certifications et diplômes.')) + about_p + marquee + exp_p + creds_p + cta
+        return layout(lang, "about.html", t("About · Tarek MEDJOUB", "À propos · Tarek MEDJOUB"),
+                      t("Experience, expertise, certifications and education of Tarek Medjoub, Network, Security & Cloud Engineer.", "Expérience, expertise, certifications et formation de Tarek Medjoub, ingénieur Réseaux, Sécurité & Cloud."),
+                      body, extra_js=js_home)
+    if page == "resources":
+        res_p = strip_head(resources).replace('class="band alt" id="resources"', 'class="band" id="resources" style="padding-top:48px"').replace('<div class="res-grid" id="resGrid">', '<div class="res-grid" id="resGrid" data-all>')
+        body = head(t('Resource center', 'Centre de ressources'), t('Guides, case studies and tools', 'Guides, études de cas et outils'),
+                    t('Everything I publish, in one place. Lab guides cover topology, configs, verification and break/fix exercises.', 'Tout ce que je publie, au même endroit. Les guides de lab couvrent topologie, configurations, vérifications et exercices de panne.')) + res_p + cta
+        return layout(lang, "resources.html", t("Resources · Tarek MEDJOUB", "Ressources · Tarek MEDJOUB"),
+                      t("Case studies, EVE-NG lab guides and free network tools.", "Études de cas, guides de lab EVE-NG et outils réseau gratuits."), body, extra_js=js_home)
+    if page == "demo":
+        d = demo.replace(' hidden aria-label=', ' aria-label=')
+        d = re.sub(r'<span class="kicker">[^<]*</span>\s*<h2>.*?</h2>', '', d, count=1, flags=re.S)
+        d = re.sub(r'<button class="demo-teaser.*?</button>', '', d, count=1, flags=re.S)
+        d = re.sub(r'<button class="btn primary lg" type="button" id="demoLaunch".*?</button>', '', d, count=1, flags=re.S)
+        body = head(t('Live demo', 'Démo interactive'), t('SD-WAN failover in action', 'Bascule SD-WAN en direct'),
+                    t('A simulated network you can break: cut a link and watch traffic move to the backup path.', 'Un réseau simulé que vous pouvez casser : coupez un lien et regardez le trafic basculer.')) + d + cta
+        return layout(lang, "demo.html", t("Live SD-WAN demo · Tarek MEDJOUB", "Démo SD-WAN · Tarek MEDJOUB"),
+                      t("Interactive SD-WAN and hybrid cloud failover simulation.", "Simulation interactive de bascule SD-WAN et cloud hybride."), body, extra_js=js_topo + js_home)
+    if page == "contact":
+        body = head("Contact", t('Let’s talk infrastructure', 'Parlons infrastructure'),
+                    t('A role, an audit or a network that needs fixing? I usually reply within one business day.', 'Un poste, un audit ou un réseau à remettre d’aplomb ? Je réponds généralement sous un jour ouvré.')) + contact.replace('<section class="band" id="contact">', '<section class="band" id="contact" style="padding-top:56px">')
+        return layout(lang, "contact.html", t("Contact · Tarek MEDJOUB", "Contact · Tarek MEDJOUB"),
+                      t("Contact Tarek Medjoub: email, LinkedIn or the contact form.", "Contacter Tarek Medjoub : email, LinkedIn ou formulaire."), body, extra_js=js_home)
+
+    body = hero + services + work + explore + cta
     jsonld = """<script type="application/ld+json">
 {"@context":"https://schema.org","@type":"Person","name":"Tarek Medjoub","jobTitle":"%s",
 "email":"mailto:%s","url":"%s","address":{"@type":"PostalAddress","addressLocality":"Paris","addressCountry":"FR"},
@@ -374,4 +427,4 @@ def home(lang):
         t("Network, Security & Cloud Engineer in Paris. Fortinet SD-WAN, multisite networks, IPsec/BGP and hybrid connectivity to Azure and AWS.",
           "Ingénieur Réseaux, Sécurité & Cloud à Paris. SD-WAN Fortinet, réseaux multisites, IPsec/BGP et connectivité hybride vers Azure et AWS."),
         body, home=True, jsonld=jsonld,
-        extra_js=f'<script src="{root}assets/js/topology.js?v={VER}" defer></script><script src="{root}assets/js/home.js?v={VER}" defer></script>')
+        extra_js=js_home)

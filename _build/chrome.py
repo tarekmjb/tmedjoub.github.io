@@ -71,7 +71,7 @@ def header(x, root, lp, home):
       </li>"""
 
     exp_items = "".join(
-        f'<a class="mm-item" href="{H}#expertise-{k}"><span class="mm-ico">{ico(k)}</span><span><b>{t(*n)}</b><small>{t(*d)}</small></span></a>'
+        f'<a class="mm-item" href="{root + lp}about.html#expertise-{k}"><span class="mm-ico">{ico(k)}</span><span><b>{t(*n)}</b><small>{t(*d)}</small></span></a>'
         for k, n, d in EXPERTISE)
     exp = panel("expertise", t("Expertise", "Expertise"),
                 f'<div class="mm-col mm-col-2"><span class="mm-h">{t("Domains", "Domaines")}</span><div class="mm-items">{exp_items}</div></div>',
@@ -88,7 +88,7 @@ def header(x, root, lp, home):
         f'<a class="mm-link" href="{root + lp}labs/{l["id"]}.html"><span>{i + 1:02d}</span>{t(*l["title"])}</a>' for i, l in enumerate(LABS))
     labs = panel("labs", "Labs",
                  f'<div class="mm-col mm-col-2"><span class="mm-h">{t("EVE-NG lab guides", "Guides de lab EVE-NG")}</span><div class="mm-links">{lab_items}</div></div>',
-                 f'<a class="mm-feature" href="{H}#resources"><span class="mm-h">{t("Resource center", "Centre de ressources")}</span><b>{t("Browse every guide, case study and tool in one place", "Tous les guides, études de cas et outils au même endroit")}</b><span class="mm-cta">{t("Open the resource center", "Ouvrir le centre de ressources")} {ico("arrow", 14)}</span></a>')
+                 f'<a class="mm-feature" href="{root + lp}resources.html"><span class="mm-h">{t("Resource center", "Centre de ressources")}</span><b>{t("Browse every guide, case study and tool in one place", "Tous les guides, études de cas et outils au même endroit")}</b><span class="mm-cta">{t("Open the resource center", "Ouvrir le centre de ressources")} {ico("arrow", 14)}</span></a>')
 
     tools = [("subnet", t("IPv4 subnet calculator", "Calcul de sous-réseau IPv4")), ("ipv6", t("IPv6 calculator", "Calcul IPv6")),
              ("vlsm", t("VLSM planner", "Planificateur VLSM")), ("wildcard", t("Wildcard &amp; ACL helper", "Assistant wildcard &amp; ACL")), ("mss", "IPsec MTU / MSS")]
@@ -98,9 +98,9 @@ def header(x, root, lp, home):
                     f'<a class="mm-feature" href="{root + lp}tools.html"><span class="mm-h">{t("Runs in your browser", "Dans votre navigateur")}</span><b>{t("Subnetting, VLSM and IPsec maths, done in seconds", "Sous-réseaux, VLSM et calculs IPsec en quelques secondes")}</b><span class="mm-cta">{t("Open the toolkit", "Ouvrir les outils")} {ico("arrow", 14)}</span></a>')
 
     about_items = "".join(f'<a class="mm-link" href="{h}"><span>{ico(i, 14)}</span>{n}</a>' for h, i, n in [
-        (f"{H}#about", "user", t("About me", "À propos")), (f"{H}#experience", "case", t("Experience", "Expérience")),
-        (f"{H}#certs", "lab", t("Certifications &amp; education", "Certifications &amp; formation")), (f"{root + lp}cv.html", "case", t("Web CV", "CV web")),
-        (f"{H}#contact", "mail", "Contact")])
+        (f"{root + lp}about.html", "user", t("About me", "À propos")), (f"{root + lp}about.html#experience", "case", t("Experience", "Expérience")),
+        (f"{root + lp}about.html#certs", "lab", t("Certifications &amp; education", "Certifications &amp; formation")), (f"{root + lp}cv.html", "case", t("Web CV", "CV web")),
+        (f"{root + lp}contact.html", "mail", "Contact")])
     about = panel("about", t("About", "À propos"),
                   f'<div class="mm-col"><span class="mm-h">Tarek Medjoub</span><div class="mm-links one">{about_items}</div></div>',
                   f'<div class="mm-feature plain"><span class="mm-h">{t("In short", "En bref")}</span><b>{t("Former team leader of six, MBA in project management, based in Paris.", "Ancien chef d’une équipe de six, MBA en management de projet, basé à Paris.")}</b><span class="mm-cta"><a href="{root}{"assets/CV_Tarek_MEDJOUB.pdf" if lp else "assets/CV_Tarek_MEDJOUB_EN.pdf"}" download>{t("Download CV (PDF)", "Télécharger le CV (PDF)")} {ico("arrow", 14)}</a></span></div>')
@@ -137,12 +137,12 @@ def footer(x, root, lp, home):
       <div class="f-brand">
         <a href="{root + lp}index.html" class="brand"><span class="brand-mark" aria-hidden="true">TM</span><span class="brand-txt">Tarek Medjoub<small>{t('Network · Security · Cloud', 'Réseaux · Sécurité · Cloud')}</small></span></a>
         <p>{t('I design, secure and monitor multisite enterprise networks, from campus to cloud.', 'Je conçois, sécurise et supervise des réseaux d’entreprise multisites, du campus au cloud.')}</p>
-        <a class="btn primary" href="{H}#contact">{t('Contact me', 'Me contacter')}</a>
+        <a class="btn primary" href="{root + lp}contact.html">{t('Contact me', 'Me contacter')}</a>
       </div>
-      {col(t('Expertise', 'Expertise'), [(f'{H}#expertise-{k}', t(*n)) for k, n, _ in EXPERTISE])}
+      {col(t('Expertise', 'Expertise'), [(f'{root + lp}about.html#expertise-{k}', t(*n)) for k, n, _ in EXPERTISE])}
       {col(t('Case studies', 'Études de cas'), [(f'{root + lp}projects/{p["id"]}.html', t(*p["title"])) for p in PROJECTS])}
-      {col(t('Resources', 'Ressources'), [(f'{H}#resources', t('Resource center', 'Centre de ressources')), (f'{root + lp}labs/{LABS[0]["id"]}.html', t('Lab guides', 'Guides de lab')), (f'{root + lp}tools.html', t('Network toolkit', 'Outils réseau')), (f'{root + lp}cv.html', t('Web CV', 'CV web'))])}
-      {col('Contact', [(f'mailto:{EMAIL}', EMAIL), (LINKEDIN, 'LinkedIn'), (f'{H}#contact', t('Send a message', 'Envoyer un message'))])}
+      {col(t('Resources', 'Ressources'), [(f'{root + lp}resources.html', t('Resource center', 'Centre de ressources')), (f'{root + lp}labs/{LABS[0]["id"]}.html', t('Lab guides', 'Guides de lab')), (f'{root + lp}tools.html', t('Network toolkit', 'Outils réseau')), (f'{root + lp}cv.html', t('Web CV', 'CV web'))])}
+      {col('Contact', [(f'mailto:{EMAIL}', EMAIL), (LINKEDIN, 'LinkedIn'), (f'{root + lp}contact.html', t('Send a message', 'Envoyer un message'))])}
     </div>
     <div class="f-bottom">
       <span>© <span class="yr">2026</span> Tarek Medjoub · Paris, France</span>

@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url><loc>https://tarekmjb.github.io/tmedjoub.github.io/index.html</loc><lastmod>2026-11-13</lastmod><priority>1.0</priority></url>
+  <url><loc>https://tarekmjb.github.io/tmedjoub.github.io/about.html</loc><lastmod>2026-11-13</lastmod><priority>0.7</priority></url>
+  <url><loc>https://tarekmjb.github.io/tmedjoub.github.io/resources.html</loc><lastmod>2026-11-13</lastmod><priority>0.7</priority></url>
+  <url><loc>https://tarekmjb.github.io/tmedjoub.github.io/demo.html</loc><lastmod>2026-11-13</lastmod><priority>0.7</priority></url>
+  <url><loc>https://tarekmjb.github.io/tmedjoub.github.io/contact.html</loc><lastmod>2026-11-13</lastmod><priority>0.7</priority></url>
   <url><loc>https://tarekmjb.github.io/tmedjoub.github.io/cv.html</loc><lastmod>2026-11-13</lastmod><priority>0.7</priority></url>
   <url><loc>https://tarekmjb.github.io/tmedjoub.github.io/tools.html</loc><lastmod>2026-11-13</lastmod><priority>0.7</priority></url>
   <url><loc>https://tarekmjb.github.io/tmedjoub.github.io/projects/sdwan.html</loc><lastmod>2026-11-13</lastmod><priority>0.7</priority></url>
@@ -18,6 +22,10 @@
   <url><loc>https://tarekmjb.github.io/tmedjoub.github.io/labs/ansible-network.html</loc><lastmod>2026-11-13</lastmod><priority>0.7</priority></url>
   <url><loc>https://tarekmjb.github.io/tmedjoub.github.io/labs/snmp-zabbix.html</loc><lastmod>2026-11-13</lastmod><priority>0.7</priority></url>
   <url><loc>https://tarekmjb.github.io/tmedjoub.github.io/fr/index.html</loc><lastmod>2026-11-13</lastmod><priority>1.0</priority></url>
+  <url><loc>https://tarekmjb.github.io/tmedjoub.github.io/fr/about.html</loc><lastmod>2026-11-13</lastmod><priority>0.7</priority></url>
+  <url><loc>https://tarekmjb.github.io/tmedjoub.github.io/fr/resources.html</loc><lastmod>2026-11-13</lastmod><priority>0.7</priority></url>
+  <url><loc>https://tarekmjb.github.io/tmedjoub.github.io/fr/demo.html</loc><lastmod>2026-11-13</lastmod><priority>0.7</priority></url>
+  <url><loc>https://tarekmjb.github.io/tmedjoub.github.io/fr/contact.html</loc><lastmod>2026-11-13</lastmod><priority>0.7</priority></url>
   <url><loc>https://tarekmjb.github.io/tmedjoub.github.io/fr/cv.html</loc><lastmod>2026-11-13</lastmod><priority>0.7</priority></url>
   <url><loc>https://tarekmjb.github.io/tmedjoub.github.io/fr/tools.html</loc><lastmod>2026-11-13</lastmod><priority>0.7</priority></url>
   <url><loc>https://tarekmjb.github.io/tmedjoub.github.io/fr/projects/sdwan.html</loc><lastmod>2026-11-13</lastmod><priority>0.7</priority></url>

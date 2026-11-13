@@ -123,7 +123,7 @@
   /* ── 3. resource center: filter + "show all" ── */
   const grid = $('#resGrid'), more = $('#resMore'), LIMIT = 6;
   if (grid) {
-    let f = 'all', expanded = false;
+    let f = 'all', expanded = grid.hasAttribute('data-all');
     const apply = () => {
       let shown = 0, total = 0;
       $$('.res', grid).forEach(c => {
@@ -133,14 +133,14 @@
         if (vis) shown++;
         c.hidden = !vis;
       });
-      more.parentElement.hidden = expanded || f !== 'all' || total <= LIMIT;
+      if (more) more.parentElement.hidden = expanded || f !== 'all' || total <= LIMIT;
     };
     $('.res-filter').addEventListener('click', e => {
       const b = e.target.closest('button'); if (!b) return;
       $$('.res-filter button').forEach(x => { x.classList.toggle('on', x === b); x.setAttribute('aria-pressed', x === b); });
       f = b.dataset.f; apply();
     });
-    more.addEventListener('click', () => { expanded = true; apply(); });
+    more && more.addEventListener('click', () => { expanded = true; apply(); });
     apply();
   }
 })();

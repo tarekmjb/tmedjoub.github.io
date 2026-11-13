@@ -210,14 +210,14 @@
     const ICO = { case: 'M4 7h16v12H4zM9 7V5h6v2', lab: 'M9 3v6l-5 9a2 2 0 0 0 2 3h12a2 2 0 0 0 2-3l-5-9V3M8 3h8', tool: 'M14.7 6.3a4 4 0 0 0-5.4 5.4L3 18l3 3 6.3-6.3a4 4 0 0 0 5.4-5.4l-2.5 2.5-2.4-.6-.6-2.4z', sec: 'M4 6h16M4 12h10M4 18h14', act: 'M5 12h14M13 6l6 6-6 6' };
     const kindOf = y => /lab/i.test(y) ? 'lab' : /tool|outil/i.test(y) ? 'tool' : /case|étude/i.test(y) ? 'case' : 'sec';
     const actions = () => [
-      { y: t('Action', 'Action'), t: t('Contact Tarek', 'Contacter Tarek'), d: 'tarek.medjoub@outlook.fr', u: LP + 'index.html#contact', a: 'go' },
+      { y: t('Action', 'Action'), t: t('Contact Tarek', 'Contacter Tarek'), d: 'tarek.medjoub@outlook.fr', u: LP + 'contact.html', a: 'go' },
       { y: t('Action', 'Action'), t: t('Download CV (PDF)', 'Télécharger le CV (PDF)'), d: t('One page', 'Une page'), u: LANG === 'fr' ? 'assets/CV_Tarek_MEDJOUB.pdf' : 'assets/CV_Tarek_MEDJOUB_EN.pdf', a: 'go' },
       { y: t('Action', 'Action'), t: t('Switch light / dark theme', 'Basculer thème clair / sombre'), d: '', a: 'theme' },
       { y: t('Action', 'Action'), t: t('Open the network console', 'Ouvrir la console réseau'), d: t('Type commands like “show version”', 'Tapez des commandes comme « show version »'), a: 'console' }
     ];
     const featured = () => {
       const d = data(), pick = u => d.find(i => i.u === LP + u);
-      return [pick('projects/sdwan.html'), pick('projects/hybrid-cloud.html'), pick('tools.html#subnet'), pick('labs/bgp.html'), pick('index.html#expertise-security')].filter(Boolean).concat(actions().slice(0, 2));
+      return [pick('projects/sdwan.html'), pick('projects/hybrid-cloud.html'), pick('tools.html#subnet'), pick('labs/bgp.html'), pick('about.html#expertise-security')].filter(Boolean).concat(actions().slice(0, 2));
     };
     const hl = (txt, terms) => {
       let h = esc(txt);
@@ -309,7 +309,7 @@
   const onHome = !!$('#top');
   const section = id => {
     if (onHome && document.getElementById(id)) { close(); setTimeout(() => document.getElementById(id).scrollIntoView({ behavior: reduce ? 'auto' : 'smooth' }), 60); }
-    else nav2(url('index.html#' + id));
+    else nav2(url(({ about: 'about.html', experience: 'about.html#experience', certs: 'about.html#certs', expertise: 'about.html#expertise', resources: 'resources.html', demo: 'demo.html', contact: 'contact.html' })[id] || ('index.html#' + id)));
   };
   const name = r => (LANG === 'fr' ? r[2] : r[1]);
   const C = {
