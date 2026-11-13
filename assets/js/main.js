@@ -69,6 +69,21 @@
     });
     pre.innerHTML = lines.join('\n');
     btn && btn.addEventListener('click', () => copy(raw, t('config copied', 'configuration copiée')));
+    // long configurations are folded: first lines visible, the rest on demand
+    const n = raw.split('\n').length;
+    if (n > 12) {
+      block.classList.add('folded');
+      const more = document.createElement('button');
+      more.type = 'button'; more.className = 'code-more';
+      const lbl = open => open ? t('Hide configuration', 'Masquer la configuration') : t(`Show full configuration (${n} lines)`, `Afficher toute la configuration (${n} lignes)`);
+      more.textContent = lbl(false); more.setAttribute('aria-expanded', 'false');
+      more.addEventListener('click', () => {
+        const open = block.classList.toggle('folded') === false;
+        more.textContent = lbl(open); more.setAttribute('aria-expanded', open);
+        if (!open) block.scrollIntoView({ block: 'nearest', behavior: reduce ? 'auto' : 'smooth' });
+      });
+      block.appendChild(more);
+    }
   });
 
 

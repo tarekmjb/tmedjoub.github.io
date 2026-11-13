@@ -83,6 +83,19 @@
     addEventListener('scroll', upd, { passive: true }); upd();
   }
 
+  /* ── live demo: shown on demand ── */
+  const fig = $('#topoFig'), launch = $('#demoLaunch'), teaser = $('#demoTeaser');
+  if (fig && launch) {
+    const start = () => {
+      fig.hidden = false; if (teaser) teaser.hidden = true;
+      launch.setAttribute('aria-expanded', 'true'); launch.hidden = true;
+      fig.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'center' });
+      const b = $('#failIsp1'); b && setTimeout(() => b.focus({ preventScroll: true }), 400);
+    };
+    launch.addEventListener('click', start);
+    teaser && teaser.addEventListener('click', start);
+  }
+
   /* ── 2. expertise explorer (tabs, deep-linkable: #expertise-security) ── */
   const tabs = $$('.xt'), panels = $$('.xp');
   const showX = (id, scroll) => {
@@ -108,7 +121,7 @@
   });
 
   /* ── 3. resource center: filter + "show all" ── */
-  const grid = $('#resGrid'), more = $('#resMore'), LIMIT = 8;
+  const grid = $('#resGrid'), more = $('#resMore'), LIMIT = 6;
   if (grid) {
     let f = 'all', expanded = false;
     const apply = () => {

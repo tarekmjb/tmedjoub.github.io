@@ -26,7 +26,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="../assets/css/main.css?v=202611111432">
+<link rel="stylesheet" href="../assets/css/main.css?v=202611130950">
 <script>(function(){try{localStorage.removeItem('tm-theme');var t=sessionStorage.getItem('tm-theme');if(t!=='dark')t='light';document.documentElement.dataset.theme=t;}catch(e){}})();</script>
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"Person","name":"Tarek Medjoub","jobTitle":"Ingénieur Réseaux, Sécurité & Cloud",
@@ -189,9 +189,9 @@
         <div class="tile-body"><h3>Revue de la connectivité cloud</h3><p>VPN site-à-cloud vers Azure et AWS, propagation BGP, filtrage et supervision.</p><span class="link-arrow">En savoir plus <svg class="ico-d" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path class="d2" pathLength="100" d="M5 12h14M13 6l6 6-6 6"/></svg></span></div>
       </a>
     </div>
-    <ol class="process reveal" aria-label="Méthode de travail">
+    <details class="more"><summary><span>Ma méthode en 5 étapes</span><svg class="more-chev" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M6 9l6 6 6-6"/></svg></summary><div class="more-body"><ol class="process" aria-label="Méthode de travail">
       <li><b>01</b><span>Découvrir</span></li><li><b>02</b><span>Auditer</span></li><li><b>03</b><span>Concevoir</span></li><li><b>04</b><span>Valider sous EVE-NG</span></li><li><b>05</b><span>Documenter &amp; transmettre</span></li>
-    </ol>
+    </ol></div></details>
   </div>
 </section>
 <section class="band alt" id="expertise">
@@ -248,39 +248,30 @@
       <div><span class="kicker">Réalisations</span><h2>Des migrations réelles, des architectures validées</h2></div>
       <p>Chaque projet a son étude de cas complète : contexte, architecture, configuration, validation et retours d’expérience.</p>
     </div>
-    
-    <article class="split reveal">
-      <div class="split-art"><svg viewBox="0 0 320 160" aria-hidden="true"><circle cx="160" cy="80" r="22" class="il-ring"/><g class="il-line"><path d="M60 34L142 70M60 126L142 90M260 34L178 70M260 126L178 90"/></g><g class="il-dash"><path d="M66 46L144 78M66 114L144 82M254 46L176 78M254 114L176 82"/></g><g class="il-card"><rect x="30" y="20" width="44" height="28" rx="6"/><rect x="30" y="112" width="44" height="28" rx="6"/><rect x="246" y="20" width="44" height="28" rx="6"/><rect x="246" y="112" width="44" height="28" rx="6"/></g><circle cx="104" cy="52" r="5" class="il-dot"/><circle cx="214" cy="106" r="5" class="il-dot"/></svg></div>
-      <div class="split-copy">
-        <span class="kicker">Étude de cas · Fortinet · SD-WAN · BGP</span>
-        <h3>Migration SD-WAN d’entreprise</h3>
-        <p>Passage d’une entreprise de quatre sites du MPLS et des routes statiques à un SD-WAN Fortinet en étoile : deux FAI par site, IPsec IKEv2 / AES-256 et BGP/OSPF. Validé sous EVE-NG avant la bascule.</p>
-        <div class="split-facts"><div><b>4</b><span>sites</span></div><div><b>2×</b><span>FAI / site</span></div><div><b>≈1.5s</b><span>bascule en lab</span></div></div>
-        <a class="btn primary" href="projects/sdwan.html">Lire l’étude de cas <svg class="ico-d" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path class="d2" pathLength="100" d="M5 12h14M13 6l6 6-6 6"/></svg></a>
-      </div>
-    </article>
-    <article class="split rev reveal">
-      <div class="split-art"><svg viewBox="0 0 320 160" aria-hidden="true"><path d="M206 76a30 30 0 0 0-58-8 24 24 0 0 0-4 47h60a20 20 0 0 0 2-39z" class="il-card"/><rect x="40" y="96" width="70" height="40" rx="8" class="il-card"/><path d="M110 112C140 112 140 100 150 100" class="il-dash"/><path d="M58 112h34M58 122h22" class="il-line"/><path d="M230 50l40-22M230 110l40 22" class="il-line"/><circle cx="274" cy="26" r="9" class="il-ring"/><circle cx="274" cy="134" r="9" class="il-ring"/></svg></div>
-      <div class="split-copy">
-        <span class="kicker">Étude de cas · FortiGate · Azure · AWS</span>
-        <h3>Architecture cloud hybride</h3>
-        <p>Un FortiGate local relié à Azure VPN Gateway et AWS Transit Gateway en IPsec route-based, avec échange BGP, filtrage strict des préfixes et supervision PRTG centralisée.</p>
-        <div class="split-facts"><div><b>2</b><span>clouds</span></div><div><b>3</b><span>pairs BGP</span></div><div><b>0</b><span>route statique vers le cloud</span></div></div>
-        <a class="btn primary" href="projects/hybrid-cloud.html">Lire l’étude de cas <svg class="ico-d" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path class="d2" pathLength="100" d="M5 12h14M13 6l6 6-6 6"/></svg></a>
-      </div>
-    </article>
-    <div class="cx-grid">
+    <div class="cx-grid cx-4">
+      <a class="card-x reveal" href="projects/sdwan.html">
+        <div class="cx-art"><svg viewBox="0 0 320 160" aria-hidden="true"><circle cx="160" cy="80" r="22" class="il-ring"/><g class="il-line"><path d="M60 34L142 70M60 126L142 90M260 34L178 70M260 126L178 90"/></g><g class="il-dash"><path d="M66 46L144 78M66 114L144 82M254 46L176 78M254 114L176 82"/></g><g class="il-card"><rect x="30" y="20" width="44" height="28" rx="6"/><rect x="30" y="112" width="44" height="28" rx="6"/><rect x="246" y="20" width="44" height="28" rx="6"/><rect x="246" y="112" width="44" height="28" rx="6"/></g><circle cx="104" cy="52" r="5" class="il-dot"/><circle cx="214" cy="106" r="5" class="il-dot"/></svg></div>
+        <span class="kicker">Fortinet · SD-WAN · BGP</span>
+        <h3>Migration SD-WAN d’entreprise</h3><p class="clamp">Passage d’une entreprise de quatre sites du MPLS et des routes statiques à un SD-WAN Fortinet en étoile : deux FAI par site, IPsec IKEv2 / AES-256 et BGP/OSPF. Validé sous EVE-NG avant la bascule.</p>
+        <span class="link-arrow">Lire l’étude de cas <svg class="ico-d" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path class="d2" pathLength="100" d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+      </a>
+      <a class="card-x reveal" href="projects/hybrid-cloud.html">
+        <div class="cx-art"><svg viewBox="0 0 320 160" aria-hidden="true"><path d="M206 76a30 30 0 0 0-58-8 24 24 0 0 0-4 47h60a20 20 0 0 0 2-39z" class="il-card"/><rect x="40" y="96" width="70" height="40" rx="8" class="il-card"/><path d="M110 112C140 112 140 100 150 100" class="il-dash"/><path d="M58 112h34M58 122h22" class="il-line"/><path d="M230 50l40-22M230 110l40 22" class="il-line"/><circle cx="274" cy="26" r="9" class="il-ring"/><circle cx="274" cy="134" r="9" class="il-ring"/></svg></div>
+        <span class="kicker">FortiGate · Azure · AWS</span>
+        <h3>Architecture cloud hybride</h3><p class="clamp">Un FortiGate local relié à Azure VPN Gateway et AWS Transit Gateway en IPsec route-based, avec échange BGP, filtrage strict des préfixes et supervision PRTG centralisée.</p>
+        <span class="link-arrow">Lire l’étude de cas <svg class="ico-d" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path class="d2" pathLength="100" d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+      </a>
       <a class="card-x reveal" href="projects/lan-optimization.html">
         <div class="cx-art"><svg viewBox="0 0 320 160" aria-hidden="true"><g class="il-line"><path d="M160 34L96 80M160 34L224 80M96 80L60 126M96 80L132 126M224 80L188 126M224 80L260 126"/></g><g class="il-card"><rect x="134" y="20" width="52" height="26" rx="6"/><rect x="72" y="68" width="48" height="24" rx="6"/><rect x="200" y="68" width="48" height="24" rx="6"/><rect x="42" y="118" width="36" height="20" rx="5"/><rect x="114" y="118" width="36" height="20" rx="5"/><rect x="170" y="118" width="36" height="20" rx="5"/><rect x="242" y="118" width="36" height="20" rx="5"/></g><path d="M134 33h52" class="il-strong"/></svg></div>
-        <span class="kicker">Étude de cas</span>
-        <h3>Optimisation de l’architecture LAN</h3><p>Remplacement d’un réseau à plat en /16 (plus de 800 hôtes dans un seul domaine de diffusion) par une architecture 3 couches : VLAN, OSPF, passerelles HSRP, ACL et SNMPv3.</p>
-        <span class="link-arrow">Lire la suite <svg class="ico-d" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path class="d2" pathLength="100" d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+        <span class="kicker">VLAN · OSPF · HSRP · ACL</span>
+        <h3>Optimisation de l’architecture LAN</h3><p class="clamp">Remplacement d’un réseau à plat en /16 (plus de 800 hôtes dans un seul domaine de diffusion) par une architecture 3 couches : VLAN, OSPF, passerelles HSRP, ACL et SNMPv3.</p>
+        <span class="link-arrow">Lire l’étude de cas <svg class="ico-d" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path class="d2" pathLength="100" d="M5 12h14M13 6l6 6-6 6"/></svg></span>
       </a>
       <a class="card-x reveal" href="projects/monitoring-stack.html">
         <div class="cx-art"><svg viewBox="0 0 320 160" aria-hidden="true"><rect x="30" y="24" width="260" height="112" rx="10" class="il-card"/><path d="M50 52h220" class="il-dash"/><polyline points="50,116 82,104 106,108 130,86 156,94 182,64 206,76 232,46 252,98 270,92" class="il-strong" fill="none"/><circle cx="232" cy="46" r="6" class="il-alert"/></svg></div>
-        <span class="kicker">Étude de cas</span>
-        <h3>Supervision & alerting</h3><p>Collecte SNMPv3 Zabbix, déclencheurs par niveau de sévérité et tickets GLPI automatiques, avec tableaux de bord NOC. Chaque alerte devient un incident suivi, pas un e-mail ignoré.</p>
-        <span class="link-arrow">Lire la suite <svg class="ico-d" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path class="d2" pathLength="100" d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+        <span class="kicker">Zabbix · PRTG · GLPI</span>
+        <h3>Supervision & alerting</h3><p class="clamp">Collecte SNMPv3 Zabbix, déclencheurs par niveau de sévérité et tickets GLPI automatiques, avec tableaux de bord NOC. Chaque alerte devient un incident suivi, pas un e-mail ignoré.</p>
+        <span class="link-arrow">Lire l’étude de cas <svg class="ico-d" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path class="d2" pathLength="100" d="M5 12h14M13 6l6 6-6 6"/></svg></span>
       </a>
     </div>
   </div>
@@ -291,14 +282,10 @@
       <span class="kicker">Démo interactive</span>
       <h2>Voyez une bascule SD-WAN en direct</h2>
       <p>Trois agences avec deux FAI chacune, un hub au siège et des tunnels IPsec/BGP vers Azure et AWS. Coupez un lien : le trafic bascule sur le chemin de secours et le graphe SLA réagit.</p>
-      <ul class="ticks">
-        <li>Cliquez un lien pour le couper ou le rétablir</li>
-        <li>« Couper ISP-1 » simule une panne sur toutes les agences</li>
-        <li>Basé sur l’architecture de l’étude de cas SD-WAN</li>
-      </ul>
-      <a class="link-arrow light" href="projects/sdwan.html">Comment c’est construit <svg class="ico-d" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path class="d2" pathLength="100" d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+      <div class="cta"><button class="btn primary lg" type="button" id="demoLaunch" aria-controls="topoFig" aria-expanded="false">Lancer la démo <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg></button><a class="link-arrow light" href="projects/sdwan.html">Comment c’est construit <svg class="ico-d" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path class="d2" pathLength="100" d="M5 12h14M13 6l6 6-6 6"/></svg></a></div>
     </div>
-    <figure class="topo reveal" id="topoFig" aria-label="Simulation interactive SD-WAN et cloud hybride">
+    <button class="demo-teaser reveal" type="button" id="demoTeaser" aria-controls="topoFig"><span class="dt-art"><svg viewBox="0 0 320 160" aria-hidden="true"><circle cx="160" cy="80" r="22" class="il-ring"/><g class="il-line"><path d="M60 34L142 70M60 126L142 90M260 34L178 70M260 126L178 90"/></g><g class="il-dash"><path d="M66 46L144 78M66 114L144 82M254 46L176 78M254 114L176 82"/></g><g class="il-card"><rect x="30" y="20" width="44" height="28" rx="6"/><rect x="30" y="112" width="44" height="28" rx="6"/><rect x="246" y="20" width="44" height="28" rx="6"/><rect x="246" y="112" width="44" height="28" rx="6"/></g><circle cx="104" cy="52" r="5" class="il-dot"/><circle cx="214" cy="106" r="5" class="il-dot"/></svg></span><span class="dt-play"><svg width="26" height="26" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg></span><span class="dt-txt">Cliquez pour lancer la simulation</span></button>
+    <figure class="topo" id="topoFig" hidden aria-label="Simulation interactive SD-WAN et cloud hybride">
       <div class="topo-head"><span class="t">Overlay SD-WAN · étoile + cloud hybride</span><span class="live"><span class="led"></span><span id="liveTxt">…</span></span><button class="fs-btn" id="fsBtn" type="button" aria-label="Plein écran" title="Plein écran"><svg class="i-open" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/></svg><svg class="i-close" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M9 4v5H4M15 4v5h5M9 20v-5H4M15 20v-5h5"/></svg><span>Plein écran</span></button></div>
       <svg id="topo" viewBox="0 0 530 400" role="img" aria-label="Trois agences avec deux liens FAI chacune vers un hub HQ, relié à Azure et AWS en IPsec avec BGP"><g id="links"></g><g id="pkts"></g><g id="nodes"></g></svg>
       <div class="legend"><span><i style="--c:var(--green)"></i>ISP-1 principal</span><span><i class="d" style="--c:var(--green)"></i>ISP-2 secours</span><span><i class="d" style="--c:var(--violet)"></i>IPsec + BGP</span><span><i style="--c:var(--red)"></i>coupé</span></div>
@@ -314,7 +301,6 @@
       <span class="kicker">À propos</span>
       <h2>De l’exploitation réseau au pilotage de projets</h2>
       <p class="lead">Mon socle : routage &amp; commutation Cisco et sécurité Fortinet sur des réseaux multisites. Chez Condor Electronics, je suis devenu chef d’équipe et j’ai migré l’interconnexion vers le SD-WAN Fortinet. Aujourd’hui, j’étends les réseaux locaux vers Azure et AWS, et un MBA en management de projet complète le profil.</p>
-      <blockquote>Faire fonctionner ne suffit pas : je rends les réseaux résilients, documentés et observables.</blockquote>
       <dl class="glance-row">
         <div><dt>Basé à</dt><dd>Paris, France</dd></div>
         <div><dt>Langues</dt><dd>Français · Anglais</dd></div>
@@ -324,10 +310,10 @@
     <div id="experience">
       <span class="kicker">Expérience</span>
       <ol class="journey">
-      <li class="jr reveal"><span class="jr-year">2023</span><div class="jr-card"><h3>Stagiaire ingénieur réseau</h3><span class="jr-org">3K Solutions · Algérie</span><p>Configuration Cisco : adressage IP, VLAN, routage statique, tests de connectivité.</p></div></li>
-      <li class="jr reveal"><span class="jr-year">2023–2025</span><div class="jr-card"><h3>Chef d’équipe &amp; chef de projet sécurité réseau</h3><span class="jr-org">Condor Electronics · Algérie</span><p>Encadrement de 4 techniciens et 2 ingénieurs sur un réseau industriel multisite ; migration vers le SD-WAN Fortinet avec secours Ubiquiti ; audit VLAN, ACL et OSPF ; alertes Zabbix/PRTG et tickets GLPI.</p></div></li>
-      <li class="jr reveal"><span class="jr-year">2026</span><div class="jr-card"><h3>Assistant chef de projet réseaux &amp; sécurité</h3><span class="jr-org">SGHP · France</span><p>Accompagnement d’une migration d’infrastructure locale vers le cloud.</p></div></li>
-      <li class="jr now reveal"><span class="jr-year">2026 – auj.</span><div class="jr-card"><h3>Ingénieur réseaux &amp; sécurité</h3><span class="jr-org">Indépendant · France</span><p>Audits de configurations réseau et sécurité, revues pare-feu et VPN, évaluations SD-WAN et cloud, avec documentation.</p><span class="pill-now">actuel</span></div></li>
+      <li class="jr reveal"><span class="jr-year">2023</span><details class="jr-card"><summary><span class="jr-sum"><h3>Stagiaire ingénieur réseau</h3><span class="jr-org">3K Solutions · Algérie</span></span><svg class="more-chev" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M6 9l6 6 6-6"/></svg></summary><p>Configuration Cisco : adressage IP, VLAN, routage statique, tests de connectivité.</p></details></li>
+      <li class="jr reveal"><span class="jr-year">2023–2025</span><details class="jr-card"><summary><span class="jr-sum"><h3>Chef d’équipe &amp; chef de projet sécurité réseau</h3><span class="jr-org">Condor Electronics · Algérie</span></span><svg class="more-chev" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M6 9l6 6 6-6"/></svg></summary><p>Encadrement de 4 techniciens et 2 ingénieurs sur un réseau industriel multisite ; migration vers le SD-WAN Fortinet avec secours Ubiquiti ; audit VLAN, ACL et OSPF ; alertes Zabbix/PRTG et tickets GLPI.</p></details></li>
+      <li class="jr reveal"><span class="jr-year">2026</span><details class="jr-card"><summary><span class="jr-sum"><h3>Assistant chef de projet réseaux &amp; sécurité</h3><span class="jr-org">SGHP · France</span></span><svg class="more-chev" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M6 9l6 6 6-6"/></svg></summary><p>Accompagnement d’une migration d’infrastructure locale vers le cloud.</p></details></li>
+      <li class="jr now reveal"><span class="jr-year">2026 – auj.</span><details class="jr-card" open><summary><span class="jr-sum"><h3>Ingénieur réseaux &amp; sécurité</h3><span class="jr-org">Indépendant · France</span></span><span class="pill-now">actuel</span><svg class="more-chev" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M6 9l6 6 6-6"/></svg></summary><p>Audits de configurations réseau et sécurité, revues pare-feu et VPN, évaluations SD-WAN et cloud, avec documentation.</p></details></li>
       </ol>
     </div>
   </div>
@@ -378,16 +364,14 @@
       <div class="cred"><span class="cred-v" style="--c:#6d28d9">Aviatrix</span><b>Multicloud Network Associate</b><small>Certification</small></div>
       <div class="cred"><span class="cred-v" style="--c:#c7000b">Huawei</span><b>HCIA Cloud Computing</b><small>Certification</small></div>
       <div class="cred"><span class="cred-v" style="--c:#c7000b">Huawei</span><b>HCIA Routing &amp; Switching</b><small>Certification</small></div>
-      <div class="cred"><span class="cred-v" style="--c:#0a7ea4">Cisco NetAcad</span><b>CCNP: Core Networking</b><small>Formation académique</small></div>
-      <div class="cred"><span class="cred-v" style="--c:#0a7ea4">Cisco NetAcad</span><b>CCNA: SRWE</b><small>Formation académique</small></div>
-      <div class="cred"><span class="cred-v" style="--c:#0a7ea4">Cisco NetAcad</span><b>Network Defense · Network Security</b><small>Formation académique</small></div>
     </div>
-    <div class="edu-row reveal">
+    <details class="more"><summary><span>Voir formations &amp; diplômes</span><svg class="more-chev" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M6 9l6 6 6-6"/></svg></summary><div class="more-body"><div class="cred-grid"><div class="cred"><span class="cred-v" style="--c:#0a7ea4">Cisco NetAcad</span><b>CCNP: Core Networking</b><small>Formation académique</small></div>
+      <div class="cred"><span class="cred-v" style="--c:#0a7ea4">Cisco NetAcad</span><b>CCNA: SRWE</b><small>Formation académique</small></div>
+      <div class="cred"><span class="cred-v" style="--c:#0a7ea4">Cisco NetAcad</span><b>Network Defense · Network Security</b><small>Formation académique</small></div></div><div class="edu-row">
       <div class="edu"><span>2024 – 2026</span><b>MBA Management &amp; Gestion de projet</b></div>
       <div class="edu"><span>2021 – 2023</span><b>Master Réseaux &amp; Télécommunications</b><small>ENIC-NARIC France : comparable au niveau 7</small></div>
-      <div class="edu next"><span>Prochaine étape</span><b>Examens Fortinet FCP · Cisco CCNA</b></div>
+      <div class="edu next"><span>Prochaine étape</span><b>Examens Fortinet FCP · Cisco CCNA</b></div></div></div></details>
     </div>
-  </div>
 </section>
 <section class="cta-band">
   <div class="wrap cta-inner reveal">
@@ -407,8 +391,8 @@
         <div class="clink" style="cursor:default"><span class="ico"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 21s-7-6.2-7-11.5A7 7 0 0 1 19 9.5C19 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg></span><div><small>LOCALISATION</small><span>Paris, France</span></div></div>
       </div>
     </div>
-    <div class="form-card reveal">
-      <h3>Envoyer un message</h3>
+    <details class="form-card form-toggle reveal">
+      <summary><span class="ft-ico"><svg class="ico-d" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect class="d1" x="3" y="5" width="18" height="14" rx="2"/><path class="d2" pathLength="100" d="M5 5h14a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2zM3 7l9 6 9-6"/></svg></span><span><b>Envoyer un message</b><small>Ouvrir le formulaire de contact</small></span><svg class="more-chev" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M6 9l6 6 6-6"/></svg></summary>
       <form class="cf" id="cf">
         <div class="grid2">
           <div><label for="cfName">Nom <span class="req" aria-hidden="true">*</span></label><input id="cfName" required autocomplete="name"></div>
@@ -422,7 +406,7 @@
         <button class="btn primary" type="submit" style="justify-self:start">Envoyer le message <svg class="ico-d" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path class="d2" pathLength="100" d="M5 12h14M13 6l6 6-6 6"/></svg></button>
         <span class="cf-hint">* obligatoire. Ouvre votre messagerie avec le message pré-rempli, votre adresse comprise pour que je puisse répondre.</span>
       </form>
-    </div>
+    </details>
   </div>
 </section>
 </main>
@@ -458,8 +442,8 @@
   </div>
 </div>
 <div class="toast" id="toast" role="status"></div>
-<script src="../assets/js/search-index.js?v=202611111432" defer></script>
-<script src="../assets/js/main.js?v=202611111432" defer></script>
-<script src="../assets/js/topology.js?v=202611111432" defer></script><script src="../assets/js/home.js?v=202611111432" defer></script>
+<script src="../assets/js/search-index.js?v=202611130950" defer></script>
+<script src="../assets/js/main.js?v=202611130950" defer></script>
+<script src="../assets/js/topology.js?v=202611130950" defer></script><script src="../assets/js/home.js?v=202611130950" defer></script>
 </body>
 </html>

@@ -104,9 +104,9 @@ def home(lang):
     </div>
     <div class="tiles">{tiles}
     </div>
-    <ol class="process reveal" aria-label="{t('Working method', 'Méthode de travail')}">
+    <details class="more"><summary><span>{t('How I work: 5 steps', 'Ma méthode en 5 étapes')}</span><svg class="more-chev" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M6 9l6 6 6-6"/></svg></summary><div class="more-body"><ol class="process" aria-label="{t('Working method', 'Méthode de travail')}">
       <li><b>01</b><span>{t('Discover', 'Découvrir')}</span></li><li><b>02</b><span>{t('Audit', 'Auditer')}</span></li><li><b>03</b><span>{t('Design', 'Concevoir')}</span></li><li><b>04</b><span>{t('Validate in EVE-NG', 'Valider sous EVE-NG')}</span></li><li><b>05</b><span>{t('Document &amp; hand over', 'Documenter &amp; transmettre')}</span></li>
-    </ol>
+    </ol></div></details>
   </div>
 </section>"""
 
@@ -194,10 +194,10 @@ def home(lang):
     small = "".join(f"""
       <a class="card-x reveal" href="projects/{pid}.html">
         <div class="cx-art">{arts[pid]}</div>
-        <span class="kicker">{t('Case study', 'Étude de cas')}</span>
-        <h3>{t(*P[pid]['title'])}</h3><p>{t(*P[pid]['card'])}</p>
-        <span class="link-arrow">{t('Read more', 'Lire la suite')} {ico('arrow', 15)}</span>
-      </a>""" for pid in ["lan-optimization", "monitoring-stack"])
+        <span class="kicker">{P[pid]['tagline']}</span>
+        <h3>{t(*P[pid]['title'])}</h3><p class="clamp">{t(*P[pid]['card'])}</p>
+        <span class="link-arrow">{t('Read the case study', 'Lire l’étude de cas')} {ico('arrow', 15)}</span>
+      </a>""" for pid in ["sdwan", "hybrid-cloud", "lan-optimization", "monitoring-stack"])
     work = f"""
 <section class="band" id="work">
   <div class="wrap">
@@ -205,8 +205,7 @@ def home(lang):
       <div><span class="kicker">{t('Featured work', 'Réalisations')}</span><h2>{t('Real migrations, validated designs', 'Des migrations réelles, des architectures validées')}</h2></div>
       <p>{t('Each project has a full case study: context, architecture, configuration, validation and lessons learned.', 'Chaque projet a son étude de cas complète : contexte, architecture, configuration, validation et retours d’expérience.')}</p>
     </div>
-    {big}
-    <div class="cx-grid">{small}
+    <div class="cx-grid cx-4">{small}
     </div>
   </div>
 </section>"""
@@ -220,14 +219,10 @@ def home(lang):
       <h2>{t('See SD-WAN failover in action', 'Voyez une bascule SD-WAN en direct')}</h2>
       <p>{t('Three branches with two ISPs each, an HQ hub and IPsec/BGP tunnels to Azure and AWS. Cut a link and watch traffic move to the backup path while the SLA graph reacts.',
             'Trois agences avec deux FAI chacune, un hub au siège et des tunnels IPsec/BGP vers Azure et AWS. Coupez un lien : le trafic bascule sur le chemin de secours et le graphe SLA réagit.')}</p>
-      <ul class="ticks">
-        <li>{t('Click any link to cut or restore it', 'Cliquez un lien pour le couper ou le rétablir')}</li>
-        <li>{t('“Fail ISP-1” simulates an outage on every site', '« Couper ISP-1 » simule une panne sur toutes les agences')}</li>
-        <li>{t('Based on the SD-WAN case study design', 'Basé sur l’architecture de l’étude de cas SD-WAN')}</li>
-      </ul>
-      <a class="link-arrow light" href="projects/sdwan.html">{t('How it was built', 'Comment c’est construit')} {ico('arrow', 15)}</a>
+      <div class="cta"><button class="btn primary lg" type="button" id="demoLaunch" aria-controls="topoFig" aria-expanded="false">{t('Launch the live demo', 'Lancer la démo')} <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg></button><a class="link-arrow light" href="projects/sdwan.html">{t('How it was built', 'Comment c’est construit')} {ico('arrow', 15)}</a></div>
     </div>
-    <figure class="topo reveal" id="topoFig" aria-label="{t('Interactive SD-WAN and hybrid cloud topology simulation', 'Simulation interactive SD-WAN et cloud hybride')}">
+    <button class="demo-teaser reveal" type="button" id="demoTeaser" aria-controls="topoFig"><span class="dt-art">{ILL['sdwan']}</span><span class="dt-play"><svg width="26" height="26" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg></span><span class="dt-txt">{t('Click to start the simulation', 'Cliquez pour lancer la simulation')}</span></button>
+    <figure class="topo" id="topoFig" hidden aria-label="{t('Interactive SD-WAN and hybrid cloud topology simulation', 'Simulation interactive SD-WAN et cloud hybride')}">
       <div class="topo-head"><span class="t">{t('SD-WAN overlay · hub-and-spoke + hybrid cloud', 'Overlay SD-WAN · étoile + cloud hybride')}</span><span class="live"><span class="led"></span><span id="liveTxt">…</span></span><button class="fs-btn" id="fsBtn" type="button" aria-label="{t('Full screen', 'Plein écran')}" title="{t('Full screen', 'Plein écran')}"><svg class="i-open" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/></svg><svg class="i-close" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M9 4v5H4M15 4v5h5M9 20v-5H4M15 20v-5h5"/></svg><span>{t('Full screen', 'Plein écran')}</span></button></div>
       <svg id="topo" viewBox="0 0 530 400" role="img" aria-label="{t('Three branch sites with two ISP links each to an HQ hub, which connects to Azure and AWS over IPsec with BGP', 'Trois agences avec deux liens FAI chacune vers un hub HQ, relié à Azure et AWS en IPsec avec BGP')}"><g id="links"></g><g id="pkts"></g><g id="nodes"></g></svg>
       <div class="legend"><span><i style="--c:var(--green)"></i>{t('ISP-1 primary', 'ISP-1 principal')}</span><span><i class="d" style="--c:var(--green)"></i>{t('ISP-2 backup', 'ISP-2 secours')}</span><span><i class="d" style="--c:var(--violet)"></i>IPsec + BGP</span><span><i style="--c:var(--red)"></i>{t('down', 'coupé')}</span></div>
@@ -251,7 +246,7 @@ def home(lang):
          t('Audits of network and security configurations, firewall and VPN reviews, SD-WAN and cloud connectivity assessments, with documentation.', 'Audits de configurations réseau et sécurité, revues pare-feu et VPN, évaluations SD-WAN et cloud, avec documentation.'), True),
     ]
     journey = "".join(f"""
-      <li class="jr{' now' if now else ''} reveal"><span class="jr-year">{y}</span><div class="jr-card"><h3>{ti}</h3><span class="jr-org">{org}</span><p>{de}</p>{'<span class="pill-now">' + t('current', 'actuel') + '</span>' if now else ''}</div></li>""" for y, ti, org, de, now in jobs)
+      <li class="jr{' now' if now else ''} reveal"><span class="jr-year">{y}</span><details class="jr-card"{' open' if now else ''}><summary><span class="jr-sum"><h3>{ti}</h3><span class="jr-org">{org}</span></span>{'<span class="pill-now">' + t('current', 'actuel') + '</span>' if now else ''}<svg class="more-chev" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M6 9l6 6 6-6"/></svg></summary><p>{de}</p></details></li>""" for y, ti, org, de, now in jobs)
     about = f"""
 <section class="band" id="about">
   <div class="wrap about-v">
@@ -260,7 +255,6 @@ def home(lang):
       <h2>{t('From network operations to project delivery', 'De l’exploitation réseau au pilotage de projets')}</h2>
       <p class="lead">{t('My core is Cisco routing &amp; switching and Fortinet security across multisite networks. At Condor Electronics I became a team leader and moved intersite connectivity to Fortinet SD-WAN. Today I extend on-prem networks into Azure and AWS, and an MBA in project management completes the picture.',
                          'Mon socle : routage &amp; commutation Cisco et sécurité Fortinet sur des réseaux multisites. Chez Condor Electronics, je suis devenu chef d’équipe et j’ai migré l’interconnexion vers le SD-WAN Fortinet. Aujourd’hui, j’étends les réseaux locaux vers Azure et AWS, et un MBA en management de projet complète le profil.')}</p>
-      <blockquote>{t('I don’t just make it work. I make it resilient, documented and observable.', 'Faire fonctionner ne suffit pas : je rends les réseaux résilients, documentés et observables.')}</blockquote>
       <dl class="glance-row">
         <div><dt>{t('Based in', 'Basé à')}</dt><dd>Paris, France</dd></div>
         <div><dt>{t('Languages', 'Langues')}</dt><dd>{t('French · English', 'Français · Anglais')}</dd></div>
@@ -317,16 +311,14 @@ def home(lang):
       <div class="cred"><span class="cred-v" style="--c:#6d28d9">Aviatrix</span><b>Multicloud Network Associate</b><small>{t('Certification', 'Certification')}</small></div>
       <div class="cred"><span class="cred-v" style="--c:#c7000b">Huawei</span><b>HCIA Cloud Computing</b><small>{t('Certification', 'Certification')}</small></div>
       <div class="cred"><span class="cred-v" style="--c:#c7000b">Huawei</span><b>HCIA Routing &amp; Switching</b><small>{t('Certification', 'Certification')}</small></div>
-      <div class="cred"><span class="cred-v" style="--c:#0a7ea4">Cisco NetAcad</span><b>CCNP: Core Networking</b><small>{t('Academy training', 'Formation académique')}</small></div>
-      <div class="cred"><span class="cred-v" style="--c:#0a7ea4">Cisco NetAcad</span><b>CCNA: SRWE</b><small>{t('Academy training', 'Formation académique')}</small></div>
-      <div class="cred"><span class="cred-v" style="--c:#0a7ea4">Cisco NetAcad</span><b>Network Defense · Network Security</b><small>{t('Academy training', 'Formation académique')}</small></div>
     </div>
-    <div class="edu-row reveal">
+    <details class="more"><summary><span>{t('Show training &amp; education', 'Voir formations &amp; diplômes')}</span><svg class="more-chev" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M6 9l6 6 6-6"/></svg></summary><div class="more-body"><div class="cred-grid"><div class="cred"><span class="cred-v" style="--c:#0a7ea4">Cisco NetAcad</span><b>CCNP: Core Networking</b><small>{t('Academy training', 'Formation académique')}</small></div>
+      <div class="cred"><span class="cred-v" style="--c:#0a7ea4">Cisco NetAcad</span><b>CCNA: SRWE</b><small>{t('Academy training', 'Formation académique')}</small></div>
+      <div class="cred"><span class="cred-v" style="--c:#0a7ea4">Cisco NetAcad</span><b>Network Defense · Network Security</b><small>{t('Academy training', 'Formation académique')}</small></div></div><div class="edu-row">
       <div class="edu"><span>2024 – 2026</span><b>{t('MBA, Management &amp; Project Management', 'MBA Management &amp; Gestion de projet')}</b></div>
       <div class="edu"><span>2021 – 2023</span><b>{t('Master’s in Networks &amp; Telecommunications', 'Master Réseaux &amp; Télécommunications')}</b><small>{t('ENIC-NARIC France: comparable to level 7', 'ENIC-NARIC France : comparable au niveau 7')}</small></div>
-      <div class="edu next"><span>{t('Next step', 'Prochaine étape')}</span><b>{t('Fortinet FCP · Cisco CCNA exams', 'Examens Fortinet FCP · Cisco CCNA')}</b></div>
+      <div class="edu next"><span>{t('Next step', 'Prochaine étape')}</span><b>{t('Fortinet FCP · Cisco CCNA exams', 'Examens Fortinet FCP · Cisco CCNA')}</b></div></div></div></details>
     </div>
-  </div>
 </section>"""
 
     # ───────── 9. CTA band + contact ─────────
@@ -350,8 +342,8 @@ def home(lang):
         <div class="clink" style="cursor:default"><span class="ico"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 21s-7-6.2-7-11.5A7 7 0 0 1 19 9.5C19 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg></span><div><small>{t('LOCATION', 'LOCALISATION')}</small><span>Paris, France</span></div></div>
       </div>
     </div>
-    <div class="form-card reveal">
-      <h3>{t('Send a message', 'Envoyer un message')}</h3>
+    <details class="form-card form-toggle reveal">
+      <summary><span class="ft-ico">{ico('mail', 20)}</span><span><b>{t('Send a message', 'Envoyer un message')}</b><small>{t('Open the contact form', 'Ouvrir le formulaire de contact')}</small></span><svg class="more-chev" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M6 9l6 6 6-6"/></svg></summary>
       <form class="cf" id="cf">
         <div class="grid2">
           <div><label for="cfName">{t('Name', 'Nom')} <span class="req" aria-hidden="true">*</span></label><input id="cfName" required autocomplete="name"></div>
@@ -365,7 +357,7 @@ def home(lang):
         <button class="btn primary" type="submit" style="justify-self:start">{t('Send message', 'Envoyer le message')} {ico('arrow', 15)}</button>
         <span class="cf-hint">{t('* required. Opens your email client with the message pre-filled, including your address so I can reply.', '* obligatoire. Ouvre votre messagerie avec le message pré-rempli, votre adresse comprise pour que je puisse répondre.')}</span>
       </form>
-    </div>
+    </details>
   </div>
 </section>"""
 
