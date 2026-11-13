@@ -1461,3 +1461,18 @@ details.form-toggle .cf{padding:22px 26px 26px;animation:toolIn .3s ease}
 .code-more{display:block;width:100%;font:600 13px var(--ui);color:#7cc7ff;background:#0d1117;border:0;border-top:1px solid #1e252c;padding:10px;cursor:pointer;transition:background .2s}
 .code-more:hover{background:#131a22}
 @media print{.code.folded pre{max-height:none;-webkit-mask-image:none;mask-image:none}.code-more{display:none}}
+
+/* ── simple homepage + detail pages ── */
+.hero-solo{grid-template-columns:minmax(0,1fr)!important;max-width:860px}
+.ex-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:18px}
+.ex{display:flex;flex-direction:column;gap:8px;padding:24px;background:var(--panel);border:1px solid var(--line);border-radius:14px;text-decoration:none;color:inherit;box-shadow:var(--shadow);transition:transform .2s,border-color .2s,box-shadow .2s}
+.ex:hover{transform:translateY(-3px);border-color:var(--amber);box-shadow:0 14px 30px rgba(15,40,90,.12)}
+.ex-ico{width:44px;height:44px;border-radius:12px;display:grid;place-items:center;background:color-mix(in srgb,var(--amber) 10%,transparent);color:var(--amber);margin-bottom:6px}
+.ex b{font-size:17px;letter-spacing:-.01em}
+.ex>span:not(.ex-ico):not(.link-arrow){color:var(--muted);font-size:14.5px;line-height:1.5;flex:1}
+.ex .link-arrow{margin-top:6px}
+.page-band{padding-bottom:56px}
+.proc-wrap{margin-top:36px}
+.proc-wrap .kicker{display:block;margin-bottom:12px}
+@media (max-width:1000px){.ex-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:560px){.ex-grid{grid-template-columns:minmax(0,1fr)}}

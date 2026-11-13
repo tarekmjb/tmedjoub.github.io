@@ -81,13 +81,13 @@ def lab_page(lang, idx):
     status = f'<span class="status-pill" style="--c:var(--green)">{t("guide ready · lab captures coming", "guide prêt · captures du lab à venir")}</span>'
     body = doc_page(
         x,
-        crumbs=[f'<a href="{home_href}">{t("Home", "Accueil")}</a>', f'<a href="{home_href}#resources">Labs</a>', t(*lab["title"])],
+        crumbs=[f'<a href="{home_href}">{t("Home", "Accueil")}</a>', f'<a href="{home_href.replace("index.html", "resources.html")}">Labs</a>', t(*lab["title"])],
         kicker=f'EVE-NG lab {idx + 1:02d} · {lab["tags"]}',
         title=t(*lab["title"]), summary=t(*lab["objective"]),
         metas=[(t("Level:", "Niveau :"), t(*lab["level"])), (t("Time:", "Durée :"), lab["time"]), (t("Focus:", "Objet :"), t(*lab["focus"]))],
         kpis=None, sections=lab_sections(x, lab), status=status,
         pn=((t(*prv["title"]), prv["id"] + ".html"), (t(*nxt["title"]), nxt["id"] + ".html")),
-        back=(home_href + "#resources", t("Back to resources", "Retour aux ressources")),
+        back=(home_href.replace("index.html", "resources.html"), t("Back to resources", "Retour aux ressources")),
         related=related_for_lab(x, idx))
     write(("fr/" if lang == "fr" else "") + f"labs/{lab['id']}.html",
           layout(lang, f"labs/{lab['id']}.html", f"{t(*lab['title'])} · EVE-NG lab · Tarek MEDJOUB", t(*lab["objective"])[:158], body, doc=True))
@@ -145,7 +145,7 @@ def cv_page(lang):
     <button class="btn primary" type="button" onclick="window.print()">⎙ {t('Print / save as PDF', 'Imprimer / enregistrer en PDF')}</button>
     <a class="btn" href="{pdf}" download>↓ {t('Designed PDF', 'PDF mis en page')}</a>
     <a class="btn" href="index.html#resume">← {t('Back to home', 'Retour à l’accueil')}</a>
-    <a class="btn" href="index.html#contact">{t('Contact me', 'Me contacter')} →</a>
+    <a class="btn" href="contact.html">{t('Contact me', 'Me contacter')} →</a>
   </div>
 </div>"""
     write(("fr/" if lang == "fr" else "") + "cv.html",
@@ -183,7 +183,7 @@ def seo_files():
     urls = []
     for lang in ("en", "fr"):
         pre = "fr/" if lang == "fr" else ""
-        urls += [pre + "index.html", pre + "cv.html", pre + "tools.html"]
+        urls += [pre + p for p in ("index.html", "about.html", "resources.html", "demo.html", "contact.html", "cv.html", "tools.html")]
         urls += [pre + f"projects/{p['id']}.html" for p in PROJECTS]
         urls += [pre + f"labs/{l['id']}.html" for l in LABS]
     sm = ['<?xml version="1.0" encoding="UTF-8"?>', '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">']
@@ -215,10 +215,10 @@ def search_index():
                                ("resources", t("Resource center", "Centre de ressources"), t("All guides, case studies and tools", "Tous les guides, études de cas et outils")),
                                ("certs", t("Certifications & education", "Certifications & formation"), "Aviatrix, Huawei HCIA, Cisco NetAcad, MBA, Master"),
                                ("contact", "Contact", t("Email, LinkedIn, contact form", "Email, LinkedIn, formulaire de contact"))]:
-            add(S, ti, de, f"index.html#{anchor}")
+            add(S, ti, de, {"expertise": "about.html#expertise", "demo": "demo.html", "about": "about.html", "experience": "about.html#experience", "resources": "resources.html", "certs": "about.html#certs", "contact": "contact.html"}.get(anchor, f"index.html#{anchor}"))
         from chrome import EXPERTISE
         for k, n, d in EXPERTISE:
-            add(t("Expertise", "Expertise"), t(*n), t(*d), f"index.html#expertise-{k}")
+            add(t("Expertise", "Expertise"), t(*n), t(*d), f"about.html#expertise-{k}")
         for p in PROJECTS:
             add(t("Case study", "Étude de cas"), t(*p["title"]), t(*p["card"]), f"projects/{p['id']}.html", p["tagline"] + " " + " ".join(p["chips"]))
             for sid, lbl, html in BUILDERS[p["id"]](x):
@@ -236,6 +236,8 @@ def search_index():
 if __name__ == "__main__":
     for lang in ("en", "fr"):
         write(("fr/" if lang == "fr" else "") + "index.html", home(lang))
+        for pg in ("about", "resources", "demo", "contact"):
+            write(("fr/" if lang == "fr" else "") + pg + ".html", home(lang, pg))
         cv_page(lang)
         write(("fr/" if lang == "fr" else "") + "tools.html", tools_page(lang))
         for i in range(len(PROJECTS)):
