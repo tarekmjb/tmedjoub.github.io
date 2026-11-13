@@ -33,7 +33,11 @@ def home(lang, page="index"):
   <canvas class="mesh" id="mesh" aria-hidden="true"></canvas>
   <div class="wrap hero-grid hero-solo">
     <div class="hero-copy">
-      <span class="eyebrow">Tarek Medjoub · {t('Network, Security &amp; Cloud Engineer', 'Ingénieur Réseaux, Sécurité &amp; Cloud')}</span>
+      <div class="id-badge">
+        <span class="id-av" aria-hidden="true">TM<i class="id-dot"></i></span>
+        <span class="id-txt"><b>Tarek Medjoub</b><small>{t('Network, Security &amp; Cloud Engineer', 'Ingénieur Réseaux, Sécurité &amp; Cloud')}</small></span>
+        <span class="id-stack" aria-label="{t('Main technologies', 'Technologies principales')}"><span>Fortinet</span><span>Cisco</span><span>Azure · AWS</span></span>
+      </div>
       <h1>{t('Resilient networks, <br><em>from the branch to the cloud</em>.', 'Des réseaux résilients, <br><em>de l’agence jusqu’au cloud</em>.')}</h1>
       <p class="hero-lede">{t('I design, secure and run multisite enterprise networks, from Fortinet SD-WAN and IPsec/BGP to hybrid connectivity with Azure and AWS.',
                               'Je conçois, sécurise et exploite des réseaux d’entreprise multisites : SD-WAN Fortinet, IPsec/BGP et connectivité hybride vers Azure et AWS.')}</p>
